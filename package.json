@@ -33,6 +33,16 @@
       "last 1 safari version"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix"
+    ]
+  },
   "devDependencies": {
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-prettier": "^6.12.0",
@@ -41,6 +51,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "4.0.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
     "prettier": "^2.1.2"
   }
 }
