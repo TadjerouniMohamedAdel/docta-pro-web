@@ -1,3 +1,9 @@
 {
-  "title": "Docta"
+  "title": "Docta",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "Welcome, please login to access the app": "Welcome, please login to access the app",
+  "required field": "Required field",
+  "must be a valid email": "Must be a valid email"
 }

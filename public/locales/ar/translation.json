@@ -1,3 +1,9 @@
 {
-  "title": "دوكتا"
+  "title": "دوكتا",
+  "login": "تسجيل الدخول",
+  "email": "البريد الإلكتروني",
+  "password": "كلمه السر",
+  "Welcome, please login to access the app": "مرحبًا ، الرجاء تسجيل الدخول للوصول إلى التطبيق",
+  "required field": "هذه الخانة إجبارية",
+  "must be a valid email": "البريد الإلكتروني غير صالح"
 }

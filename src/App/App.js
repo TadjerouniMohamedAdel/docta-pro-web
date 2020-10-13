@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useAuthState } from '../features/Auth/context';
 
 const AuthenticatedApp = React.lazy(() =>
   import(/* webpackPrefetch: true */ './AuthenticatedApp/AuthenticatedApp'),
@@ -8,12 +9,26 @@ const UnauthenticatedApp = React.lazy(() =>
 );
 
 function App() {
-  const [user] = useState('zzz');
+  const { user, setUser } = useAuthState();
+  const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    if (token && !user)
+      setTimeout(() => {
+        setUser({ username: 'mohamed' });
+      }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
-    <React.Suspense fallback="loading...">
-      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
-    </React.Suspense>
+    <>
+      {token && !user ? (
+        'loading'
+      ) : (
+        <React.Suspense fallback="loading">
+          {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+        </React.Suspense>
+      )}
+    </>
   );
 }
 
