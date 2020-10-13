@@ -3463,6 +3463,11 @@ css-prefers-color-scheme@^3.1.1:
   dependencies:
     postcss "^7.0.5"
 
+css-pro-layout@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/css-pro-layout/-/css-pro-layout-1.0.2.tgz#085931a394ef6b8386d984bdedfd08eb0183fe9b"
+  integrity sha512-+EYXkHNSpgPkUoczmPqIz01Q7LLV3JjH/Ow5gmUn75E4AfcjqCUxV6L7ABB4FFdmOI6V22HJdZ8zSIshLxfcjA==
+
 css-select-base-adapter@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/css-select-base-adapter/-/css-select-base-adapter-0.1.1.tgz#3b2ff4972cc362ab88561507a95408a1432135d7"

@@ -8,7 +8,7 @@ const UnauthenticatedApp = React.lazy(() =>
 );
 
 function App() {
-  const [user] = useState();
+  const [user] = useState('zzz');
 
   return (
     <React.Suspense fallback="loading...">

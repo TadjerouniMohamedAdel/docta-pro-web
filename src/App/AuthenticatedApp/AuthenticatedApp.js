@@ -1,7 +1,8 @@
 import React from 'react';
+import Layout from '../../components/Layout';
 
 const AuthenticatedApp = () => {
-  return <div>AuthenticatedApp</div>;
+  return <Layout />;
 };
 
 export default AuthenticatedApp;
