@@ -1,6 +1,7 @@
 import React from 'react';
 import { bool } from 'prop-types';
 import Logo from './components/Logo/Logo';
+import Menu from './components/Menu/Menu';
 
 const propTypes = {
   collapsed: bool.isRequired,
@@ -15,6 +16,7 @@ const Sidebar = ({ collapsed, toggled }) => {
       }`}
     >
       <Logo />
+      <Menu />
     </aside>
   );
 };
