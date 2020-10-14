@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAuthState } from '../features/Auth/context';
+import FullPageSpinner from '../components/FullPageSpinner/FullPageSpinner';
 
 const AuthenticatedApp = React.lazy(() =>
   import(/* webpackPrefetch: true */ './AuthenticatedApp/AuthenticatedApp'),
@@ -22,9 +23,9 @@ function App() {
   return (
     <>
       {token && !user ? (
-        'loading'
+        <FullPageSpinner />
       ) : (
-        <React.Suspense fallback="loading">
+        <React.Suspense fallback={<FullPageSpinner />}>
           {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
         </React.Suspense>
       )}
