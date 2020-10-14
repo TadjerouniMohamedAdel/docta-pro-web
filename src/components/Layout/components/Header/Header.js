@@ -1,14 +1,32 @@
-import { Col, Row } from 'antd';
 import React from 'react';
+import { Col, Row } from 'antd';
+import { bool, func } from 'prop-types';
+import SidebarCollapser from './components/SidebarCollapser/SidebarCollapser';
+import SidebarToggler from './components/SidebarToggler/SidebarToggler';
 import UserProfile from './components/UserProfile/UserProfile';
 
-const Header = () => {
+const propTypes = {
+  collapsed: bool.isRequired,
+  handleCollapsed: func.isRequired,
+  setToggled: func.isRequired,
+};
+const Header = ({ handleCollapsed, collapsed, setToggled }) => {
   return (
     <header
       className="header"
       style={{ display: 'flex', alignItems: 'center', padding: 20 }}
     >
-      <Row align="middle" style={{ marginLeft: 'auto' }}>
+      <Row
+        style={{ width: '100%', alignItems: 'center' }}
+        justify="space-between"
+      >
+        <Col flex="auto">
+          <SidebarCollapser
+            handleCollapsed={handleCollapsed}
+            collapsed={collapsed}
+          />
+          <SidebarToggler setToggled={setToggled} />
+        </Col>
         <Col>
           <UserProfile />
         </Col>
@@ -16,5 +34,7 @@ const Header = () => {
     </header>
   );
 };
+
+Header.propTypes = propTypes;
 
 export default Header;
