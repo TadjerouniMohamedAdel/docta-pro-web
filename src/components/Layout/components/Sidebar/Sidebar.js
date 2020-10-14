@@ -1,6 +1,6 @@
 import React from 'react';
 import { bool } from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import Logo from './components/Logo/Logo';
 
 const propTypes = {
   collapsed: bool.isRequired,
@@ -8,18 +8,13 @@ const propTypes = {
 };
 
 const Sidebar = ({ collapsed, toggled }) => {
-  const { t } = useTranslation();
-
   return (
     <aside
       className={`sidebar break-point-md ${collapsed ? 'collapsed' : ''} ${
         toggled ? 'toggled' : ''
       }`}
-      style={{ padding: '20px 0' }}
     >
-      <div className="logo" style={{ height: 64 }}>
-        {t('title')}
-      </div>
+      <Logo />
     </aside>
   );
 };
