@@ -4,6 +4,7 @@ import { bool, func } from 'prop-types';
 import SidebarCollapser from './components/SidebarCollapser/SidebarCollapser';
 import SidebarToggler from './components/SidebarToggler/SidebarToggler';
 import UserProfile from './components/UserProfile/UserProfile';
+import Localization from './components/Localization';
 
 const propTypes = {
   collapsed: bool.isRequired,
@@ -28,7 +29,14 @@ const Header = ({ handleCollapsed, collapsed, setToggled }) => {
           <SidebarToggler setToggled={setToggled} />
         </Col>
         <Col>
-          <UserProfile />
+          <Row align="middle">
+            <Col>
+              <Localization />
+            </Col>
+            <Col>
+              <UserProfile />
+            </Col>
+          </Row>
         </Col>
       </Row>
     </header>

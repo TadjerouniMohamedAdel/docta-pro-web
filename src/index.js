@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { AuthProvider } from './features/Auth/context';
+import AppProvider from './AppProvider';
 import './i18n';
 import './styles/index.less';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider>
+    <AppProvider>
       <App />
-    </AuthProvider>
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

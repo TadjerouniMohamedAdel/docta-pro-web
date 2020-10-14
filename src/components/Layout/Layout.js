@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Header, Sidebar, Content, Footer, Overlay } from './components';
+import { useLocaleState } from './components/Header/components/Localization';
 
 const Layout = () => {
+  const { locale } = useLocaleState();
   const [collapsed, setCollapsed] = useState(false);
   const [toggled, setToggled] = useState(false);
 
@@ -10,7 +12,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="layout has-sidebar">
+    <div className={`layout has-sidebar ${locale === 'ar' ? 'rtl' : ''}`}>
       <Sidebar collapsed={collapsed} toggled={toggled} />
       <Overlay setToggled={setToggled} />
       <div className="layout">
