@@ -1,6 +1,7 @@
 {
   "title": "Docta",
   "login": "Login",
+  "logout": "Logout",
   "email": "Email",
   "password": "Password",
   "Welcome, please login to access the app": "Welcome, please login to access the app",
