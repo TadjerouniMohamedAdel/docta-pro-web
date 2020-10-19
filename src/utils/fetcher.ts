@@ -3,12 +3,14 @@ import { queryCache } from 'react-query';
 type FetchHeader = {
   'Content-Type'?: string;
   Authorization?: string;
+  locale: string;
 };
 
 function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
   const token = localStorage.getItem('token');
+  const locale = localStorage.getItem('locale') ?? 'en';
 
-  const headers: FetchHeader = { 'Content-Type': 'application/json' };
+  const headers: FetchHeader = { 'Content-Type': 'application/json', locale };
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
@@ -26,7 +28,7 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
     config.body = JSON.stringify(body);
   }
   return window.fetch(endpoint, config).then(async (response) => {
-    if (response.status === 401) {
+    if (response.status === 401 && endpoint !== '/api/v1/auth') {
       queryCache.clear();
       localStorage.removeItem('token');
       window.location.assign(window.location as any);
