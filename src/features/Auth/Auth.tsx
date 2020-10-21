@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, Form, Typography, Row, Col } from 'antd';
+import { Button, Input, Form, Typography, Row, Col, Alert } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -12,14 +12,14 @@ const Auth: React.FC = () => {
   const { t } = useTranslation();
   const { setUser } = useAuthState();
 
-  const [mutate, { isLoading }] = useMutation(login);
+  const [mutate, { isLoading, isError }] = useMutation(login);
 
   const onLogin = async (values: LoginParams): Promise<void> => {
     try {
       const response: AuthResponse | undefined = await mutate(values);
       if (response) {
-        localStorage.setItem('token', response.token);
-        setUser(response.user);
+        localStorage.setItem('token', response.data.token);
+        setUser(response.data.user);
       }
     } catch (err) {
       console.log(err);
@@ -108,10 +108,20 @@ const Auth: React.FC = () => {
               </Button>
             </Form.Item>
           </Col>
+          <Col span={24} style={{ textAlign: 'center' }}>
+            <Typography.Text>By Clever Zone</Typography.Text>
+          </Col>
+          {isError ? (
+            <Col span={24}>
+              <Alert
+                message="Email or password incorrect !"
+                type="error"
+                style={{ textAlign: 'center' }}
+              />
+            </Col>
+          ) : null}
         </Row>
       </Form>
-
-      <Typography.Text style={{ textAlign: 'center' }}>By Clever Zone</Typography.Text>
     </div>
   );
 };

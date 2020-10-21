@@ -1,3 +1,5 @@
+import { ApiResponse } from '../../interfaces/api';
+
 export type User = {
   username: string;
 };
@@ -7,7 +9,9 @@ export type LoginParams = {
   password: string;
 };
 
-export type AuthResponse = {
-  token: string;
-  user: User;
-};
+export interface AuthResponse extends ApiResponse {
+  data: {
+    token: string;
+    user: User;
+  };
+}
