@@ -19,17 +19,18 @@ const Auth: React.FC = () => {
       const response: AuthResponse | undefined = await mutate(values);
       if (response) {
         localStorage.setItem('token', response.data.token);
-        setUser(response.data.user);
+        setUser({ username: 'mohamed' });
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const initialValues: LoginParams = { email: '', password: '' };
+  const initialValues: LoginParams = { phone: '', password: '' };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required(t('required field')).email(t('must be a valid email')),
+    // email: Yup.string().required(t('required field')).email(t('must be a valid email')),
+    phone: Yup.string().required(t('required field')),
     password: Yup.string().required(t('required field')),
   });
 
@@ -64,14 +65,14 @@ const Auth: React.FC = () => {
         <Row gutter={[16, 8]}>
           <Col span={24}>
             <Form.Item
-              validateStatus={touched.email && Boolean(errors.email) ? 'error' : undefined}
-              help={errors.email}
+              validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
+              help={errors.phone}
             >
               <Input
                 size="large"
-                name="email"
-                placeholder={t('email')}
-                value={values.email}
+                name="phone"
+                placeholder={t('phone')}
+                value={values.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 className="login-input"
