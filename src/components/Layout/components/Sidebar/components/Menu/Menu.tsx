@@ -14,7 +14,7 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
 
   return (
     <AntMenu
-      theme="dark"
+      theme="light"
       mode="inline"
       inlineCollapsed={collapsed}
       selectedKeys={[pathname]}

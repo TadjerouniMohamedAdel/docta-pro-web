@@ -14,12 +14,14 @@ body {
 }
 
 .layout {
-  .sidebar {
-    background-color: #001529;
-    color: white;
+  background-color: @layout-body-background;
+  .header {
+    box-shadow: @box-shadow-base;
+    background-color: @white;
   }
-  .content {
-    background-color: @layout-body-background;
+  .sidebar {
+    background-color: @white;
+    z-index: 1;
   }
 }
 
