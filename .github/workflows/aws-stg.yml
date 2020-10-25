@@ -41,7 +41,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.AWS_REPOSITORY_NAME }}
+          ECR_REPOSITORY: $AWS_REPOSITORY_NAME
           IMAGE_TAG: latest
         run: |
           # Build a docker container and
@@ -52,12 +52,12 @@ jobs:
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Download task definition
-        run: aws ecs describe-task-definition --task-definition ${{ secrets.AWS_TASK_DEFINITION_NAME }} --query taskDefinition > ecs-task-definition.json
+        run: aws ecs describe-task-definition --task-definition $AWS_TASK_DEFINITION_NAME --query taskDefinition > ecs-task-definition.json
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ecs-task-definition.json
-          service: ${{ secrets.AWS_SERVICE_NAME }}
-          cluster: ${{ secrets.AWS_CLUSTER_NAME }}
+          service: $AWS_SERVICE_NAME
+          cluster: $AWS_CLUSTER_NAME
           wait-for-service-stability: true
