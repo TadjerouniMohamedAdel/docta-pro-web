@@ -30,6 +30,7 @@
     "import/no-extraneous-dependencies": "off",
     "react/jsx-wrap-multilines": "off",
     "react/jsx-indent": "off",
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }
