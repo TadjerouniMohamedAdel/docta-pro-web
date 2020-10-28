@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, Form, Typography, Row, Col, Alert } from 'antd';
+import { Button, Input, Form, Typography, Alert } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,9 @@ import { useMutation } from 'react-query';
 import { useAuthState } from './context';
 import { login } from './services';
 import { AuthResponse, LoginParams } from './types';
+import Spacer from '../../components/Spacer/Spacer';
+import Link from '../../components/Link/Link';
+import AuthWrapper from './AuthWrapper/AuthWrapper';
 
 const Auth: React.FC = () => {
   const { t } = useTranslation();
@@ -40,90 +43,77 @@ const Auth: React.FC = () => {
     onSubmit: onLogin,
   });
 
-  const { touched, handleChange, handleBlur, errors, values, handleSubmit } = formik;
+  const { handleChange, handleBlur, values, handleSubmit } = formik;
 
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        padding: 10,
-        maxWidth: '100%',
-      }}
-    >
-      <div style={{ textAlign: 'center' }}>
-        <Typography.Title level={2}>{t('title')}</Typography.Title>
-        <Typography.Title level={5} style={{ marginBottom: 35 }}>
-          {t('Welcome, please login to access the app')}
-        </Typography.Title>
-      </div>
+    <AuthWrapper>
+      <div
+        style={{
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          padding: 10,
+          maxWidth: '100%',
+        }}
+      >
+        <div style={{ textAlign: 'center' }}>
+          <Typography.Title level={2}>{t('title')}</Typography.Title>
+          <Typography.Title level={5} style={{ marginBottom: 35 }}>
+            {t('Welcome, please login to access the app')}
+          </Typography.Title>
+        </div>
 
-      <Form onFinish={handleSubmit} style={{ width: 400, maxWidth: '100%' }}>
-        <Row gutter={[16, 8]}>
-          <Col span={24}>
-            <Form.Item
-              validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
-              help={errors.phone}
-            >
+        <Form onFinish={handleSubmit} style={{ width: 400, maxWidth: '100%' }}>
+          <Spacer size="md" direction="vertical">
+            <Spacer size="xs" direction="vertical">
+              <Typography.Text>{t('phone')}</Typography.Text>
               <Input
-                size="large"
                 name="phone"
-                placeholder={t('phone')}
+                placeholder={t('enter your phone number')}
                 value={values.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="login-input"
               />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              validateStatus={touched.password && Boolean(errors.password) ? 'error' : undefined}
-              help={errors.password}
-            >
+            </Spacer>
+
+            <Spacer size="xs" direction="vertical">
+              <Typography.Text>{t('password')}</Typography.Text>
               <Input.Password
-                size="large"
                 name="password"
                 value={values.password}
-                placeholder={t('password')}
+                placeholder={t('enter your password')}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="login-input"
               />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item>
-              <Button
-                size="large"
-                type="primary"
-                htmlType="submit"
-                className="login-button bee-btn-filled"
-                block
-                loading={isLoading}
-              >
-                {t('login')}
-              </Button>
-            </Form.Item>
-          </Col>
-          <Col span={24} style={{ textAlign: 'center' }}>
+              <Link style={{ fontSize: 12 }} onClick={() => console.log('forgot password')}>
+                Forgot password?
+              </Link>
+            </Spacer>
+
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-button bee-btn-filled"
+              block
+              loading={isLoading}
+            >
+              {t('login')}
+            </Button>
+
             <Typography.Text>By Clever Zone</Typography.Text>
-          </Col>
+          </Spacer>
           {isError ? (
-            <Col span={24}>
-              <Alert
-                message="Email or password incorrect !"
-                type="error"
-                style={{ textAlign: 'center' }}
-              />
-            </Col>
+            <Alert
+              message="Email or password incorrect !"
+              type="error"
+              style={{ textAlign: 'center' }}
+            />
           ) : null}
-        </Row>
-      </Form>
-    </div>
+        </Form>
+      </div>
+    </AuthWrapper>
   );
 };
 
