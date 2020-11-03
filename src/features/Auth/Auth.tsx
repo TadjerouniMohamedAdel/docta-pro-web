@@ -10,6 +10,10 @@ import { AuthResponse, LoginParams } from './types';
 import Spacer from '../../components/Spacer/Spacer';
 import Link from '../../components/Link/Link';
 import AuthWrapper from './AuthWrapper/AuthWrapper';
+import Text from '../../components/Text/Text';
+import Card from '../../components/Card/Card';
+import illustration from '../../assets/img/illustration.png';
+import logo from '../../assets/img/logo.png';
 
 const Auth: React.FC = () => {
   const { t } = useTranslation();
@@ -58,60 +62,63 @@ const Auth: React.FC = () => {
           maxWidth: '100%',
         }}
       >
-        <div style={{ textAlign: 'center' }}>
-          <Typography.Title level={2}>{t('title')}</Typography.Title>
-          <Typography.Title level={5} style={{ marginBottom: 35 }}>
-            {t('Welcome, please login to access the app')}
-          </Typography.Title>
-        </div>
+        <Card style={{ padding: '40px 48px 24px 48px', maxWidth: 408 }}>
+          <Form onFinish={handleSubmit} style={{ width: 400, maxWidth: '100%' }}>
+            <Spacer size="md" direction="vertical">
+              <Spacer size="md" direction="vertical" align="center">
+                <img src={illustration} alt="illustration" />
+                <img src={logo} alt="logo" />
+              </Spacer>
+              <Spacer size="xs" direction="vertical">
+                <Typography.Text>{t('phone')}</Typography.Text>
+                <Input
+                  name="phone"
+                  placeholder={t('enter your phone number')}
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Spacer>
 
-        <Form onFinish={handleSubmit} style={{ width: 400, maxWidth: '100%' }}>
-          <Spacer size="md" direction="vertical">
-            <Spacer size="xs" direction="vertical">
-              <Typography.Text>{t('phone')}</Typography.Text>
-              <Input
-                name="phone"
-                placeholder={t('enter your phone number')}
-                value={values.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+              <Spacer size="xs" direction="vertical">
+                <Typography.Text>{t('password')}</Typography.Text>
+                <Input.Password
+                  name="password"
+                  value={values.password}
+                  placeholder={t('enter your password')}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <Link style={{ fontSize: 12 }} onClick={() => console.log('forgot password')}>
+                  Forgot password?
+                </Link>
+              </Spacer>
+
+              <Spacer size="xxxl" direction="vertical">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-button bee-btn-filled"
+                  block
+                  loading={isLoading}
+                >
+                  {t('login')}
+                </Button>
+
+                <Text size="sm" style={{ margin: '0 auto', textAlign: 'center', display: 'block' }}>
+                  {t('dont have an account')} <Link>Sign in</Link>
+                </Text>
+              </Spacer>
             </Spacer>
-
-            <Spacer size="xs" direction="vertical">
-              <Typography.Text>{t('password')}</Typography.Text>
-              <Input.Password
-                name="password"
-                value={values.password}
-                placeholder={t('enter your password')}
-                onChange={handleChange}
-                onBlur={handleBlur}
+            {isError ? (
+              <Alert
+                message="Email or password incorrect !"
+                type="error"
+                style={{ textAlign: 'center' }}
               />
-              <Link style={{ fontSize: 12 }} onClick={() => console.log('forgot password')}>
-                Forgot password?
-              </Link>
-            </Spacer>
-
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-button bee-btn-filled"
-              block
-              loading={isLoading}
-            >
-              {t('login')}
-            </Button>
-
-            <Typography.Text>By Clever Zone</Typography.Text>
-          </Spacer>
-          {isError ? (
-            <Alert
-              message="Email or password incorrect !"
-              type="error"
-              style={{ textAlign: 'center' }}
-            />
-          ) : null}
-        </Form>
+            ) : null}
+          </Form>
+        </Card>
       </div>
     </AuthWrapper>
   );
