@@ -14,6 +14,7 @@ import Text from '../../components/Text/Text';
 import Card from '../../components/Card/Card';
 import illustration from '../../assets/img/illustration.png';
 import logo from '../../assets/img/logo.png';
+import Icon from '../../components/Icon/Icon';
 
 const Auth: React.FC = () => {
   const { t } = useTranslation();
@@ -72,6 +73,7 @@ const Auth: React.FC = () => {
               <Spacer size="xs" direction="vertical">
                 <Typography.Text>{t('phone')}</Typography.Text>
                 <Input
+                  prefix={<Icon name="phone" />}
                   name="phone"
                   placeholder={t('enter your phone number')}
                   value={values.phone}
@@ -83,11 +85,15 @@ const Auth: React.FC = () => {
               <Spacer size="xs" direction="vertical">
                 <Typography.Text>{t('password')}</Typography.Text>
                 <Input.Password
+                  prefix={<Icon name="lock-2" />}
                   name="password"
                   value={values.password}
                   placeholder={t('enter your password')}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  iconRender={(visible) =>
+                    visible ? <Icon name="eye" /> : <Icon name="eye-off" />
+                  }
                 />
                 <Link style={{ fontSize: 12 }} onClick={() => console.log('forgot password')}>
                   Forgot password?
