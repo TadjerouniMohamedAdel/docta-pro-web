@@ -4,10 +4,11 @@ import { TextProps } from 'antd/lib/typography/Text';
 
 export type Props = TextProps & {
   children: React.ReactNode;
-  size: 'sm' | 'md' | 'lg' | 'xl';
+  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 };
 
 const sizes = {
+  xs: 10,
   sm: 12,
   md: 14,
   lg: 16,
