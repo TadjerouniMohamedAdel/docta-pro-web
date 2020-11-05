@@ -15,6 +15,7 @@ import Card from '../../components/Card/Card';
 import illustration from '../../assets/img/illustration.png';
 import logo from '../../assets/img/logo.png';
 import Icon from '../../components/Icon/Icon';
+import Label from '../../components/Label/Label';
 
 const Auth: React.FC = () => {
   const { t } = useTranslation();
@@ -48,7 +49,7 @@ const Auth: React.FC = () => {
     onSubmit: onLogin,
   });
 
-  const { handleChange, handleBlur, values, handleSubmit } = formik;
+  const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
 
   return (
     <AuthWrapper>
@@ -71,15 +72,19 @@ const Auth: React.FC = () => {
                 <img src={logo} alt="logo" />
               </Spacer>
               <Spacer size="xs" direction="vertical">
-                <Typography.Text>{t('phone')}</Typography.Text>
-                <Input
-                  prefix={<Icon name="phone" />}
-                  name="phone"
-                  placeholder={t('enter your phone number')}
-                  value={values.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+                <Label title={t('phone')} error={errors.phone} />
+                <Form.Item
+                  validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
+                >
+                  <Input
+                    prefix={<Icon name="phone" />}
+                    name="phone"
+                    placeholder={t('enter your phone number')}
+                    value={values.phone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Form.Item>
               </Spacer>
 
               <Spacer size="xs" direction="vertical">
@@ -101,13 +106,7 @@ const Auth: React.FC = () => {
               </Spacer>
 
               <Spacer size="xxxl" direction="vertical">
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-button bee-btn-filled"
-                  block
-                  loading={isLoading}
-                >
+                <Button type="primary" htmlType="submit" block loading={isLoading}>
                   {t('login')}
                 </Button>
 
