@@ -4,7 +4,7 @@ import Text from '../Text/Text';
 
 export type Props = {
   title: string;
-  error: string | undefined;
+  error?: string | undefined;
 };
 
 const Label: React.FC<Props> = ({ title, error }) => {
