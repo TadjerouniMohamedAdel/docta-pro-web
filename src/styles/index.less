@@ -36,3 +36,22 @@ body {
 .icons {
   font-size: 1.2rem;
 }
+
+// input
+.ant-input-affix-wrapper {
+  border-radius: 8px;
+  input {
+    color: @text-color-secondary;
+  }
+  svg {
+    fill: @text-color-secondary;
+  }
+  &.ant-input-affix-wrapper-focused {
+    input {
+      color: @text-color;
+    }
+    svg {
+      fill: @text-color;
+    }
+  }
+}

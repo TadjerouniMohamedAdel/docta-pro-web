@@ -1,10 +1,16 @@
 {
   "title": "Docta",
-  "login": "Login",
+  "login": "Log in",
   "logout": "Logout",
+  "phone": "Phone",
   "email": "Email",
   "password": "Password",
   "Welcome, please login to access the app": "Welcome, please login to access the app",
-  "required field": "Required field",
-  "must be a valid email": "Must be a valid email"
+  "required field": "This field required field",
+  "must be a valid email": "Must be a valid email",
+  "dont have an account": "Dont have an account?",
+  "sign in": "Sign in",
+  "forgot password": "Forgot password?",
+  "enter your password": "Enter your password",
+  "enter your phone number": "Enter your phone number"
 }
