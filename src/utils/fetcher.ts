@@ -28,13 +28,15 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
     config.body = JSON.stringify(body);
   }
   return window.fetch(endpoint, config).then(async (response) => {
-    if (response.status === 401 && endpoint !== '/api/v1/auth') {
+    if (response.status === 401 && endpoint !== '/api/v1/users/auth?action=pro') {
       queryCache.clear();
       localStorage.removeItem('token');
       window.location.assign(window.location as any);
       return Promise.reject(new Error('You need to re-authenticate !'));
     }
+    console.log(response);
     const data = await response.json();
+
     if (response.ok) {
       return data;
     }
