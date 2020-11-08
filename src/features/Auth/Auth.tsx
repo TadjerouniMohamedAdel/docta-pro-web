@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 import { useAuthState } from './context';
 import { login } from './services';
 import { AuthResponse, LoginParams } from './types';
@@ -20,6 +21,8 @@ import Label from '../../components/Label/Label';
 const Auth: React.FC = () => {
   const { t } = useTranslation();
   const { setUser } = useAuthState();
+
+  const history = useHistory();
 
   const [mutate, { isLoading, isError }] = useMutation(login);
 
@@ -64,7 +67,7 @@ const Auth: React.FC = () => {
         }}
       >
         <Card style={{ padding: '40px 48px 24px 48px', maxWidth: 408 }}>
-          <Form onFinish={handleSubmit} style={{ width: 400, maxWidth: '100%' }}>
+          <Form onFinish={handleSubmit} style={{ width: 408, maxWidth: '100%' }}>
             <Spacer size="md" direction="vertical">
               <Spacer size="md" direction="vertical" align="center">
                 <img src={illustration} alt="illustration" />
@@ -108,28 +111,28 @@ const Auth: React.FC = () => {
                     }
                   />
                 </Form.Item>
-                <Link style={{ fontSize: 12 }} onClick={() => console.log('forgot password')}>
+                <Link style={{ fontSize: 12 }} onClick={() => history.push('/forget-password')}>
                   {t('forgot password')}
                 </Link>
               </Spacer>
 
-              <Spacer size="xxxl" direction="vertical">
+              <Spacer size="md" direction="vertical">
                 <Button type="primary" htmlType="submit" block loading={isLoading}>
                   {t('login')}
                 </Button>
 
+                {isError ? (
+                  <Alert
+                    message="Email or password incorrect !"
+                    type="error"
+                    style={{ textAlign: 'center' }}
+                  />
+                ) : null}
                 <Text size="sm" style={{ margin: '0 auto', textAlign: 'center', display: 'block' }}>
-                  {t('dont have an account')} <Link>{t('sign in')}</Link>
+                  {t('dont have an account')} <Link>{t('sign up')}</Link>
                 </Text>
               </Spacer>
             </Spacer>
-            {isError ? (
-              <Alert
-                message="Email or password incorrect !"
-                type="error"
-                style={{ textAlign: 'center' }}
-              />
-            ) : null}
           </Form>
         </Card>
       </div>
