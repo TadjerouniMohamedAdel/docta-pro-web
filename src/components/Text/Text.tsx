@@ -4,7 +4,7 @@ import { TextProps } from 'antd/lib/typography/Text';
 
 export type Props = TextProps & {
   children: React.ReactNode;
-  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 };
 
 const sizes = {
@@ -13,6 +13,7 @@ const sizes = {
   md: 14,
   lg: 16,
   xl: 18,
+  xxl: 24,
 };
 
 const Spacer: React.FC<Props> = ({ children, size, style, ...rest }) => {
