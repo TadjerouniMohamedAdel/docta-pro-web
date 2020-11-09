@@ -1,0 +1,18 @@
+@import '../../../../../../../styles/variables.less';
+
+.menu-item {
+  .menu-item-title {
+    color: @text-color-secondary;
+  }
+  svg {
+    fill: @text-color-secondary;
+  }
+  &.active {
+    .menu-item-title {
+      color: @text-color;
+    }
+    svg {
+      fill: @primary-color;
+    }
+  }
+}
