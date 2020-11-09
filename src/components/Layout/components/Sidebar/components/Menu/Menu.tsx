@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as AntMenu } from 'antd';
-import { HomeOutlined, ProjectOutlined } from '@ant-design/icons';
+import MenuItem from './MenuItem/MenuItem';
 
 type Props = {
   collapsed: boolean;
@@ -19,13 +19,16 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
       inlineCollapsed={collapsed}
       selectedKeys={[pathname]}
       defaultSelectedKeys={[pathname]}
+      style={{ padding: '24px 0' }}
     >
-      <AntMenu.Item key="/" icon={<HomeOutlined />}>
-        {t('Dashboard')} <Link to="/" />
-      </AntMenu.Item>
-      <AntMenu.Item key="/patients" icon={<ProjectOutlined />}>
-        {t('Patients')} <Link to="/patients" />
-      </AntMenu.Item>
+      <MenuItem title={t('overview')} iconName="dashboard-3" path="/" collapsed={collapsed} />
+      <MenuItem
+        title={t('appointments')}
+        iconName="calendar-2"
+        path="/appointments"
+        collapsed={collapsed}
+      />
+      <MenuItem title={t('patients')} iconName="group" path="/patients" collapsed={collapsed} />
     </AntMenu>
   );
 };
