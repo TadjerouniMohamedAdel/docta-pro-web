@@ -4,7 +4,7 @@ import { TextProps } from 'antd/lib/typography/Text';
 
 export type Props = TextProps & {
   children: React.ReactNode;
-  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 };
 
 const sizes = {
@@ -16,7 +16,7 @@ const sizes = {
   xxl: 24,
 };
 
-const Spacer: React.FC<Props> = ({ children, size, style, ...rest }) => {
+const Spacer: React.FC<Props> = ({ children, size = 'md', style, ...rest }) => {
   return (
     <Typography.Text style={{ fontSize: sizes[size], ...style }} {...rest}>
       {children}
