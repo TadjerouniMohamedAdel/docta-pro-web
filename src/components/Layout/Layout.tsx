@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Content, Footer, Header, Overlay, Sidebar } from './components';
+import { Content, Header, Overlay, Sidebar } from './components';
 import { useLocaleState } from './components/Header/components/Localization';
 
 const Layout: React.FC = () => {
@@ -17,7 +17,7 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <div className={`layout has-sidebar ${locale === 'ar' ? 'rtl' : ''}`}>
+    <div className={`layout main-layout has-sidebar ${locale === 'ar' ? 'rtl' : ''}`}>
       <Sidebar collapsed={collapsed} toggled={toggled} />
       <Overlay handleToggled={handleToggled} />
       <div className="layout">
@@ -27,7 +27,6 @@ const Layout: React.FC = () => {
           handleToggled={handleToggled}
         />
         <Content />
-        <Footer />
       </div>
     </div>
   );
