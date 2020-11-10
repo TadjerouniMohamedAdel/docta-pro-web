@@ -28,7 +28,9 @@ const MenuItem: React.FC<Props> = ({ collapsed, iconName, title, path, ...rest }
         className={`menu-item ${collapsed ? 'collapsed' : ''} ${pathname === path ? 'active' : ''}`}
       >
         <Icon name={iconName} size={24} style={{ marginRight: 24, overflow: 'initial' }} />
-        <Text className="menu-item-title"> {title}</Text>
+        <Text className="menu-item-title" style={{ fontWeight: 500 }}>
+          {title}
+        </Text>
         <Link to={path} />
       </div>
     </Menu.Item>
