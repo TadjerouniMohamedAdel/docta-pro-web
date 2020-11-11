@@ -13,7 +13,8 @@ const sizes = {
   md: 14,
   lg: 16,
   xl: 18,
-  xxl: 24,
+  xxl: 20,
+  xxxl: 24,
 };
 
 const Spacer: React.FC<Props> = ({ children, size = 'md', style, ...rest }) => {
