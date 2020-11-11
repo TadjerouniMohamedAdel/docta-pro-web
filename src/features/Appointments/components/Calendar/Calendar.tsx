@@ -26,7 +26,9 @@ const Spacer: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, curren
                 {moment(date).format('MMMM YYYY')}
               </Text>
             </Col>
-            <Col>{appointmentsCount} Appointments</Col>
+            <Col>
+              <Text className="appointment-count">{appointmentsCount} Appointments</Text>
+            </Col>
           </Row>
         )}
       />
