@@ -6,6 +6,7 @@ import Calendar from './components/Calendar/Calendar';
 import Text from '../../components/Text/Text';
 import Icon from '../../components/Icon/Icon';
 import AppointmentsList from './components/AppointmentsList/AppointmentsList';
+import VisitReasons from './components/VisitReasons/VisitReasons';
 
 const Appointments: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -130,7 +131,10 @@ const Appointments: React.FC = () => {
               <Text type="secondary">6 Appointments</Text>
             </Col>
             <Col>
-              <Row>
+              <Row gutter={10}>
+                <Col>
+                  <VisitReasons />
+                </Col>
                 <Col>
                   <Button
                     type="primary"
