@@ -27,7 +27,7 @@ const Spacer: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, curren
               </Text>
             </Col>
             <Col>
-              <Text className="appointment-count">{appointmentsCount} Appointments</Text>
+              <Text type="secondary">{appointmentsCount} Appointments</Text>
             </Col>
           </Row>
         )}
