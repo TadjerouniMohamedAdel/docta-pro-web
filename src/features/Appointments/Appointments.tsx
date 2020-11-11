@@ -5,6 +5,7 @@ import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerL
 import Calendar from './components/Calendar/Calendar';
 import Text from '../../components/Text/Text';
 import Icon from '../../components/Icon/Icon';
+import AppointmentsList from './components/AppointmentsList/AppointmentsList';
 
 const Appointments: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -118,7 +119,37 @@ const Appointments: React.FC = () => {
           </div>
         </div>
       </InnerSidebar>
-      <InnerContent>inner content</InnerContent>
+      <InnerContent style={{ padding: '18px 40px' }}>
+        <div>
+          <Row justify="space-between" align="middle">
+            <Col>
+              <Text size="xxl" style={{ fontWeight: 'bold' }}>
+                {moment(currentDate).format('dddd, MMMM DD')}
+              </Text>
+              <br />
+              <Text type="secondary">6 Appointments</Text>
+            </Col>
+            <Col>
+              <Row>
+                <Col>
+                  <Button
+                    type="primary"
+                    icon={<Icon name="add" style={{ fill: 'white' }} />}
+                    style={{ display: 'flex' }}
+                    size="small"
+                  >
+                    New Appointment
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </div>
+        <Divider />
+        <div>
+          <AppointmentsList currentDate={currentDate} />
+        </div>
+      </InnerContent>
     </InnerLayout>
   );
 };

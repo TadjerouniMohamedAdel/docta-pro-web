@@ -1,0 +1,19 @@
+@import '../../../../styles/variables.less';
+
+.appointment-card {
+  border: 1px solid @border-color-base;
+  background-color: @input-bg;
+  .appointment-action {
+    display: none;
+  }
+  &:hover {
+    border: 1px solid @primary-color;
+    background-color: @primary-color;
+    .ant-typography {
+      color: white;
+    }
+    .appointment-action {
+      display: initial;
+    }
+  }
+}
