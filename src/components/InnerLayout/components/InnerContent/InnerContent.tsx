@@ -1,14 +1,14 @@
 import React from 'react';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
 };
 
-const InnerContent: React.FC<Props> = ({ children }) => {
+const InnerContent: React.FC<Props> = ({ children, ...rest }) => {
   return (
-    <aside className="content" style={{ padding: '18px 40px' }}>
+    <div className="content" {...rest}>
       {children}
-    </aside>
+    </div>
   );
 };
 
