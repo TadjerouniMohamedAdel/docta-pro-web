@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocaleState } from '../Layout/components/Header/components/Localization';
 import Card from '../Card/Card';
+import './styles.less';
 
 export type Props = {
   children: React.ReactNode;
