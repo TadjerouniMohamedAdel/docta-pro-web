@@ -15,15 +15,18 @@ type Props = {
 const Header: React.FC<Props> = ({ handleCollapsed, handleToggled, collapsed }) => {
   return (
     <header className="header" style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-      <Row style={{ width: '100%', alignItems: 'center' }} justify="space-between">
-        <Col style={{ marginRight: 15 }}>
-          <SidebarCollapser handleCollapsed={handleCollapsed} collapsed={collapsed} />
-          <SidebarToggler handleToggled={handleToggled} />
+      <Row style={{ width: '100%' }} justify="space-between" align="middle">
+        <Col flex={1}>
+          <Row align="middle" gutter={15}>
+            <Col>
+              <SidebarCollapser handleCollapsed={handleCollapsed} collapsed={collapsed} />
+              <SidebarToggler handleToggled={handleToggled} />
+            </Col>
+            <Col flex="auto">
+              <Search />
+            </Col>
+          </Row>
         </Col>
-        <Col flex="auto">
-          <Search />
-        </Col>
-
         <Col>
           <Row align="middle">
             <Col>
