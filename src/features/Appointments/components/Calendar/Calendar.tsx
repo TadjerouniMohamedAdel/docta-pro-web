@@ -11,7 +11,7 @@ export type Props = {
   onSelectDate: (value: Date) => void;
 };
 
-const Spacer: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, currentDate }) => {
+const Calendar: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, currentDate }) => {
   return (
     <div className={`${currentDate === date ? '' : 'inactive-calendar'}`}>
       <AntCalendar
@@ -36,4 +36,4 @@ const Spacer: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, curren
   );
 };
 
-export default Spacer;
+export default Calendar;
