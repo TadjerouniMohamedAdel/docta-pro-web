@@ -19,4 +19,17 @@
       fill: @text-color-secondary;
     }
   }
+  &.with-prefix-icon {
+    > svg {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      fill: @text-color-secondary;
+      z-index: 1;
+      left: 17px;
+    }
+    .ant-select-selector {
+      padding-left: 48px !important;
+    }
+  }
 }
