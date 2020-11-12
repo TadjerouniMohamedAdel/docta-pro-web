@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Col, Dropdown, Menu, Row } from 'antd';
+import { Col, Dropdown, Menu, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
 import './styles.less';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import Icon from '../../../../components/Icon/Icon';
+import Button from '../../../../components/Button/Button';
 
 export type Props = {
   currentDate: Date;
@@ -76,7 +77,7 @@ const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
                     </Row>
                   </Col>
                   <Col className="appointment-action">
-                    <Button size="small">Start appointment</Button>
+                    <Button size="small">Start Appointment</Button>
                   </Col>
                   <Col className="appointment-action">
                     <Dropdown
