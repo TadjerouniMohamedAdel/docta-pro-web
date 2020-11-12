@@ -1,0 +1,24 @@
+@import '../../styles/variables.less';
+
+.custom-button {
+  svg {
+    margin: 0 5px;
+  }
+  span {
+    margin: 0 5px;
+    font-weight: bold;
+  }
+  &.ant-btn-text {
+    &:not(.active) {
+      svg {
+        fill: @text-color-secondary;
+      }
+      span {
+        color: @text-color-secondary;
+      }
+    }
+    &.active {
+      background-color: rgba(@primary-color, 0.1);
+    }
+  }
+}
