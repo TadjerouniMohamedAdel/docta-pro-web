@@ -16,8 +16,8 @@ const Select: React.FC<Props> = ({ className, prefixIcon, ...rest }) => {
       })}
       style={{ position: 'relative' }}
     >
-      {prefixIcon ?? null}
       <AntSelect {...rest} />
+      {prefixIcon ?? null}
     </div>
   );
 };
