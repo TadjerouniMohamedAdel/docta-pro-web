@@ -1,14 +1,19 @@
-import { Button, Col, Divider, Row } from 'antd';
+import { Col, Divider, Row } from 'antd';
 import React, { useState } from 'react';
 import moment from 'moment';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Calendar from './components/Calendar/Calendar';
 import Text from '../../components/Text/Text';
 import Icon from '../../components/Icon/Icon';
 import AppointmentsList from './components/AppointmentsList/AppointmentsList';
 import VisitReasons from './components/VisitReasons/VisitReasons';
+import Button from '../../components/Button/Button';
 
 const Appointments: React.FC = () => {
+  const history = useHistory();
+  const { pathname } = useLocation();
+
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [prevDate, setPrevDate] = useState<Date>(currentDate);
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
@@ -137,6 +142,28 @@ const Appointments: React.FC = () => {
                 </Col>
                 <Col>
                   <Button
+                    type="text"
+                    size="small"
+                    icon={<Icon name="list-check-2" type="none" />}
+                    active={pathname === '/appointments'}
+                    onClick={() => history.push('/appointments')}
+                  >
+                    List
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    type="text"
+                    size="small"
+                    icon={<Icon name="calendar-2" />}
+                    active={pathname === '/appointments/week'}
+                    onClick={() => history.push('/appointments/week')}
+                  >
+                    Week
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
                     type="primary"
                     icon={<Icon name="add" style={{ fill: 'white' }} />}
                     style={{ display: 'flex' }}
@@ -151,7 +178,13 @@ const Appointments: React.FC = () => {
         </div>
         <Divider />
         <div>
-          <AppointmentsList currentDate={currentDate} />
+          <Switch>
+            <Route path="/appointments/week" render={() => <span>week calendar</span>} />
+            <Route
+              path="/appointments"
+              render={() => <AppointmentsList currentDate={currentDate} />}
+            />
+          </Switch>
         </div>
       </InnerContent>
     </InnerLayout>
