@@ -1,7 +1,8 @@
-import { Checkbox, Select } from 'antd';
+import { Checkbox } from 'antd';
 import React from 'react';
 import Text from '../../../../components/Text/Text';
 import Icon from '../../../../components/Icon/Icon';
+import Select from '../../../../components/Select/Select';
 
 export type Props = {};
 
@@ -25,8 +26,7 @@ const VisitReasons: React.FC<Props> = () => {
     <Select
       size="small"
       placeholder="VISIT REASONS"
-      style={{ paddingLeft: 10 }}
-      suffixIcon={<Icon name="arrow-down-s" style={{ marginTop: '-5px' }} />}
+      suffixIcon={<Icon name="arrow-down-s" />}
       dropdownMatchSelectWidth={false}
       dropdownRender={() => (
         <div>
