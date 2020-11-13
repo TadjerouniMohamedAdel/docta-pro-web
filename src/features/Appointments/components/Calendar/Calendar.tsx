@@ -27,7 +27,9 @@ const Calendar: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, curr
               </Text>
             </Col>
             <Col>
-              <Text type="secondary">{appointmentsCount} Appointments</Text>
+              <Text type="secondary" style={{ fontWeight: 500 }}>
+                {appointmentsCount} Appointments
+              </Text>
             </Col>
           </Row>
         )}

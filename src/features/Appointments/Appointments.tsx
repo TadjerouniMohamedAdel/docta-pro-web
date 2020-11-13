@@ -9,8 +9,11 @@ import Icon from '../../components/Icon/Icon';
 import AppointmentsList from './components/AppointmentsList/AppointmentsList';
 import VisitReasons from './components/VisitReasons/VisitReasons';
 import Button from '../../components/Button/Button';
+import { useLocaleState } from '../../components/Layout/components/Header/components/Localization';
 
 const Appointments: React.FC = () => {
+  const { locale } = useLocaleState();
+
   const history = useHistory();
   const { pathname } = useLocation();
 
@@ -98,7 +101,11 @@ const Appointments: React.FC = () => {
                       style={{ margin: '0 auto', display: 'flex' }}
                       onClick={() => changePanel('prev')}
                     >
-                      <Icon name="arrow-left-s" style={{ marginRight: 16 }} />
+                      {locale === 'ar' ? (
+                        <Icon name="arrow-right-s" style={{ marginLeft: 16 }} />
+                      ) : (
+                        <Icon name="arrow-left-s" style={{ marginRight: 16 }} />
+                      )}
                       <Text size="md" style={{ fontWeight: 'bold' }}>
                         PREV
                       </Text>
@@ -116,7 +123,11 @@ const Appointments: React.FC = () => {
                       <Text size="md" style={{ fontWeight: 'bold' }}>
                         NEXT
                       </Text>
-                      <Icon name="arrow-right-s" style={{ marginLeft: 16 }} />
+                      {locale === 'ar' ? (
+                        <Icon name="arrow-left-s" style={{ marginRight: 16 }} />
+                      ) : (
+                        <Icon name="arrow-right-s" style={{ marginLeft: 16 }} />
+                      )}
                     </Button>
                   </Col>
                 </Row>
@@ -133,7 +144,9 @@ const Appointments: React.FC = () => {
                 {moment(currentDate).format('dddd, MMMM DD')}
               </Text>
               <br />
-              <Text type="secondary">6 Appointments</Text>
+              <Text type="secondary" style={{ fontWeight: 500 }}>
+                6 Appointments
+              </Text>
             </Col>
             <Col>
               <Row gutter={10}>
