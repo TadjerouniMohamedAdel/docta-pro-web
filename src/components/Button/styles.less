@@ -3,6 +3,7 @@
 .custom-button {
   svg {
     margin: 0 5px;
+    fill: @text-color-secondary;
   }
   span {
     margin: 0 5px;
@@ -19,6 +20,17 @@
     }
     &.active {
       background-color: rgba(@primary-color, 0.1);
+    }
+  }
+
+  &.ant-btn-primary {
+    svg {
+      fill: #fff;
+    }
+    &.ant-btn-background-ghost {
+      svg {
+        fill: @primary-color;
+      }
     }
   }
 }
