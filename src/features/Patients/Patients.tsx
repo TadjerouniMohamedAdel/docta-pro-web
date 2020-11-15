@@ -7,6 +7,7 @@ import Button from '../../components/Button/Button';
 import Icon from '../../components/Icon/Icon';
 import Tab from '../../components/Tab/Tab';
 import Spacer from '../../components/Spacer/Spacer';
+import PersonalInfo from './components/PersonalInfo/PersonalInfo';
 
 const Patients: React.FC = () => {
   return (
@@ -87,7 +88,7 @@ const Patients: React.FC = () => {
         <div>
           <Tabs defaultActiveKey="1" tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}>
             <Tabs.TabPane tab={<Tab icon={<Icon name="profile" />}>Personal info</Tab>} key="1">
-              <div style={{ padding: '24px 80px' }}>Content of Tab Pane 1</div>
+              <PersonalInfo />
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={<Tab icon={<Icon name="health-book" type="fill" />}>Medical Record</Tab>}
