@@ -2,12 +2,19 @@
 
 .custom-select {
   .ant-select-selector {
-    padding-left: 15px !important;
-    padding-right: 20px !important;
+    border-radius: 8px !important;
   }
-  .ant-select-selection-placeholder {
-    font-size: 12px;
-    font-weight: bold;
+
+  .ant-select-sm {
+    .ant-select-selector {
+      border-radius: 4px !important;
+      padding-left: 15px !important;
+      padding-right: 20px !important;
+    }
+    .ant-select-selection-placeholder {
+      font-size: 12px;
+      font-weight: bold;
+    }
   }
 
   .ant-select-arrow {
@@ -26,19 +33,19 @@
       transform: translateY(-50%);
       fill: @text-color-secondary;
       z-index: 1;
-      left: 17px;
+      left: 12px;
     }
     .ant-select-selector {
-      padding-left: 48px !important;
+      padding-left: 40px !important;
     }
     .ant-select-rtl {
       .ant-select-selector {
         padding-left: initial;
-        padding-right: 48px !important;
+        padding-right: 40px !important;
       }
       & + svg {
         left: initial;
-        right: 17px;
+        right: 12px;
       }
     }
   }
