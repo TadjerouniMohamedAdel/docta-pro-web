@@ -10,6 +10,7 @@ import AppointmentsList from './components/AppointmentsList/AppointmentsList';
 import VisitReasons from './components/VisitReasons/VisitReasons';
 import Button from '../../components/Button/Button';
 import { useLocaleState } from '../../components/Layout/components/Header/components/Localization';
+import WeekCalendar from './components/WeekCalendar/WeekCalendar';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -192,7 +193,10 @@ const Appointments: React.FC = () => {
         <Divider />
         <div>
           <Switch>
-            <Route path="/appointments/week" render={() => <span>week calendar</span>} />
+            <Route
+              path="/appointments/week"
+              render={() => <WeekCalendar currentDate={currentDate} />}
+            />
             <Route
               path="/appointments"
               render={() => <AppointmentsList currentDate={currentDate} />}
