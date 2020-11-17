@@ -1,4 +1,4 @@
-import { AutoComplete, Col, Dropdown, Input, Menu, Row, Tabs } from 'antd';
+import { Col, Dropdown, Menu, Row, Tabs } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
@@ -8,6 +8,8 @@ import Icon from '../../components/Icon/Icon';
 import Tab from '../../components/Tab/Tab';
 import Spacer from '../../components/Spacer/Spacer';
 import PersonalInfo from './components/PersonalInfo/PersonalInfo';
+import PatientsList from './components/PatientsList/PatientsList';
+import BlockedPatientsList from './components/BlockedPatientsList/BlockedPatientsList';
 
 const Patients: React.FC = () => {
   return (
@@ -32,14 +34,10 @@ const Patients: React.FC = () => {
         </Row>
         <Tabs defaultActiveKey="1" tabBarStyle={{ paddingLeft: 16, paddingRight: 16 }} size="small">
           <Tabs.TabPane tab={<Tab>All Patients</Tab>} key="1">
-            <div style={{ padding: 12 }}>
-              <AutoComplete allowClear style={{ width: '100%' }}>
-                <Input size="small" placeholder="Search patients" />
-              </AutoComplete>
-            </div>
+            <PatientsList />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Blocked Patients" key="2">
-            Blocked Patients
+            <BlockedPatientsList />
           </Tabs.TabPane>
         </Tabs>
       </InnerSidebar>
