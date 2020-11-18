@@ -7,9 +7,9 @@ import Button from '../../components/Button/Button';
 import Icon from '../../components/Icon/Icon';
 import Tab from '../../components/Tab/Tab';
 import Spacer from '../../components/Spacer/Spacer';
-import PersonalInfo from './components/PersonalInfo/PersonalInfo';
 import PatientsList from './components/PatientsList/PatientsList';
 import BlockedPatientsList from './components/BlockedPatientsList/BlockedPatientsList';
+import PatientProfile from './components/PatientProfile/PatientProfile';
 
 const Patients: React.FC = () => {
   return (
@@ -41,7 +41,7 @@ const Patients: React.FC = () => {
           </Tabs.TabPane>
         </Tabs>
       </InnerSidebar>
-      <InnerContent>
+      <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '18px 25px' }}>
           <Row align="middle" gutter={16}>
             <Col>
@@ -83,21 +83,8 @@ const Patients: React.FC = () => {
             </Col>
           </Row>
         </div>
-        <div>
-          <Tabs defaultActiveKey="1" tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}>
-            <Tabs.TabPane tab={<Tab icon={<Icon name="profile" />}>Personal info</Tab>} key="1">
-              <PersonalInfo />
-            </Tabs.TabPane>
-            <Tabs.TabPane
-              tab={<Tab icon={<Icon name="health-book" type="fill" />}>Medical Record</Tab>}
-              key="2"
-            >
-              Content of Tab Pane 2
-            </Tabs.TabPane>
-            <Tabs.TabPane tab={<Tab icon={<Icon name="history" />}>Visits History</Tab>} key="3">
-              Content of Tab Pane 3
-            </Tabs.TabPane>
-          </Tabs>
+        <div style={{ flexGrow: 1 }}>
+          <PatientProfile />
         </div>
       </InnerContent>
     </InnerLayout>
