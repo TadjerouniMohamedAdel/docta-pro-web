@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row } from 'antd';
+import { Col, Form, Input, Row, Select as AntSelect } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
 import Select from '../../../../components/Select/Select';
@@ -78,7 +78,16 @@ const MedicalRecords: React.FC<Props> = () => {
                 prefixIcon={<Icon name="drop" />}
                 placeholder="Select your blood type"
                 dropdownMatchSelectWidth={false}
-              />
+              >
+                <AntSelect.Option value="o+">O+</AntSelect.Option>
+                <AntSelect.Option value="o-">O-</AntSelect.Option>
+                <AntSelect.Option value="a+">A+</AntSelect.Option>
+                <AntSelect.Option value="a-">A-</AntSelect.Option>
+                <AntSelect.Option value="b+">B+</AntSelect.Option>
+                <AntSelect.Option value="b-">B-</AntSelect.Option>
+                <AntSelect.Option value="ab+">AB+</AntSelect.Option>
+                <AntSelect.Option value="ab-">AB-</AntSelect.Option>
+              </Select>
             </Form.Item>
           </Col>
           <Col span={3}>
