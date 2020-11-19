@@ -1,44 +1,17 @@
 @import '../../styles/variables.less';
 
 .custom-button {
-  svg {
+  .custom-icon {
     margin: 0 5px;
-    fill: @text-color-secondary;
+    font-size: 24px !important;
+    line-height: 23px !important;
   }
   span {
     margin: 0 5px;
     font-weight: bold;
   }
-  &.ant-btn-text {
-    &:not(.active) {
-      svg {
-        fill: @text-color-secondary;
-      }
-      span {
-        color: @text-color-secondary;
-      }
-    }
-    &.active {
-      background-color: rgba(@primary-color, 0.1);
-    }
-  }
 
-  &.ant-btn-primary {
-    svg {
-      fill: #fff;
-    }
-    &.ant-btn-background-ghost {
-      svg {
-        fill: @primary-color;
-      }
-    }
-  }
   &.ant-btn-default {
-    svg {
-      fill: @text-color-secondary;
-    }
-    span {
-      color: @text-color-secondary;
-    }
+    color: @text-color-secondary;
   }
 }

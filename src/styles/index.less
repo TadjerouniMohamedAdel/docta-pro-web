@@ -49,15 +49,21 @@ body {
   input {
     color: @text-color-secondary;
   }
-  svg {
-    fill: @text-color-secondary;
+  .ant-input-prefix {
+    position: relative;
+    width: 30px;
+
+    .custom-icon {
+      position: absolute;
+      color: @text-color-secondary;
+    }
   }
   &.ant-input-affix-wrapper-focused {
     input {
       color: @text-color;
     }
-    svg {
-      fill: @text-color;
+    .custom-icon {
+      color: @text-color;
     }
   }
 }

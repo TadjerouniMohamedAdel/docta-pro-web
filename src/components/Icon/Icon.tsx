@@ -1,6 +1,7 @@
 import React from 'react';
+import classNames from 'classnames';
 
-export type Props = {
+export type Props = React.HTMLAttributes<HTMLElement> & {
   name: string;
   type?: 'fill' | 'line' | 'none';
   size?: number;
@@ -9,9 +10,11 @@ export type Props = {
 
 const Spacer: React.FC<Props> = ({ name, type = 'line', size = 22, style, ...rest }) => {
   return (
-    <svg className="remix" style={{ width: size, height: size, ...style }} {...rest}>
-      <use xlinkHref={`remixicon.symbol.svg#ri-${name}${type === 'none' ? '' : `-${type}`}`} />
-    </svg>
+    <i
+      className={classNames('custom-icon', `ri-${name}${type === 'none' ? '' : `-${type}`}`)}
+      style={{ fontSize: size, ...style }}
+      {...rest}
+    />
   );
 };
 
