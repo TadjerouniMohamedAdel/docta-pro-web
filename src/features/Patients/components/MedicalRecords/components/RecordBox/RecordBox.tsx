@@ -3,6 +3,7 @@ import Button from '../../../../../../components/Button/Button';
 import Text from '../../../../../../components/Text/Text';
 import Icon from '../../../../../../components/Icon/Icon';
 import RecordItem from '../RecordItem/RecordItem';
+import './styles.less';
 
 type Props = {
   data: string[];
@@ -20,8 +21,9 @@ const RecordBox: React.FC<Props> = ({ data, title }) => {
           type="ghost"
           size="small"
           block
-          icon={<Icon name="add-circle" type="fill" />}
+          icon={<Icon name="add-circle" type="fill" size={18} />}
           className="btn-record"
+          style={{ marginBottom: 10 }}
         >
           Add new
         </Button>

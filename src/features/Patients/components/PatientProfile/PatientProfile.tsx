@@ -19,10 +19,7 @@ const PatientProfile: React.FC<Props> = () => {
       <Tabs.TabPane tab={<Tab icon={<Icon name="profile" />}>Personal info</Tab>} key="1">
         <PersonalInfo />
       </Tabs.TabPane>
-      <Tabs.TabPane
-        tab={<Tab icon={<Icon name="health-book" type="fill" />}>Medical Record</Tab>}
-        key="2"
-      >
+      <Tabs.TabPane tab={<Tab icon={<Icon name="health-book" />}>Medical Record</Tab>} key="2">
         <MedicalRecords />
       </Tabs.TabPane>
       <Tabs.TabPane tab={<Tab icon={<Icon name="history" />}>Visits History</Tab>} key="3">

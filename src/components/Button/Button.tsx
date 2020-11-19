@@ -26,7 +26,7 @@ const Button: React.FC<Props> = ({
         active,
       })}
       icon={icon}
-      style={{ display: 'flex', ...style }}
+      style={{ display: 'flex', alignItems: 'center', ...style }}
       size={size}
       {...rest}
     >

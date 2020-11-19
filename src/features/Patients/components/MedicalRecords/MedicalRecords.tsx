@@ -38,7 +38,7 @@ const MedicalRecords: React.FC<Props> = () => {
           <Col span={9}>
             <Form.Item>
               <Input
-                prefix={<Icon name="user" />}
+                prefix={<Icon name="ruler" />}
                 name="height"
                 value={values.height}
                 placeholder="enter your height"
@@ -56,7 +56,7 @@ const MedicalRecords: React.FC<Props> = () => {
           <Col span={9}>
             <Form.Item>
               <Input
-                prefix={<Icon name="user" />}
+                prefix={<Icon name="ruler" />}
                 name="weight"
                 value={values.weight}
                 placeholder="enter your weight"
@@ -75,7 +75,7 @@ const MedicalRecords: React.FC<Props> = () => {
             <Form.Item>
               <Select
                 value={values.bloodType}
-                prefixIcon={<Icon name="genderless" />}
+                prefixIcon={<Icon name="drop" />}
                 placeholder="Select your blood type"
                 dropdownMatchSelectWidth={false}
               />

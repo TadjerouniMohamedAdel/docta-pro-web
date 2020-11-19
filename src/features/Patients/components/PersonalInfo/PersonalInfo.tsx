@@ -134,34 +134,20 @@ const PersonalInfo: React.FC<Props> = () => {
               />
             </Form.Item>
           </Col>
+
           <Col span={12}>
-            <Label title="Address" error={touched.address ? errors.address : undefined} />
-            <Form.Item
-              validateStatus={touched.address && Boolean(errors.address) ? 'error' : undefined}
-            >
-              <Input
-                prefix={<Icon name="map-pin" />}
-                name="address"
-                value={values.address}
-                placeholder="enter your address"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={6}>
             <Label title="State" error={touched.state ? errors.state : undefined} />
             <Form.Item
               validateStatus={touched.state && Boolean(errors.state) ? 'error' : undefined}
             >
               <Select
-                prefixIcon={<Icon name="road-map" />}
+                prefixIcon={<Icon name="map-pin" />}
                 placeholder="Select your state"
                 dropdownMatchSelectWidth={false}
               />
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col span={12}>
             <Label title="City" error={touched.city ? errors.city : undefined} />
             <Form.Item validateStatus={touched.city && Boolean(errors.city) ? 'error' : undefined}>
               <Select

@@ -17,7 +17,7 @@ const RecordItem: React.FC<Props> = ({ children }) => {
       </Col>
       <Col>
         <Button type="text" className="btn-record-delete" danger size="small">
-          <Icon name="close-circle" />
+          <Icon name="close-circle" size={18} />
         </Button>
       </Col>
     </Row>
