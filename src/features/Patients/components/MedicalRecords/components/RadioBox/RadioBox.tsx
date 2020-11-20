@@ -16,7 +16,7 @@ const RadioBox: React.FC<Props> = ({ icon = null, ...rest }) => {
 
   return (
     <div className="radio-box">
-      <Row gutter={24} align="middle">
+      <Row gutter={24} align="middle" wrap={false}>
         <Col>{icon}</Col>
         <Col>
           <Radio.Group size="large" options={options} {...rest} />
