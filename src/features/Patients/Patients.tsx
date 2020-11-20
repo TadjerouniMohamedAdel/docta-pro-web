@@ -1,6 +1,6 @@
 import { Col, Dropdown, Menu, Row, Tabs } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import React from 'react';
+import React, { useState } from 'react';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
 import Button from '../../components/Button/Button';
@@ -10,8 +10,11 @@ import Spacer from '../../components/Spacer/Spacer';
 import PatientsList from './components/PatientsList/PatientsList';
 import BlockedPatientsList from './components/BlockedPatientsList/BlockedPatientsList';
 import PatientProfile from './components/PatientProfile/PatientProfile';
+import PatientModal from './components/PatientModal/PatientModal';
 
 const Patients: React.FC = () => {
+  const [showPatientModal, setShowPatientModal] = useState(false);
+
   return (
     <InnerLayout>
       <InnerSidebar>
@@ -27,7 +30,7 @@ const Patients: React.FC = () => {
             </Spacer>
           </Col>
           <Col>
-            <Button type="primary" size="small">
+            <Button type="primary" size="small" onClick={() => setShowPatientModal(true)}>
               <Icon name="add" />
             </Button>
           </Col>
@@ -87,6 +90,7 @@ const Patients: React.FC = () => {
           <PatientProfile />
         </div>
       </InnerContent>
+      <PatientModal visible={showPatientModal} setVisible={setShowPatientModal} />
     </InnerLayout>
   );
 };
