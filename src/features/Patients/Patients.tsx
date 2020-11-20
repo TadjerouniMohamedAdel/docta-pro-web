@@ -7,10 +7,10 @@ import Button from '../../components/Button/Button';
 import Icon from '../../components/Icon/Icon';
 import Tab from '../../components/Tab/Tab';
 import Spacer from '../../components/Spacer/Spacer';
-import PatientsList from './components/PatientsList/PatientsList';
-import BlockedPatientsList from './components/BlockedPatientsList/BlockedPatientsList';
-import PatientProfile from './components/PatientProfile/PatientProfile';
-import PatientModal from './components/PatientModal/PatientModal';
+import PatientsList from './PatientsList/PatientsList';
+import BlockedPatientsList from './BlockedPatientsList/BlockedPatientsList';
+import PatientProfile from './PatientProfile/PatientProfile';
+import PatientModal from './PatientModal/PatientModal';
 
 const Patients: React.FC = () => {
   const [showPatientModal, setShowPatientModal] = useState(false);

@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
-import Calendar from './components/Calendar/Calendar';
+import Calendar from './Calendar/Calendar';
 import Text from '../../components/Text/Text';
 import Icon from '../../components/Icon/Icon';
-import AppointmentsList from './components/AppointmentsList/AppointmentsList';
-import VisitReasons from './components/VisitReasons/VisitReasons';
+import AppointmentsList from './AppointmentsList/AppointmentsList';
+import VisitReasons from './VisitReasons/VisitReasons';
 import Button from '../../components/Button/Button';
-import { useLocaleState } from '../../components/Layout/components/Header/components/Localization';
-import WeekCalendar from './components/WeekCalendar/WeekCalendar';
+import { useLocaleState } from '../../components/Layout/Header/Localization';
+import WeekCalendar from './WeekCalendar/WeekCalendar';
 import './styles.less';
 
 const Appointments: React.FC = () => {

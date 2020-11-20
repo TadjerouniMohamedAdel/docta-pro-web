@@ -1,6 +1,9 @@
+import { Content } from 'antd/lib/layout/layout';
 import React, { useState } from 'react';
-import { Content, Header, Overlay, Sidebar } from './components';
-import { useLocaleState } from './components/Header/components/Localization';
+import Header from './Header/Header';
+import { useLocaleState } from './Header/Localization';
+import Overlay from './Overlay/Overlay';
+import Sidebar from './Sidebar/Sidebar';
 
 const Layout: React.FC = () => {
   const { locale } = useLocaleState();

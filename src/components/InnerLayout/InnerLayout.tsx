@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocaleState } from '../Layout/components/Header/components/Localization';
+import { useLocaleState } from '../Layout/Header/Localization';
 import Card from '../Card/Card';
 import './styles.less';
 
