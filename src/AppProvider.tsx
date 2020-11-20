@@ -1,6 +1,6 @@
 import React from 'react';
-import { LocaleProvider } from './components/Layout/Header/Localization';
 import { AuthProvider } from './features/Auth/context';
+import { LocaleProvider } from './i18n';
 
 const AppProvider: React.FC = ({ children }) => {
   return (

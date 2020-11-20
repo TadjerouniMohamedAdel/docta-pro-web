@@ -2,7 +2,7 @@ import React from 'react';
 import { GlobalOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu, message } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useLocaleState } from './context';
+import { useLocaleState } from '../../../../i18n';
 
 const Localization: React.FC = () => {
   const { locale, setLocale } = useLocaleState();

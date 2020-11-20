@@ -5,7 +5,7 @@ import ar from 'antd/es/locale/ar_EG';
 import { BrowserRouter as Router } from 'react-router-dom';
 import FullPageLoader from '../components/FullPageLoader';
 import { useAuthState } from '../features/Auth/context';
-import { useLocaleState } from '../components/Layout/Header/Localization';
+import { useLocaleState } from '../i18n';
 
 const AuthenticatedApp = React.lazy(
   () => import(/* webpackPrefetch: true */ './AuthenticatedApp/AuthenticatedApp'),

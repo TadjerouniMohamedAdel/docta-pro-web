@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { useLocaleState } from '../Localization';
+import { useLocaleState } from '../../../../i18n';
 
 type Props = {
   handleCollapsed: () => void;

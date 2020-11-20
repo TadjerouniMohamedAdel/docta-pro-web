@@ -2,7 +2,7 @@ import React from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-import { useLocaleState } from '../../../components/Layout/Header/Localization';
+import { useLocaleState } from '../../../i18n';
 import './styles.less';
 
 export type Props = {

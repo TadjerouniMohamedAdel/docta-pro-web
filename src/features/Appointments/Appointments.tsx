@@ -9,7 +9,7 @@ import Icon from '../../components/Icon/Icon';
 import AppointmentsList from './AppointmentsList/AppointmentsList';
 import VisitReasons from './VisitReasons/VisitReasons';
 import Button from '../../components/Button/Button';
-import { useLocaleState } from '../../components/Layout/Header/Localization';
+import { useLocaleState } from '../../i18n';
 import WeekCalendar from './WeekCalendar/WeekCalendar';
 import './styles.less';
 
