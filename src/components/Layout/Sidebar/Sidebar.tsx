@@ -10,7 +10,7 @@ type Props = {
 const Sidebar: React.FC<Props> = ({ collapsed, toggled }) => {
   return (
     <aside
-      className={`sidebar break-point-lg ${collapsed ? 'collapsed' : ''} ${
+      className={`sidebar break-point-xl ${collapsed ? 'collapsed' : ''} ${
         toggled ? 'toggled' : ''
       }`}
     >

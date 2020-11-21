@@ -7,7 +7,7 @@ type Props = {
 
 const SidebarToggler: React.FC<Props> = ({ handleToggled }) => {
   return (
-    <div className="sidebar-toggler break-point-md">
+    <div className="sidebar-toggler break-point-xl">
       <MenuOutlined onClick={() => handleToggled(true)} className="icons" />
     </div>
   );
