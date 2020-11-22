@@ -6,7 +6,7 @@ const UnauthenticatedApp: React.FC = () => {
   return (
     <Switch>
       <Route path="/forget-password" component={ForgetPassword} />
-      <Route exact path="/" component={Auth} />
+      <Route exact path="*" component={Auth} />
     </Switch>
   );
 };

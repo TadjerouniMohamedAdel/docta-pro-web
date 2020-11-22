@@ -10,7 +10,7 @@ export type Props = {
 const Tab: React.FC<Props> = ({ children, icon, ...rest }) => {
   return (
     <div {...rest}>
-      <Row gutter={10}>
+      <Row gutter={10} align="middle">
         <Col style={{ display: 'flex', alignItems: 'center' }}>{icon ?? null}</Col>
         <Col>{children}</Col>
       </Row>

@@ -12,7 +12,7 @@ export type Props = SelectProps<any> & {
 const Select: React.FC<Props> = ({
   className,
   prefixIcon = null,
-  suffixIcon = <Icon name="arrow-down-s" />,
+  suffixIcon = <Icon name="arrow-down-s-line" />,
   ...rest
 }) => {
   return (

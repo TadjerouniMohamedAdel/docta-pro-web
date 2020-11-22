@@ -1,15 +1,18 @@
-import { AutoComplete, Col, Dropdown, Input, Menu, Row, Tabs } from 'antd';
+import { Col, Dropdown, Menu, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import React from 'react';
+import React, { useState } from 'react';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
 import Button from '../../components/Button/Button';
 import Icon from '../../components/Icon/Icon';
-import Tab from '../../components/Tab/Tab';
 import Spacer from '../../components/Spacer/Spacer';
-import PersonalInfo from './components/PersonalInfo/PersonalInfo';
+import PatientsList from './PatientsList/PatientsList';
+import PatientProfile from './PatientProfile/PatientProfile';
+import PatientModal from './PatientModal/PatientModal';
 
 const Patients: React.FC = () => {
+  const [showPatientModal, setShowPatientModal] = useState(false);
+
   return (
     <InnerLayout>
       <InnerSidebar>
@@ -25,25 +28,14 @@ const Patients: React.FC = () => {
             </Spacer>
           </Col>
           <Col>
-            <Button type="primary" size="small">
-              <Icon name="add" />
+            <Button type="primary" size="small" onClick={() => setShowPatientModal(true)}>
+              <Icon name="add-line" />
             </Button>
           </Col>
         </Row>
-        <Tabs defaultActiveKey="1" tabBarStyle={{ paddingLeft: 16, paddingRight: 16 }} size="small">
-          <Tabs.TabPane tab={<Tab>All Patients</Tab>} key="1">
-            <div style={{ padding: 12 }}>
-              <AutoComplete allowClear style={{ width: '100%' }}>
-                <Input size="small" placeholder="Search patients" />
-              </AutoComplete>
-            </div>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Blocked Patients" key="2">
-            Blocked Patients
-          </Tabs.TabPane>
-        </Tabs>
+        <PatientsList />
       </InnerSidebar>
-      <InnerContent>
+      <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '18px 25px' }}>
           <Row align="middle" gutter={16}>
             <Col>
@@ -62,7 +54,7 @@ const Patients: React.FC = () => {
               <Button
                 ghost
                 type="primary"
-                icon={<Icon name="chat-2" />}
+                icon={<Icon name="chat-2-line" />}
                 style={{ display: 'flex' }}
                 size="small"
               >
@@ -79,29 +71,17 @@ const Patients: React.FC = () => {
                 trigger={['click']}
               >
                 <Button type="default" size="small">
-                  <Icon name="more-2" size={24} type="fill" />
+                  <Icon name="more-2-fill" size={24} />
                 </Button>
               </Dropdown>
             </Col>
           </Row>
         </div>
-        <div>
-          <Tabs defaultActiveKey="1" tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}>
-            <Tabs.TabPane tab={<Tab icon={<Icon name="profile" />}>Personal info</Tab>} key="1">
-              <PersonalInfo />
-            </Tabs.TabPane>
-            <Tabs.TabPane
-              tab={<Tab icon={<Icon name="health-book" type="fill" />}>Medical Record</Tab>}
-              key="2"
-            >
-              Content of Tab Pane 2
-            </Tabs.TabPane>
-            <Tabs.TabPane tab={<Tab icon={<Icon name="history" />}>Visits History</Tab>} key="3">
-              Content of Tab Pane 3
-            </Tabs.TabPane>
-          </Tabs>
+        <div style={{ flexGrow: 1 }}>
+          <PatientProfile />
         </div>
       </InnerContent>
+      <PatientModal visible={showPatientModal} setVisible={setShowPatientModal} />
     </InnerLayout>
   );
 };

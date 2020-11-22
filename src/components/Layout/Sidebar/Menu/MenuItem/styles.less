@@ -1,0 +1,18 @@
+@import '../../../../../styles/variables.less';
+
+.menu-item {
+  .menu-item-title {
+    color: @text-color-secondary;
+  }
+  .custom-icon {
+    color: @text-color-secondary;
+  }
+  &.active {
+    .menu-item-title {
+      color: @text-color;
+    }
+    .custom-icon {
+      color: @primary-color;
+    }
+  }
+}

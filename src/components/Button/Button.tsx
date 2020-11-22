@@ -10,12 +10,23 @@ export type Props = Omit<ButtonProps, 'icon'> & {
   active?: boolean;
 };
 
-const Button: React.FC<Props> = ({ children, icon, style, size, active = false, ...rest }) => {
+const Button: React.FC<Props> = ({
+  children,
+  icon,
+  style,
+  size,
+  active = false,
+  className,
+  ...rest
+}) => {
   return (
     <AntButton
-      className={classNames('custom-button', { 'small-button': size === 'small', active })}
+      className={classNames('custom-button', className, {
+        'small-button': size === 'small',
+        active,
+      })}
       icon={icon}
-      style={{ display: 'flex', ...style }}
+      style={{ display: 'flex', alignItems: 'center', ...style }}
       size={size}
       {...rest}
     >

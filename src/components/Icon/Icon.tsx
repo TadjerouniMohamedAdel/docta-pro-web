@@ -1,17 +1,20 @@
 import React from 'react';
+import classNames from 'classnames';
+import { IconName } from './types';
 
-export type Props = {
-  name: string;
-  type?: 'fill' | 'line' | 'none';
+export type Props = React.HTMLAttributes<HTMLElement> & {
   size?: number;
   style?: React.CSSProperties;
+  name: IconName;
 };
 
-const Spacer: React.FC<Props> = ({ name, type = 'line', size = 22, style, ...rest }) => {
+const Spacer: React.FC<Props> = ({ name, size = 22, style, ...rest }) => {
   return (
-    <svg className="remix" style={{ width: size, height: size, ...style }} {...rest}>
-      <use xlinkHref={`remixicon.symbol.svg#ri-${name}${type === 'none' ? '' : `-${type}`}`} />
-    </svg>
+    <i
+      className={classNames('custom-icon', `ri-${name}`)}
+      style={{ fontSize: size, ...style }}
+      {...rest}
+    />
   );
 };
 

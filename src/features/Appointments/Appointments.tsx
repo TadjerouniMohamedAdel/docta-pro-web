@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
-import Calendar from './components/Calendar/Calendar';
+import Calendar from './Calendar/Calendar';
 import Text from '../../components/Text/Text';
 import Icon from '../../components/Icon/Icon';
-import AppointmentsList from './components/AppointmentsList/AppointmentsList';
-import VisitReasons from './components/VisitReasons/VisitReasons';
+import AppointmentsList from './AppointmentsList/AppointmentsList';
+import VisitReasons from './VisitReasons/VisitReasons';
 import Button from '../../components/Button/Button';
-import { useLocaleState } from '../../components/Layout/components/Header/components/Localization';
+import { useLocaleState } from '../../i18n';
+import WeekCalendar from './WeekCalendar/WeekCalendar';
+import './styles.less';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -101,11 +103,13 @@ const Appointments: React.FC = () => {
                       style={{ margin: '0 auto', display: 'flex' }}
                       onClick={() => changePanel('prev')}
                     >
-                      {locale === 'ar' ? (
-                        <Icon name="arrow-right-s" style={{ marginLeft: 16 }} />
-                      ) : (
-                        <Icon name="arrow-left-s" style={{ marginRight: 16 }} />
-                      )}
+                      <Text style={{ fontWeight: 'normal' }}>
+                        {locale === 'ar' ? (
+                          <Icon name="arrow-right-s-line" style={{ marginLeft: 16 }} />
+                        ) : (
+                          <Icon name="arrow-left-s-line" style={{ marginRight: 16 }} />
+                        )}
+                      </Text>
                       <Text size="md" style={{ fontWeight: 'bold' }}>
                         PREV
                       </Text>
@@ -123,11 +127,13 @@ const Appointments: React.FC = () => {
                       <Text size="md" style={{ fontWeight: 'bold' }}>
                         NEXT
                       </Text>
-                      {locale === 'ar' ? (
-                        <Icon name="arrow-left-s" style={{ marginRight: 16 }} />
-                      ) : (
-                        <Icon name="arrow-right-s" style={{ marginLeft: 16 }} />
-                      )}
+                      <Text style={{ fontWeight: 'normal' }}>
+                        {locale === 'ar' ? (
+                          <Icon name="arrow-left-s-line" style={{ marginRight: 16 }} />
+                        ) : (
+                          <Icon name="arrow-right-s-line" style={{ marginLeft: 16 }} />
+                        )}
+                      </Text>
                     </Button>
                   </Col>
                 </Row>
@@ -155,9 +161,10 @@ const Appointments: React.FC = () => {
                 </Col>
                 <Col>
                   <Button
+                    className="btn-view-swicther"
                     type="text"
                     size="small"
-                    icon={<Icon name="list-check-2" type="none" />}
+                    icon={<Icon name="list-check-2" />}
                     active={pathname === '/appointments'}
                     onClick={() => history.push('/appointments')}
                   >
@@ -166,9 +173,10 @@ const Appointments: React.FC = () => {
                 </Col>
                 <Col>
                   <Button
+                    className="btn-view-swicther"
                     type="text"
                     size="small"
-                    icon={<Icon name="calendar-2" />}
+                    icon={<Icon name="calendar-2-line" />}
                     active={pathname === '/appointments/week'}
                     onClick={() => history.push('/appointments/week')}
                   >
@@ -178,7 +186,7 @@ const Appointments: React.FC = () => {
                 <Col>
                   <Button
                     type="primary"
-                    icon={<Icon name="add" style={{ fill: 'white' }} />}
+                    icon={<Icon name="add-line" />}
                     style={{ display: 'flex' }}
                     size="small"
                   >
@@ -192,7 +200,10 @@ const Appointments: React.FC = () => {
         <Divider />
         <div>
           <Switch>
-            <Route path="/appointments/week" render={() => <span>week calendar</span>} />
+            <Route
+              path="/appointments/week"
+              render={() => <WeekCalendar currentDate={currentDate} />}
+            />
             <Route
               path="/appointments"
               render={() => <AppointmentsList currentDate={currentDate} />}

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Content, Header, Overlay, Sidebar } from './components';
-import { useLocaleState } from './components/Header/components/Localization';
+import Header from './Header/Header';
+import { useLocaleState } from '../../i18n';
+import Overlay from './Overlay/Overlay';
+import Sidebar from './Sidebar/Sidebar';
+import Content from './Content/Content';
 
 const Layout: React.FC = () => {
   const { locale } = useLocaleState();

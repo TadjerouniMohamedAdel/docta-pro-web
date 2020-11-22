@@ -4,7 +4,7 @@ import { TextProps } from 'antd/lib/typography/Text';
 
 export type Props = TextProps & {
   children: React.ReactNode;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
 };
 
 const sizes = {
