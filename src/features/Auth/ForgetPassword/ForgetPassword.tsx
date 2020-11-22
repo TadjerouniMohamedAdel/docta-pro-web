@@ -86,7 +86,7 @@ const ForgetPassword: React.FC = () => {
                       validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
                     >
                       <Input
-                        prefix={<Icon name="phone" />}
+                        prefix={<Icon name="phone-line" />}
                         name="phone"
                         placeholder={t('enter your phone number')}
                         value={values.phone}

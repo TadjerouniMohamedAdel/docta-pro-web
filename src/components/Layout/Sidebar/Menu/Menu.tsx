@@ -21,14 +21,25 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
       defaultSelectedKeys={[pathname]}
       style={{ padding: '24px 0' }}
     >
-      <MenuItem title={t('overview')} iconName="dashboard-3" path="/" collapsed={collapsed} exact />
+      <MenuItem
+        title={t('overview')}
+        iconName="dashboard-3-line"
+        path="/"
+        collapsed={collapsed}
+        exact
+      />
       <MenuItem
         title={t('appointments')}
-        iconName="calendar-2"
+        iconName="calendar-2-line"
         path="/appointments"
         collapsed={collapsed}
       />
-      <MenuItem title={t('patients')} iconName="group" path="/patients" collapsed={collapsed} />
+      <MenuItem
+        title={t('patients')}
+        iconName="group-line"
+        path="/patients"
+        collapsed={collapsed}
+      />
     </AntMenu>
   );
 };

@@ -26,7 +26,7 @@ const VisitsHistory: React.FC<Props> = () => {
       title: (
         <Row align="middle" gutter={8}>
           <Col>
-            <Icon name="time" size={18} />
+            <Icon name="time-line" size={18} />
           </Col>
           <Col>Date</Col>
         </Row>
@@ -39,7 +39,7 @@ const VisitsHistory: React.FC<Props> = () => {
       title: (
         <Row align="middle" gutter={8}>
           <Col>
-            <Icon name="first-aid-kit" size={18} />
+            <Icon name="first-aid-kit-line" size={18} />
           </Col>
           <Col>Reason</Col>
         </Row>
@@ -51,7 +51,7 @@ const VisitsHistory: React.FC<Props> = () => {
       title: (
         <Row align="middle" gutter={8}>
           <Col>
-            <Icon name="stethoscope" size={18} />
+            <Icon name="stethoscope-line" size={18} />
           </Col>
           <Col>Diagnostic</Col>
         </Row>

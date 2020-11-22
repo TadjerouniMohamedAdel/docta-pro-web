@@ -79,7 +79,7 @@ const Auth: React.FC = () => {
                   validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
                 >
                   <Input
-                    prefix={<Icon name="phone" />}
+                    prefix={<Icon name="phone-line" />}
                     name="phone"
                     placeholder={t('enter your phone number')}
                     value={values.phone}
@@ -100,14 +100,14 @@ const Auth: React.FC = () => {
                   }
                 >
                   <Input.Password
-                    prefix={<Icon name="lock-2" />}
+                    prefix={<Icon name="lock-2-line" />}
                     name="password"
                     value={values.password}
                     placeholder={t('enter your password')}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     iconRender={(visible) =>
-                      visible ? <Icon name="eye" /> : <Icon name="eye-off" />
+                      visible ? <Icon name="eye-line" /> : <Icon name="eye-off-line" />
                     }
                   />
                 </Form.Item>

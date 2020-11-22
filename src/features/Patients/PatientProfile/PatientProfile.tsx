@@ -16,13 +16,13 @@ const PatientProfile: React.FC<Props> = () => {
       tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
       className="patient-profile-tab"
     >
-      <Tabs.TabPane tab={<Tab icon={<Icon name="profile" />}>Personal info</Tab>} key="1">
+      <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
         <PersonalInfo />
       </Tabs.TabPane>
-      <Tabs.TabPane tab={<Tab icon={<Icon name="health-book" />}>Medical Record</Tab>} key="2">
+      <Tabs.TabPane tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>} key="2">
         <MedicalRecords />
       </Tabs.TabPane>
-      <Tabs.TabPane tab={<Tab icon={<Icon name="history" />}>Visits History</Tab>} key="3">
+      <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
         <VisitsHistory />
       </Tabs.TabPane>
     </Tabs>

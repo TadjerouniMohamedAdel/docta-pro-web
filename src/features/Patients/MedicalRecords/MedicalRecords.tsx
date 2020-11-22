@@ -38,7 +38,7 @@ const MedicalRecords: React.FC<Props> = () => {
           <Col span={9}>
             <Form.Item>
               <Input
-                prefix={<Icon name="ruler" />}
+                prefix={<Icon name="ruler-line" />}
                 name="height"
                 value={values.height}
                 placeholder="enter your height"
@@ -56,7 +56,7 @@ const MedicalRecords: React.FC<Props> = () => {
           <Col span={9}>
             <Form.Item>
               <Input
-                prefix={<Icon name="ruler" />}
+                prefix={<Icon name="scales-2-line" />}
                 name="weight"
                 value={values.weight}
                 placeholder="enter your weight"
@@ -75,7 +75,7 @@ const MedicalRecords: React.FC<Props> = () => {
             <Form.Item>
               <Select
                 value={values.bloodType}
-                prefixIcon={<Icon name="drop" />}
+                prefixIcon={<Icon name="drop-line" />}
                 placeholder="Select your blood type"
                 dropdownMatchSelectWidth={false}
               >
@@ -97,7 +97,7 @@ const MedicalRecords: React.FC<Props> = () => {
           </Col>
           <Col span={9}>
             <Form.Item>
-              <RadioBox icon={<Icon name="profile" />} />
+              <RadioBox icon={<Icon name="profile-line" />} />
             </Form.Item>
           </Col>
           <Col span={3}>
@@ -107,7 +107,7 @@ const MedicalRecords: React.FC<Props> = () => {
           </Col>
           <Col span={9}>
             <Form.Item>
-              <RadioBox icon={<Icon name="profile" />} />
+              <RadioBox icon={<Icon name="profile-line" />} />
             </Form.Item>
           </Col>
           <Col span={3}>
@@ -117,7 +117,7 @@ const MedicalRecords: React.FC<Props> = () => {
           </Col>
           <Col span={9}>
             <Form.Item>
-              <RadioBox icon={<Icon name="profile" />} />
+              <RadioBox icon={<Icon name="profile-line" />} />
             </Form.Item>
           </Col>
         </Row>

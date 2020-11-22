@@ -5,10 +5,11 @@ import { MenuItemProps } from 'antd/lib/menu/MenuItem';
 import Icon from '../../../../Icon/Icon';
 import Text from '../../../../Text/Text';
 import './styles.less';
+import { IconName } from '../../../../Icon/types';
 
 type Props = Omit<MenuItemProps, 'key'> & {
   collapsed: boolean;
-  iconName: string;
+  iconName: IconName;
   title: string;
   path: string;
   exact?: boolean;

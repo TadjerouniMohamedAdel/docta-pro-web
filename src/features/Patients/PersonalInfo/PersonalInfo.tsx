@@ -50,7 +50,7 @@ const PersonalInfo: React.FC<Props> = () => {
               validateStatus={touched.firstName && Boolean(errors.firstName) ? 'error' : undefined}
             >
               <Input
-                prefix={<Icon name="user" />}
+                prefix={<Icon name="user-line" />}
                 name="firstName"
                 value={values.firstName}
                 placeholder="enter your first name"
@@ -65,7 +65,7 @@ const PersonalInfo: React.FC<Props> = () => {
               validateStatus={touched.lastName && Boolean(errors.lastName) ? 'error' : undefined}
             >
               <Input
-                prefix={<Icon name="user" />}
+                prefix={<Icon name="user-line" />}
                 name="lastName"
                 value={values.lastName}
                 placeholder="enter your last name"
@@ -80,7 +80,7 @@ const PersonalInfo: React.FC<Props> = () => {
               validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
             >
               <Input
-                prefix={<Icon name="phone" />}
+                prefix={<Icon name="phone-line" />}
                 name="phone"
                 value={values.phone}
                 placeholder="enter your phone number"
@@ -95,7 +95,7 @@ const PersonalInfo: React.FC<Props> = () => {
               validateStatus={touched.email && Boolean(errors.email) ? 'error' : undefined}
             >
               <Input
-                prefix={<Icon name="mail" />}
+                prefix={<Icon name="mail-line" />}
                 name="email"
                 value={values.phone}
                 placeholder="enter your email"
@@ -110,7 +110,7 @@ const PersonalInfo: React.FC<Props> = () => {
               validateStatus={touched.birthday && Boolean(errors.birthday) ? 'error' : undefined}
             >
               <DatePicker
-                prefixIcon={<Icon name="cake" />}
+                prefixIcon={<Icon name="mail-line" />}
                 name="birthday"
                 value={values.birthday}
                 placeholder="enter your birthday"
@@ -128,7 +128,7 @@ const PersonalInfo: React.FC<Props> = () => {
               validateStatus={touched.email && Boolean(errors.email) ? 'error' : undefined}
             >
               <Select
-                prefixIcon={<Icon name="genderless" />}
+                prefixIcon={<Icon name="genderless-line" />}
                 placeholder="Select your gender"
                 dropdownMatchSelectWidth={false}
               />
@@ -141,7 +141,7 @@ const PersonalInfo: React.FC<Props> = () => {
               validateStatus={touched.state && Boolean(errors.state) ? 'error' : undefined}
             >
               <Select
-                prefixIcon={<Icon name="map-pin" />}
+                prefixIcon={<Icon name="map-pin-line" />}
                 placeholder="Select your state"
                 dropdownMatchSelectWidth={false}
               />
@@ -151,7 +151,7 @@ const PersonalInfo: React.FC<Props> = () => {
             <Label title="City" error={touched.city ? errors.city : undefined} />
             <Form.Item validateStatus={touched.city && Boolean(errors.city) ? 'error' : undefined}>
               <Select
-                prefixIcon={<Icon name="road-map" />}
+                prefixIcon={<Icon name="road-map-line" />}
                 placeholder="Select your City"
                 dropdownMatchSelectWidth={false}
               />
@@ -168,7 +168,7 @@ const PersonalInfo: React.FC<Props> = () => {
               }
             >
               <Input
-                prefix={<Icon name="heart-pulse" />}
+                prefix={<Icon name="heart-pulse-line" />}
                 name="generalStatus"
                 value={values.generalStatus}
                 placeholder="enter your general status"

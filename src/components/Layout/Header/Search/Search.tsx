@@ -10,7 +10,7 @@ const Search: React.FC<Props> = () => {
       <Input
         size="middle"
         placeholder="Search patients, staff, invoices etc…"
-        prefix={<Icon name="search" />}
+        prefix={<Icon name="search-2-line" />}
       />
     </AutoComplete>
   );

@@ -45,7 +45,7 @@ const RecordBox: React.FC<Props> = ({ data, title }) => {
               type="ghost"
               size="small"
               block
-              icon={<Icon name="add-circle" type="fill" size={18} />}
+              icon={<Icon name="add-circle-fill" size={18} />}
               className="btn-record"
               onClick={() => setFocused(true)}
             >

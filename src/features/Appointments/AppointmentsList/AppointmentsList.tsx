@@ -89,7 +89,7 @@ const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
                       trigger={['click']}
                     >
                       <Button type="text" ghost>
-                        <Icon name="more" size={24} type="fill" style={{ color: '#fff' }} />
+                        <Icon name="more-line" size={24} style={{ color: '#fff' }} />
                       </Button>
                     </Dropdown>
                   </Col>

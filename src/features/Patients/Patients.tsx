@@ -31,7 +31,7 @@ const Patients: React.FC = () => {
           </Col>
           <Col>
             <Button type="primary" size="small" onClick={() => setShowPatientModal(true)}>
-              <Icon name="add" />
+              <Icon name="add-line" />
             </Button>
           </Col>
         </Row>
@@ -63,7 +63,7 @@ const Patients: React.FC = () => {
               <Button
                 ghost
                 type="primary"
-                icon={<Icon name="chat-2" />}
+                icon={<Icon name="chat-2-line" />}
                 style={{ display: 'flex' }}
                 size="small"
               >
@@ -80,7 +80,7 @@ const Patients: React.FC = () => {
                 trigger={['click']}
               >
                 <Button type="default" size="small">
-                  <Icon name="more-2" size={24} type="fill" />
+                  <Icon name="more-line" size={24} />
                 </Button>
               </Dropdown>
             </Col>

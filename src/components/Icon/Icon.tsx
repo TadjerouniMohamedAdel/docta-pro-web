@@ -1,17 +1,17 @@
 import React from 'react';
 import classNames from 'classnames';
+import { IconName } from './types';
 
 export type Props = React.HTMLAttributes<HTMLElement> & {
-  name: string;
-  type?: 'fill' | 'line' | 'none';
   size?: number;
   style?: React.CSSProperties;
+  name: IconName;
 };
 
-const Spacer: React.FC<Props> = ({ name, type = 'line', size = 22, style, ...rest }) => {
+const Spacer: React.FC<Props> = ({ name, size = 22, style, ...rest }) => {
   return (
     <i
-      className={classNames('custom-icon', `ri-${name}${type === 'none' ? '' : `-${type}`}`)}
+      className={classNames('custom-icon', `ri-${name}`)}
       style={{ fontSize: size, ...style }}
       {...rest}
     />

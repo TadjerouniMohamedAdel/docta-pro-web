@@ -30,7 +30,7 @@ const Modal: React.FC<Props> = ({ children, actions, title, onCancel, ...rest })
               <Col>{actions}</Col>
               <Col>
                 <Button type="default" onClick={onCancel}>
-                  <Icon name="close" />
+                  <Icon name="close-line" />
                 </Button>
               </Col>
             </Row>

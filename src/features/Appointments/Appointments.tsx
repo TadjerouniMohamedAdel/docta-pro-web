@@ -105,9 +105,9 @@ const Appointments: React.FC = () => {
                     >
                       <Text style={{ fontWeight: 'normal' }}>
                         {locale === 'ar' ? (
-                          <Icon name="arrow-right-s" style={{ marginLeft: 16 }} />
+                          <Icon name="arrow-right-s-line" style={{ marginLeft: 16 }} />
                         ) : (
-                          <Icon name="arrow-left-s" style={{ marginRight: 16 }} />
+                          <Icon name="arrow-left-s-line" style={{ marginRight: 16 }} />
                         )}
                       </Text>
                       <Text size="md" style={{ fontWeight: 'bold' }}>
@@ -129,9 +129,9 @@ const Appointments: React.FC = () => {
                       </Text>
                       <Text style={{ fontWeight: 'normal' }}>
                         {locale === 'ar' ? (
-                          <Icon name="arrow-left-s" style={{ marginRight: 16 }} />
+                          <Icon name="arrow-left-s-line" style={{ marginRight: 16 }} />
                         ) : (
-                          <Icon name="arrow-right-s" style={{ marginLeft: 16 }} />
+                          <Icon name="arrow-right-s-line" style={{ marginLeft: 16 }} />
                         )}
                       </Text>
                     </Button>
@@ -164,7 +164,7 @@ const Appointments: React.FC = () => {
                     className="btn-view-swicther"
                     type="text"
                     size="small"
-                    icon={<Icon name="list-check-2" type="none" />}
+                    icon={<Icon name="list-check-2" />}
                     active={pathname === '/appointments'}
                     onClick={() => history.push('/appointments')}
                   >
@@ -176,7 +176,7 @@ const Appointments: React.FC = () => {
                     className="btn-view-swicther"
                     type="text"
                     size="small"
-                    icon={<Icon name="calendar-2" />}
+                    icon={<Icon name="calendar-2-line" />}
                     active={pathname === '/appointments/week'}
                     onClick={() => history.push('/appointments/week')}
                   >
@@ -186,7 +186,7 @@ const Appointments: React.FC = () => {
                 <Col>
                   <Button
                     type="primary"
-                    icon={<Icon name="add" style={{ fill: 'white' }} />}
+                    icon={<Icon name="add-line" />}
                     style={{ display: 'flex' }}
                     size="small"
                   >
