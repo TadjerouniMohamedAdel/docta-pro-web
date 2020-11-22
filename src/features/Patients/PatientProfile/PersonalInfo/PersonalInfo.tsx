@@ -45,7 +45,11 @@ const PersonalInfo: React.FC<Props> = () => {
         </Row>
         <Row gutter={[35, 16]}>
           <Col span={12}>
-            <Label title="First name" error={touched.firstName ? errors.firstName : undefined} />
+            <Label
+              title="First name"
+              error={touched.firstName ? errors.firstName : undefined}
+              required
+            />
             <Form.Item
               validateStatus={touched.firstName && Boolean(errors.firstName) ? 'error' : undefined}
             >
@@ -60,7 +64,11 @@ const PersonalInfo: React.FC<Props> = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Label title="Last name" error={touched.lastName ? errors.lastName : undefined} />
+            <Label
+              title="Last name"
+              error={touched.lastName ? errors.lastName : undefined}
+              required
+            />
             <Form.Item
               validateStatus={touched.lastName && Boolean(errors.lastName) ? 'error' : undefined}
             >
@@ -75,7 +83,7 @@ const PersonalInfo: React.FC<Props> = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Label title="Phone" error={touched.phone ? errors.phone : undefined} />
+            <Label title="Phone" error={touched.phone ? errors.phone : undefined} required />
             <Form.Item
               validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
             >
