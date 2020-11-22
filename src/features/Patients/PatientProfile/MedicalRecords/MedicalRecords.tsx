@@ -117,7 +117,7 @@ const MedicalRecords: React.FC<Props> = () => {
           </Col>
           <Col span={9}>
             <Form.Item>
-              <RadioBox icon={<Icon name="profile-line" />} />
+              <RadioBox icon={<Icon name="goblet-line" />} />
             </Form.Item>
           </Col>
         </Row>

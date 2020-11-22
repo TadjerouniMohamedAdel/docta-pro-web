@@ -56,4 +56,7 @@ export type IconName =
   | 'award-line'
   | 'drop-line'
   | 'scales-2-line'
-  | 'goblet-line';
+  | 'goblet-line'
+  | 'close-circle-line'
+  | 'more-fill'
+  | 'more-2-fill';

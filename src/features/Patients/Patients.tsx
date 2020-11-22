@@ -71,7 +71,7 @@ const Patients: React.FC = () => {
                 trigger={['click']}
               >
                 <Button type="default" size="small">
-                  <Icon name="more-line" size={24} />
+                  <Icon name="more-2-fill" size={24} />
                 </Button>
               </Dropdown>
             </Col>
