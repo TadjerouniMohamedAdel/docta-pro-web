@@ -2,9 +2,9 @@ import { Tabs } from 'antd';
 import React from 'react';
 import Tab from '../../../components/Tab/Tab';
 import Icon from '../../../components/Icon/Icon';
-import PersonalInfo from '../PersonalInfo/PersonalInfo';
-import MedicalRecords from '../MedicalRecords/MedicalRecords';
-import VisitsHistory from '../VisitsHistory/VisitsHistory';
+import PersonalInfo from './PersonalInfo/PersonalInfo';
+import MedicalRecords from './MedicalRecords/MedicalRecords';
+import VisitsHistory from './VisitsHistory/VisitsHistory';
 import './styles.less';
 
 type Props = {};

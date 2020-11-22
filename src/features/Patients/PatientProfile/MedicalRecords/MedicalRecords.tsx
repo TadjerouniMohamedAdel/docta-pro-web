@@ -1,9 +1,9 @@
 import { Col, Form, Input, Row, Select as AntSelect } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
-import Select from '../../../components/Select/Select';
-import Icon from '../../../components/Icon/Icon';
-import Text from '../../../components/Text/Text';
+import Select from '../../../../components/Select/Select';
+import Icon from '../../../../components/Icon/Icon';
+import Text from '../../../../components/Text/Text';
 import RadioBox from './RadioBox/RadioBox';
 import RecordsList from './RecordsList/RecordsList';
 

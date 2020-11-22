@@ -1,11 +1,11 @@
 import { Col, Row, Form, Input, Avatar } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
-import Label from '../../../components/Label/Label';
-import Icon from '../../../components/Icon/Icon';
-import Button from '../../../components/Button/Button';
-import Select from '../../../components/Select/Select';
-import DatePicker from '../../../components/DatePicker/DatePicker';
+import Label from '../../../../components/Label/Label';
+import Icon from '../../../../components/Icon/Icon';
+import Button from '../../../../components/Button/Button';
+import Select from '../../../../components/Select/Select';
+import DatePicker from '../../../../components/DatePicker/DatePicker';
 
 type Props = {};
 

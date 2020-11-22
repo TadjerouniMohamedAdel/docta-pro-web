@@ -1,14 +1,12 @@
-import { Col, Dropdown, Menu, Row, Tabs } from 'antd';
+import { Col, Dropdown, Menu, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useState } from 'react';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
 import Button from '../../components/Button/Button';
 import Icon from '../../components/Icon/Icon';
-import Tab from '../../components/Tab/Tab';
 import Spacer from '../../components/Spacer/Spacer';
 import PatientsList from './PatientsList/PatientsList';
-import BlockedPatientsList from './BlockedPatientsList/BlockedPatientsList';
 import PatientProfile from './PatientProfile/PatientProfile';
 import PatientModal from './PatientModal/PatientModal';
 
@@ -35,14 +33,7 @@ const Patients: React.FC = () => {
             </Button>
           </Col>
         </Row>
-        <Tabs defaultActiveKey="1" tabBarStyle={{ paddingLeft: 16, paddingRight: 16 }} size="small">
-          <Tabs.TabPane tab={<Tab>All Patients</Tab>} key="1">
-            <PatientsList />
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Blocked Patients" key="2">
-            <BlockedPatientsList />
-          </Tabs.TabPane>
-        </Tabs>
+        <PatientsList />
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '18px 25px' }}>

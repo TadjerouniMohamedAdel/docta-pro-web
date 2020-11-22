@@ -4,8 +4,8 @@ import Button from '../../../components/Button/Button';
 import Modal from '../../../components/Modal/Modal';
 import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
-import PersonalInfo from '../PersonalInfo/PersonalInfo';
-import MedicalRecords from '../MedicalRecords/MedicalRecords';
+import PersonalInfo from '../PatientProfile/PersonalInfo/PersonalInfo';
+import MedicalRecords from '../PatientProfile/MedicalRecords/MedicalRecords';
 
 type Props = {
   visible?: boolean;

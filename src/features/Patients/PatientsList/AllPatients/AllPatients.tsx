@@ -1,17 +1,25 @@
 import { AutoComplete, Col, Divider, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
-import Spacer from '../../../components/Spacer/Spacer';
-import Text from '../../../components/Text/Text';
+import Spacer from '../../../../components/Spacer/Spacer';
+import Text from '../../../../components/Text/Text';
 
 type Props = {};
 
-const BlockedPatientsList: React.FC<Props> = () => {
+const AllPatients: React.FC<Props> = () => {
   const data = [
     {
       id: 1,
       firstName: 'Mohamed',
-      lastName: 'Blocked',
+      lastName: 'Chiller',
+      phone: '+213777859632',
+      address: '1962 Icnoj Trail',
+      picture: '',
+    },
+    {
+      id: 2,
+      firstName: 'Mohamed',
+      lastName: 'Azouaoui',
       phone: '+213777859632',
       address: '1962 Icnoj Trail',
       picture: '',
@@ -62,4 +70,4 @@ const BlockedPatientsList: React.FC<Props> = () => {
   );
 };
 
-export default BlockedPatientsList;
+export default AllPatients;

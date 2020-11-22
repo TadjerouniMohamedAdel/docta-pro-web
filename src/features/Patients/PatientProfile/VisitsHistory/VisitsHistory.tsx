@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Table } from 'antd';
 import moment from 'moment';
-import Icon from '../../../components/Icon/Icon';
+import Icon from '../../../../components/Icon/Icon';
 
 type Props = {};
 
