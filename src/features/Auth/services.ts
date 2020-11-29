@@ -6,3 +6,16 @@ export const login = async (params: LoginParams): Promise<AuthResponse> => {
     body: params,
   });
 };
+
+export const getCurrentUser = async (): Promise<AuthResponse> => {
+  return {
+    data: {
+      firstName: 'mohamed',
+      lastName: 'chiller',
+      phone: '+213791686064',
+      email: 'mohamed@cleverzone.io',
+    },
+  };
+
+  // return fetcher('/api/v1/users/?action=pro');
+};
