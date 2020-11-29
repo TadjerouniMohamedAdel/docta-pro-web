@@ -34,10 +34,15 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
       window.location.assign(window.location as any);
       return Promise.reject(new Error('You need to re-authenticate !'));
     }
-    console.log(response);
     const data = await response.json();
 
+    const responseHeaders: Headers & {
+      authorization?: string;
+    } = response.headers;
+
     if (response.ok) {
+      const authorization: string | null = responseHeaders.get('authorization');
+      if (authorization) localStorage.setItem('token', authorization);
       return data;
     }
     return Promise.reject(data);
