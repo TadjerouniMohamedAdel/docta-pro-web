@@ -17,9 +17,10 @@ import illustration from '../../assets/img/illustration.png';
 import logo from '../../assets/img/logo.png';
 import Icon from '../../components/Icon/Icon';
 import Label from '../../components/Label/Label';
+import i18n from '../../i18n';
 
 const Auth: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   const { setUser } = useAuthState();
 
   const history = useHistory();
@@ -30,8 +31,7 @@ const Auth: React.FC = () => {
     try {
       const response: AuthResponse | undefined = await mutate(values);
       if (response) {
-        localStorage.setItem('token', response.data.token);
-        setUser({ username: 'mohamed' });
+        setUser(response.data);
       }
     } catch (err) {
       console.log(err);
@@ -41,8 +41,8 @@ const Auth: React.FC = () => {
   const initialValues: LoginParams = { phone: '', password: '' };
 
   const validationSchema = Yup.object().shape({
-    phone: Yup.string().required(t('required field')),
-    password: Yup.string().required(t('required field')),
+    phone: Yup.string().required(t('errors:required field')),
+    password: Yup.string().required(t('errors:required field')),
   });
 
   const formik = useFormik({
@@ -81,7 +81,7 @@ const Auth: React.FC = () => {
                   <Input
                     prefix={<Icon name="phone-line" />}
                     name="phone"
-                    placeholder={t('enter your phone number')}
+                    placeholder={i18n.t('placeholders:enter your', { fieldName: t('phone') })}
                     value={values.phone}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -103,12 +103,14 @@ const Auth: React.FC = () => {
                     prefix={<Icon name="lock-2-line" />}
                     name="password"
                     value={values.password}
-                    placeholder={t('enter your password')}
+                    placeholder={i18n.t('placeholders:enter your', { fieldName: t('password') })}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    iconRender={(visible) =>
-                      visible ? <Icon name="eye-line" /> : <Icon name="eye-off-line" />
-                    }
+                    iconRender={(visible) => (
+                      <span>
+                        {visible ? <Icon name="eye-line" /> : <Icon name="eye-off-line" />}
+                      </span>
+                    )}
                   />
                 </Form.Item>
                 <Link style={{ fontSize: 12 }} onClick={() => history.push('/forget-password')}>
