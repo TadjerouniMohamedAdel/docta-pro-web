@@ -1,0 +1,4 @@
+{
+  "required field": "Ce champ est requis",
+  "must be a valid": "{{fieldName}} non valide"
+}
