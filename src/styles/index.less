@@ -58,6 +58,15 @@ body {
       color: @text-color-secondary;
     }
   }
+  .ant-input-suffix {
+    position: relative;
+    width: 25px;
+
+    > .custom-icon,
+    .ant-input-password-icon {
+      position: absolute;
+    }
+  }
   &.ant-input-affix-wrapper-focused {
     input {
       color: @text-color;
