@@ -19,3 +19,21 @@ export const getCurrentUser = async (): Promise<AuthResponse> => {
 
   // return fetcher('/api/v1/users/?action=pro');
 };
+
+// TODO this api should use GET method !!!
+export const CheckPhoneNumber = async (phone: string): Promise<AuthResponse> => {
+  return fetcher('/api/v1/users/phone-verification?action=pro', {
+    body: { phone },
+  });
+};
+
+type ResetPasswordParams = {
+  password: string;
+  tokenId: string;
+};
+
+export const resetPassword = async (params: ResetPasswordParams): Promise<void> => {
+  return fetcher('/api/v1/users/reset-password?action=pro', {
+    body: params,
+  });
+};

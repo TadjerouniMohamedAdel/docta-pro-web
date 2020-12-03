@@ -1,4 +1,5 @@
 {
-  "required field": "This field is required",
-  "must be a valid": "Must be a valid {{fieldName}}"
+  "required field": "Required field",
+  "must be a valid": "Must be a valid {{fieldName}}",
+  "passwords must match": "Passwords must match"
 }

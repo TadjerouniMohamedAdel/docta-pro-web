@@ -5,9 +5,16 @@
   "sign in": "Sign in",
   "sign up": "Sign up",
   "phone": "Phone",
+  "phone number": "Phone number",
   "email": "Email",
   "password": "Password",
   "Welcome, please login to access the app": "Welcome, please login to access the app",
   "dont have an account": "Dont have an account?",
-  "forgot password": "Forgot password?"
+  "forgot password": "Forgot password?",
+  "forgot password description": "Enter the phone number associated with your account. We will send you a code to reset your password.",
+  "take me back to": "take me back to",
+  "next": "Next",
+  "Docta phone number": "Docta phone number",
+  "reset password": "Reset password",
+  "new password": "New password"
 }

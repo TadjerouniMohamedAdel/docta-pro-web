@@ -1,4 +1,4 @@
 {
-  "required field": "Ce champ est requis",
+  "required field": "Champ obligatoire",
   "must be a valid": "{{fieldName}} non valide"
 }

@@ -5,9 +5,17 @@
   "sign in": "Se connecter",
   "sign up": "S'inscrire",
   "phone": "Numéro de téléphone",
+  "phone number": "Numéro de téléphone",
   "email": "Email",
   "password": "Mot de passe",
   "Welcome, please login to access the app": "Bienvenue, veuillez vous connecter pour accéder à l'application",
   "dont have an account": "Vous n'avez pas de compte?",
-  "forgot password": "Mot de passe oublié?"
+  "forgot password": "Mot de passe oublié?",
+  "forgot password description": "Saisissez le numéro de téléphone associé à votre compte. Nous vous enverrons un code pour réinitialiser votre mot de passe.",
+  "take me back to": "ramène-moi à",
+  "next": "Suivant",
+  "Docta phone number": "Numéro de téléphone Docta",
+  "reset password": "Réinitialiser le mot de passe",
+  "new password": "Nouveau mot de passe",
+  "confirm your": "Confirmer votre"
 }

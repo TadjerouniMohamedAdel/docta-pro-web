@@ -1,3 +1,6 @@
 {
-  "enter your": "ادخل {{fieldName}}"
+  "enter your": "ادخل {{fieldName}}",
+  "enter code we sent you to": "أدخل الرمز الذي أرسلناه لك إلى",
+  "enter otp": "أدخل OTP",
+  "confirm your": "أكد {{fieldName}}"
 }
