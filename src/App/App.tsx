@@ -3,9 +3,12 @@ import React, { useEffect } from 'react';
 import en from 'antd/es/locale/en_GB';
 import ar from 'antd/es/locale/ar_EG';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { queryCache } from 'react-query';
 import FullPageLoader from '../components/FullPageLoader';
 import { useAuthState } from '../features/Auth/context';
 import { useLocaleState } from '../i18n';
+import { getCurrentUser } from '../features/Auth/services';
+import { AuthResponse } from '../features/Auth/types';
 
 const AuthenticatedApp = React.lazy(
   () => import(/* webpackPrefetch: true */ './AuthenticatedApp/AuthenticatedApp'),
@@ -22,11 +25,22 @@ function App() {
   const { locale } = useLocaleState();
   const token = localStorage.getItem('token');
 
+  const handleFetchCurrentUser = async (): Promise<void> => {
+    try {
+      const response: AuthResponse | undefined = await getCurrentUser();
+      if (response) {
+        setUser(response.data);
+      }
+    } catch (err) {
+      console.log(err);
+      queryCache.clear();
+      localStorage.removeItem('token');
+      window.location.assign(window.location as any);
+    }
+  };
+
   useEffect(() => {
-    if (token && !user)
-      setTimeout(() => {
-        setUser({ username: 'mohamed' });
-      }, 2000);
+    if (token && !user) handleFetchCurrentUser();
   }, []);
 
   return (

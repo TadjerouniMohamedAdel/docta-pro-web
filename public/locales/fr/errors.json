@@ -1,0 +1,4 @@
+{
+  "required field": "Champ obligatoire",
+  "must be a valid": "{{fieldName}} non valide"
+}

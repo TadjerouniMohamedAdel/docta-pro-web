@@ -1,0 +1,6 @@
+{
+  "enter your": "Entrez votre {{fieldName}}",
+  "enter code we sent you to": "Entrez le code auquel nous vous avons envoyé",
+  "enter otp": "Entrez OTP",
+  "confirm your": "Confirmer votre {{fieldName}}"
+}

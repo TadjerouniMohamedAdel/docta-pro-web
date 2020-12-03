@@ -2,9 +2,19 @@
   "title": "دوكتا",
   "login": "تسجيل الدخول",
   "logout": "تسجيل الخروج",
+  "sign in": "تسجيل الدخول",
+  "sign up": "سجل",
+  "phone": "رقم الهاتف",
+  "phone number": "رقم الهاتف",
   "email": "البريد الإلكتروني",
   "password": "كلمه السر",
   "Welcome, please login to access the app": "مرحبًا ، الرجاء تسجيل الدخول للوصول إلى التطبيق",
-  "required field": "هذه الخانة إجبارية",
-  "must be a valid email": "البريد الإلكتروني غير صالح"
+  "dont have an account": "ليس لديك حساب؟",
+  "forgot password": "هل نسيت كلمة المرور؟",
+  "forgot password description": "أدخل رقم الهاتف المرتبط بحسابك. سنرسل لك رمزًا لإعادة تعيين كلمة المرور الخاصة بك",
+  "take me back to": "أعدني إلى",
+  "next": "التالى",
+  "Docta phone number": "رقم الهاتف الخاص بدوكتا",
+  "reset password": "إعادة تعيين كلمة المرور",
+  "new password": "كلمة سر جديدة"
 }

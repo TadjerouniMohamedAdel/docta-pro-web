@@ -1,7 +1,10 @@
 import { ApiResponse } from '../../interfaces/api';
 
 export type User = {
-  username: string;
+  phone: string;
+  email: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type LoginParams = {
@@ -10,8 +13,5 @@ export type LoginParams = {
 };
 
 export interface AuthResponse extends ApiResponse {
-  data: {
-    token: string;
-    user: User;
-  };
+  data: User;
 }
