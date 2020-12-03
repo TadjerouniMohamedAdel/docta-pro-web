@@ -34,7 +34,10 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
       window.location.assign(window.location as any);
       return Promise.reject(new Error('You need to re-authenticate !'));
     }
-    const data = await response.json();
+
+    let data;
+
+    if (response.status !== 204) data = await response.json();
 
     const responseHeaders: Headers & {
       authorization?: string;
