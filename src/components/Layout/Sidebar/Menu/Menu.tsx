@@ -40,6 +40,12 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
         path="/patients"
         collapsed={collapsed}
       />
+      <MenuItem
+        title={t('settings')}
+        iconName="settings-line"
+        path="/settings"
+        collapsed={collapsed}
+      />
     </AntMenu>
   );
 };

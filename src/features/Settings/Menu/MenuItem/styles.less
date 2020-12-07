@@ -1,0 +1,23 @@
+@import '../../../../styles/variables.less';
+
+.setting-menu-item-wrapper {
+  padding: 0 !important;
+  .setting-menu-item {
+    width: 100%;
+
+    .menu-item-arrow {
+      color: @text-color-secondary;
+    }
+    &.active {
+      background-color: @primary-color;
+      color: white;
+
+      .menu-item-title {
+        color: white;
+      }
+      .custom-icon {
+        color: white;
+      }
+    }
+  }
+}
