@@ -4,7 +4,6 @@
   .custom-icon {
     margin: 0 5px;
     font-size: 24px !important;
-    line-height: 23px !important;
   }
   span {
     margin: 0 5px;
@@ -13,5 +12,25 @@
 
   &.ant-btn-default {
     color: @text-color-secondary;
+  }
+
+  &.ant-btn-text {
+    &.delete-action,
+    &.edit-action {
+      color: @text-color-secondary;
+      .custom-icon {
+        font-size: 20px !important;
+      }
+    }
+    &.delete-action {
+      &:hover {
+        color: @error-color;
+      }
+    }
+    &.edit-action {
+      &:hover {
+        color: @primary-color;
+      }
+    }
   }
 }
