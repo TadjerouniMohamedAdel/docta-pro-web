@@ -8,6 +8,8 @@ import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
 import Button from '../../../components/Button/Button';
 import { fetchUsers } from './services';
+import UserModal from './UserModal/UserModal';
+import { Professional, UserForm } from './types';
 
 type Props = {};
 
@@ -19,9 +21,21 @@ const useUsersList = (page: number, size: number) => {
   return { resolvedData: resolvedData ?? [], isLoading, isError, isFetching };
 };
 
+const initialValues: UserForm = {
+  id: '',
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  roleId: undefined,
+  password: '',
+};
+
 const Users: React.FC<Props> = () => {
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize] = useState(10);
+  const [showModal, setShowModal] = useState(false);
+  const [userForm, setUserForm] = useState<UserForm>(initialValues);
 
   const { t } = useTranslation('translation');
 
@@ -33,12 +47,30 @@ const Users: React.FC<Props> = () => {
     setPageIndex(current);
   };
 
-  const columns: ColumnsType<any> = [
+  const handleEditUser = (record: Professional) => {
+    setUserForm({
+      ...userForm,
+      id: record.id,
+      firstName: record.firstName,
+      lastName: record.lastName,
+      phone: record.user.phone,
+      email: record.user.email,
+      roleId: record.role.id,
+    });
+    setShowModal(true);
+  };
+
+  const handleAddUser = () => {
+    setUserForm(initialValues);
+    setShowModal(true);
+  };
+
+  const columns: ColumnsType<Professional> = [
     {
       title: t('full name'),
       dataIndex: 'fullName',
       key: 'fullName',
-      render: (text: any, record: any) => (
+      render: (text: any, record: Professional) => (
         <Row gutter={16} align="middle">
           <Col>
             <Avatar src={record.picture} className="picture" />
@@ -53,19 +85,19 @@ const Users: React.FC<Props> = () => {
       title: t('phone number'),
       dataIndex: 'phone',
       key: 'phone',
-      render: (text: any, record: any) => <>{record.user.phone}</>,
+      render: (text: any, record: Professional) => <>{record.user.phone}</>,
     },
     {
       title: t('email'),
       dataIndex: 'diagnostic',
       key: 'diagnostic',
-      render: (text: any, record: any) => <>{record.user.email}</>,
+      render: (text: any, record: Professional) => <>{record.user.email}</>,
     },
     {
       title: t('role'),
       dataIndex: 'role',
       key: 'role',
-      render: (text: any, record: any) => <>{record.role.name}</>,
+      render: (text: any, record: Professional) => <>{record.role.name}</>,
     },
     {
       title: t('created at'),
@@ -77,10 +109,15 @@ const Users: React.FC<Props> = () => {
       title: t('actions'),
       dataIndex: 'actions',
       key: 'actions',
-      render: () => (
+      render: (text: any, record: Professional) => (
         <Row>
           <Col>
-            <Button type="text" size="small" className="edit-action">
+            <Button
+              type="text"
+              size="small"
+              className="edit-action"
+              onClick={() => handleEditUser(record)}
+            >
               <Icon name="pencil-line" />
             </Button>
           </Col>
@@ -103,7 +140,12 @@ const Users: React.FC<Props> = () => {
           </Text>
         </Col>
         <Col>
-          <Button type="primary" icon={<Icon name="add-line" />} size="small">
+          <Button
+            type="primary"
+            icon={<Icon name="add-line" />}
+            size="small"
+            onClick={handleAddUser}
+          >
             {t('add user')}
           </Button>
         </Col>
@@ -117,6 +159,7 @@ const Users: React.FC<Props> = () => {
         onChange={handleChange}
         loading={isFetching}
       />
+      <UserModal visible={showModal} setVisible={setShowModal} user={userForm} />
     </div>
   );
 };
