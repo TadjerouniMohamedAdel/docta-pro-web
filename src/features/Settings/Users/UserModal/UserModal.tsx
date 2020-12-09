@@ -38,9 +38,6 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
   const getRoles = async (): Promise<void> => {
     try {
       const response = await fetchRoles();
-      setRoles(
-        response.data.map((role: Role) => ({ id: role.id, code: role.code, name: role.name })),
-      );
       setRoles(response.data);
     } catch (error) {
       console.log(error);
@@ -56,10 +53,10 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
     }
   };
 
-  const checkAllPermissions = () => {
+  const checkAllPermissions = (value: boolean) => {
     const sectionsToUpdate: Section[] = sections.map((section) => ({
       ...section,
-      permissions: section.permissions.map((permission) => ({ ...permission, checked: true })),
+      permissions: section.permissions.map((permission) => ({ ...permission, checked: value })),
     }));
 
     setSections(sectionsToUpdate);
@@ -78,12 +75,13 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
   };
 
   const handleRoleChange = (id: string) => {
-    const role = roles.find((item) => item.id === id);
-    console.log(role);
-
-    if (role) {
-      if (role.permissions.length === 0) checkAllPermissions();
-      else checkRelevantPermission(role);
+    if (!id) checkAllPermissions(false);
+    else {
+      const role = roles.find((item) => item.id === id);
+      if (role) {
+        if (role.permissions.length === 0) checkAllPermissions(true);
+        else checkRelevantPermission(role);
+      }
     }
   };
 
@@ -137,6 +135,10 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
     getRoles();
     getPermissions();
   }, []);
+
+  useEffect(() => {
+    handleRoleChange(user.roleId ?? '');
+  }, [user]);
 
   return (
     <Modal
