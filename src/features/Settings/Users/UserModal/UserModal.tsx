@@ -7,7 +7,7 @@ import Modal from '../../../../components/Modal/Modal';
 import Icon from '../../../../components/Icon/Icon';
 import Button from '../../../../components/Button/Button';
 import Text from '../../../../components/Text/Text';
-import { Role, UserForm, Sections } from '../types';
+import { Role, UserForm, Section } from '../types';
 import Label from '../../../../components/Label/Label';
 import Select from '../../../../components/Select/Select';
 import i18n from '../../../../i18n';
@@ -25,7 +25,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
   const { t } = useTranslation('translation');
 
   const [roles, setRoles] = useState<Role[]>([]);
-  const [sections, setSections] = useState<Sections[]>([]);
+  const [sections, setSections] = useState<Section[]>([]);
 
   const formik = useFormik({
     initialValues: user as UserForm,
@@ -57,7 +57,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
   };
 
   const checkAllPermissions = () => {
-    const sectionsToUpdate: Sections[] = sections.map((section) => ({
+    const sectionsToUpdate: Section[] = sections.map((section) => ({
       ...section,
       permissions: section.permissions.map((permission) => ({ ...permission, checked: true })),
     }));
@@ -66,7 +66,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
   };
 
   const checkRelevantPermission = (role: Role) => {
-    const sectionsToUpdate: Sections[] = sections.map((section) => ({
+    const sectionsToUpdate: Section[] = sections.map((section) => ({
       ...section,
       permissions: section.permissions.map((permission) => ({
         ...permission,
@@ -87,21 +87,44 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
     }
   };
 
-  const columns: ColumnsType<Sections> = [
+  const handlePermissionChange = (id: string, checked: boolean) => {
+    const sectionsToUpdate: Section[] = [...sections];
+
+    const sectionIndex: number = sectionsToUpdate.findIndex(
+      (section) => section.permissions.filter((permission) => permission.id === id).length > 0,
+    );
+
+    if (sectionIndex !== -1) {
+      const PermissoinIndex: number = sectionsToUpdate[sectionIndex].permissions.findIndex(
+        (permission) => permission.id === id,
+      );
+      if (PermissoinIndex !== -1) {
+        sectionsToUpdate[sectionIndex].permissions[PermissoinIndex].checked = checked;
+      }
+
+      setSections(sectionsToUpdate);
+    }
+  };
+
+  const columns: ColumnsType<Section> = [
     {
       title: t('sections'),
       dataIndex: 'sections',
       key: 'sections',
-      render: (text: any, record: Sections) => <Text>{record.name}</Text>,
+      render: (text: any, record: Section) => <Text>{record.name}</Text>,
     },
     {
       title: t('permissions'),
       dataIndex: 'permissions',
       key: 'permissions',
-      render: (text: any, record: Sections) => (
+      render: (text: any, record: Section) => (
         <Row>
           {record.permissions.map((permission) => (
-            <Checkbox key={permission.id} checked={permission.checked}>
+            <Checkbox
+              key={permission.id}
+              checked={permission.checked}
+              onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
+            >
               {permission.name}
             </Checkbox>
           ))}

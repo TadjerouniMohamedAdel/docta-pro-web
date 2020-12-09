@@ -1,22 +1,22 @@
-export type Permissions = {
+export type Permission = {
   id: string;
   name: string;
   code: string;
   checked?: boolean;
 };
 
-export type Sections = {
+export type Section = {
   id: string;
   name: string;
   code: string;
-  permissions: Permissions[];
+  permissions: Permission[];
 };
 
 export type Role = {
   id: string;
   name: string;
   code: string;
-  permissions: Permissions[];
+  permissions: Permission[];
 };
 
 export type User = {
