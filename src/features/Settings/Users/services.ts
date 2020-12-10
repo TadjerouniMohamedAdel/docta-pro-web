@@ -35,3 +35,9 @@ export const editUser = async ({
     method: 'PUT',
   });
 };
+
+export const deleteUser = async (id: string): Promise<any> => {
+  return fetcher(`/api/v1/professionals/${id}`, {
+    method: 'delete',
+  });
+};
