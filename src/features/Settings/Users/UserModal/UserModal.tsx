@@ -3,6 +3,7 @@ import { Checkbox, Col, Form, Input, Row, Select as AntSelect, Table } from 'ant
 import { ColumnsType } from 'antd/lib/table';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import generatePassword from 'password-generator';
 import Modal from '../../../../components/Modal/Modal';
 import Icon from '../../../../components/Icon/Icon';
 import Button from '../../../../components/Button/Button';
@@ -12,6 +13,7 @@ import Label from '../../../../components/Label/Label';
 import Select from '../../../../components/Select/Select';
 import i18n from '../../../../i18n';
 import { fetchPermissions, fetchRoles } from '../services';
+import Link from '../../../../components/Link/Link';
 
 type Props = {
   visible?: boolean;
@@ -33,7 +35,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
     onSubmit: () => console.log('form submitted'),
   });
 
-  const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
+  const { handleChange, handleBlur, values, handleSubmit, touched, errors, setFieldValue } = formik;
 
   const getRoles = async (): Promise<void> => {
     try {
@@ -102,6 +104,11 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
 
       setSections(sectionsToUpdate);
     }
+  };
+
+  const handleGeneratePassword = () => {
+    const password = generatePassword(8, false, /[\w\d-]/);
+    setFieldValue('password', password);
   };
 
   const columns: ColumnsType<Section> = [
@@ -256,11 +263,20 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
             </Col>
 
             <Col span={12}>
-              <Label
-                title={t('password')}
-                error={touched.password ? errors.password : undefined}
-                required
-              />
+              <Row>
+                <Col flex={1}>
+                  <Label
+                    title={t('password')}
+                    error={touched.password ? errors.password : undefined}
+                    required
+                  />
+                </Col>
+                <Col>
+                  <Link style={{ fontSize: 10 }} onClick={handleGeneratePassword}>
+                    {t('generate password')}
+                  </Link>
+                </Col>
+              </Row>
               <Form.Item
                 validateStatus={touched.password && Boolean(errors.password) ? 'error' : undefined}
               >
