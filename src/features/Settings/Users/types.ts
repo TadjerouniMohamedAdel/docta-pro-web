@@ -45,3 +45,23 @@ export type UserForm = {
   password: string;
   roleId: string | undefined;
 };
+
+export type AddUserParams = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  password: string;
+  role: string;
+  permissions: string[];
+};
+
+export type EditUserParams = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  password?: string;
+  role: string;
+  permissions: string[];
+};

@@ -4,17 +4,18 @@ import { ColumnsType } from 'antd/lib/table';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import InputMask from 'react-input-mask';
+import { useMutation } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import generatePassword from 'password-generator';
 import Modal from '../../../../components/Modal/Modal';
 import Icon from '../../../../components/Icon/Icon';
 import Button from '../../../../components/Button/Button';
 import Text from '../../../../components/Text/Text';
-import { Role, UserForm, Section } from '../types';
+import { Role, UserForm, Section, AddUserParams, EditUserParams } from '../types';
 import Label from '../../../../components/Label/Label';
 import Select from '../../../../components/Select/Select';
 import i18n from '../../../../i18n';
-import { fetchPermissions, fetchRoles } from '../services';
+import { addUser, editUser, fetchPermissions, fetchRoles } from '../services';
 import Link from '../../../../components/Link/Link';
 
 type Props = {
@@ -30,6 +31,9 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
 
   const [roles, setRoles] = useState<Role[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
+
+  const [addUserMutate, { isLoading: isAddUserLoading }] = useMutation(addUser);
+  const [EditUserMutate, { isLoading: isEditUserLoading }] = useMutation(editUser);
 
   const phoneRegEx = /(\+[0-9]{11,12})/;
 
@@ -51,8 +55,54 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
     }),
   });
 
-  const handleSaveUser = (values: UserForm) => {
-    console.log(values);
+  const handleAddUser = async (values: UserForm, permissions: string[]) => {
+    const addUserParams: AddUserParams = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      phone: values.phone,
+      role: values.roleId || '',
+      password: values.password,
+      permissions,
+    };
+
+    try {
+      await addUserMutate(addUserParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEditUser = async (values: UserForm, permissions: string[]) => {
+    const editUserParams: EditUserParams = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      phone: values.phone,
+      role: values.roleId || '',
+      permissions,
+    };
+
+    if (values.password) editUserParams.password = values.password;
+
+    try {
+      await EditUserMutate({ id: values.id || '', body: editUserParams });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSaveUser = async (values: UserForm): Promise<void> => {
+    const permissions: string[] = [];
+
+    sections.forEach((section) =>
+      section.permissions.forEach((permission) => {
+        if (permission.checked) permissions.push(permission.id);
+      }),
+    );
+
+    if (!values.id) handleAddUser(values, permissions);
+    else handleEditUser(values, permissions);
   };
 
   const [form] = Form.useForm();
@@ -183,7 +233,12 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
       width={780}
       onCancel={() => setVisible(false)}
       actions={
-        <Button type="primary" icon={<Icon name="save-line" />} onClick={form.submit}>
+        <Button
+          type="primary"
+          icon={<Icon name="save-line" />}
+          onClick={form.submit}
+          loading={isAddUserLoading || isEditUserLoading}
+        >
           SAVE
         </Button>
       }
