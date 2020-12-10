@@ -37,7 +37,7 @@ export type Professional = {
 };
 
 export type UserForm = {
-  id: string;
+  id: string | undefined;
   firstName: string;
   lastName: string;
   phone: string;

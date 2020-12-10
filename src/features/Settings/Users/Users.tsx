@@ -22,7 +22,7 @@ const useUsersList = (page: number, size: number) => {
 };
 
 const initialValues: UserForm = {
-  id: '',
+  id: undefined,
   firstName: '',
   lastName: '',
   phone: '',

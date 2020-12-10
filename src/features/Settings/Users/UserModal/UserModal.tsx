@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Checkbox, Col, Form, Input, Row, Select as AntSelect, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import generatePassword from 'password-generator';
 import Modal from '../../../../components/Modal/Modal';
@@ -24,15 +26,42 @@ type Props = {
 const { Option } = AntSelect;
 
 const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
-  const { t } = useTranslation('translation');
+  const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const [roles, setRoles] = useState<Role[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
 
+  const phoneRegEx = /(\+[0-9]{11,12})/;
+
+  const validationSchema = Yup.object().shape({
+    id: Yup.string(),
+    firstName: Yup.string().required(t('errors:required field')),
+    lastName: Yup.string().required(t('errors:required field')),
+    phone: Yup.string()
+      .required(t('errors:required field'))
+      .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
+    email: Yup.string()
+      .required(t('errors:required field'))
+      .email(i18n.t('errors:must be a valid', { fieldName: t('email') })),
+    roleId: Yup.string().required(t('errors:required field')),
+    password: Yup.string().when('id', {
+      is: undefined,
+      then: Yup.string().required(t('errors:required field')),
+      otherwise: Yup.string(),
+    }),
+  });
+
+  const handleSaveUser = (values: UserForm) => {
+    console.log(values);
+  };
+
+  const [form] = Form.useForm();
+
   const formik = useFormik({
     initialValues: user as UserForm,
     enableReinitialize: true,
-    onSubmit: () => console.log('form submitted'),
+    validationSchema,
+    onSubmit: handleSaveUser,
   });
 
   const { handleChange, handleBlur, values, handleSubmit, touched, errors, setFieldValue } = formik;
@@ -154,13 +183,13 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
       width={780}
       onCancel={() => setVisible(false)}
       actions={
-        <Button type="primary" icon={<Icon name="save-line" />}>
+        <Button type="primary" icon={<Icon name="save-line" />} onClick={form.submit}>
           SAVE
         </Button>
       }
     >
       <div style={{ padding: '16px 40px' }}>
-        <Form onFinish={handleSubmit}>
+        <Form onFinish={handleSubmit} form={form}>
           <Row gutter={[35, 16]}>
             <Col span={12}>
               <Label
@@ -207,14 +236,36 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
               <Form.Item
                 validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
               >
-                <Input
-                  prefix={<Icon name="phone-line" />}
-                  name="phone"
+                <InputMask
+                  mask="+213 999 999 999"
+                  maskChar={null}
+                  placeholder={`+213 ${i18n.t('placeholders:enter your', {
+                    fieldName: t('phone number'),
+                  })}`}
                   value={values.phone}
-                  placeholder="enter your phone number"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+                  onChange={(e) =>
+                    handleChange({
+                      target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
+                    })
+                  }
+                  onBlur={(e) =>
+                    handleBlur({
+                      target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
+                    })
+                  }
+                >
+                  {(inputProps: any) => (
+                    <Input
+                      prefix={<Icon name="phone-line" />}
+                      name="phone"
+                      value={values.phone}
+                      placeholder={`+213 ${i18n.t('placeholders:enter your', {
+                        fieldName: t('phone number'),
+                      })}`}
+                      {...inputProps}
+                    />
+                  )}
+                </InputMask>
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -242,7 +293,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
                   prefixIcon={<Icon name="award-line" />}
                   placeholder="Select Role"
                   dropdownMatchSelectWidth={false}
-                  value={values.roleId}
+                  value={values.roleId || undefined}
                   onChange={(value) => {
                     handleChange({
                       target: {
@@ -263,7 +314,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
             </Col>
 
             <Col span={12}>
-              <Row>
+              <Row gutter={8}>
                 <Col flex={1}>
                   <Label
                     title={t('password')}
@@ -282,6 +333,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
               >
                 <Input
                   prefix={<Icon name="lock-2-line" />}
+                  suffix={<Icon name="eye-line" />}
                   name="password"
                   value={values.password}
                   placeholder={i18n.t('placeholders:enter your', { fieldName: t('password') })}
