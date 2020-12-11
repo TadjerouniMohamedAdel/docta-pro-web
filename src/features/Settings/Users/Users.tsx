@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Col, Row, Table, Avatar } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
-import { useMutation, usePaginatedQuery } from 'react-query';
+import { useMutation, usePaginatedQuery, useQueryCache } from 'react-query';
 import { LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import Text from '../../../components/Text/Text';
@@ -68,11 +68,26 @@ const Users: React.FC<Props> = () => {
   };
 
   const [mutate, { isLoading: isDeleteUserLoading }] = useMutation(deleteUser);
+  const cache = useQueryCache();
 
   const handleDeleteUser = async (id: string) => {
     try {
       setUserId(id);
       await mutate(id);
+      const previousValue: { data: any[]; total: number } | undefined = cache.getQueryData([
+        'users',
+        pageIndex,
+        pageSize,
+      ]);
+      if (previousValue) {
+        const updatedValue = { ...previousValue };
+        const newData = updatedValue.data.filter((item) => item.id !== id);
+        cache.setQueryData(['users', pageIndex, pageSize], {
+          ...updatedValue,
+          data: newData,
+          total: updatedValue.total - 1,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
