@@ -8,6 +8,10 @@
   "phone number": "Phone number",
   "email": "Email",
   "password": "Password",
+  "role": "Role",
+  "first name": "First Name",
+  "last name": "Last Name",
+  "full name": "Full Name",
   "Welcome, please login to access the app": "Welcome, please login to access the app",
   "dont have an account": "Dont have an account?",
   "forgot password": "Forgot password?",
@@ -17,5 +21,14 @@
   "Docta phone number": "Docta phone number",
   "reset password": "Reset password",
   "new password": "New password",
-  "settings": "Settings"
+  "settings": "Settings",
+  "created at": "Created At",
+  "actions": "Actions",
+  "users": "Users",
+  "add user": "Add user",
+  "edit user": "Edit user",
+  "sections": "Sections",
+  "permissions": "Permissions",
+  "save": "Save",
+  "generate password": "Generate password"
 }

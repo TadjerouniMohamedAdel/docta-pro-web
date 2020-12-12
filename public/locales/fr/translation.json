@@ -8,6 +8,10 @@
   "phone number": "Numéro de téléphone",
   "email": "Email",
   "password": "Mot de passe",
+  "role": "Rôle",
+  "first name": "Prénom",
+  "last name": "Nom de famille",
+  "full name": "Nom complet",
   "Welcome, please login to access the app": "Bienvenue, veuillez vous connecter pour accéder à l'application",
   "dont have an account": "Vous n'avez pas de compte?",
   "forgot password": "Mot de passe oublié?",
@@ -18,5 +22,14 @@
   "reset password": "Réinitialiser le mot de passe",
   "new password": "Nouveau mot de passe",
   "confirm your": "Confirmer votre",
-  "settings": "paramètre"
+  "settings": "paramètre",
+  "created at": "Créé à",
+  "actions": "Actions",
+  "users": "Utilisateurs",
+  "add user": "Ajouter un utilisateur",
+  "edit user": "Mettre à jour l'utilisateur",
+  "sections": "Sections",
+  "permissions": "Autorisations",
+  "save": "Enregistrer",
+  "generate password": "Générer un mot de passe"
 }

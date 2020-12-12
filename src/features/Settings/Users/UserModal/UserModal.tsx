@@ -68,6 +68,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
 
     try {
       await addUserMutate(addUserParams);
+      setVisible(false);
     } catch (error) {
       console.log(error);
     }
@@ -87,6 +88,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
 
     try {
       await EditUserMutate({ id: values.id || '', body: editUserParams });
+      setVisible(false);
     } catch (error) {
       console.log(error);
     }
@@ -238,8 +240,9 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
           icon={<Icon name="save-line" />}
           onClick={form.submit}
           loading={isAddUserLoading || isEditUserLoading}
+          style={{ textTransform: 'uppercase' }}
         >
-          SAVE
+          {t('save')}
         </Button>
       }
     >
@@ -248,7 +251,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
           <Row gutter={[35, 16]}>
             <Col span={12}>
               <Label
-                title="First name"
+                title={t('first name')}
                 error={touched.firstName ? errors.firstName : undefined}
                 required
               />
@@ -261,7 +264,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
                   prefix={<Icon name="user-line" />}
                   name="firstName"
                   value={values.firstName}
-                  placeholder="enter your first name"
+                  placeholder={i18n.t('placeholders:enter', { fieldName: t('first name') })}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -269,7 +272,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
             </Col>
             <Col span={12}>
               <Label
-                title="Last name"
+                title={t('last name')}
                 error={touched.lastName ? errors.lastName : undefined}
                 required
               />
@@ -280,21 +283,21 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
                   prefix={<Icon name="user-line" />}
                   name="lastName"
                   value={values.lastName}
-                  placeholder="enter your last name"
+                  placeholder={i18n.t('placeholders:enter', { fieldName: t('last name') })}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Label title="Phone" error={touched.phone ? errors.phone : undefined} required />
+              <Label title={t('phone')} error={touched.phone ? errors.phone : undefined} required />
               <Form.Item
                 validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
               >
                 <InputMask
                   mask="+213 999 999 999"
                   maskChar={null}
-                  placeholder={`+213 ${i18n.t('placeholders:enter your', {
+                  placeholder={`+213 ${i18n.t('placeholders:enter', {
                     fieldName: t('phone number'),
                   })}`}
                   value={values.phone}
@@ -314,7 +317,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
                       prefix={<Icon name="phone-line" />}
                       name="phone"
                       value={values.phone}
-                      placeholder={`+213 ${i18n.t('placeholders:enter your', {
+                      placeholder={`+213 ${i18n.t('placeholders:enter', {
                         fieldName: t('phone number'),
                       })}`}
                       {...inputProps}
@@ -324,7 +327,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Label title="Email" error={touched.email ? errors.email : undefined} required />
+              <Label title={t('email')} error={touched.email ? errors.email : undefined} required />
               <Form.Item
                 validateStatus={touched.email && Boolean(errors.email) ? 'error' : undefined}
               >
@@ -332,7 +335,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
                   prefix={<Icon name="mail-line" />}
                   name="email"
                   value={values.email}
-                  placeholder="enter your email"
+                  placeholder={i18n.t('placeholders:enter', { fieldName: t('email') })}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -340,13 +343,17 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
             </Col>
 
             <Col span={12}>
-              <Label title="Role" error={touched.roleId ? errors.roleId : undefined} required />
+              <Label
+                title={t('role')}
+                error={touched.roleId ? errors.roleId : undefined}
+                required
+              />
               <Form.Item
                 validateStatus={touched.roleId && Boolean(errors.roleId) ? 'error' : undefined}
               >
                 <Select
                   prefixIcon={<Icon name="award-line" />}
-                  placeholder="Select Role"
+                  placeholder={i18n.t('placeholders:select', { fieldName: t('role') })}
                   dropdownMatchSelectWidth={false}
                   value={values.roleId || undefined}
                   onChange={(value) => {
@@ -378,7 +385,10 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
                   />
                 </Col>
                 <Col>
-                  <Link style={{ fontSize: 10 }} onClick={handleGeneratePassword}>
+                  <Link
+                    style={{ fontSize: 10, textTransform: 'uppercase' }}
+                    onClick={handleGeneratePassword}
+                  >
                     {t('generate password')}
                   </Link>
                 </Col>
@@ -391,7 +401,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
                   suffix={<Icon name="eye-line" />}
                   name="password"
                   value={values.password}
-                  placeholder={i18n.t('placeholders:enter your', { fieldName: t('password') })}
+                  placeholder={i18n.t('placeholders:enter', { fieldName: t('password') })}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
