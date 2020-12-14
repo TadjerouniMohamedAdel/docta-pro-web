@@ -1,5 +1,6 @@
 on:
   pull_request:
+    types: [opened, reopened]
     branches: [develop, main]
 
 name: Test Docta Pro Web
