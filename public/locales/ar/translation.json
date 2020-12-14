@@ -8,6 +8,10 @@
   "phone number": "رقم الهاتف",
   "email": "البريد الإلكتروني",
   "password": "كلمه السر",
+  "role": "دور",
+  "first name": "الاسم",
+  "last name": "اسم العائلة",
+  "full name": "الاسم الكامل",
   "Welcome, please login to access the app": "مرحبًا ، الرجاء تسجيل الدخول للوصول إلى التطبيق",
   "dont have an account": "ليس لديك حساب؟",
   "forgot password": "هل نسيت كلمة المرور؟",
@@ -17,5 +21,14 @@
   "Docta phone number": "رقم الهاتف الخاص بدوكتا",
   "reset password": "إعادة تعيين كلمة المرور",
   "new password": "كلمة سر جديدة",
-  "settings": "إعدادات"
+  "settings": "إعدادات",
+  "created at": "أنشئت في",
+  "actions": "أجراءات",
+  "users": "المستخدمين",
+  "add user": "إضافة مستخدم",
+  "edit user": "تحديث المستخدم",
+  "sections": "الأقسام",
+  "permissions": "الرخصات",
+  "save": "حفظ",
+  "generate password": "توليد كلمة السر"
 }
