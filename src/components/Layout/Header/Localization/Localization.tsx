@@ -9,7 +9,9 @@ const Localization: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   const handleLocaleChange = (e: any): void => {
-    const hide: Function = message.loading(t('changing language'), 0);
+    const result = message.loading(t('changing language'), 0) as unknown;
+    const hide = result as () => void;
+
     i18n.changeLanguage(e.key, () => {
       setLocale(e.key);
       localStorage.setItem('locale', e.key);
