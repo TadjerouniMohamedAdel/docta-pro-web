@@ -3,7 +3,7 @@ name: Test Docta Pro Web
 on:
   pull_request:
     branches:
-      - develop
+      branches: [develop, main]
 
 jobs:
   test:
@@ -13,23 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Set variables
-        id: set-var
-        run: |
-          if [ "${{github.ref}}" == "refs/heads/develop" ]
-          then
-            echo "::set-output name=AWS_CLUSTER_NAME::docta-stg"
-            echo "::set-output name=AWS_REPOSITORY_NAME::docta-pro-stg-ecr"
-            echo "::set-output name=AWS_TASK_DEFINITION_NAME::docta-pro-stg-td"
-            echo "::set-output name=AWS_SERVICE_NAME::docta-pro-stg-service"
-          # elif [ "${{github.ref}}" == "refs/heads/main" ]
-          # then
-          # echo "::set-output name=AWS_CLUSTER_NAME::docta-stg"
-          # echo "::set-output name=AWS_REPOSITORY_NAME::docta-pro-stg-ecr"
-          # echo "::set-output name=AWS_TASK_DEFINITION_NAME::docta-pro-stg-td"
-          # echo "::set-output name=AWS_SERVICE_NAME::docta-pro-stg-service"
-          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -42,12 +25,10 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Build docker image
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ steps.set-var.outputs.AWS_REPOSITORY_NAME }}
+          ECR_REPOSITORY: docta-pro-stg-ecr
           IMAGE_TAG: latest
-        run: |
-          # Build a docker container
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        run: docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
