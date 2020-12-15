@@ -2,6 +2,7 @@ name: Test Docta Pro Web
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     branches:
       branches: [develop, main]
 
