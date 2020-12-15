@@ -2,7 +2,7 @@ import { queryCache } from 'react-query';
 
 type FetchHeader = {
   'Content-Type'?: string;
-  Authorization?: string;
+  authorization?: string;
   locale: string;
 };
 
@@ -12,7 +12,7 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
 
   const headers: FetchHeader = { 'Content-Type': 'application/json', locale };
   if (token) {
-    headers.Authorization = `Bearer ${token}`;
+    headers.authorization = token;
   }
 
   const config = {
