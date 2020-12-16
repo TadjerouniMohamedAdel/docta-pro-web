@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Route, Switch } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
+import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
 import Menu from './Menu/Menu';
 import Users from './Users';
 
@@ -24,7 +25,9 @@ const Settings: React.FC<Props> = () => {
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <Switch>
-          <Route path="/settings/users" component={Users} />
+          <ProtectedComponent accessCode="users_roles/settings">
+            <Route path="/settings/users" component={Users} />
+          </ProtectedComponent>
         </Switch>
       </InnerContent>
     </InnerLayout>

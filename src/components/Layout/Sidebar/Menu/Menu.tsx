@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as AntMenu } from 'antd';
 import MenuItem from './MenuItem/MenuItem';
+import ProtectedComponent from '../../../../features/Auth/ProtectedComponent/ProtectedComponent';
 
 type Props = {
   collapsed: boolean;
@@ -40,12 +41,14 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
         path="/patients"
         collapsed={collapsed}
       />
-      <MenuItem
-        title={t('settings')}
-        iconName="settings-line"
-        path="/settings"
-        collapsed={collapsed}
-      />
+      <ProtectedComponent accessCode="settings" type="section">
+        <MenuItem
+          title={t('settings')}
+          iconName="settings-line"
+          path="/settings"
+          collapsed={collapsed}
+        />
+      </ProtectedComponent>
     </AntMenu>
   );
 };

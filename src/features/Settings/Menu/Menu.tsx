@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as AntMenu } from 'antd';
 import MenuItem from './MenuItem/MenuItem';
+import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
 
 const Menu: React.FC = () => {
   const { t } = useTranslation();
@@ -21,7 +22,9 @@ const Menu: React.FC = () => {
         iconName="calendar-event-line"
         path="/settings/working-hours"
       />
-      <MenuItem title={t('users')} iconName="shield-user-line" path="/settings/users" />
+      <ProtectedComponent accessCode="users_roles/settings">
+        <MenuItem title={t('users')} iconName="shield-user-line" path="/settings/users" />
+      </ProtectedComponent>
     </AntMenu>
   );
 };
