@@ -21,14 +21,12 @@ const Auth: React.FC = () => {
 
   const history = useHistory();
 
-  const [mutate, { isLoading, isError }] = useMutation(login);
+  const { mutateAsync, isLoading, isError } = useMutation(login);
 
   const onLogin = async (values: LoginParams): Promise<void> => {
     try {
-      const response: AuthResponse | undefined = await mutate(values);
-      if (response) {
-        setUser(response.data);
-      }
+      const response: AuthResponse | undefined = await mutateAsync(values);
+      if (response) setUser(response.data);
     } catch (err) {
       console.log(err);
     }
