@@ -1,7 +1,7 @@
 import fetcher from '../../../utils/fetcher';
 import { AddUserParams, EditUserParams } from './types';
 
-export const fetchUsers = async (key: string, page = 1, size = 10): Promise<any> => {
+export const fetchUsers = async (page = 1, size = 10): Promise<any> => {
   return fetcher(`/api/v1/professionals?skip=${(page - 1) * size}&take=${size}`);
 };
 
