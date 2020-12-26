@@ -1,16 +1,18 @@
 import React from 'react';
-import { QueryCache, ReactQueryCacheProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { AuthProvider } from './features/Auth/context';
 import { LocaleProvider } from './i18n';
 
 const AppProvider: React.FC = ({ children }) => {
-  const queryCache = new QueryCache();
+  const queryClient = new QueryClient();
   return (
-    <ReactQueryCacheProvider queryCache={queryCache}>
+    <QueryClientProvider client={queryClient}>
       <LocaleProvider>
         <AuthProvider>{children}</AuthProvider>
       </LocaleProvider>
-    </ReactQueryCacheProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 };
 

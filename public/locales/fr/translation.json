@@ -31,5 +31,9 @@
   "sections": "Sections",
   "permissions": "Autorisations",
   "save": "Enregistrer",
-  "generate password": "Générer un mot de passe"
+  "generate password": "Générer un mot de passe",
+  "patients": "Patients",
+  "all patients": "Tous les patients",
+  "blocked patients": "Patients bloqués",
+  "search patients": "Rechercher des patients"
 }

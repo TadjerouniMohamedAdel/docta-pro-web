@@ -1,6 +1,7 @@
 import { Col, Dropdown, Menu, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
 import Button from '../../components/Button/Button';
@@ -11,6 +12,9 @@ import PatientProfile from './PatientProfile/PatientProfile';
 import PatientModal from './PatientModal/PatientModal';
 
 const Patients: React.FC = () => {
+  const { t } = useTranslation('translation');
+  const [patientsCount, setPatientsCount] = useState();
+
   const [showPatientModal, setShowPatientModal] = useState(false);
 
   return (
@@ -20,10 +24,10 @@ const Patients: React.FC = () => {
           <Col style={{ display: 'flex' }}>
             <Spacer size="xs">
               <Text size="xxl" style={{ fontWeight: 'bold' }}>
-                Patients
+                {t('patients')}
               </Text>
               <Text type="secondary" style={{ fontWeight: 500 }}>
-                465
+                {patientsCount}
               </Text>
             </Spacer>
           </Col>
@@ -33,7 +37,7 @@ const Patients: React.FC = () => {
             </Button>
           </Col>
         </Row>
-        <PatientsList />
+        <PatientsList setPatientsCount={setPatientsCount} />
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '18px 25px' }}>

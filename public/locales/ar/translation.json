@@ -30,5 +30,9 @@
   "sections": "الأقسام",
   "permissions": "الرخصات",
   "save": "حفظ",
-  "generate password": "توليد كلمة السر"
+  "generate password": "توليد كلمة السر",
+  "patients": "المرضى",
+  "all patients": "كل المرضى",
+  "blocked patients": "المرضى المحظورون",
+  "search patients": "ابحث عن المرضى"
 }

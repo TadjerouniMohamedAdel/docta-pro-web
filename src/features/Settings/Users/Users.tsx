@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Col, Row, Table, Avatar } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
-import { useMutation, usePaginatedQuery, useQueryCache } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import Text from '../../../components/Text/Text';
@@ -15,11 +15,12 @@ import { Professional, UserForm } from './types';
 type Props = {};
 
 const useUsersList = (page: number, size: number) => {
-  const { resolvedData, isLoading, isError, isFetching } = usePaginatedQuery(
+  const { data, isLoading, isError, isFetching } = useQuery(
     ['users', page, size],
-    fetchUsers,
+    () => fetchUsers(page, size),
+    { keepPreviousData: true },
   );
-  return { resolvedData: resolvedData ?? [], isLoading, isError, isFetching };
+  return { resolvedData: data ?? [], isLoading, isError, isFetching };
 };
 
 const initialValues: UserForm = {
@@ -67,8 +68,8 @@ const Users: React.FC<Props> = () => {
     setShowModal(true);
   };
 
-  const [mutate, { isLoading: isDeleteUserLoading }] = useMutation(deleteUser);
-  const cache = useQueryCache();
+  const { mutate, isLoading: isDeleteUserLoading } = useMutation(deleteUser);
+  const cache = useQueryClient();
 
   const handleDeleteUser = async (id: string) => {
     try {

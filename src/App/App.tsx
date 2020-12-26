@@ -3,12 +3,14 @@ import React, { useEffect } from 'react';
 import en from 'antd/es/locale/en_GB';
 import ar from 'antd/es/locale/ar_EG';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { queryCache } from 'react-query';
+import { QueryCache } from 'react-query';
 import FullPageLoader from '../components/FullPageLoader';
 import { useAuthState } from '../features/Auth/context';
 import { useLocaleState } from '../i18n';
 import { getCurrentUser } from '../features/Auth/services';
 import { AuthResponse } from '../features/Auth/types';
+
+const queryCache = new QueryCache();
 
 const AuthenticatedApp = React.lazy(
   () => import(/* webpackPrefetch: true */ './AuthenticatedApp/AuthenticatedApp'),

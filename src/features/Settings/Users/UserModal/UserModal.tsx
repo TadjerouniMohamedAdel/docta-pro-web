@@ -32,8 +32,8 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
   const [roles, setRoles] = useState<Role[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
 
-  const [addUserMutate, { isLoading: isAddUserLoading }] = useMutation(addUser);
-  const [EditUserMutate, { isLoading: isEditUserLoading }] = useMutation(editUser);
+  const { mutate: addUserMutate, isLoading: isAddUserLoading } = useMutation(addUser);
+  const { mutate: EditUserMutate, isLoading: isEditUserLoading } = useMutation(editUser);
 
   const phoneRegEx = /(\+[0-9]{11,12})/;
 

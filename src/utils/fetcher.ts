@@ -1,10 +1,12 @@
-import { queryCache } from 'react-query';
+import { QueryCache } from 'react-query';
 
 type FetchHeader = {
   'Content-Type'?: string;
   authorization?: string;
   locale: string;
 };
+
+const queryCache = new QueryCache();
 
 function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
   const token = localStorage.getItem('token');
