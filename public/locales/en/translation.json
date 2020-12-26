@@ -30,5 +30,9 @@
   "sections": "Sections",
   "permissions": "Permissions",
   "save": "Save",
-  "generate password": "Generate password"
+  "generate password": "Generate password",
+  "patients": "Patients",
+  "all patients": "All Patients",
+  "blocked patients": "Blocked Patients",
+  "search patients": "Search patients"
 }

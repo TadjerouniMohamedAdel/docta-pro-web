@@ -3,6 +3,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useInfiniteQuery } from 'react-query';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
@@ -27,6 +28,8 @@ const usePatientsList = (term: string) => {
 };
 
 const AllPatients: React.FC<Props> = () => {
+  const { t } = useTranslation('translation');
+
   const [term, setTerm] = useState<string>('');
   const {
     data,
@@ -58,7 +61,7 @@ const AllPatients: React.FC<Props> = () => {
         <div style={{ padding: '0 12px' }}>
           <Input
             size="small"
-            placeholder="Search patients"
+            placeholder={t('search patients')}
             onChange={(e) => handleSearchChange(e.target.value)}
           />
         </div>
