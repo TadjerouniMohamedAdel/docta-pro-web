@@ -13,6 +13,7 @@ import PatientModal from './PatientModal/PatientModal';
 
 const Patients: React.FC = () => {
   const { t } = useTranslation('translation');
+  const [patientsCount, setPatientsCount] = useState();
 
   const [showPatientModal, setShowPatientModal] = useState(false);
 
@@ -26,7 +27,7 @@ const Patients: React.FC = () => {
                 {t('patients')}
               </Text>
               <Text type="secondary" style={{ fontWeight: 500 }}>
-                465
+                {patientsCount}
               </Text>
             </Spacer>
           </Col>
@@ -36,7 +37,7 @@ const Patients: React.FC = () => {
             </Button>
           </Col>
         </Row>
-        <PatientsList />
+        <PatientsList setPatientsCount={setPatientsCount} />
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '18px 25px' }}>

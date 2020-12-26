@@ -10,13 +10,18 @@ import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import { fetchAllPatients } from '../../services';
 
-type Props = {};
+type Props = {
+  setPatientsCount: (value: number) => void;
+};
 
 const usePatientsList = (term: string) => {
+  const [total, setTotal] = useState(0);
+
   const { data, ...rest } = useInfiniteQuery(
     'patients',
     async ({ pageParam = 0 }) => {
       const res = await fetchAllPatients(term, pageParam);
+      setTotal(res.total);
       return { ...res, patients: res.data };
     },
     {
@@ -24,10 +29,10 @@ const usePatientsList = (term: string) => {
         lastPage.nextCursor < lastPage.total ? lastPage.nextCursor : undefined,
     },
   );
-  return { data: data && data.pages ? data : ({ pages: [] } as any), ...rest };
+  return { data: data && data.pages ? data : ({ pages: [] } as any), total, ...rest };
 };
 
-const AllPatients: React.FC<Props> = () => {
+const AllPatients: React.FC<Props> = ({ setPatientsCount }) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
@@ -38,6 +43,7 @@ const AllPatients: React.FC<Props> = () => {
     fetchNextPage,
     hasNextPage,
     refetch,
+    total,
   } = usePatientsList(term);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -54,6 +60,10 @@ const AllPatients: React.FC<Props> = () => {
   useEffect(() => {
     refetch();
   }, [term]);
+
+  useEffect(() => {
+    setPatientsCount(total);
+  }, [total]);
 
   return (
     <div style={{ padding: '12px 0' }}>
