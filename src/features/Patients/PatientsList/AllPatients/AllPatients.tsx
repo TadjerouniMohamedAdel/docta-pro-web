@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import { LoadingOutlined } from '@ant-design/icons';
-import { AutoComplete, Col, Input, Row } from 'antd';
+import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
@@ -11,11 +11,11 @@ import { fetchAllPatients } from '../../services';
 
 type Props = {};
 
-const usePatientsList = () => {
+const usePatientsList = (term: string) => {
   const { data, ...rest } = useInfiniteQuery(
     'patients',
     async ({ pageParam = 0 }) => {
-      const res = await fetchAllPatients(pageParam);
+      const res = await fetchAllPatients(term, pageParam);
       return { ...res, patients: res.data };
     },
     {
@@ -27,8 +27,15 @@ const usePatientsList = () => {
 };
 
 const AllPatients: React.FC<Props> = () => {
-  const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } = usePatientsList();
-
+  const [term, setTerm] = useState<string>('');
+  const {
+    data,
+    isFetchingNextPage,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    refetch,
+  } = usePatientsList(term);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
   useIntersectionObserver({
@@ -37,13 +44,23 @@ const AllPatients: React.FC<Props> = () => {
     enabled: hasNextPage,
   });
 
+  const handleSearchChange = (value: string) => {
+    setTerm(value);
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [term]);
+
   return (
     <div style={{ padding: '12px 0' }}>
       <Spacer size="xl" direction="vertical">
         <div style={{ padding: '0 12px' }}>
-          <AutoComplete allowClear style={{ width: '100%' }}>
-            <Input size="small" placeholder="Search patients" />
-          </AutoComplete>
+          <Input
+            size="small"
+            placeholder="Search patients"
+            onChange={(e) => handleSearchChange(e.target.value)}
+          />
         </div>
 
         <div>
@@ -63,7 +80,7 @@ const AllPatients: React.FC<Props> = () => {
                               {patient.firstName} {patient.lastName}
                             </Text>
                             <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                              {patient.address}
+                              {patient.city ?? '-'} - {patient.state ?? '-'}
                             </Text>
                           </Spacer>
                         </Col>
@@ -71,7 +88,7 @@ const AllPatients: React.FC<Props> = () => {
                     </Col>
                     <Col>
                       <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                        {patient.phone}
+                        {patient.user.phone}
                       </Text>
                     </Col>
                   </Row>
