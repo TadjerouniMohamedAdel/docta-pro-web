@@ -18,25 +18,6 @@ type Props = {
 const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
-  // const phoneRegEx = /(\+[0-9]{11,12})/;
-
-  // const validationSchema = Yup.object().shape({
-  //   id: Yup.string(),
-  //   firstName: Yup.string().required(t('errors:required field')),
-  //   lastName: Yup.string().required(t('errors:required field')),
-  //   phone: Yup.string()
-  //     .required(t('errors:required field'))
-  //     .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
-  //   birthday: Yup.date().typeError(i18n.t('errors:must be a valid', { fieldName: t('birthday') })),
-  //   email: Yup.string().email(i18n.t('errors:must be a valid', { fieldName: t('email') })),
-  // });
-
-  // const formik = useFormik({
-  //   initialValues: personalInfoForm,
-  //   validationSchema,
-  //   onSubmit: () => console.log('form submited'),
-  // });
-
   const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
 
   const handleFieldsChange = (key: string, value: any): void => {
