@@ -1,3 +1,5 @@
+import { Moment } from 'moment';
+
 export type FormField = {
   key: string;
   value: any;
@@ -8,7 +10,7 @@ export type PersonalInfoForm = {
   lastName: string;
   phone: string;
   email: string;
-  birthday: null | Date;
+  birthday: Moment | null | undefined;
   gender: string;
   address: string;
   state: string;

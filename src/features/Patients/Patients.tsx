@@ -36,7 +36,7 @@ const Patients: React.FC = () => {
             </Spacer>
           </Col>
           <Col>
-            <Button type="default" size="small" onClick={() => setShowPatientModal(true)}>
+            <Button type="primary" size="small" onClick={() => setShowPatientModal(true)}>
               <Icon name="add-line" />
             </Button>
           </Col>

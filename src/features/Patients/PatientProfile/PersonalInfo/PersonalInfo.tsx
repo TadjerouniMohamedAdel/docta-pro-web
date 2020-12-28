@@ -2,41 +2,40 @@ import React from 'react';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { Col, Row, Form, Input, Avatar } from 'antd';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { FormikProps } from 'formik';
 import Label from '../../../../components/Label/Label';
 import Icon from '../../../../components/Icon/Icon';
 import Select from '../../../../components/Select/Select';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
-import { FormField } from '../../types';
+import { FormField, PersonalInfoForm } from '../../types';
 import i18n from '../../../../i18n';
 
 type Props = {
-  personalInfoForm: any;
   handleFormChange: (values: FormField) => void;
+  formik: FormikProps<PersonalInfoForm>;
 };
 
-const PersonalInfo: React.FC<Props> = ({ personalInfoForm, handleFormChange }) => {
+const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
-  const phoneRegEx = /(\+[0-9]{11,12})/;
+  // const phoneRegEx = /(\+[0-9]{11,12})/;
 
-  const validationSchema = Yup.object().shape({
-    id: Yup.string(),
-    firstName: Yup.string().required(t('errors:required field')),
-    lastName: Yup.string().required(t('errors:required field')),
-    phone: Yup.string()
-      .required(t('errors:required field'))
-      .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
-    birthday: Yup.date().typeError(i18n.t('errors:must be a valid', { fieldName: t('birthday') })),
-    email: Yup.string().email(i18n.t('errors:must be a valid', { fieldName: t('email') })),
-  });
+  // const validationSchema = Yup.object().shape({
+  //   id: Yup.string(),
+  //   firstName: Yup.string().required(t('errors:required field')),
+  //   lastName: Yup.string().required(t('errors:required field')),
+  //   phone: Yup.string()
+  //     .required(t('errors:required field'))
+  //     .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
+  //   birthday: Yup.date().typeError(i18n.t('errors:must be a valid', { fieldName: t('birthday') })),
+  //   email: Yup.string().email(i18n.t('errors:must be a valid', { fieldName: t('email') })),
+  // });
 
-  const formik = useFormik({
-    initialValues: personalInfoForm,
-    validationSchema,
-    onSubmit: () => console.log('form submited'),
-  });
+  // const formik = useFormik({
+  //   initialValues: personalInfoForm,
+  //   validationSchema,
+  //   onSubmit: () => console.log('form submited'),
+  // });
 
   const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
 
@@ -110,9 +109,15 @@ const PersonalInfo: React.FC<Props> = ({ personalInfoForm, handleFormChange }) =
                 fieldName: t('phone number'),
               })}`}
               value={values.phone}
-              onChange={handleChange}
+              onChange={(e) =>
+                handleChange({
+                  target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
+                })
+              }
               onBlur={(e) => {
-                handleBlur(e);
+                handleBlur({
+                  target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
+                });
                 handleFieldsChange(e.target.name, e.target.value);
               }}
               dir="ltr"
