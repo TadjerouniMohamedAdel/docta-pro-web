@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Modal as AntModal, Row } from 'antd';
 import { ModalProps } from 'antd/lib/modal';
+import classNames from 'classnames';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
@@ -9,12 +10,21 @@ import './styles.less';
 type Props = ModalProps & {
   children: React.ReactNode;
   actions?: React.ReactNode;
+  borderedHeader?: boolean;
 };
 
-const Modal: React.FC<Props> = ({ children, actions, title, onCancel, ...rest }) => {
+const Modal: React.FC<Props> = ({
+  children,
+  actions,
+  borderedHeader = true,
+  title,
+  onCancel,
+  className,
+  ...rest
+}) => {
   return (
     <AntModal
-      className="custom-modal"
+      className={classNames('custom-modal', { 'bordered-header': borderedHeader }, className)}
       footer={null}
       closable
       onCancel={onCancel}
