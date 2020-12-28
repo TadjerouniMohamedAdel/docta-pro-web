@@ -3,6 +3,7 @@ import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { Col, Row, Form, Input, Avatar } from 'antd';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import Label from '../../../../components/Label/Label';
 import Icon from '../../../../components/Icon/Icon';
 import Select from '../../../../components/Select/Select';
@@ -16,10 +17,24 @@ type Props = {
 };
 
 const PersonalInfo: React.FC<Props> = ({ personalInfoForm, handleFormChange }) => {
-  const { t } = useTranslation(['translation', 'placeholders']);
+  const { t } = useTranslation(['translation', 'placeholders', 'errors']);
+
+  const phoneRegEx = /(\+[0-9]{11,12})/;
+
+  const validationSchema = Yup.object().shape({
+    id: Yup.string(),
+    firstName: Yup.string().required(t('errors:required field')),
+    lastName: Yup.string().required(t('errors:required field')),
+    phone: Yup.string()
+      .required(t('errors:required field'))
+      .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
+    birthday: Yup.date().typeError(i18n.t('errors:must be a valid', { fieldName: t('birthday') })),
+    email: Yup.string().email(i18n.t('errors:must be a valid', { fieldName: t('email') })),
+  });
 
   const formik = useFormik({
     initialValues: personalInfoForm,
+    validationSchema,
     onSubmit: () => console.log('form submited'),
   });
 
@@ -35,11 +50,6 @@ const PersonalInfo: React.FC<Props> = ({ personalInfoForm, handleFormChange }) =
         <Col>
           <Avatar src="" size={95} />
         </Col>
-        {/* <Col>
-          <Button type="default" size="small" style={{ paddingLeft: 24, paddingRight: 24 }}>
-            Change photo
-          </Button>
-        </Col> */}
       </Row>
       <Row gutter={[35, 16]}>
         <Col span={12}>
