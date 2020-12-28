@@ -6,29 +6,29 @@ import Icon from '../../../../components/Icon/Icon';
 import Text from '../../../../components/Text/Text';
 import RadioBox from './RadioBox/RadioBox';
 import RecordsList from './RecordsList/RecordsList';
+import { MedicalRecordsForm } from '../../types';
 
-type Props = {};
+type Props = {
+  handleFormChange: (values: any) => void;
+  medicalRecordsForm: MedicalRecordsForm;
+};
 
-const MedicalRecords: React.FC<Props> = () => {
-  const initialValues = {
-    height: undefined,
-    weight: undefined,
-    bloodType: undefined,
-    married: null,
-    smoking: null,
-    alcohol: null,
-  };
-
+const MedicalRecords: React.FC<Props> = ({ medicalRecordsForm, handleFormChange }) => {
   const formik = useFormik({
-    initialValues,
-    onSubmit: () => console.log('form submited'),
+    initialValues: medicalRecordsForm,
+    onSubmit: () => {},
   });
 
-  const { handleChange, handleBlur, values, handleSubmit } = formik;
+  const { handleChange, values } = formik;
+
+  const handleFieldsChange = (key: string, value: any): void => {
+    console.log(key, value);
+    handleFormChange({ key, value });
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Form onFinish={handleSubmit} style={{ padding: '30px 40px' }}>
+      <Form style={{ padding: '30px 40px' }} initialValues={medicalRecordsForm}>
         <Row gutter={[35, 24]} align="middle">
           <Col span={3}>
             <Text size="lg" ellipsis>
@@ -43,7 +43,9 @@ const MedicalRecords: React.FC<Props> = () => {
                 value={values.height}
                 placeholder="enter your height"
                 onChange={handleChange}
-                onBlur={handleBlur}
+                onBlur={(e) => {
+                  handleFieldsChange(e.target.name, e.target.value);
+                }}
               />
             </Form.Item>
           </Col>
@@ -61,7 +63,9 @@ const MedicalRecords: React.FC<Props> = () => {
                 value={values.weight}
                 placeholder="enter your weight"
                 onChange={handleChange}
-                onBlur={handleBlur}
+                onBlur={(e) => {
+                  handleFieldsChange(e.target.name, e.target.value);
+                }}
               />
             </Form.Item>
           </Col>
@@ -78,6 +82,12 @@ const MedicalRecords: React.FC<Props> = () => {
                 prefixIcon={<Icon name="drop-line" />}
                 placeholder="Select your blood type"
                 dropdownMatchSelectWidth={false}
+                onChange={(value) => {
+                  handleChange({
+                    target: { name: 'bloodType', value },
+                  });
+                  handleFieldsChange('bloodType', value);
+                }}
               >
                 <AntSelect.Option value="o+">O+</AntSelect.Option>
                 <AntSelect.Option value="o-">O-</AntSelect.Option>
@@ -97,7 +107,14 @@ const MedicalRecords: React.FC<Props> = () => {
           </Col>
           <Col span={9}>
             <Form.Item>
-              <RadioBox icon={<Icon name="profile-line" />} />
+              <RadioBox
+                icon={<Icon name="profile-line" />}
+                value={values.married}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleFieldsChange('married', e.target.value);
+                }}
+              />
             </Form.Item>
           </Col>
           <Col span={3}>
@@ -107,7 +124,14 @@ const MedicalRecords: React.FC<Props> = () => {
           </Col>
           <Col span={9}>
             <Form.Item>
-              <RadioBox icon={<Icon name="profile-line" />} />
+              <RadioBox
+                icon={<Icon name="profile-line" />}
+                value={values.smoking}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleFieldsChange('smoking', e.target.value);
+                }}
+              />
             </Form.Item>
           </Col>
           <Col span={3}>
@@ -117,13 +141,20 @@ const MedicalRecords: React.FC<Props> = () => {
           </Col>
           <Col span={9}>
             <Form.Item>
-              <RadioBox icon={<Icon name="goblet-line" />} />
+              <RadioBox
+                icon={<Icon name="goblet-line" />}
+                value={values.alcohol}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleFieldsChange('alcohol', e.target.value);
+                }}
+              />
             </Form.Item>
           </Col>
         </Row>
       </Form>
       <div style={{ flexGrow: 1 }}>
-        <RecordsList />
+        <RecordsList handleFormChange={handleFormChange} medicalRecordsForm={medicalRecordsForm} />
       </div>
     </div>
   );

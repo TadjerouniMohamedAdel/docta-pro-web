@@ -3,7 +3,7 @@ import React from 'react';
 import Tab from '../../../components/Tab/Tab';
 import Icon from '../../../components/Icon/Icon';
 // import PersonalInfo from './PersonalInfo/PersonalInfo';
-import MedicalRecords from './MedicalRecords/MedicalRecords';
+// import MedicalRecords f  rom './MedicalRecords/MedicalRecords';
 import VisitsHistory from './VisitsHistory/VisitsHistory';
 import './styles.less';
 
@@ -20,7 +20,7 @@ const PatientProfile: React.FC<Props> = () => {
         <div style={{ padding: '16px 80px' }}>{/* <PersonalInfo /> */}</div>
       </Tabs.TabPane>
       <Tabs.TabPane tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>} key="2">
-        <MedicalRecords />
+        {/* <MedicalRecords /> */}
       </Tabs.TabPane>
       <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
         <VisitsHistory />

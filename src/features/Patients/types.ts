@@ -17,3 +17,21 @@ export type PersonalInfoForm = {
   city: string;
   generalStatus: string;
 };
+
+export type MedicalLists = {
+  id?: string;
+  name: string;
+};
+
+export type MedicalRecordsForm = {
+  height: string;
+  weight: string;
+  bloodType: string | undefined;
+  smoking: boolean | null;
+  married: boolean | null;
+  alcohol: boolean | null;
+  medications: MedicalLists[];
+  allergies: MedicalLists[];
+  surgeries: MedicalLists[];
+  chronicIllnesses: MedicalLists[];
+};

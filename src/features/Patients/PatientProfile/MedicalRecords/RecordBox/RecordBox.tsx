@@ -5,19 +5,24 @@ import Text from '../../../../../components/Text/Text';
 import Icon from '../../../../../components/Icon/Icon';
 import RecordItem from '../RecordItem/RecordItem';
 import './styles.less';
+import { MedicalLists } from '../../../types';
 
 type Props = {
-  data: string[];
+  data: MedicalLists[];
   title: string;
+  name: string;
+  handleFormChange: (values: any) => void;
 };
 
-const RecordBox: React.FC<Props> = ({ data, title }) => {
+const RecordBox: React.FC<Props> = ({ data, title, name, handleFormChange }) => {
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
 
   const handleAddNewValue = () => {
-    alert(value);
     setFocused(false);
+    const dataToUpdate = [...data];
+    dataToUpdate.push({ name: value });
+    handleFormChange({ key: name, value: dataToUpdate });
     setValue('');
   };
 
@@ -54,7 +59,7 @@ const RecordBox: React.FC<Props> = ({ data, title }) => {
           )}
         </div>
         {data.map((item) => (
-          <RecordItem>{item}</RecordItem>
+          <RecordItem key={item.id}>{item.name}</RecordItem>
         ))}
       </div>
     </div>

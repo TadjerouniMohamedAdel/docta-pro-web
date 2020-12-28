@@ -9,7 +9,7 @@ import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from '../PatientProfile/PersonalInfo/PersonalInfo';
 import MedicalRecords from '../PatientProfile/MedicalRecords/MedicalRecords';
-import { FormField, PersonalInfoForm } from '../types';
+import { FormField, MedicalRecordsForm, PersonalInfoForm } from '../types';
 import i18n from '../../../i18n';
 
 type Props = {
@@ -33,6 +33,19 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     generalStatus: '',
   });
 
+  const [medicalRecordsForm, setMedicalRecordsForm] = useState<MedicalRecordsForm>({
+    height: '',
+    weight: '',
+    bloodType: undefined,
+    married: null,
+    smoking: null,
+    alcohol: null,
+    medications: [],
+    allergies: [],
+    surgeries: [],
+    chronicIllnesses: [],
+  });
+
   const phoneRegEx = /(\+[0-9]{11,12})/;
 
   const validationSchema = Yup.object().shape({
@@ -48,23 +61,26 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     email: Yup.string().email(i18n.t('errors:must be a valid', { fieldName: t('email') })),
   });
 
-  const formik: FormikProps<PersonalInfoForm> = useFormik({
+  const personalInfoFormik: FormikProps<PersonalInfoForm> = useFormik({
     initialValues: personalInfoForm,
     validationSchema,
     onSubmit: () => {},
     isInitialValid: false,
   });
 
-  const { handleSubmit, isValid, isInitialValid } = formik;
+  const { handleSubmit, isValid } = personalInfoFormik;
 
-  const handleFormChange = ({ key, value }: FormField) => {
+  const handlePersonalInfoFormChange = ({ key, value }: FormField) => {
     setPersonalInfoForm({ ...personalInfoForm, [key]: value });
+  };
+
+  const handleMedicalRecordsFormChange = ({ key, value }: any) => {
+    setMedicalRecordsForm({ ...medicalRecordsForm, [key]: value });
   };
 
   const handleSavePatient = async () => {
     handleSubmit();
-    console.log('isValid', isValid);
-    if (isValid && isInitialValid) console.log('save new patient', personalInfoForm);
+    if (isValid) console.log('save new patient', personalInfoForm);
   };
 
   return (
@@ -88,14 +104,20 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
       >
         <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
           <div style={{ padding: '16px 40px' }}>
-            <PersonalInfo handleFormChange={handleFormChange} formik={formik} />
+            <PersonalInfo
+              handleFormChange={handlePersonalInfoFormChange}
+              formik={personalInfoFormik}
+            />
           </div>
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>}
           key="2"
         >
-          <MedicalRecords />
+          <MedicalRecords
+            medicalRecordsForm={medicalRecordsForm}
+            handleFormChange={handleMedicalRecordsFormChange}
+          />
         </Tabs.TabPane>
       </Tabs>
     </Modal>

@@ -109,11 +109,6 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                   name="phone"
                   value={values.phone}
                   placeholder="enter your phone number"
-                  // onChange={handleChange}
-                  // onBlur={(e) => {
-                  //   handleBlur(e);
-                  //   handleFieldsChange(e.target.name, e.target.value);
-                  // }}
                   {...inputProps}
                 />
               )}
