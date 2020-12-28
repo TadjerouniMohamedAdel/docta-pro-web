@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs } from 'antd';
 import Button from '../../../components/Button/Button';
 import Modal from '../../../components/Modal/Modal';
@@ -6,6 +6,7 @@ import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from '../PatientProfile/PersonalInfo/PersonalInfo';
 import MedicalRecords from '../PatientProfile/MedicalRecords/MedicalRecords';
+import { FormField, PersonalInfoForm } from '../types';
 
 type Props = {
   visible?: boolean;
@@ -13,14 +14,37 @@ type Props = {
 };
 
 const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
+  const [personalInfoForm, setPersonalInfoForm] = useState<PersonalInfoForm>({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    birthday: null,
+    gender: '',
+    address: '',
+    state: '',
+    city: '',
+    generalStatus: '',
+  });
+
+  const handleFormChange = ({ key, value }: FormField) => {
+    setPersonalInfoForm({ ...personalInfoForm, [key]: value });
+  };
+
+  const handleSavePatient = () => {
+    console.log('save new patient', personalInfoForm);
+  };
+
   return (
     <Modal
       title="Add a patient"
       visible={visible}
-      width={780}
+      centered
+      width={800}
       onCancel={() => setVisible(false)}
+      borderedHeader={false}
       actions={
-        <Button type="primary" icon={<Icon name="save-line" />}>
+        <Button type="primary" icon={<Icon name="save-line" />} onClick={handleSavePatient}>
           SAVE
         </Button>
       }
@@ -31,7 +55,9 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
         className="patient-profile-tab"
       >
         <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
-          <PersonalInfo />
+          <div style={{ padding: '16px 40px' }}>
+            <PersonalInfo personalInfoForm={personalInfoForm} handleFormChange={handleFormChange} />
+          </div>
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>}
