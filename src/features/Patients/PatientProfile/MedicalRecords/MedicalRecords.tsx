@@ -117,7 +117,9 @@ const MedicalRecords: React.FC<Props> = ({
                 icon={<Icon name="profile-line" />}
                 value={values.married}
                 onChange={(e) => {
-                  handleChange(e);
+                  handleChange({
+                    target: { name: 'married', value: e.target.value },
+                  });
                   handleFieldsChange('married', e.target.value);
                 }}
               />
@@ -134,7 +136,9 @@ const MedicalRecords: React.FC<Props> = ({
                 icon={<Icon name="profile-line" />}
                 value={values.smoking}
                 onChange={(e) => {
-                  handleChange(e);
+                  handleChange({
+                    target: { name: 'smoking', value: e.target.value },
+                  });
                   handleFieldsChange('smoking', e.target.value);
                 }}
               />
@@ -151,7 +155,9 @@ const MedicalRecords: React.FC<Props> = ({
                 icon={<Icon name="goblet-line" />}
                 value={values.alcohol}
                 onChange={(e) => {
-                  handleChange(e);
+                  handleChange({
+                    target: { name: 'alcohol', value: e.target.value },
+                  });
                   handleFieldsChange('alcohol', e.target.value);
                 }}
               />
