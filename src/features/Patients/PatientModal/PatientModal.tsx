@@ -11,6 +11,7 @@ import PersonalInfo from '../PatientProfile/PersonalInfo/PersonalInfo';
 import MedicalRecords from '../PatientProfile/MedicalRecords/MedicalRecords';
 import { FormField, MedicalItems, MedicalRecordsForm, PersonalInfoForm } from '../types';
 import i18n from '../../../i18n';
+import { addNewPatient } from '../services';
 
 type Props = {
   visible?: boolean;
@@ -78,11 +79,6 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     setMedicalRecordsForm({ ...medicalRecordsForm, [key]: value });
   };
 
-  const handleSavePatient = async () => {
-    handleSubmit();
-    if (isValid) console.log('save new patient', personalInfoForm);
-  };
-
   const handleAddNewItem = (name: MedicalItems, value: string): void => {
     const dataToUpdate = [...medicalRecordsForm[name]];
     dataToUpdate.push({ name: value });
@@ -93,6 +89,17 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     const dataToUpdate = [...medicalRecordsForm[name]];
     dataToUpdate.splice(index, 1);
     handleMedicalRecordsFormChange({ key: name, value: dataToUpdate });
+  };
+
+  const handleSavePatient = async () => {
+    handleSubmit();
+    if (isValid) {
+      try {
+        await addNewPatient({ ...personalInfoForm, ...medicalRecordsForm });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (

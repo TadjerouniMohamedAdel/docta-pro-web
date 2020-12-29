@@ -1,7 +1,7 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
-import { Col, Row, Form, Input, Avatar } from 'antd';
+import { Col, Row, Form, Input, Avatar, Select as AntSelect } from 'antd';
 import { FormikProps } from 'formik';
 import Label from '../../../../components/Label/Label';
 import Icon from '../../../../components/Icon/Icon';
@@ -168,7 +168,10 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 });
                 handleFieldsChange('gender', value);
               }}
-            />
+            >
+              <AntSelect.Option value="MALE">Male</AntSelect.Option>
+              <AntSelect.Option value="Female">Female</AntSelect.Option>
+            </Select>
           </Form.Item>
         </Col>
 
