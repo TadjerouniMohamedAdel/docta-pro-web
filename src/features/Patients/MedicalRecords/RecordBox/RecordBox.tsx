@@ -60,6 +60,7 @@ const RecordBox: React.FC<Props> = ({ data, title, name, handleAddNewItem, handl
               icon={<Icon name="add-circle-fill" size={18} />}
               className="btn-record"
               onClick={() => setFocused(true)}
+              style={{ justifyContent: 'start' }}
             >
               {t('add new')}
             </Button>

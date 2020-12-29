@@ -170,7 +170,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           >
             <Select
               prefixIcon={<Icon name="genderless-line" />}
-              placeholder={i18n.t('placeholders:enter', {
+              placeholder={i18n.t('placeholders:select', {
                 fieldName: t('gender'),
               })}
               dropdownMatchSelectWidth={false}
@@ -192,7 +192,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           <Form.Item validateStatus={touched.state && Boolean(errors.state) ? 'error' : undefined}>
             <Select
               prefixIcon={<Icon name="map-pin-line" />}
-              placeholder={i18n.t('placeholders:enter', {
+              placeholder={i18n.t('placeholders:select', {
                 fieldName: t('state'),
               })}
               dropdownMatchSelectWidth={false}
@@ -210,7 +210,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           <Form.Item validateStatus={touched.city && Boolean(errors.city) ? 'error' : undefined}>
             <Select
               prefixIcon={<Icon name="road-map-line" />}
-              placeholder={i18n.t('placeholders:enter', {
+              placeholder={i18n.t('placeholders:select', {
                 fieldName: t('city'),
               })}
               dropdownMatchSelectWidth={false}
