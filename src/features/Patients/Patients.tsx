@@ -13,9 +13,13 @@ import PatientModal from './PatientModal/PatientModal';
 
 const Patients: React.FC = () => {
   const { t } = useTranslation('translation');
-  const [patientsCount, setPatientsCount] = useState();
+  const [patientsCount, setPatientsCount] = useState<number | undefined>();
 
-  const [showPatientModal, setShowPatientModal] = useState(false);
+  const [showPatientModal, setShowPatientModal] = useState<boolean>(false);
+
+  const handleSetPatientCount = (value: number) => {
+    setPatientsCount(value);
+  };
 
   return (
     <InnerLayout>
@@ -37,7 +41,7 @@ const Patients: React.FC = () => {
             </Button>
           </Col>
         </Row>
-        <PatientsList setPatientsCount={setPatientsCount} />
+        <PatientsList handleSetPatientCount={handleSetPatientCount} />
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '18px 25px' }}>

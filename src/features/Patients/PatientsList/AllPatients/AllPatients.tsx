@@ -11,7 +11,7 @@ import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import { fetchAllPatients } from '../../services';
 
 type Props = {
-  setPatientsCount: (value: number) => void;
+  handleSetPatientCount: (value: number) => void;
 };
 
 const usePatientsList = (term: string) => {
@@ -32,7 +32,7 @@ const usePatientsList = (term: string) => {
   return { data: data && data.pages ? data : ({ pages: [] } as any), total, ...rest };
 };
 
-const AllPatients: React.FC<Props> = ({ setPatientsCount }) => {
+const AllPatients: React.FC<Props> = ({ handleSetPatientCount }) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
@@ -62,7 +62,7 @@ const AllPatients: React.FC<Props> = ({ setPatientsCount }) => {
   }, [term]);
 
   useEffect(() => {
-    setPatientsCount(total);
+    handleSetPatientCount(total);
   }, [total]);
 
   return (

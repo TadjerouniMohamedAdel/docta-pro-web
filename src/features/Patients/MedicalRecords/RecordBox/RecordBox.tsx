@@ -1,24 +1,36 @@
 import React, { useState } from 'react';
 import { Input } from 'antd';
-import Button from '../../../../../components/Button/Button';
-import Text from '../../../../../components/Text/Text';
-import Icon from '../../../../../components/Icon/Icon';
+import { useTranslation } from 'react-i18next';
+import Button from '../../../../components/Button/Button';
+import Text from '../../../../components/Text/Text';
+import Icon from '../../../../components/Icon/Icon';
 import RecordItem from '../RecordItem/RecordItem';
 import './styles.less';
+import { MedicalItems, MedicalLists } from '../../types';
 
 type Props = {
-  data: string[];
+  data: MedicalLists[];
   title: string;
+  name: MedicalItems;
+  handleAddNewItem: (name: MedicalItems, values: string) => void;
+  handleDeleteItem: (name: MedicalItems, index: number) => void;
 };
 
-const RecordBox: React.FC<Props> = ({ data, title }) => {
+const RecordBox: React.FC<Props> = ({ data, title, name, handleAddNewItem, handleDeleteItem }) => {
+  const { t } = useTranslation('translation');
+
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
 
-  const handleAddNewValue = () => {
-    alert(value);
+  const handleAddValue = () => {
     setFocused(false);
+    handleAddNewItem(name, value);
     setValue('');
+  };
+
+  const handleDeleteValue = (index: number) => {
+    setFocused(false);
+    handleDeleteItem(name, index);
   };
 
   return (
@@ -37,7 +49,7 @@ const RecordBox: React.FC<Props> = ({ data, title }) => {
               placeholder=""
               onChange={(e) => setValue(e.target.value)}
               onBlur={() => setFocused(false)}
-              onPressEnter={handleAddNewValue}
+              onPressEnter={handleAddValue}
               style={{ width: '100%' }}
             />
           ) : (
@@ -48,13 +60,17 @@ const RecordBox: React.FC<Props> = ({ data, title }) => {
               icon={<Icon name="add-circle-fill" size={18} />}
               className="btn-record"
               onClick={() => setFocused(true)}
+              style={{ justifyContent: 'start' }}
             >
-              Add new
+              {t('add new')}
             </Button>
           )}
         </div>
-        {data.map((item) => (
-          <RecordItem>{item}</RecordItem>
+        {data.map((item, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <RecordItem key={index} onDelete={() => handleDeleteValue(index)}>
+            {item.name}
+          </RecordItem>
         ))}
       </div>
     </div>
