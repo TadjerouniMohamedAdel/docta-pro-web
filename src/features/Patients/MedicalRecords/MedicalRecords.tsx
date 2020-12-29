@@ -38,7 +38,7 @@ const MedicalRecords: React.FC<Props> = ({
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: 600 }}>
       <Form style={{ padding: '30px 40px' }} initialValues={medicalRecordsForm}>
         <Row gutter={[35, 24]} align="middle">
           <Col span={3}>
@@ -204,7 +204,7 @@ const MedicalRecords: React.FC<Props> = ({
           </Col>
         </Row>
       </Form>
-      <div style={{ flexGrow: 1 }}>
+      <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <RecordsList
           medicalRecordsForm={medicalRecordsForm}
           handleAddNewItem={handleAddNewItem}
