@@ -43,7 +43,7 @@ const MedicalRecords: React.FC<Props> = ({
         <Row gutter={[35, 24]} align="middle">
           <Col span={3}>
             <Text size="lg" ellipsis>
-              Height
+              {t('height')}
             </Text>
           </Col>
           <Col span={9}>
@@ -79,7 +79,7 @@ const MedicalRecords: React.FC<Props> = ({
 
           <Col span={3}>
             <Text size="lg" ellipsis>
-              Weight
+              {t('weight')}
             </Text>
           </Col>
           <Col span={9}>
@@ -115,7 +115,7 @@ const MedicalRecords: React.FC<Props> = ({
 
           <Col span={3}>
             <Text size="lg" ellipsis>
-              Blood type
+              {t('blood type')}
             </Text>
           </Col>
           <Col span={9}>
@@ -123,7 +123,9 @@ const MedicalRecords: React.FC<Props> = ({
               <Select
                 value={values.bloodType}
                 prefixIcon={<Icon name="drop-line" />}
-                placeholder="Select your blood type"
+                placeholder={`${i18n.t('placeholders:enter', {
+                  fieldName: t('blood type'),
+                })}`}
                 dropdownMatchSelectWidth={false}
                 onChange={(value) => {
                   handleChange({
@@ -145,7 +147,7 @@ const MedicalRecords: React.FC<Props> = ({
           </Col>
           <Col span={3}>
             <Text size="lg" ellipsis>
-              Married?
+              {t('married')}?
             </Text>
           </Col>
           <Col span={9}>
@@ -164,7 +166,7 @@ const MedicalRecords: React.FC<Props> = ({
           </Col>
           <Col span={3}>
             <Text size="lg" ellipsis>
-              Smoking?
+              {t('smoking')}?
             </Text>
           </Col>
           <Col span={9}>
@@ -183,7 +185,7 @@ const MedicalRecords: React.FC<Props> = ({
           </Col>
           <Col span={3}>
             <Text size="lg" ellipsis>
-              Alcohol?
+              {t('alcohol')}?
             </Text>
           </Col>
           <Col span={9}>

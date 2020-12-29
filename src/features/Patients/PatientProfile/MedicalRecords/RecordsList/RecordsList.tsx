@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './styles.less';
 import RecordBox from '../RecordBox/RecordBox';
 import { MedicalItems, MedicalRecordsForm } from '../../../types';
@@ -14,31 +15,33 @@ const RecordsList: React.FC<Props> = ({
   handleAddNewItem,
   handleDeleteItem,
 }) => {
+  const { t } = useTranslation('translation');
+
   return (
     <div className="records-list">
       <RecordBox
-        title="Chronic Diseases"
+        title={t('chronic diseases')}
         name="chronicIllnesses"
         data={medicalRecordsForm.chronicIllnesses}
         handleAddNewItem={handleAddNewItem}
         handleDeleteItem={handleDeleteItem}
       />
       <RecordBox
-        title="Medicines"
+        title={t('medications')}
         name="medications"
         data={medicalRecordsForm.medications}
         handleAddNewItem={handleAddNewItem}
         handleDeleteItem={handleDeleteItem}
       />
       <RecordBox
-        title="Surgeries"
+        title={t('surgeries')}
         name="surgeries"
         data={medicalRecordsForm.surgeries}
         handleAddNewItem={handleAddNewItem}
         handleDeleteItem={handleDeleteItem}
       />
       <RecordBox
-        title="Allergies"
+        title={t('allergies')}
         name="allergies"
         data={medicalRecordsForm.allergies}
         handleAddNewItem={handleAddNewItem}

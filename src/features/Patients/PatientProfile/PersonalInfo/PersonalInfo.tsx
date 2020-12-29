@@ -34,7 +34,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
       <Row gutter={[35, 16]}>
         <Col span={12}>
           <Label
-            title="First name"
+            title={t('first name')}
             error={touched.firstName ? (errors.firstName as string) : undefined}
             required
           />
@@ -45,7 +45,9 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               prefix={<Icon name="user-line" />}
               name="firstName"
               value={values.firstName}
-              placeholder="enter your first name"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('first name'),
+              })}
               onChange={handleChange}
               onBlur={(e) => {
                 handleBlur(e);
@@ -56,7 +58,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
         </Col>
         <Col span={12}>
           <Label
-            title="Last name"
+            title={t('last name')}
             error={touched.lastName ? (errors.lastName as string) : undefined}
             required
           />
@@ -67,7 +69,9 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               prefix={<Icon name="user-line" />}
               name="lastName"
               value={values.lastName}
-              placeholder="enter your last name"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('last name'),
+              })}
               onChange={handleChange}
               onBlur={(e) => {
                 handleBlur(e);
@@ -78,7 +82,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
         </Col>
         <Col span={12}>
           <Label
-            title="Phone"
+            title={t('phone number')}
             error={touched.phone ? (errors.phone as string) : undefined}
             required
           />
@@ -108,7 +112,6 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                   prefix={<Icon name="phone-line" />}
                   name="phone"
                   value={values.phone}
-                  placeholder="enter your phone number"
                   {...inputProps}
                 />
               )}
@@ -116,13 +119,15 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Label title="Email" error={touched.email ? (errors.email as string) : undefined} />
+          <Label title={t('email')} error={touched.email ? (errors.email as string) : undefined} />
           <Form.Item validateStatus={touched.email && Boolean(errors.email) ? 'error' : undefined}>
             <Input
               prefix={<Icon name="mail-line" />}
               name="email"
               value={values.email}
-              placeholder="enter your email"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('email'),
+              })}
               onChange={handleChange}
               onBlur={(e) => {
                 handleBlur(e);
@@ -133,7 +138,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
         </Col>
         <Col span={12}>
           <Label
-            title="Birthday"
+            title={t('birthday')}
             error={touched.birthday ? (errors.birthday as string) : undefined}
           />
           <Form.Item
@@ -143,7 +148,9 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               prefixIcon={<Icon name="mail-line" />}
               name="birthday"
               value={values.birthday}
-              placeholder="enter your birthday"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('birthday'),
+              })}
               onChange={(date) => {
                 handleChange({
                   target: { name: 'birthday', value: date },
@@ -154,13 +161,18 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Label title="Gender" error={touched.gender ? (errors.gender as string) : undefined} />
+          <Label
+            title={t('gender')}
+            error={touched.gender ? (errors.gender as string) : undefined}
+          />
           <Form.Item
             validateStatus={touched.gender && Boolean(errors.gender) ? 'error' : undefined}
           >
             <Select
               prefixIcon={<Icon name="genderless-line" />}
-              placeholder="Select your gender"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('gender'),
+              })}
               dropdownMatchSelectWidth={false}
               onChange={(value) => {
                 handleChange({
@@ -176,11 +188,13 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
         </Col>
 
         <Col span={12}>
-          <Label title="State" error={touched.state ? (errors.state as string) : undefined} />
+          <Label title={t('state')} error={touched.state ? (errors.state as string) : undefined} />
           <Form.Item validateStatus={touched.state && Boolean(errors.state) ? 'error' : undefined}>
             <Select
               prefixIcon={<Icon name="map-pin-line" />}
-              placeholder="Select your state"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('state'),
+              })}
               dropdownMatchSelectWidth={false}
               onChange={(value) => {
                 handleChange({
@@ -192,11 +206,13 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Label title="City" error={touched.city ? (errors.city as string) : undefined} />
+          <Label title={t('city')} error={touched.city ? (errors.city as string) : undefined} />
           <Form.Item validateStatus={touched.city && Boolean(errors.city) ? 'error' : undefined}>
             <Select
               prefixIcon={<Icon name="road-map-line" />}
-              placeholder="Select your City"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('city'),
+              })}
               dropdownMatchSelectWidth={false}
               onChange={(value) => {
                 handleChange({
@@ -209,7 +225,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
         </Col>
         <Col span={24}>
           <Label
-            title="General Status"
+            title={t('general status')}
             error={touched.generalStatus ? (errors.generalStatus as string) : undefined}
           />
           <Form.Item
@@ -221,7 +237,9 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               prefix={<Icon name="heart-pulse-line" />}
               name="generalStatus"
               value={values.generalStatus}
-              placeholder="enter your general status"
+              placeholder={i18n.t('placeholders:enter', {
+                fieldName: t('general status'),
+              })}
               onChange={handleChange}
               onBlur={(e) => {
                 handleBlur(e);

@@ -121,7 +121,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
 
   return (
     <Modal
-      title="Add a patient"
+      title={t('add patient')}
       visible={visible}
       centered
       width={800}
@@ -134,7 +134,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           onClick={handleSavePatient}
           loading={isLoading}
         >
-          SAVE
+          {t('save')}
         </Button>
       }
     >
@@ -143,7 +143,10 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
         tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
         className="patient-profile-tab"
       >
-        <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
+        <Tabs.TabPane
+          tab={<Tab icon={<Icon name="profile-line" />}>{t('personal info')} </Tab>}
+          key="1"
+        >
           <div style={{ padding: '16px 40px' }}>
             <PersonalInfo
               handleFormChange={handlePersonalInfoFormChange}
@@ -152,7 +155,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           </div>
         </Tabs.TabPane>
         <Tabs.TabPane
-          tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>}
+          tab={<Tab icon={<Icon name="health-book-line" />}>{t('medical record')}</Tab>}
           key="2"
         >
           <MedicalRecords

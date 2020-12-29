@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Input } from 'antd';
+import { useTranslation } from 'react-i18next';
 import Button from '../../../../../components/Button/Button';
 import Text from '../../../../../components/Text/Text';
 import Icon from '../../../../../components/Icon/Icon';
@@ -16,6 +17,8 @@ type Props = {
 };
 
 const RecordBox: React.FC<Props> = ({ data, title, name, handleAddNewItem, handleDeleteItem }) => {
+  const { t } = useTranslation('translation');
+
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
 
@@ -58,7 +61,7 @@ const RecordBox: React.FC<Props> = ({ data, title, name, handleAddNewItem, handl
               className="btn-record"
               onClick={() => setFocused(true)}
             >
-              Add new
+              {t('add new')}
             </Button>
           )}
         </div>
