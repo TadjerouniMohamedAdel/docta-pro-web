@@ -5,25 +5,29 @@ import Text from '../../../../../components/Text/Text';
 import Icon from '../../../../../components/Icon/Icon';
 import RecordItem from '../RecordItem/RecordItem';
 import './styles.less';
-import { MedicalLists } from '../../../types';
+import { MedicalItems, MedicalLists } from '../../../types';
 
 type Props = {
   data: MedicalLists[];
   title: string;
-  name: string;
-  handleFormChange: (values: any) => void;
+  name: MedicalItems;
+  handleAddNewItem: (name: MedicalItems, values: string) => void;
+  handleDeleteItem: (name: MedicalItems, index: number) => void;
 };
 
-const RecordBox: React.FC<Props> = ({ data, title, name, handleFormChange }) => {
+const RecordBox: React.FC<Props> = ({ data, title, name, handleAddNewItem, handleDeleteItem }) => {
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
 
-  const handleAddNewValue = () => {
+  const handleAddValue = () => {
     setFocused(false);
-    const dataToUpdate = [...data];
-    dataToUpdate.push({ name: value });
-    handleFormChange({ key: name, value: dataToUpdate });
+    handleAddNewItem(name, value);
     setValue('');
+  };
+
+  const handleDeleteValue = (index: number) => {
+    setFocused(false);
+    handleDeleteItem(name, index);
   };
 
   return (
@@ -42,7 +46,7 @@ const RecordBox: React.FC<Props> = ({ data, title, name, handleFormChange }) => 
               placeholder=""
               onChange={(e) => setValue(e.target.value)}
               onBlur={() => setFocused(false)}
-              onPressEnter={handleAddNewValue}
+              onPressEnter={handleAddValue}
               style={{ width: '100%' }}
             />
           ) : (
@@ -58,8 +62,11 @@ const RecordBox: React.FC<Props> = ({ data, title, name, handleFormChange }) => 
             </Button>
           )}
         </div>
-        {data.map((item) => (
-          <RecordItem key={item.id}>{item.name}</RecordItem>
+        {data.map((item, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <RecordItem key={index} onDelete={() => handleDeleteValue(index)}>
+            {item.name}
+          </RecordItem>
         ))}
       </div>
     </div>

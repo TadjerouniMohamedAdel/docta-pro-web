@@ -18,6 +18,8 @@ export type PersonalInfoForm = {
   generalStatus: string;
 };
 
+export type MedicalItems = 'medications' | 'allergies' | 'surgeries' | 'chronicIllnesses';
+
 export type MedicalLists = {
   id?: string;
   name: string;

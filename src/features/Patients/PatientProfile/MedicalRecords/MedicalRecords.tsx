@@ -6,7 +6,7 @@ import Icon from '../../../../components/Icon/Icon';
 import Text from '../../../../components/Text/Text';
 import RadioBox from './RadioBox/RadioBox';
 import RecordsList from './RecordsList/RecordsList';
-import { MedicalRecordsForm } from '../../types';
+import { MedicalItems, MedicalRecordsForm } from '../../types';
 
 type Props = {
   handleFormChange: (values: any) => void;
@@ -22,8 +22,19 @@ const MedicalRecords: React.FC<Props> = ({ medicalRecordsForm, handleFormChange 
   const { handleChange, values } = formik;
 
   const handleFieldsChange = (key: string, value: any): void => {
-    console.log(key, value);
     handleFormChange({ key, value });
+  };
+
+  const handleAddNewItem = (name: MedicalItems, value: string): void => {
+    const dataToUpdate = [...medicalRecordsForm[name]];
+    dataToUpdate.push({ name: value });
+    handleFormChange({ key: name, value: dataToUpdate });
+  };
+
+  const handleDeleteItem = (name: MedicalItems, index: number): void => {
+    const dataToUpdate = [...medicalRecordsForm[name]];
+    dataToUpdate.splice(index, 1);
+    handleFormChange({ key: name, value: dataToUpdate });
   };
 
   return (
@@ -154,7 +165,11 @@ const MedicalRecords: React.FC<Props> = ({ medicalRecordsForm, handleFormChange 
         </Row>
       </Form>
       <div style={{ flexGrow: 1 }}>
-        <RecordsList handleFormChange={handleFormChange} medicalRecordsForm={medicalRecordsForm} />
+        <RecordsList
+          medicalRecordsForm={medicalRecordsForm}
+          handleAddNewItem={handleAddNewItem}
+          handleDeleteItem={handleDeleteItem}
+        />
       </div>
     </div>
   );

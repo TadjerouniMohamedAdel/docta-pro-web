@@ -1,39 +1,48 @@
 import React from 'react';
 import './styles.less';
 import RecordBox from '../RecordBox/RecordBox';
-import { MedicalRecordsForm } from '../../../types';
+import { MedicalItems, MedicalRecordsForm } from '../../../types';
 
 type Props = {
-  handleFormChange: (values: any) => void;
   medicalRecordsForm: MedicalRecordsForm;
+  handleAddNewItem: (name: MedicalItems, values: string) => void;
+  handleDeleteItem: (name: MedicalItems, index: number) => void;
 };
 
-const RecordsList: React.FC<Props> = ({ handleFormChange, medicalRecordsForm }) => {
+const RecordsList: React.FC<Props> = ({
+  medicalRecordsForm,
+  handleAddNewItem,
+  handleDeleteItem,
+}) => {
   return (
     <div className="records-list">
       <RecordBox
         title="Chronic Diseases"
         name="chronicIllnesses"
         data={medicalRecordsForm.chronicIllnesses}
-        handleFormChange={handleFormChange}
+        handleAddNewItem={handleAddNewItem}
+        handleDeleteItem={handleDeleteItem}
       />
       <RecordBox
         title="Medicines"
         name="medications"
         data={medicalRecordsForm.medications}
-        handleFormChange={handleFormChange}
+        handleAddNewItem={handleAddNewItem}
+        handleDeleteItem={handleDeleteItem}
       />
       <RecordBox
         title="Surgeries"
         name="surgeries"
         data={medicalRecordsForm.surgeries}
-        handleFormChange={handleFormChange}
+        handleAddNewItem={handleAddNewItem}
+        handleDeleteItem={handleDeleteItem}
       />
       <RecordBox
         title="Allergies"
         name="allergies"
         data={medicalRecordsForm.allergies}
-        handleFormChange={handleFormChange}
+        handleAddNewItem={handleAddNewItem}
+        handleDeleteItem={handleDeleteItem}
       />
     </div>
   );
