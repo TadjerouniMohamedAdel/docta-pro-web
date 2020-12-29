@@ -3,12 +3,12 @@ import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { Col, Row, Form, Input, Avatar, Select as AntSelect } from 'antd';
 import { FormikProps } from 'formik';
-import Label from '../../../../components/Label/Label';
-import Icon from '../../../../components/Icon/Icon';
-import Select from '../../../../components/Select/Select';
-import DatePicker from '../../../../components/DatePicker/DatePicker';
-import { FormField, PersonalInfoForm } from '../../types';
-import i18n from '../../../../i18n';
+import Label from '../../../components/Label/Label';
+import Icon from '../../../components/Icon/Icon';
+import Select from '../../../components/Select/Select';
+import DatePicker from '../../../components/DatePicker/DatePicker';
+import { FormField, PersonalInfoForm } from '../types';
+import i18n from '../../../i18n';
 
 type Props = {
   handleFormChange: (values: FormField) => void;

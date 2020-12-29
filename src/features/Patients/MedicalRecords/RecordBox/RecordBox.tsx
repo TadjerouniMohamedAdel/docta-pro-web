@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Input } from 'antd';
 import { useTranslation } from 'react-i18next';
-import Button from '../../../../../components/Button/Button';
-import Text from '../../../../../components/Text/Text';
-import Icon from '../../../../../components/Icon/Icon';
+import Button from '../../../../components/Button/Button';
+import Text from '../../../../components/Text/Text';
+import Icon from '../../../../components/Icon/Icon';
 import RecordItem from '../RecordItem/RecordItem';
 import './styles.less';
-import { MedicalItems, MedicalLists } from '../../../types';
+import { MedicalItems, MedicalLists } from '../../types';
 
 type Props = {
   data: MedicalLists[];

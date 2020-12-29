@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Radio, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { RadioGroupProps } from 'antd/lib/radio';
-import Text from '../../../../../components/Text/Text';
+import Text from '../../../../components/Text/Text';
 import './styles.less';
 
 type Props = RadioGroupProps & {

@@ -3,13 +3,13 @@ import { useFormik } from 'formik';
 import React from 'react';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
-import Select from '../../../../components/Select/Select';
-import Icon from '../../../../components/Icon/Icon';
-import Text from '../../../../components/Text/Text';
+import Select from '../../../components/Select/Select';
+import Icon from '../../../components/Icon/Icon';
+import Text from '../../../components/Text/Text';
 import RadioBox from './RadioBox/RadioBox';
 import RecordsList from './RecordsList/RecordsList';
-import { MedicalItems, MedicalRecordsForm } from '../../types';
-import i18n from '../../../../i18n';
+import { MedicalItems, MedicalRecordsForm } from '../types';
+import i18n from '../../../i18n';
 
 type Props = {
   handleFormChange: (values: any) => void;
