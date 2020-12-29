@@ -11,9 +11,16 @@ import { MedicalItems, MedicalRecordsForm } from '../../types';
 type Props = {
   handleFormChange: (values: any) => void;
   medicalRecordsForm: MedicalRecordsForm;
+  handleAddNewItem: (name: MedicalItems, values: string) => void;
+  handleDeleteItem: (name: MedicalItems, index: number) => void;
 };
 
-const MedicalRecords: React.FC<Props> = ({ medicalRecordsForm, handleFormChange }) => {
+const MedicalRecords: React.FC<Props> = ({
+  medicalRecordsForm,
+  handleFormChange,
+  handleAddNewItem,
+  handleDeleteItem,
+}) => {
   const formik = useFormik({
     initialValues: medicalRecordsForm,
     onSubmit: () => {},
@@ -23,18 +30,6 @@ const MedicalRecords: React.FC<Props> = ({ medicalRecordsForm, handleFormChange 
 
   const handleFieldsChange = (key: string, value: any): void => {
     handleFormChange({ key, value });
-  };
-
-  const handleAddNewItem = (name: MedicalItems, value: string): void => {
-    const dataToUpdate = [...medicalRecordsForm[name]];
-    dataToUpdate.push({ name: value });
-    handleFormChange({ key: name, value: dataToUpdate });
-  };
-
-  const handleDeleteItem = (name: MedicalItems, index: number): void => {
-    const dataToUpdate = [...medicalRecordsForm[name]];
-    dataToUpdate.splice(index, 1);
-    handleFormChange({ key: name, value: dataToUpdate });
   };
 
   return (

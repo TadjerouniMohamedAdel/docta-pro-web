@@ -9,7 +9,7 @@ import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from '../PatientProfile/PersonalInfo/PersonalInfo';
 import MedicalRecords from '../PatientProfile/MedicalRecords/MedicalRecords';
-import { FormField, MedicalRecordsForm, PersonalInfoForm } from '../types';
+import { FormField, MedicalItems, MedicalRecordsForm, PersonalInfoForm } from '../types';
 import i18n from '../../../i18n';
 
 type Props = {
@@ -83,6 +83,18 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     if (isValid) console.log('save new patient', personalInfoForm);
   };
 
+  const handleAddNewItem = (name: MedicalItems, value: string): void => {
+    const dataToUpdate = [...medicalRecordsForm[name]];
+    dataToUpdate.push({ name: value });
+    handleMedicalRecordsFormChange({ key: name, value: dataToUpdate });
+  };
+
+  const handleDeleteItem = (name: MedicalItems, index: number): void => {
+    const dataToUpdate = [...medicalRecordsForm[name]];
+    dataToUpdate.splice(index, 1);
+    handleMedicalRecordsFormChange({ key: name, value: dataToUpdate });
+  };
+
   return (
     <Modal
       title="Add a patient"
@@ -117,6 +129,8 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           <MedicalRecords
             medicalRecordsForm={medicalRecordsForm}
             handleFormChange={handleMedicalRecordsFormChange}
+            handleAddNewItem={handleAddNewItem}
+            handleDeleteItem={handleDeleteItem}
           />
         </Tabs.TabPane>
       </Tabs>
