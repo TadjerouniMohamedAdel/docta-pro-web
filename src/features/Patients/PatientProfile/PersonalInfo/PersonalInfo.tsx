@@ -99,7 +99,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 handleBlur({
                   target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
                 });
-                handleFieldsChange(e.target.name, e.target.value);
+                handleFieldsChange(e.target.name, e.target.value.replace(/ /g, ''));
               }}
               dir="ltr"
             >

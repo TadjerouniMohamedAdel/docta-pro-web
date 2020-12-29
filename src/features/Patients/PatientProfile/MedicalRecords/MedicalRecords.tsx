@@ -1,12 +1,15 @@
 import { Col, Form, Input, Row, Select as AntSelect } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
+import InputMask from 'react-input-mask';
+import { useTranslation } from 'react-i18next';
 import Select from '../../../../components/Select/Select';
 import Icon from '../../../../components/Icon/Icon';
 import Text from '../../../../components/Text/Text';
 import RadioBox from './RadioBox/RadioBox';
 import RecordsList from './RecordsList/RecordsList';
 import { MedicalItems, MedicalRecordsForm } from '../../types';
+import i18n from '../../../../i18n';
 
 type Props = {
   handleFormChange: (values: any) => void;
@@ -21,6 +24,8 @@ const MedicalRecords: React.FC<Props> = ({
   handleAddNewItem,
   handleDeleteItem,
 }) => {
+  const { t } = useTranslation(['translation', 'placeholders']);
+
   const formik = useFormik({
     initialValues: medicalRecordsForm,
     onSubmit: () => {},
@@ -43,16 +48,32 @@ const MedicalRecords: React.FC<Props> = ({
           </Col>
           <Col span={9}>
             <Form.Item>
-              <Input
-                prefix={<Icon name="ruler-line" />}
-                name="height"
+              <InputMask
+                mask="999"
+                maskChar={null}
+                placeholder={`${i18n.t('placeholders:enter', {
+                  fieldName: t('height'),
+                })}`}
                 value={values.height}
-                placeholder="enter your height"
-                onChange={handleChange}
+                onChange={(e) =>
+                  handleChange({
+                    target: { name: 'height', value: e.target.value },
+                  })
+                }
                 onBlur={(e) => {
-                  handleFieldsChange(e.target.name, e.target.value);
+                  handleFieldsChange(e.target.name, parseInt(e.target.value, 0));
                 }}
-              />
+                dir="ltr"
+              >
+                {(inputProps: any) => (
+                  <Input
+                    prefix={<Icon name="ruler-line" />}
+                    name="height"
+                    value={values.height}
+                    {...inputProps}
+                  />
+                )}
+              </InputMask>
             </Form.Item>
           </Col>
 
@@ -63,16 +84,32 @@ const MedicalRecords: React.FC<Props> = ({
           </Col>
           <Col span={9}>
             <Form.Item>
-              <Input
-                prefix={<Icon name="scales-2-line" />}
-                name="weight"
+              <InputMask
+                mask="999"
+                maskChar={null}
+                placeholder={`${i18n.t('placeholders:enter', {
+                  fieldName: t('weight'),
+                })}`}
                 value={values.weight}
-                placeholder="enter your weight"
-                onChange={handleChange}
+                onChange={(e) =>
+                  handleChange({
+                    target: { name: 'weight', value: e.target.value },
+                  })
+                }
                 onBlur={(e) => {
-                  handleFieldsChange(e.target.name, e.target.value);
+                  handleFieldsChange(e.target.name, parseInt(e.target.value, 0));
                 }}
-              />
+                dir="ltr"
+              >
+                {(inputProps: any) => (
+                  <Input
+                    prefix={<Icon name="ruler-line" />}
+                    name="weight"
+                    value={values.weight}
+                    {...inputProps}
+                  />
+                )}
+              </InputMask>
             </Form.Item>
           </Col>
 
@@ -95,14 +132,14 @@ const MedicalRecords: React.FC<Props> = ({
                   handleFieldsChange('bloodType', value);
                 }}
               >
-                <AntSelect.Option value="o+">O+</AntSelect.Option>
-                <AntSelect.Option value="o-">O-</AntSelect.Option>
-                <AntSelect.Option value="a+">A+</AntSelect.Option>
-                <AntSelect.Option value="a-">A-</AntSelect.Option>
-                <AntSelect.Option value="b+">B+</AntSelect.Option>
-                <AntSelect.Option value="b-">B-</AntSelect.Option>
-                <AntSelect.Option value="ab+">AB+</AntSelect.Option>
-                <AntSelect.Option value="ab-">AB-</AntSelect.Option>
+                <AntSelect.Option value="O+">O+</AntSelect.Option>
+                <AntSelect.Option value="O-">O-</AntSelect.Option>
+                <AntSelect.Option value="A+">A+</AntSelect.Option>
+                <AntSelect.Option value="A-">A-</AntSelect.Option>
+                <AntSelect.Option value="B+">B+</AntSelect.Option>
+                <AntSelect.Option value="B-">B-</AntSelect.Option>
+                <AntSelect.Option value="AB+">AB+</AntSelect.Option>
+                <AntSelect.Option value="AB-">AB-</AntSelect.Option>
               </Select>
             </Form.Item>
           </Col>

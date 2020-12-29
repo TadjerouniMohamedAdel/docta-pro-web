@@ -3,6 +3,7 @@ import { Tabs } from 'antd';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { useMutation } from 'react-query';
 import Button from '../../../components/Button/Button';
 import Modal from '../../../components/Modal/Modal';
 import Icon from '../../../components/Icon/Icon';
@@ -21,22 +22,25 @@ type Props = {
 const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
-  const [personalInfoForm, setPersonalInfoForm] = useState<PersonalInfoForm>({
+  const personalInfoFormInitialValues: PersonalInfoForm = {
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
     birthday: null,
     gender: '',
-    address: '',
-    state: '',
-    city: '',
+    state: undefined,
+    city: undefined,
     generalStatus: '',
-  });
+  };
 
-  const [medicalRecordsForm, setMedicalRecordsForm] = useState<MedicalRecordsForm>({
-    height: '',
-    weight: '',
+  const [personalInfoForm, setPersonalInfoForm] = useState<PersonalInfoForm>(
+    personalInfoFormInitialValues,
+  );
+
+  const medicalRecordsFormInitialValues: MedicalRecordsForm = {
+    height: undefined,
+    weight: undefined,
     bloodType: undefined,
     married: null,
     smoking: null,
@@ -45,7 +49,11 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     allergies: [],
     surgeries: [],
     chronicIllnesses: [],
-  });
+  };
+
+  const [medicalRecordsForm, setMedicalRecordsForm] = useState<MedicalRecordsForm>(
+    medicalRecordsFormInitialValues,
+  );
 
   const phoneRegEx = /(\+[0-9]{11,12})/;
 
@@ -91,11 +99,20 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     handleMedicalRecordsFormChange({ key: name, value: dataToUpdate });
   };
 
+  const { mutateAsync, isLoading } = useMutation(addNewPatient);
+
   const handleSavePatient = async () => {
     handleSubmit();
     if (isValid) {
       try {
-        await addNewPatient({ ...personalInfoForm, ...medicalRecordsForm });
+        await mutateAsync({
+          ...personalInfoForm,
+          phone: personalInfoForm.phone,
+          ...medicalRecordsForm,
+        });
+        setPersonalInfoForm(personalInfoFormInitialValues);
+        setMedicalRecordsForm(medicalRecordsFormInitialValues);
+        setVisible(false);
       } catch (error) {
         console.log(error);
       }
@@ -111,7 +128,12 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
       onCancel={() => setVisible(false)}
       borderedHeader={false}
       actions={
-        <Button type="primary" icon={<Icon name="save-line" />} onClick={handleSavePatient}>
+        <Button
+          type="primary"
+          icon={<Icon name="save-line" />}
+          onClick={handleSavePatient}
+          loading={isLoading}
+        >
           SAVE
         </Button>
       }

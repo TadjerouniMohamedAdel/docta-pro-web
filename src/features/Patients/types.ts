@@ -12,9 +12,8 @@ export type PersonalInfoForm = {
   email: string;
   birthday: Moment | null | undefined;
   gender: string;
-  address: string;
-  state: string;
-  city: string;
+  state?: string;
+  city?: string;
   generalStatus: string;
 };
 
@@ -26,9 +25,9 @@ export type MedicalLists = {
 };
 
 export type MedicalRecordsForm = {
-  height: string;
-  weight: string;
-  bloodType: string | undefined;
+  height?: number;
+  weight?: number;
+  bloodType?: string;
   smoking: boolean | null;
   married: boolean | null;
   alcohol: boolean | null;
