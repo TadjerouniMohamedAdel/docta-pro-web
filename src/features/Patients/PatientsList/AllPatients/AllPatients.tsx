@@ -5,6 +5,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useInfiniteQuery } from 'react-query';
+import classNames from 'classnames';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
@@ -12,6 +13,8 @@ import { fetchAllPatients } from '../../services';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;
+  patientId?: string;
+  setPatientId: (id: string) => void;
 };
 
 const usePatientsList = (term: string) => {
@@ -32,7 +35,7 @@ const usePatientsList = (term: string) => {
   return { data: data && data.pages ? data : ({ pages: [] } as any), total, ...rest };
 };
 
-const AllPatients: React.FC<Props> = ({ handleSetPatientCount }) => {
+const AllPatients: React.FC<Props> = ({ handleSetPatientCount, patientId, setPatientId }) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
@@ -55,6 +58,11 @@ const AllPatients: React.FC<Props> = ({ handleSetPatientCount }) => {
 
   const handleSearchChange = (value: string) => {
     setTerm(value);
+  };
+
+  const handleGetPatientDetails = (id: string): void => {
+    console.log(id);
+    setPatientId(id);
   };
 
   useEffect(() => {
@@ -80,7 +88,14 @@ const AllPatients: React.FC<Props> = ({ handleSetPatientCount }) => {
           {data.pages.map((page: any) => (
             <>
               {page.patients.map((patient: any) => (
-                <div key={patient.id} className="patient-box">
+                <div
+                  key={patient.id}
+                  className={classNames('patient-box', { selected: patient.id === patientId })}
+                  onClick={() => handleGetPatientDetails(patient.id)}
+                  onKeyPress={() => handleGetPatientDetails(patient.id)}
+                  role="button"
+                  tabIndex={0}
+                >
                   <Row justify="space-between" gutter={12} style={{ padding: '12px' }}>
                     <Col>
                       <Row gutter={12} align="middle">

@@ -27,7 +27,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     lastName: '',
     phone: '',
     email: '',
-    birthday: null,
+    birthDate: '',
     gender: '',
     state: undefined,
     city: undefined,

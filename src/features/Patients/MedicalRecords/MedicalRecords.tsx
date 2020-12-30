@@ -14,7 +14,7 @@ import i18n from '../../../i18n';
 type Props = {
   handleFormChange: (values: any) => void;
   medicalRecordsForm: MedicalRecordsForm;
-  handleAddNewItem: (name: MedicalItems, values: string) => void;
+  handleAddNewItem: (name: MedicalItems, value: string) => void;
   handleDeleteItem: (name: MedicalItems, index: number) => void;
 };
 
@@ -28,6 +28,7 @@ const MedicalRecords: React.FC<Props> = ({
 
   const formik = useFormik({
     initialValues: medicalRecordsForm,
+    enableReinitialize: true,
     onSubmit: () => {},
   });
 

@@ -1,5 +1,3 @@
-import { Moment } from 'moment';
-
 export type FormField = {
   key: string;
   value: any;
@@ -10,7 +8,7 @@ export type PersonalInfoForm = {
   lastName: string;
   phone: string;
   email: string;
-  birthday: Moment | null | undefined;
+  birthDate: string;
   gender: string;
   state?: string;
   city?: string;
@@ -35,4 +33,33 @@ export type MedicalRecordsForm = {
   allergies: MedicalLists[];
   surgeries: MedicalLists[];
   chronicIllnesses: MedicalLists[];
+};
+
+export type FetchPersonalInfoResponse = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  picture: string;
+  state: string;
+  city: string;
+  birthDate: string;
+  gender: string;
+  registered: boolean;
+  generalStatus: string;
+  user: { phone: string; email: string };
+};
+
+export type FetchMedicalRecordResponse = {
+  id: string;
+  alcohol: boolean;
+  married: boolean;
+  smoking: boolean;
+  height: number;
+  weight: number;
+  bloodType: string;
+  allergies: MedicalLists[];
+  chronicIllnesses: MedicalLists[];
+  medications: MedicalLists[];
+  surgeries: MedicalLists[];
+  registered: boolean;
 };
