@@ -4,12 +4,17 @@ import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useInfiniteQuery } from 'react-query';
+import classNames from 'classnames';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import { fetchBlockedPatients } from '../../services';
+import { SelectedPatient } from '../../types';
 
-type Props = {};
+type Props = {
+  selectedPatient?: SelectedPatient;
+  setSelectedPatient: (values: SelectedPatient) => void;
+};
 
 const usePatientsList = (term: string) => {
   const { data, ...rest } = useInfiniteQuery(
@@ -26,7 +31,7 @@ const usePatientsList = (term: string) => {
   return { data: data && data.pages ? data : ({ pages: [] } as any), ...rest };
 };
 
-const BlockedPatients: React.FC<Props> = () => {
+const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient }) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
@@ -50,6 +55,10 @@ const BlockedPatients: React.FC<Props> = () => {
     setTerm(value);
   };
 
+  const handleGetPatientDetails = (values: SelectedPatient): void => {
+    setSelectedPatient(values);
+  };
+
   useEffect(() => {
     refetch();
   }, [term]);
@@ -65,11 +74,20 @@ const BlockedPatients: React.FC<Props> = () => {
           />
         </div>
 
-        <div>
+        <div className="patients-list">
           {data.pages.map((page: any) => (
             <>
-              {page.patients.map((patient: any) => (
-                <div key={patient.id}>
+              {page.patients.map((patient: SelectedPatient) => (
+                <div
+                  key={patient.id}
+                  className={classNames('patient-box', {
+                    selected: patient.id === selectedPatient?.id,
+                  })}
+                  onClick={() => handleGetPatientDetails(patient)}
+                  onKeyPress={() => handleGetPatientDetails(patient)}
+                  role="button"
+                  tabIndex={0}
+                >
                   <Row justify="space-between" gutter={12} style={{ padding: '12px' }}>
                     <Col>
                       <Row gutter={12} align="middle">

@@ -3,6 +3,7 @@ import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { Col, Row, Form, Input, Avatar, Select as AntSelect } from 'antd';
 import { FormikProps } from 'formik';
+import moment from 'moment';
 import Label from '../../../components/Label/Label';
 import Icon from '../../../components/Icon/Icon';
 import Select from '../../../components/Select/Select';
@@ -139,23 +140,23 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
         <Col span={12}>
           <Label
             title={t('birthday')}
-            error={touched.birthday ? (errors.birthday as string) : undefined}
+            error={touched.birthDate ? (errors.birthDate as string) : undefined}
           />
           <Form.Item
-            validateStatus={touched.birthday && Boolean(errors.birthday) ? 'error' : undefined}
+            validateStatus={touched.birthDate && Boolean(errors.birthDate) ? 'error' : undefined}
           >
             <DatePicker
               prefixIcon={<Icon name="mail-line" />}
-              name="birthday"
-              value={values.birthday}
+              name="birthDate"
+              value={values.birthDate ? moment(values.birthDate) : null}
               placeholder={i18n.t('placeholders:enter', {
                 fieldName: t('birthday'),
               })}
               onChange={(date) => {
                 handleChange({
-                  target: { name: 'birthday', value: date },
+                  target: { name: 'birthDate', value: date },
                 });
-                handleFieldsChange('birthday', date);
+                handleFieldsChange('birthDate', date);
               }}
             />
           </Form.Item>
@@ -174,6 +175,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 fieldName: t('gender'),
               })}
               dropdownMatchSelectWidth={false}
+              value={values.gender}
               onChange={(value) => {
                 handleChange({
                   target: { name: 'gender', value },
@@ -195,6 +197,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('state'),
               })}
+              value={values.state}
               dropdownMatchSelectWidth={false}
               onChange={(value) => {
                 handleChange({
@@ -213,6 +216,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('city'),
               })}
+              value={values.city}
               dropdownMatchSelectWidth={false}
               onChange={(value) => {
                 handleChange({
