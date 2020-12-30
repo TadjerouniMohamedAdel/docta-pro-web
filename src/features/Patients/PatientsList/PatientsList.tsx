@@ -24,7 +24,7 @@ const PatientsList: React.FC<Props> = ({ handleSetPatientCount, patientId, setPa
         />
       </Tabs.TabPane>
       <Tabs.TabPane tab={t('blocked patients')} key="2">
-        <BlockedPatients />
+        <BlockedPatients patientId={patientId} setPatientId={setPatientId} />
       </Tabs.TabPane>
     </Tabs>
   );

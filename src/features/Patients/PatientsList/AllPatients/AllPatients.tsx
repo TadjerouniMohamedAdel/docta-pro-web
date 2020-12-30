@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { LoadingOutlined } from '@ant-design/icons';
 import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
@@ -61,7 +60,6 @@ const AllPatients: React.FC<Props> = ({ handleSetPatientCount, patientId, setPat
   };
 
   const handleGetPatientDetails = (id: string): void => {
-    console.log(id);
     setPatientId(id);
   };
 

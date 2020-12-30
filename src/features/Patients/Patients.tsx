@@ -1,6 +1,6 @@
 import { Col, Dropdown, Empty, Menu, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
@@ -21,10 +21,6 @@ const Patients: React.FC = () => {
   const handleSetPatientCount = (value: number) => {
     setPatientsCount(value);
   };
-
-  useEffect(() => {
-    console.log(patientId);
-  }, [patientId]);
 
   return (
     <InnerLayout>

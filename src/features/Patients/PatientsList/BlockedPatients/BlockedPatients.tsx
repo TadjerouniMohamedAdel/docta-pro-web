@@ -4,12 +4,16 @@ import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useInfiniteQuery } from 'react-query';
+import classNames from 'classnames';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import { fetchBlockedPatients } from '../../services';
 
-type Props = {};
+type Props = {
+  patientId?: string;
+  setPatientId: (id: string) => void;
+};
 
 const usePatientsList = (term: string) => {
   const { data, ...rest } = useInfiniteQuery(
@@ -26,7 +30,7 @@ const usePatientsList = (term: string) => {
   return { data: data && data.pages ? data : ({ pages: [] } as any), ...rest };
 };
 
-const BlockedPatients: React.FC<Props> = () => {
+const BlockedPatients: React.FC<Props> = ({ patientId, setPatientId }) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
@@ -50,6 +54,10 @@ const BlockedPatients: React.FC<Props> = () => {
     setTerm(value);
   };
 
+  const handleGetPatientDetails = (id: string): void => {
+    setPatientId(id);
+  };
+
   useEffect(() => {
     refetch();
   }, [term]);
@@ -69,7 +77,14 @@ const BlockedPatients: React.FC<Props> = () => {
           {data.pages.map((page: any) => (
             <>
               {page.patients.map((patient: any) => (
-                <div key={patient.id} className="patient-box">
+                <div
+                  key={patient.id}
+                  className={classNames('patient-box', { selected: patient.id === patientId })}
+                  onClick={() => handleGetPatientDetails(patient.id)}
+                  onKeyPress={() => handleGetPatientDetails(patient.id)}
+                  role="button"
+                  tabIndex={0}
+                >
                   <Row justify="space-between" gutter={12} style={{ padding: '12px' }}>
                     <Col>
                       <Row gutter={12} align="middle">
