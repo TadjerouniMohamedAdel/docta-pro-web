@@ -76,11 +76,11 @@ const AllPatients: React.FC<Props> = ({ handleSetPatientCount }) => {
           />
         </div>
 
-        <div>
+        <div className="patients-list">
           {data.pages.map((page: any) => (
             <>
               {page.patients.map((patient: any) => (
-                <div key={patient.id}>
+                <div key={patient.id} className="patient-box">
                   <Row justify="space-between" gutter={12} style={{ padding: '12px' }}>
                     <Col>
                       <Row gutter={12} align="middle">

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Tabs } from 'antd';
 import BlockedPatients from './BlockedPatients/BlockedPatients';
 import AllPatients from './AllPatients/AllPatients';
+import './styles.less';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;
