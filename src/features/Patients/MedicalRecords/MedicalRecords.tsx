@@ -1,5 +1,5 @@
 import { Col, Form, Input, Row, Select as AntSelect } from 'antd';
-import { useFormik } from 'formik';
+import { FormikProps } from 'formik';
 import React from 'react';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,7 @@ type Props = {
   medicalRecordsForm: MedicalRecordsForm;
   handleAddNewItem: (name: MedicalItems, value: string) => void;
   handleDeleteItem: (name: MedicalItems, index: number) => void;
+  formik: FormikProps<MedicalRecordsForm>;
 };
 
 const MedicalRecords: React.FC<Props> = ({
@@ -23,16 +24,11 @@ const MedicalRecords: React.FC<Props> = ({
   handleFormChange,
   handleAddNewItem,
   handleDeleteItem,
+  formik,
 }) => {
   const { t } = useTranslation(['translation', 'placeholders']);
 
-  const formik = useFormik({
-    initialValues: medicalRecordsForm,
-    enableReinitialize: true,
-    onSubmit: () => {},
-  });
-
-  const { handleChange, values } = formik;
+  const { handleChange, handleBlur, values } = formik;
 
   const handleFieldsChange = (key: string, value: any): void => {
     handleFormChange({ key, value });
@@ -40,7 +36,7 @@ const MedicalRecords: React.FC<Props> = ({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: 600 }}>
-      <Form style={{ padding: '30px 40px' }} initialValues={medicalRecordsForm}>
+      <Form style={{ padding: '30px 40px' }}>
         <Row gutter={[35, 24]} align="middle">
           <Col span={3}>
             <Text size="lg" ellipsis>
@@ -50,6 +46,7 @@ const MedicalRecords: React.FC<Props> = ({
           <Col span={9}>
             <Form.Item>
               <InputMask
+                name="height"
                 mask="999"
                 maskChar={null}
                 placeholder={`${i18n.t('placeholders:enter', {
@@ -62,18 +59,12 @@ const MedicalRecords: React.FC<Props> = ({
                   })
                 }
                 onBlur={(e) => {
+                  handleBlur(e);
                   handleFieldsChange(e.target.name, parseInt(e.target.value, 0));
                 }}
                 dir="ltr"
               >
-                {(inputProps: any) => (
-                  <Input
-                    prefix={<Icon name="ruler-line" />}
-                    name="height"
-                    value={values.height}
-                    {...inputProps}
-                  />
-                )}
+                {(inputProps: any) => <Input prefix={<Icon name="ruler-line" />} {...inputProps} />}
               </InputMask>
             </Form.Item>
           </Col>
@@ -98,6 +89,7 @@ const MedicalRecords: React.FC<Props> = ({
                   })
                 }
                 onBlur={(e) => {
+                  handleBlur(e);
                   handleFieldsChange(e.target.name, parseInt(e.target.value, 0));
                 }}
                 dir="ltr"

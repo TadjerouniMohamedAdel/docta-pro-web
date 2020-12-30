@@ -74,7 +74,11 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     initialValues: personalInfoForm,
     validationSchema,
     onSubmit: () => {},
-    isInitialValid: false,
+  });
+
+  const medicalRecordFormik: FormikProps<MedicalRecordsForm> = useFormik({
+    initialValues: medicalRecordsForm,
+    onSubmit: () => {},
   });
 
   const { handleSubmit, isValid } = personalInfoFormik;
@@ -104,14 +108,14 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
   const handleSavePatient = async () => {
     handleSubmit();
     if (isValid) {
+      setPersonalInfoForm(personalInfoFormInitialValues);
+      setMedicalRecordsForm(medicalRecordsFormInitialValues);
       try {
         await mutateAsync({
           ...personalInfoForm,
           phone: personalInfoForm.phone,
           ...medicalRecordsForm,
         });
-        setPersonalInfoForm(personalInfoFormInitialValues);
-        setMedicalRecordsForm(medicalRecordsFormInitialValues);
         setVisible(false);
       } catch (error) {
         console.log(error);
@@ -163,6 +167,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
             handleFormChange={handleMedicalRecordsFormChange}
             handleAddNewItem={handleAddNewItem}
             handleDeleteItem={handleDeleteItem}
+            formik={medicalRecordFormik}
           />
         </Tabs.TabPane>
       </Tabs>

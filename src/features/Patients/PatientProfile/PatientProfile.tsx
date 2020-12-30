@@ -88,6 +88,12 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient }) => {
     isInitialValid: false,
   });
 
+  const medicalRecordFormik: FormikProps<MedicalRecordsForm> = useFormik({
+    initialValues: medicalRecordsForm,
+    enableReinitialize: true,
+    onSubmit: () => {},
+  });
+
   const handleFetchPersonalInfo = async () => {
     try {
       const response: { data: FetchPersonalInfoResponse } = await fetchPatientDetails(
@@ -241,6 +247,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient }) => {
               handleFormChange={handleMedicalRecordsFormChange}
               handleAddNewItem={handleAddNewItem}
               handleDeleteItem={handleDeleteItem}
+              formik={medicalRecordFormik}
             />
           </Tabs.TabPane>
           <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
