@@ -4,14 +4,19 @@ import { Tabs } from 'antd';
 import BlockedPatients from './BlockedPatients/BlockedPatients';
 import AllPatients from './AllPatients/AllPatients';
 import './styles.less';
+import { SelectedPatient } from '../types';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;
-  patientId?: string;
-  setPatientId: (id: string) => void;
+  selectedPatient?: SelectedPatient;
+  setSelectedPatient: (values: SelectedPatient) => void;
 };
 
-const PatientsList: React.FC<Props> = ({ handleSetPatientCount, patientId, setPatientId }) => {
+const PatientsList: React.FC<Props> = ({
+  handleSetPatientCount,
+  selectedPatient,
+  setSelectedPatient,
+}) => {
   const { t } = useTranslation('translation');
 
   return (
@@ -19,12 +24,15 @@ const PatientsList: React.FC<Props> = ({ handleSetPatientCount, patientId, setPa
       <Tabs.TabPane tab={t('all patients')} key="1">
         <AllPatients
           handleSetPatientCount={handleSetPatientCount}
-          patientId={patientId}
-          setPatientId={setPatientId}
+          selectedPatient={selectedPatient}
+          setSelectedPatient={setSelectedPatient}
         />
       </Tabs.TabPane>
       <Tabs.TabPane tab={t('blocked patients')} key="2">
-        <BlockedPatients patientId={patientId} setPatientId={setPatientId} />
+        <BlockedPatients
+          selectedPatient={selectedPatient}
+          setSelectedPatient={setSelectedPatient}
+        />
       </Tabs.TabPane>
     </Tabs>
   );

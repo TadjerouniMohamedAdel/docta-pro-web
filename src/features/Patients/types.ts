@@ -63,3 +63,15 @@ export type FetchMedicalRecordResponse = {
   surgeries: MedicalLists[];
   registered: boolean;
 };
+
+export type SelectedPatient = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  picture?: string;
+  state?: string;
+  city?: string;
+  user: {
+    phone: string;
+  };
+};

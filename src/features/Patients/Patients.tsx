@@ -1,5 +1,4 @@
-import { Col, Dropdown, Empty, Menu, Row } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
+import { Col, Empty, Row } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
@@ -10,11 +9,12 @@ import Spacer from '../../components/Spacer/Spacer';
 import PatientsList from './PatientsList/PatientsList';
 import PatientProfile from './PatientProfile/PatientProfile';
 import PatientModal from './PatientModal/PatientModal';
+import { SelectedPatient } from './types';
 
 const Patients: React.FC = () => {
   const { t } = useTranslation('translation');
   const [patientsCount, setPatientsCount] = useState<number | undefined>();
-  const [patientId, setPatientId] = useState<string>();
+  const [selectedPatient, setSelectedPatient] = useState<SelectedPatient | undefined>();
 
   const [showPatientModal, setShowPatientModal] = useState<boolean>(false);
 
@@ -44,58 +44,13 @@ const Patients: React.FC = () => {
         </Row>
         <PatientsList
           handleSetPatientCount={handleSetPatientCount}
-          patientId={patientId}
-          setPatientId={setPatientId}
+          selectedPatient={selectedPatient}
+          setSelectedPatient={setSelectedPatient}
         />
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
-        {patientId ? (
-          <>
-            <div style={{ padding: '18px 25px' }}>
-              <Row align="middle" gutter={16}>
-                <Col>
-                  <Avatar src="" size={54} />
-                </Col>
-                <Col flex={1}>
-                  <Text size="xxl" style={{ fontWeight: 'bold' }}>
-                    Pauline Nunez
-                  </Text>
-                  <br />
-                  <Text type="secondary" style={{ fontWeight: 500 }}>
-                    Coronary atherosclerosis - Latest diagnosis
-                  </Text>
-                </Col>
-                <Col>
-                  <Button
-                    ghost
-                    type="primary"
-                    icon={<Icon name="chat-2-line" />}
-                    style={{ display: 'flex' }}
-                    size="small"
-                  >
-                    Message
-                  </Button>
-                </Col>
-                <Col>
-                  <Dropdown
-                    overlay={
-                      <Menu>
-                        <Menu.Item> more actions</Menu.Item>
-                      </Menu>
-                    }
-                    trigger={['click']}
-                  >
-                    <Button type="default" size="small">
-                      <Icon name="more-2-fill" size={24} />
-                    </Button>
-                  </Dropdown>
-                </Col>
-              </Row>
-            </div>
-            <div style={{ flexGrow: 1 }}>
-              <PatientProfile patientId={patientId} />
-            </div>
-          </>
+        {selectedPatient ? (
+          <PatientProfile selectedPatient={selectedPatient} />
         ) : (
           <div
             style={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}

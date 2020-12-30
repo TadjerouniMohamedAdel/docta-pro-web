@@ -9,11 +9,12 @@ import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import { fetchAllPatients } from '../../services';
+import { SelectedPatient } from '../../types';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;
-  patientId?: string;
-  setPatientId: (id: string) => void;
+  selectedPatient?: SelectedPatient;
+  setSelectedPatient: (values: SelectedPatient) => void;
 };
 
 const usePatientsList = (term: string) => {
@@ -34,7 +35,11 @@ const usePatientsList = (term: string) => {
   return { data: data && data.pages ? data : ({ pages: [] } as any), total, ...rest };
 };
 
-const AllPatients: React.FC<Props> = ({ handleSetPatientCount, patientId, setPatientId }) => {
+const AllPatients: React.FC<Props> = ({
+  handleSetPatientCount,
+  selectedPatient,
+  setSelectedPatient,
+}) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
@@ -59,8 +64,8 @@ const AllPatients: React.FC<Props> = ({ handleSetPatientCount, patientId, setPat
     setTerm(value);
   };
 
-  const handleGetPatientDetails = (id: string): void => {
-    setPatientId(id);
+  const handleGetPatientDetails = (values: SelectedPatient): void => {
+    setSelectedPatient(values);
   };
 
   useEffect(() => {
@@ -85,12 +90,14 @@ const AllPatients: React.FC<Props> = ({ handleSetPatientCount, patientId, setPat
         <div className="patients-list">
           {data.pages.map((page: any) => (
             <>
-              {page.patients.map((patient: any) => (
+              {page.patients.map((patient: SelectedPatient) => (
                 <div
                   key={patient.id}
-                  className={classNames('patient-box', { selected: patient.id === patientId })}
-                  onClick={() => handleGetPatientDetails(patient.id)}
-                  onKeyPress={() => handleGetPatientDetails(patient.id)}
+                  className={classNames('patient-box', {
+                    selected: patient.id === selectedPatient?.id,
+                  })}
+                  onClick={() => handleGetPatientDetails(patient)}
+                  onKeyPress={() => handleGetPatientDetails(patient)}
                   role="button"
                   tabIndex={0}
                 >

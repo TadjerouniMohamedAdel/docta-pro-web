@@ -9,10 +9,11 @@ import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
 import { fetchBlockedPatients } from '../../services';
+import { SelectedPatient } from '../../types';
 
 type Props = {
-  patientId?: string;
-  setPatientId: (id: string) => void;
+  selectedPatient?: SelectedPatient;
+  setSelectedPatient: (values: SelectedPatient) => void;
 };
 
 const usePatientsList = (term: string) => {
@@ -30,7 +31,7 @@ const usePatientsList = (term: string) => {
   return { data: data && data.pages ? data : ({ pages: [] } as any), ...rest };
 };
 
-const BlockedPatients: React.FC<Props> = ({ patientId, setPatientId }) => {
+const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient }) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
@@ -54,8 +55,8 @@ const BlockedPatients: React.FC<Props> = ({ patientId, setPatientId }) => {
     setTerm(value);
   };
 
-  const handleGetPatientDetails = (id: string): void => {
-    setPatientId(id);
+  const handleGetPatientDetails = (values: SelectedPatient): void => {
+    setSelectedPatient(values);
   };
 
   useEffect(() => {
@@ -76,12 +77,14 @@ const BlockedPatients: React.FC<Props> = ({ patientId, setPatientId }) => {
         <div className="patients-list">
           {data.pages.map((page: any) => (
             <>
-              {page.patients.map((patient: any) => (
+              {page.patients.map((patient: SelectedPatient) => (
                 <div
                   key={patient.id}
-                  className={classNames('patient-box', { selected: patient.id === patientId })}
-                  onClick={() => handleGetPatientDetails(patient.id)}
-                  onKeyPress={() => handleGetPatientDetails(patient.id)}
+                  className={classNames('patient-box', {
+                    selected: patient.id === selectedPatient?.id,
+                  })}
+                  onClick={() => handleGetPatientDetails(patient)}
+                  onKeyPress={() => handleGetPatientDetails(patient)}
                   role="button"
                   tabIndex={0}
                 >

@@ -1,4 +1,4 @@
-import { Tabs } from 'antd';
+import { Col, Row, Tabs, Avatar, Dropdown, Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
 import Tab from '../../../components/Tab/Tab';
 import Icon from '../../../components/Icon/Icon';
+import Text from '../../../components/Text/Text';
+import Button from '../../../components/Button/Button';
 import PersonalInfo from '../PersonalInfo/PersonalInfo';
 import MedicalRecords from '../MedicalRecords/MedicalRecords';
 import VisitsHistory from './VisitsHistory/VisitsHistory';
@@ -17,14 +19,15 @@ import {
   MedicalRecordsForm,
   PersonalInfoForm,
   MedicalItems,
+  SelectedPatient,
 } from '../types';
 import { fetchPatientDetails } from '../services';
 
 type Props = {
-  patientId?: string;
+  selectedPatient?: SelectedPatient;
 };
 
-const PatientProfile: React.FC<Props> = ({ patientId }) => {
+const PatientProfile: React.FC<Props> = ({ selectedPatient }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const [activeKey, setActiveKey] = useState<string>('1');
@@ -88,7 +91,7 @@ const PatientProfile: React.FC<Props> = ({ patientId }) => {
   const handleFetchPersonalInfo = async () => {
     try {
       const response: { data: FetchPersonalInfoResponse } = await fetchPatientDetails(
-        patientId,
+        selectedPatient?.id,
         'personal-info',
       );
 
@@ -111,7 +114,7 @@ const PatientProfile: React.FC<Props> = ({ patientId }) => {
   const handleFetchMedicalRecord = async () => {
     try {
       const response: { data: FetchMedicalRecordResponse } = await fetchPatientDetails(
-        patientId,
+        selectedPatient?.id,
         'medical-info',
       );
       setMedicalRecordsForm({
@@ -167,40 +170,85 @@ const PatientProfile: React.FC<Props> = ({ patientId }) => {
   };
 
   useEffect(() => {
-    console.log('activeKey', activeKey);
-    console.log('patientId', patientId);
-    if (patientId) handlegetPatientDetails();
-  }, [patientId, activeKey]);
+    if (selectedPatient) handlegetPatientDetails();
+  }, [selectedPatient, activeKey]);
 
   return (
-    <Tabs
-      defaultActiveKey="1"
-      activeKey={activeKey}
-      tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
-      className="patient-profile-tab"
-      onChange={handleTabsChange}
-    >
-      <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
-        <div style={{ padding: '16px 80px' }}>
-          <PersonalInfo
-            handleFormChange={handlePersonalInfoFormChange}
-            formik={personalInfoFormik}
-            patientId={patientId}
-          />
-        </div>
-      </Tabs.TabPane>
-      <Tabs.TabPane tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>} key="2">
-        <MedicalRecords
-          medicalRecordsForm={medicalRecordsForm}
-          handleFormChange={handleMedicalRecordsFormChange}
-          handleAddNewItem={handleAddNewItem}
-          handleDeleteItem={handleDeleteItem}
-        />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
-        <VisitsHistory />
-      </Tabs.TabPane>
-    </Tabs>
+    <>
+      <div style={{ padding: '18px 25px' }}>
+        <Row align="middle" gutter={16}>
+          <Col>
+            <Avatar src={selectedPatient?.picture} size={54} />
+          </Col>
+          <Col flex={1}>
+            <Text size="xxl" style={{ fontWeight: 'bold' }}>
+              {selectedPatient?.firstName} {selectedPatient?.lastName}
+            </Text>
+            <br />
+            <Text type="secondary" style={{ fontWeight: 500 }}>
+              {selectedPatient?.state} - {selectedPatient?.city}
+            </Text>
+          </Col>
+          <Col>
+            <Button
+              ghost
+              type="primary"
+              icon={<Icon name="chat-2-line" />}
+              style={{ display: 'flex' }}
+              size="small"
+            >
+              Message
+            </Button>
+          </Col>
+          <Col>
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item> more actions</Menu.Item>
+                </Menu>
+              }
+              trigger={['click']}
+            >
+              <Button type="default" size="small">
+                <Icon name="more-2-fill" size={24} />
+              </Button>
+            </Dropdown>
+          </Col>
+        </Row>
+      </div>
+      <div style={{ flexGrow: 1 }}>
+        <Tabs
+          defaultActiveKey="1"
+          activeKey={activeKey}
+          tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
+          className="patient-profile-tab"
+          onChange={handleTabsChange}
+        >
+          <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
+            <div style={{ padding: '16px 80px' }}>
+              <PersonalInfo
+                handleFormChange={handlePersonalInfoFormChange}
+                formik={personalInfoFormik}
+              />
+            </div>
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>}
+            key="2"
+          >
+            <MedicalRecords
+              medicalRecordsForm={medicalRecordsForm}
+              handleFormChange={handleMedicalRecordsFormChange}
+              handleAddNewItem={handleAddNewItem}
+              handleDeleteItem={handleDeleteItem}
+            />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
+            <VisitsHistory />
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
+    </>
   );
 };
 

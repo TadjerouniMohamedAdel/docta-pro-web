@@ -14,7 +14,6 @@ import i18n from '../../../i18n';
 type Props = {
   handleFormChange: (values: FormField) => void;
   formik: FormikProps<PersonalInfoForm>;
-  patientId?: string;
 };
 
 const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
