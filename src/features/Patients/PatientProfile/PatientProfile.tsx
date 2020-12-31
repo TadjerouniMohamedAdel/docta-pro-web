@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useQueryClient } from 'react-query';
 import i18n from '../../../i18n';
 import Tab from '../../../components/Tab/Tab';
 import Icon from '../../../components/Icon/Icon';
@@ -21,13 +22,14 @@ import {
   MedicalItems,
   SelectedPatient,
 } from '../types';
-import { fetchPatientDetails } from '../services';
+import { fetchPatientDetails, updatePatient } from '../services';
 
 type Props = {
   selectedPatient?: SelectedPatient;
+  setSelectedPatient: (values: SelectedPatient) => void;
 };
 
-const PatientProfile: React.FC<Props> = ({ selectedPatient }) => {
+const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const [activeKey, setActiveKey] = useState<string>('1');
@@ -140,16 +142,46 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient }) => {
     }
   };
 
-  const handlePersonalInfoFormChange = ({ key, value }: FormField) => {
-    console.log(key, value);
+  const queryClient = useQueryClient();
+
+  const updateCachedData = () => {
+    queryClient.invalidateQueries('patients');
   };
 
-  const handleMedicalRecordsFormChange = (value: any) => {
-    console.log(value);
+  const handlePersonalInfoFormChange = async ({ key, value }: FormField) => {
+    try {
+      if (selectedPatient) {
+        await updatePatient(selectedPatient.id, 'personal-info', { [key]: value });
+        updateCachedData();
+        setSelectedPatient({ ...selectedPatient, [key]: value });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleAddNewItem = (name: MedicalItems, values: string) => {
-    console.log(name, values);
+  const handleMedicalRecordsFormChange = async ({ key, value }: any) => {
+    try {
+      if (selectedPatient) {
+        await updatePatient(selectedPatient.id, 'medical-info', { [key]: value });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAddNewItem = async (name: MedicalItems, value: string) => {
+    try {
+      if (selectedPatient) {
+        const response = await updatePatient(selectedPatient.id, name, { item: value });
+        setMedicalRecordsForm({
+          ...medicalRecordsForm,
+          [name]: [...medicalRecordsForm[name], { id: response.id, name: value }],
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDeleteItem = (name: MedicalItems, index: number) => {

@@ -17,3 +17,10 @@ export const addNewPatient = async (data: any): Promise<any> => {
     body: data,
   });
 };
+
+export const updatePatient = async (id: string, action: string, data: any): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/${id}?action=${action}`, {
+    body: data,
+    method: 'PUT',
+  });
+};

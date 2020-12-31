@@ -50,7 +50,10 @@ const Patients: React.FC = () => {
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         {selectedPatient ? (
-          <PatientProfile selectedPatient={selectedPatient} />
+          <PatientProfile
+            selectedPatient={selectedPatient}
+            setSelectedPatient={setSelectedPatient}
+          />
         ) : (
           <div
             style={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
