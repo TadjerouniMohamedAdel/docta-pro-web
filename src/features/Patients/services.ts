@@ -24,3 +24,16 @@ export const updatePatient = async (id: string, action: string, data: any): Prom
     method: 'PUT',
   });
 };
+
+export const deletePatientItem = async (
+  id: string,
+  recordId: string,
+  action: string,
+): Promise<any> => {
+  return fetcher(
+    `/api/v1/professionals/patients/${id}/medical-records/${recordId}?action=${action}`,
+    {
+      method: 'DELETE',
+    },
+  );
+};

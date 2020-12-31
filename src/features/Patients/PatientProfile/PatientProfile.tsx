@@ -22,7 +22,7 @@ import {
   MedicalItems,
   SelectedPatient,
 } from '../types';
-import { fetchPatientDetails, updatePatient } from '../services';
+import { fetchPatientDetails, updatePatient, deletePatientItem } from '../services';
 
 type Props = {
   selectedPatient?: SelectedPatient;
@@ -184,8 +184,20 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
     }
   };
 
-  const handleDeleteItem = (name: MedicalItems, index: number) => {
-    console.log(name, index);
+  const handleDeleteItem = async (name: MedicalItems, index: number) => {
+    try {
+      if (selectedPatient) {
+        await deletePatientItem(selectedPatient.id, medicalRecordsForm[name][index].id || '', name);
+        const dataToUpdate = [...medicalRecordsForm[name]];
+        dataToUpdate.splice(index, 1);
+        setMedicalRecordsForm({
+          ...medicalRecordsForm,
+          [name]: dataToUpdate,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handlegetPatientDetails = () => {
