@@ -144,16 +144,12 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
 
   const queryClient = useQueryClient();
 
-  const updateCachedData = () => {
-    queryClient.invalidateQueries('patients');
-  };
-
   const handlePersonalInfoFormChange = async ({ key, value }: FormField) => {
     try {
       if (selectedPatient) {
         await updatePatient(selectedPatient.id, 'personal-info', { [key]: value });
-        updateCachedData();
         setSelectedPatient({ ...selectedPatient, [key]: value });
+        queryClient.invalidateQueries('patients');
       }
     } catch (error) {
       console.log(error);
