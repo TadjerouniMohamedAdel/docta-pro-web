@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
 import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
+import DoctorProfile from './DoctorProfile';
 import Menu from './Menu/Menu';
 import Users from './Users';
 
@@ -26,7 +27,10 @@ const Settings: React.FC<Props> = () => {
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <Switch>
           <ProtectedComponent accessCode="users_roles/settings">
-            <Route path="/settings/users" component={Users} />
+            <Route exact path="/settings/doctor-profile" component={DoctorProfile} />
+          </ProtectedComponent>
+          <ProtectedComponent accessCode="users_roles/settings">
+            <Route exact path="/settings/users" component={Users} />
           </ProtectedComponent>
         </Switch>
       </InnerContent>
