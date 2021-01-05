@@ -9,6 +9,7 @@ import Icon from '../../../../../../../components/Icon/Icon';
 import DatePicker from '../../../../../../../components/DatePicker/DatePicker';
 import { Diploma } from '../../../../types';
 import i18n from '../../../../../../../i18n';
+import './styles.less';
 
 type Props = {
   index: number;
@@ -48,6 +49,7 @@ const DiplomasItem: React.FC<Props> = ({
           <Row justify="end" align="bottom">
             <Col>
               <Button
+                className="btn-delete-diploma"
                 type="text"
                 style={{ paddingRight: 0, paddingLeft: 0 }}
                 onClick={() => handleDeleteDiploma(index)}

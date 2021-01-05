@@ -1,5 +1,5 @@
 import { Col, Form, Input, Row } from 'antd';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { useFormik } from 'formik';
@@ -44,10 +44,6 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
   });
 
   const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
-
-  useEffect(() => {
-    console.log('diplomas', diplomas);
-  }, [diplomas]);
 
   return (
     <>
