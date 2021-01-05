@@ -6,6 +6,7 @@ import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
+import CabinetInfo from './CabinetInfo/CabinetInfo';
 
 type Props = {};
 
@@ -53,7 +54,7 @@ const DoctorProfile: React.FC<Props> = () => {
             tab={<Tab icon={<Icon name="health-book-line" />}>{t('cabinet info')}</Tab>}
             key="2"
           >
-            Cabinet info
+            <CabinetInfo />
           </Tabs.TabPane>
           <Tabs.TabPane
             tab={<Tab icon={<Icon name="history-line" />}>{t('visit reasons')}</Tab>}

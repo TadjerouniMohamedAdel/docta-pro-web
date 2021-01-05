@@ -70,6 +70,7 @@ const PersonalInfo: React.FC<Props> = () => {
             </Col>
             <Col>
               <Upload
+                accept="image/*"
                 showUploadList={false}
                 beforeUpload={(file) => {
                   handleUploadImage(file);
