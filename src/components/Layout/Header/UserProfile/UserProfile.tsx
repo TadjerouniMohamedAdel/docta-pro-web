@@ -1,13 +1,15 @@
 import { LoginOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Col, Dropdown, Menu, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthState } from '../../../../features/Auth';
+import Text from '../../../Text/Text';
+import Icon from '../../../Icon/Icon';
 
 const UserProfile: React.FC = () => {
   const { t } = useTranslation();
-  const { setUser } = useAuthState();
+  const { user, setUser } = useAuthState();
 
   const handleLogout = (): void => {
     localStorage.setItem('token', '');
@@ -27,7 +29,21 @@ const UserProfile: React.FC = () => {
       trigger={['click']}
     >
       <Button type="text" style={{ height: 'auto' }}>
-        <Avatar shape="circle" icon={<UserOutlined />} />
+        <Row gutter={14} align="middle">
+          <Col>
+            <Avatar shape="circle" icon={<UserOutlined />} />
+          </Col>
+          <Col>
+            <Text style={{ fontWeight: 500 }} type="secondary">
+              {user?.firstName} {user?.lastName}
+            </Text>
+          </Col>
+          <Col>
+            <Text style={{ fontWeight: 500 }} type="secondary">
+              <Icon name="arrow-down-s-line" />
+            </Text>
+          </Col>
+        </Row>
       </Button>
     </Dropdown>
   );
