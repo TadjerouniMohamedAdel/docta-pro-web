@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Avatar, Button, Col, Divider, Form, Input, Row, Select as AntSelect, Upload } from 'antd';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
-import { useFormik } from 'formik';
+import { FormikProps } from 'formik';
 import moment from 'moment';
 import Label from '../../../../components/Label/Label';
 import Icon from '../../../../components/Icon/Icon';
@@ -14,47 +14,33 @@ import Diplomas from './Diplomas/Diplomas';
 import Languages from './Languages/Languages';
 import { getBase64 } from '../../../../utils/base64';
 
-type Props = {};
+type Props = {
+  data: DoctorPersonalInfoForm;
+  formik: FormikProps<DoctorPersonalInfoForm>;
+  handleUpdateData: (values: DoctorPersonalInfoForm) => void;
+};
 
-const PersonalInfo: React.FC<Props> = () => {
+const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
-  const initialValues: DoctorPersonalInfoForm = {
-    picture: '',
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    birthDate: '',
-    gender: undefined,
-    mainSpecialty: undefined,
-    secondarySpecialty: undefined,
-    biography: '',
-    diplomas: [],
-    languages: [],
+  const { handleChange, handleBlur, values, touched, errors } = formik;
+
+  const handleFieldsChange = (key: string, value: any): void => {
+    handleUpdateData({ ...data, [key]: value });
   };
 
-  const [data, setData] = useState(initialValues);
-
-  const formik = useFormik({
-    initialValues,
-    onSubmit: () => {},
-  });
-
-  const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
-
-  const hanldeUpdateLanguages = (languages: Language[]) => {
-    setData({ ...data, languages });
+  const handleUpdateLanguages = (languages: Language[]) => {
+    handleUpdateData({ ...data, languages });
   };
 
   const handleUpdateDiplomas = (diplomas: Diploma[]) => {
-    setData({ ...data, diplomas });
+    handleUpdateData({ ...data, diplomas });
   };
 
   const handleUploadImage = async (file: Blob) => {
     try {
       const result = await getBase64(file);
-      setData({ ...data, picture: result as string });
+      handleUpdateData({ ...data, picture: result as string });
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +49,7 @@ const PersonalInfo: React.FC<Props> = () => {
   return (
     <>
       <div style={{ padding: '24px 80px' }}>
-        <Form onFinish={handleSubmit}>
+        <Form>
           <Row gutter={[35, 16]} align="middle">
             <Col>
               <Avatar src={data.picture} size={95} />
@@ -103,7 +89,10 @@ const PersonalInfo: React.FC<Props> = () => {
                     fieldName: t('first name'),
                   })}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    handleFieldsChange(e.target.name, e.target.value);
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -124,7 +113,10 @@ const PersonalInfo: React.FC<Props> = () => {
                     fieldName: t('last name'),
                   })}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    handleFieldsChange(e.target.name, e.target.value);
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -153,6 +145,8 @@ const PersonalInfo: React.FC<Props> = () => {
                     handleBlur({
                       target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
                     });
+
+                    handleFieldsChange('phone', e.target.value.replace(/ /g, ''));
                   }}
                 >
                   {(inputProps: any) => (
@@ -182,7 +176,10 @@ const PersonalInfo: React.FC<Props> = () => {
                     fieldName: t('email'),
                   })}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    handleFieldsChange(e.target.name, e.target.value);
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -207,6 +204,7 @@ const PersonalInfo: React.FC<Props> = () => {
                     handleChange({
                       target: { name: 'birthDate', value: date },
                     });
+                    handleFieldsChange('birthDate', date);
                   }}
                 />
               </Form.Item>
@@ -230,6 +228,7 @@ const PersonalInfo: React.FC<Props> = () => {
                     handleChange({
                       target: { name: 'gender', value },
                     });
+                    handleFieldsChange('gender', value);
                   }}
                 >
                   <AntSelect.Option value="MALE">Male</AntSelect.Option>
@@ -260,6 +259,7 @@ const PersonalInfo: React.FC<Props> = () => {
                     handleChange({
                       target: { name: 'mainSpecialty', value },
                     });
+                    handleFieldsChange('mainSpecialty', value);
                   }}
                 />
               </Form.Item>
@@ -289,6 +289,7 @@ const PersonalInfo: React.FC<Props> = () => {
                     handleChange({
                       target: { name: 'secondarySpecialty', value },
                     });
+                    handleFieldsChange('secondarySpecialty', value);
                   }}
                 />
               </Form.Item>
@@ -312,7 +313,10 @@ const PersonalInfo: React.FC<Props> = () => {
                   value={values.biography}
                   placeholder={t('Tell your patients about you')}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    handleFieldsChange(e.target.name, e.target.value);
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -322,7 +326,7 @@ const PersonalInfo: React.FC<Props> = () => {
       <Divider style={{ margin: 0 }} />
       <div style={{ padding: '24px 80px' }}>
         <Diplomas diplomas={data.diplomas} updateDiplomas={handleUpdateDiplomas} />
-        <Languages languages={data.languages} updateLanguages={hanldeUpdateLanguages} />
+        <Languages languages={data.languages} updateLanguages={handleUpdateLanguages} />
       </div>
     </>
   );
