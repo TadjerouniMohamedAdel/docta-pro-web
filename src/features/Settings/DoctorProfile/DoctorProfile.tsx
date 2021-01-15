@@ -8,7 +8,7 @@ import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
 import CabinetInfo from './CabinetInfo/CabinetInfo';
-import { DoctorPersonalInfoForm } from './types';
+import { AddressForm, DoctorCabinetInfoForm, DoctorPersonalInfoForm } from './types';
 
 type Props = {};
 
@@ -31,13 +31,27 @@ const DoctorProfile: React.FC<Props> = () => {
     languages: [],
   });
 
-  const updateDoctorPersonalInfo = (values: DoctorPersonalInfoForm) => {
-    console.log(values);
-    setDoctorPersonalInfoForm(values);
-  };
+  const [doctorCabinetInfoForm, setDoctorCabinetInfoForm] = useState<DoctorCabinetInfoForm>({
+    services: [],
+    images: [],
+    addressForm: {
+      address: '',
+      state: undefined,
+      city: undefined,
+    },
+    location: {
+      lat: 0,
+      lng: 0,
+    },
+  });
 
   const handleTabsChange = (value: string) => {
     setActiveKey(value);
+  };
+
+  // personal info handlers-------------------------------------------
+  const updateDoctorPersonalInfo = (values: DoctorPersonalInfoForm) => {
+    setDoctorPersonalInfoForm(values);
   };
 
   const handleSavePersonalInfo = () => {
@@ -51,11 +65,27 @@ const DoctorProfile: React.FC<Props> = () => {
     },
   });
 
-  const { handleSubmit } = doctorPersonalInfoFormik;
+  const { handleSubmit: submitDoctorPersonalInfoForm } = doctorPersonalInfoFormik;
 
-  // const handleSaveCabinetInfo = (values: DoctorCabinetInfoForm) => {
-  //   console.log(values);
-  // };
+  // cabinet info handlers-------------------------------------------
+  const updateDoctorCabinetInfo = (values: DoctorCabinetInfoForm) => {
+    setDoctorCabinetInfoForm(values);
+  };
+
+  const handleSaveCabinetInfo = () => {
+    console.log('doctorCabinetInfoForm', doctorCabinetInfoForm);
+  };
+
+  const { addressForm } = doctorCabinetInfoForm;
+
+  const doctorCabinetInfoFormik: FormikProps<AddressForm> = useFormik({
+    initialValues: addressForm,
+    onSubmit: () => {
+      handleSaveCabinetInfo();
+    },
+  });
+
+  const { handleSubmit: submitDoctorCabinetInfoForm } = doctorCabinetInfoFormik;
 
   const getAction = () => {
     switch (activeKey) {
@@ -65,7 +95,7 @@ const DoctorProfile: React.FC<Props> = () => {
             type="primary"
             icon={<Icon name="save-line" />}
             size="small"
-            onClick={() => handleSubmit()}
+            onClick={() => submitDoctorPersonalInfoForm()}
             //   loading={isLoading}
           >
             {t('save')}
@@ -78,7 +108,7 @@ const DoctorProfile: React.FC<Props> = () => {
             type="primary"
             icon={<Icon name="save-line" />}
             size="small"
-            //   onClick={handleSaveCabinetInfo}
+            onClick={() => submitDoctorCabinetInfoForm()}
             //   loading={isLoading}
           >
             {t('save')}
@@ -130,7 +160,11 @@ const DoctorProfile: React.FC<Props> = () => {
             tab={<Tab icon={<Icon name="health-book-line" />}>{t('cabinet info')}</Tab>}
             key="2"
           >
-            <CabinetInfo />
+            <CabinetInfo
+              data={doctorCabinetInfoForm}
+              formik={doctorCabinetInfoFormik}
+              handleUpdateData={updateDoctorCabinetInfo}
+            />
           </Tabs.TabPane>
         </Tabs>
       </div>

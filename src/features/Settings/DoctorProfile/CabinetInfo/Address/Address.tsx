@@ -1,7 +1,7 @@
 import { Col, Form, Input, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFormik } from 'formik';
+import { FormikProps } from 'formik';
 import Label from '../../../../../components/Label/Label';
 import Icon from '../../../../../components/Icon/Icon';
 import i18n from '../../../../../i18n';
@@ -9,21 +9,22 @@ import Select from '../../../../../components/Select/Select';
 import { AddressForm } from '../../types';
 
 type Props = {
-  addressForm: AddressForm;
+  data: AddressForm;
+  formik: FormikProps<AddressForm>;
+  handleUpdateData: (values: AddressForm) => void;
 };
 
-const Address: React.FC<Props> = ({ addressForm }) => {
+const Address: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
-  const formik = useFormik({
-    initialValues: addressForm,
-    onSubmit: () => {},
-  });
+  const { handleChange, handleBlur, values, touched, errors } = formik;
 
-  const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
+  const handleFieldsChange = (key: string, value: any): void => {
+    handleUpdateData({ ...data, [key]: value });
+  };
 
   return (
-    <Form onFinish={handleSubmit}>
+    <Form>
       <Row gutter={[35, 16]}>
         <Col span={24}>
           <Label
@@ -41,7 +42,10 @@ const Address: React.FC<Props> = ({ addressForm }) => {
                 fieldName: t('address'),
               })}
               onChange={handleChange}
-              onBlur={handleBlur}
+              onBlur={(e) => {
+                handleBlur(e);
+                handleFieldsChange(e.target.name, e.target.value);
+              }}
             />
           </Form.Item>
         </Col>
@@ -60,6 +64,7 @@ const Address: React.FC<Props> = ({ addressForm }) => {
                 handleChange({
                   target: { name: 'state', value },
                 });
+                handleFieldsChange('state', value);
               }}
             />
           </Form.Item>
@@ -78,6 +83,7 @@ const Address: React.FC<Props> = ({ addressForm }) => {
                 handleChange({
                   target: { name: 'city', value },
                 });
+                handleFieldsChange('city', value);
               }}
             />
           </Form.Item>
