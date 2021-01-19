@@ -8,6 +8,7 @@ import Text from '../../../../../components/Text/Text';
 import { Language } from '../../types';
 import i18n from '../../../../../i18n';
 import './styles.less';
+import { fetchLanguages } from '../../services';
 
 type Props = {
   languages: Language[];
@@ -21,12 +22,13 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState<Language[]>([]);
 
-  const handleOnSearch = (term: string) => {
-    console.log(term);
-    setData([
-      { code: 'ar', name: 'arabic' },
-      { code: 'en', name: 'english' },
-    ]);
+  const handleOnSearch = async (term: string) => {
+    try {
+      const response = await fetchLanguages(term);
+      if (response.data) setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleOnSelect = (term: string, option: any) => {

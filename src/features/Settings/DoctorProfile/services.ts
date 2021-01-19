@@ -29,3 +29,7 @@ export const updateDoctorCabinetProfile = async (body: any): Promise<any> => {
 export const fetchDoctorVisitReasons = async (): Promise<any> => {
   return fetcher('/api/v1/professionals');
 };
+
+export const fetchLanguages = async (term: string): Promise<any> => {
+  return fetcher(`/api/v1/languages?term=${term}`);
+};
