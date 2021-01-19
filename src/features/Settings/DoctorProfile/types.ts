@@ -22,8 +22,6 @@ export type DoctorPersonalInfoForm = {
   email: string;
   birthDate: string;
   gender?: string;
-  mainSpecialty?: string;
-  secondarySpecialty?: string;
   biography: string;
   diplomas: Diploma[];
   languages: Language[];

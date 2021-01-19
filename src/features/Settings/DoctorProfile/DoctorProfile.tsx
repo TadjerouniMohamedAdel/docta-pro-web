@@ -24,8 +24,6 @@ const DoctorProfile: React.FC<Props> = () => {
     email: '',
     birthDate: '',
     gender: undefined,
-    mainSpecialty: undefined,
-    secondarySpecialty: undefined,
     biography: '',
     diplomas: [],
     languages: [],

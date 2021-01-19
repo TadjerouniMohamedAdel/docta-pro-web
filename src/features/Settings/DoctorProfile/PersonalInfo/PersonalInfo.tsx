@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Button, Col, Divider, Form, Input, Row, Select as AntSelect, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, Row, Select as AntSelect, Upload } from 'antd';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { FormikProps } from 'formik';
@@ -132,10 +132,9 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
                 <InputMask
                   mask="+213 999 999 999"
                   maskChar={null}
-                  placeholder={`+213 ${i18n.t('placeholders:enter', {
-                    fieldName: t('phone number'),
-                  })}`}
+                  placeholder={t('phone number')}
                   value={values.phone}
+                  disabled
                   onChange={(e) =>
                     handleChange({
                       target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
@@ -154,6 +153,7 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
                       prefix={<Icon name="phone-line" />}
                       name="phone"
                       value={values.phone}
+                      disabled
                       {...inputProps}
                     />
                   )}
@@ -238,62 +238,6 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
             </Col>
           </Row>
           <Row gutter={[35, 16]}>
-            <Col span={12}>
-              <Label
-                title={t('main specialty')}
-                error={touched.mainSpecialty ? (errors.mainSpecialty as string) : undefined}
-              />
-              <Form.Item
-                validateStatus={
-                  touched.mainSpecialty && Boolean(errors.mainSpecialty) ? 'error' : undefined
-                }
-              >
-                <Select
-                  prefixIcon={<Icon name="first-aid-kit-line" />}
-                  placeholder={i18n.t('placeholders:select', {
-                    fieldName: t('main specialty'),
-                  })}
-                  dropdownMatchSelectWidth={false}
-                  value={values.mainSpecialty}
-                  onChange={(value) => {
-                    handleChange({
-                      target: { name: 'mainSpecialty', value },
-                    });
-                    handleFieldsChange('mainSpecialty', value);
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Label
-                title={t('secondary specialty')}
-                error={
-                  touched.secondarySpecialty ? (errors.secondarySpecialty as string) : undefined
-                }
-              />
-              <Form.Item
-                validateStatus={
-                  touched.secondarySpecialty && Boolean(errors.secondarySpecialty)
-                    ? 'error'
-                    : undefined
-                }
-              >
-                <Select
-                  prefixIcon={<Icon name="first-aid-kit-line" />}
-                  placeholder={i18n.t('placeholders:select', {
-                    fieldName: t('secondary specialty'),
-                  })}
-                  dropdownMatchSelectWidth={false}
-                  value={values.secondarySpecialty}
-                  onChange={(value) => {
-                    handleChange({
-                      target: { name: 'secondarySpecialty', value },
-                    });
-                    handleFieldsChange('secondarySpecialty', value);
-                  }}
-                />
-              </Form.Item>
-            </Col>
             <Col span={24}>
               <Label
                 title={t('Doctor Biography (max 240 words)')}
@@ -322,9 +266,7 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
             </Col>
           </Row>
         </Form>
-      </div>
-      <Divider style={{ margin: 0 }} />
-      <div style={{ padding: '24px 80px' }}>
+
         <Diplomas diplomas={data.diplomas} updateDiplomas={handleUpdateDiplomas} />
         <Languages languages={data.languages} updateLanguages={handleUpdateLanguages} />
       </div>
