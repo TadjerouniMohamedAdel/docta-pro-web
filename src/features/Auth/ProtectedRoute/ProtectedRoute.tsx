@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Route, RouteProps } from 'react-router-dom';
 import { useCheckAccess } from '../hooks';
 
-type Props = {
-  children: React.ReactNode;
+type Props = RouteProps & {
   type?: 'section' | 'permission';
   accessCode: string;
 };
 
-const ProtectedComponent: React.FC<Props> = ({
+const ProtectedRoute: React.FC<Props> = ({
   children,
   type = 'permission',
   accessCode,
@@ -21,15 +21,7 @@ const ProtectedComponent: React.FC<Props> = ({
     setAccessible(CheckAccess());
   }, []);
 
-  return (
-    <>
-      {accessible
-        ? React.Children.map(children, (child) =>
-            React.cloneElement(child as React.ReactElement, { ...rest }),
-          )
-        : null}
-    </>
-  );
+  return <>{accessible ? <Route {...rest} /> : null}</>;
 };
 
-export default ProtectedComponent;
+export default ProtectedRoute;

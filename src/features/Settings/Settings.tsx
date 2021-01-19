@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
-import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
+import ProtectedRoute from '../Auth/ProtectedRoute/ProtectedRoute';
 import DoctorProfile from './DoctorProfile';
 import Menu from './Menu/Menu';
 import Users from './Users';
@@ -26,12 +26,16 @@ const Settings: React.FC<Props> = () => {
       </InnerSidebar>
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <Switch>
-          <ProtectedComponent accessCode="users_roles/settings">
-            <Route exact path="/settings/doctor-profile" component={DoctorProfile} />
-          </ProtectedComponent>
-          <ProtectedComponent accessCode="users_roles/settings">
-            <Route exact path="/settings/users" component={Users} />
-          </ProtectedComponent>
+          <ProtectedRoute
+            accessCode="clinic_profile/settings"
+            path="/settings/doctor-profile"
+            component={DoctorProfile}
+          />
+          <ProtectedRoute
+            accessCode="users_roles/settings"
+            path="/settings/users"
+            component={Users}
+          />
         </Switch>
       </InnerContent>
     </InnerLayout>
