@@ -17,17 +17,19 @@ const Menu: React.FC = () => {
       defaultSelectedKeys={[pathname]}
       style={{ padding: '24px 0' }}
     >
-      <ProtectedComponent accessCode="users_roles/settings">
+      <ProtectedComponent accessCode="clinic_profile/settings">
         <MenuItem
           title={t('doctor profile')}
           iconName="hospital-line"
           path="/settings/doctor-profile"
         />
-        <MenuItem
-          title={t('my schedule')}
-          iconName="calendar-event-line"
-          path="/settings/working-hours"
-        />
+      </ProtectedComponent>
+      <MenuItem
+        title={t('my schedule')}
+        iconName="calendar-event-line"
+        path="/settings/working-hours"
+      />
+      <ProtectedComponent accessCode="users_roles/settings">
         <MenuItem title={t('users')} iconName="shield-user-line" path="/settings/users" />
       </ProtectedComponent>
     </AntMenu>

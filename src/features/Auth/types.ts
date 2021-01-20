@@ -13,6 +13,8 @@ type Permission = {
   section: Section;
 };
 
+type Role = { name: string; code: string };
+
 export type User = {
   phone: string;
   email: string;
@@ -20,6 +22,7 @@ export type User = {
   lastName: string;
   picture: string;
   permissions: Permission[];
+  role: Role;
 };
 
 export type LoginParams = {

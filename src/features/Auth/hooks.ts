@@ -5,6 +5,7 @@ export const useCheckAccess = (type: string, accessCode: string) => {
 
   const CheckAccess = () => {
     if (user) {
+      if (user.role.code === 'practitioner') return true;
       switch (type) {
         case 'section':
           if (user.permissions.find((item) => item.section.code === accessCode)) return true;
