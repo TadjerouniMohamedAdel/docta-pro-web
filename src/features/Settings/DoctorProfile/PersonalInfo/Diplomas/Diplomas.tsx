@@ -21,15 +21,15 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const initialValues: Diploma = {
-    title: '',
+    name: '',
     institute: '',
-    date: null,
+    graduationDate: null,
   };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required(t('errors:required field')),
+    name: Yup.string().required(t('errors:required field')),
     institute: Yup.string().required(t('errors:required field')),
-    date: Yup.date().required(t('errors:required field')),
+    graduationDate: Yup.date().required(t('errors:required field')),
   });
 
   const formik = useFormik({
@@ -67,12 +67,12 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
             <Row gutter={[8, 8]}>
               <Col span={24}>
                 <Form.Item
-                  validateStatus={touched.title && Boolean(errors.title) ? 'error' : undefined}
+                  validateStatus={touched.name && Boolean(errors.name) ? 'error' : undefined}
                 >
                   <Input
                     prefix={<Icon name="file-text-line" />}
-                    name="title"
-                    value={values.title}
+                    name="name"
+                    value={values.name}
                     placeholder={i18n.t('placeholders:enter', {
                       fieldName: t('diploma title'),
                     })}
@@ -101,20 +101,22 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
               </Col>
               <Col span={6}>
                 <Form.Item
-                  validateStatus={touched.date && Boolean(errors.date) ? 'error' : undefined}
+                  validateStatus={
+                    touched.graduationDate && Boolean(errors.graduationDate) ? 'error' : undefined
+                  }
                 >
                   <DatePicker
                     format="MMMM YYYY"
                     picker="month"
                     prefixIcon={<Icon name="calendar-2-line" />}
-                    name="date"
-                    value={values.date ? moment(values.date) : null}
+                    name="graduationDate"
+                    value={values.graduationDate ? moment(values.graduationDate) : null}
                     placeholder={i18n.t('placeholders:enter', {
                       fieldName: t('date'),
                     })}
                     onChange={(date) => {
                       handleChange({
-                        target: { name: 'date', value: date },
+                        target: { name: 'graduationDate', value: date },
                       });
                     }}
                   />

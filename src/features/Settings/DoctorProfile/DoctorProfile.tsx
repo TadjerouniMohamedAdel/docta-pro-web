@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Avatar, Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormik } from 'formik';
@@ -8,13 +8,20 @@ import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
 import CabinetInfo from './CabinetInfo/CabinetInfo';
-import { AddressForm, DoctorCabinetInfoForm, DoctorPersonalInfoForm } from './types';
+import { AddressForm, DoctorInfo, DoctorCabinetInfoForm, DoctorPersonalInfoForm } from './types';
+import { fetchDoctorPersonalInfo } from './services';
 
 type Props = {};
 
 const DoctorProfile: React.FC<Props> = () => {
   const { t } = useTranslation('translation');
   const [activeKey, setActiveKey] = useState<string>('1');
+
+  const [doctorInfo, setDoctorInfo] = useState<DoctorInfo>({
+    firstName: '',
+    lastName: '',
+    specialties: [],
+  });
 
   const [doctorPersonalInfoForm, setDoctorPersonalInfoForm] = useState<DoctorPersonalInfoForm>({
     picture: '',
@@ -47,6 +54,33 @@ const DoctorProfile: React.FC<Props> = () => {
     setActiveKey(value);
   };
 
+  const getDoctorPersonalInfo = async () => {
+    try {
+      const { data } = await fetchDoctorPersonalInfo();
+      if (data) {
+        setDoctorPersonalInfoForm({
+          picture: data.picture || '',
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          birthDate: data.birthDate,
+          gender: data.gender,
+          biography: data.bio,
+          diplomas: data.formations,
+          languages: data.languages,
+        });
+        setDoctorInfo({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          specialties: data.specialties.map((item) => ({ name: item.specialty.name })),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // personal info handlers-------------------------------------------
   const updateDoctorPersonalInfo = (values: DoctorPersonalInfoForm) => {
     setDoctorPersonalInfoForm(values);
@@ -58,6 +92,7 @@ const DoctorProfile: React.FC<Props> = () => {
 
   const doctorPersonalInfoFormik: FormikProps<DoctorPersonalInfoForm> = useFormik({
     initialValues: doctorPersonalInfoForm,
+    enableReinitialize: true,
     onSubmit: () => {
       handleSavePersonalInfo();
     },
@@ -78,6 +113,7 @@ const DoctorProfile: React.FC<Props> = () => {
 
   const doctorCabinetInfoFormik: FormikProps<AddressForm> = useFormik({
     initialValues: addressForm,
+    enableReinitialize: true,
     onSubmit: () => {
       handleSaveCabinetInfo();
     },
@@ -118,6 +154,10 @@ const DoctorProfile: React.FC<Props> = () => {
     }
   };
 
+  useEffect(() => {
+    getDoctorPersonalInfo();
+  }, []);
+
   return (
     <>
       <div style={{ padding: '18px 25px' }}>
@@ -127,11 +167,15 @@ const DoctorProfile: React.FC<Props> = () => {
           </Col>
           <Col flex={1}>
             <Text size="xxl" style={{ fontWeight: 'bold' }}>
-              Dr.Mahmud Abu Hasan
+              Dr. {doctorInfo.firstName} {doctorInfo.lastName}
             </Text>
             <br />
             <Text type="secondary" style={{ fontWeight: 500 }}>
-              Cardiologist - Residence El Khelil N 41, Said Hamdine, Alger
+              <Row gutter={4}>
+                {doctorInfo.specialties.map((specialty) => (
+                  <Col>{specialty.name}</Col>
+                ))}
+              </Row>
             </Text>
           </Col>
           <Col>{getAction()}</Col>

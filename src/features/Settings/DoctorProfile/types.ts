@@ -1,7 +1,7 @@
 export type Diploma = {
-  title: string;
+  name: string;
   institute: string;
-  date: Date | null;
+  graduationDate: Date | null;
 };
 
 export type Language = {
@@ -43,4 +43,31 @@ export type DoctorCabinetInfoForm = {
   images: [];
   addressForm: AddressForm;
   location: Location;
+};
+
+export type FetchDoctorPersonalInfoResponse = {
+  bio: string;
+  birthDate: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  formations: Diploma[];
+  gender: string | undefined;
+  languages: Language[];
+  phone: string;
+  picture: string;
+  specialties: {
+    isMain: 0;
+    practitionerToSpecialtyId: string;
+    specialty: {
+      id: string;
+      name: string;
+    };
+  }[];
+};
+
+export type DoctorInfo = {
+  firstName: string;
+  lastName: string;
+  specialties: { name: string }[];
 };

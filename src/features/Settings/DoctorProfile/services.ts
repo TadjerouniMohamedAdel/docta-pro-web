@@ -1,11 +1,14 @@
 import fetcher from '../../../utils/fetcher';
+import { FetchDoctorPersonalInfoResponse } from './types';
 
 export const fetchDoctorProfile = async (): Promise<any> => {
   return fetcher('/api/v1/professionals');
 };
 
-export const fetchDoctorPersonalInfo = async (): Promise<any> => {
-  return fetcher('/api/v1/professionals');
+export const fetchDoctorPersonalInfo = async (): Promise<{
+  data: FetchDoctorPersonalInfoResponse;
+}> => {
+  return fetcher('/api/v1/practitioners/profile');
 };
 
 export const updateDoctorPersonalInfo = async (body: any): Promise<any> => {
