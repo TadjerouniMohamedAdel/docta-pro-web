@@ -9,8 +9,13 @@ import Icon from '../../../components/Icon/Icon';
 import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
 import CabinetInfo from './CabinetInfo/CabinetInfo';
-import { AddressForm, DoctorInfo, DoctorCabinetInfoForm, DoctorPersonalInfoForm } from './types';
-import { fetchDoctorPersonalInfo, updateDoctorPersonalInfo } from './services';
+import { CabinetForm, DoctorInfo, DoctorCabinetInfoForm, DoctorPersonalInfoForm } from './types';
+import {
+  fetchDoctorCabinetProfile,
+  fetchDoctorPersonalInfo,
+  updateDoctorCabinetProfile,
+  updateDoctorPersonalInfo,
+} from './services';
 
 type Props = {};
 
@@ -40,20 +45,18 @@ const DoctorProfile: React.FC<Props> = () => {
   const [doctorCabinetInfoForm, setDoctorCabinetInfoForm] = useState<DoctorCabinetInfoForm>({
     services: [],
     images: [],
-    addressForm: {
+    cabinetForm: {
+      contactNumber: '',
+      secondaryContactNumber: '',
       address: '',
-      state: undefined,
-      city: undefined,
+      state: '',
+      city: '',
     },
     location: {
       lat: 0,
       lng: 0,
     },
   });
-
-  const handleTabsChange = (value: string) => {
-    setActiveKey(value);
-  };
 
   const getDoctorPersonalInfo = async () => {
     try {
@@ -80,6 +83,36 @@ const DoctorProfile: React.FC<Props> = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getDoctorCabinetInfo = async () => {
+    try {
+      const { data } = await fetchDoctorCabinetProfile();
+      if (data) {
+        setDoctorCabinetInfoForm({
+          services: data.services,
+          images: data.images,
+          cabinetForm: {
+            contactNumber: data.contactNumber,
+            secondaryContactNumber: data.secondaryContactNumber,
+            address: data.address,
+            state: data.state.name,
+            city: data.city.name,
+          },
+          location: {
+            lat: 0,
+            lng: 0,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleTabsChange = (value: string) => {
+    setActiveKey(value);
+    if (value === '2') getDoctorCabinetInfo();
   };
 
   // personal info handlers-------------------------------------------
@@ -110,14 +143,18 @@ const DoctorProfile: React.FC<Props> = () => {
     setDoctorCabinetInfoForm(values);
   };
 
+  const { mutate: saveCabinetInfoMutation, isLoading: isSaveCabinetInfoLoading } = useMutation(
+    updateDoctorCabinetProfile,
+  );
+
   const handleSaveCabinetInfo = () => {
-    console.log('doctorCabinetInfoForm', doctorCabinetInfoForm);
+    saveCabinetInfoMutation(doctorCabinetInfoForm);
   };
 
-  const { addressForm } = doctorCabinetInfoForm;
+  const { cabinetForm } = doctorCabinetInfoForm;
 
-  const doctorCabinetInfoFormik: FormikProps<AddressForm> = useFormik({
-    initialValues: addressForm,
+  const doctorCabinetInfoFormik: FormikProps<CabinetForm> = useFormik({
+    initialValues: cabinetForm,
     enableReinitialize: true,
     onSubmit: () => {
       handleSaveCabinetInfo();
@@ -148,7 +185,7 @@ const DoctorProfile: React.FC<Props> = () => {
             icon={<Icon name="save-line" />}
             size="small"
             onClick={() => submitDoctorCabinetInfoForm()}
-            //   loading={isLoading}
+            loading={isSaveCabinetInfoLoading}
           >
             {t('save')}
           </Button>

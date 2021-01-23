@@ -8,6 +8,7 @@ import Text from '../../../../../components/Text/Text';
 import { Service } from '../../types';
 import i18n from '../../../../../i18n';
 import './styles.less';
+import { fetchServices } from '../../services';
 
 type Props = {
   services: Service[];
@@ -21,17 +22,18 @@ const Services: React.FC<Props> = ({ services, updateServices }) => {
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState<Service[]>([]);
 
-  const handleOnSearch = (term: string) => {
-    console.log(term);
-    setData([
-      { id: '111', name: 'ECG Analyse' },
-      { id: '222', name: 'service 2' },
-    ]);
+  const handleOnSearch = async (term: string) => {
+    try {
+      const response = await fetchServices(term);
+      if (response.data) setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleOnSelect = (term: string, option: any) => {
     const updatedServices = [...services];
-    updatedServices.push({ id: option.key, name: option.children });
+    updatedServices.push({ id: option.key, name: option.children, isNew: true });
     updateServices(updatedServices);
     setValue('');
   };
@@ -42,7 +44,7 @@ const Services: React.FC<Props> = ({ services, updateServices }) => {
 
   const onDelete = (index: number) => {
     const updatedServices = [...services];
-    updatedServices.splice(index, 1);
+    updatedServices[index].isDeleted = true;
     updateServices(updatedServices);
   };
 

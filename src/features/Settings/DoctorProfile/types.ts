@@ -19,6 +19,8 @@ export type Language = {
 export type Service = {
   id: string;
   name: string;
+  isNew?: boolean;
+  isDeleted?: boolean;
 };
 
 export type DoctorPersonalInfoForm = {
@@ -34,10 +36,12 @@ export type DoctorPersonalInfoForm = {
   languages: Language[];
 };
 
-export type AddressForm = {
+export type CabinetForm = {
+  contactNumber: string;
+  secondaryContactNumber: string;
   address: string;
-  state?: string;
-  city?: string;
+  state: string;
+  city: string;
 };
 
 export type Location = {
@@ -47,8 +51,8 @@ export type Location = {
 
 export type DoctorCabinetInfoForm = {
   services: Service[];
-  images: [];
-  addressForm: AddressForm;
+  images: string[];
+  cabinetForm: CabinetForm;
   location: Location;
 };
 
@@ -68,6 +72,20 @@ export type FetchDoctorPersonalInfoResponse = {
       name: string;
     };
   }[];
+};
+
+export type FetchDoctorCabinetInfoResponse = {
+  contactNumber: string;
+  secondaryContactNumber: string;
+  services: Service[];
+  address: string;
+  state: { id: string; name: string };
+  city: {
+    id: string;
+    name: string;
+  };
+  images: string[];
+  geolocation: {};
 };
 
 export type DoctorInfo = {

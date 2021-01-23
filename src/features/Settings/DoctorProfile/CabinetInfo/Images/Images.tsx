@@ -6,7 +6,7 @@ import Text from '../../../../../components/Text/Text';
 import { getBase64 } from '../../../../../utils/base64';
 
 type Props = {
-  images: [];
+  images: string[];
 };
 
 const Images: React.FC<Props> = () => {
@@ -51,10 +51,9 @@ const Images: React.FC<Props> = () => {
       <Text> {t('cabinet on map')} </Text>
       <Upload
         accept="image/*"
-        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
         fileList={upload.fileList}
-        beforeUpload={(file) => {
+        beforeUpload={(file: any) => {
           console.log(file);
           // handleUploadImage(file);
           return false;

@@ -1,5 +1,10 @@
 import fetcher from '../../../utils/fetcher';
-import { DoctorPersonalInfoForm, FetchDoctorPersonalInfoResponse } from './types';
+import {
+  DoctorCabinetInfoForm,
+  DoctorPersonalInfoForm,
+  FetchDoctorCabinetInfoResponse,
+  FetchDoctorPersonalInfoResponse,
+} from './types';
 
 export const fetchDoctorProfile = async (): Promise<any> => {
   return fetcher('/api/v1/professionals');
@@ -29,21 +34,27 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
   });
 };
 
-export const fetchDoctorCabinetProfile = async (): Promise<any> => {
-  return fetcher('/api/v1/professionals');
+export const fetchDoctorCabinetProfile = async (): Promise<{
+  data: FetchDoctorCabinetInfoResponse;
+}> => {
+  return fetcher('/api/v1/practitioners/cabinets/profile');
 };
 
-export const updateDoctorCabinetProfile = async (body: any): Promise<any> => {
-  return fetcher('/api/v1/professionals', {
-    body,
+export const updateDoctorCabinetProfile = async (params: DoctorCabinetInfoForm): Promise<any> => {
+  return fetcher('/api/v1/practitioners/cabinets/profile', {
+    body: {
+      contactNumber: params.cabinetForm.contactNumber,
+      secondaryContactNumber: params.cabinetForm.secondaryContactNumber,
+      services: params.services.filter((service) => service.isNew || service.isDeleted),
+    },
     method: 'PUT',
   });
 };
 
-export const fetchDoctorVisitReasons = async (): Promise<any> => {
-  return fetcher('/api/v1/professionals');
-};
-
 export const fetchLanguages = async (term: string): Promise<any> => {
   return fetcher(`/api/v1/languages?term=${term}`);
+};
+
+export const fetchServices = async (term: string): Promise<any> => {
+  return fetcher(`/api/v1/services?term=${term}`);
 };
