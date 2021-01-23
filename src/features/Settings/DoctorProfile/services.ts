@@ -27,7 +27,10 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
       birthDate: params.birthDate,
       languages: params.languages.filter((language) => language.isNew || language.isDeleted),
       formations: params.diplomas.filter(
-        (diplomas) => diplomas.isNew || diplomas.isDeleted || diplomas.isEdited,
+        (diplomas) =>
+          (diplomas.isNew && !diplomas.isDeleted) ||
+          (diplomas.isDeleted && diplomas.id) ||
+          diplomas.isEdited,
       ),
     },
     method: 'PUT',
@@ -45,7 +48,9 @@ export const updateDoctorCabinetProfile = async (params: DoctorCabinetInfoForm):
     body: {
       contactNumber: params.cabinetForm.contactNumber,
       secondaryContactNumber: params.cabinetForm.secondaryContactNumber,
-      services: params.services.filter((service) => service.isNew || service.isDeleted),
+      services: params.services.filter(
+        (service) => (service.isNew && !service.isDeleted) || (service.isDeleted && service.id),
+      ),
     },
     method: 'PUT',
   });

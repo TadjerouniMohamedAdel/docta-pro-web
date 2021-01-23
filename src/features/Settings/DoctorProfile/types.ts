@@ -17,7 +17,7 @@ export type Language = {
 };
 
 export type Service = {
-  id: string;
+  id?: string;
   name: string;
   isNew?: boolean;
   isDeleted?: boolean;
