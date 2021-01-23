@@ -11,27 +11,29 @@ type Props = {
 const DiplomasList: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
   const handleUpdateDiploma = (index: number, diploma: Diploma) => {
     const updatedDiplomas = [...diplomas];
-    updatedDiplomas[index] = diploma;
+    updatedDiplomas[index] = { ...diploma, isEdited: true };
     updateDiplomas(updatedDiplomas);
   };
 
   const handleDeleteDiploma = (index: number) => {
     const updatedDiplomas = [...diplomas];
-    updatedDiplomas.splice(index, 1);
+    updatedDiplomas[index].isDeleted = true;
     updateDiplomas(updatedDiplomas);
   };
 
   return (
     <>
-      {diplomas.map((diploma, index) => (
-        <DiplomasItem
-          key={index}
-          diploma={diploma}
-          handleUpdateDiploma={handleUpdateDiploma}
-          handleDeleteDiploma={handleDeleteDiploma}
-          index={index}
-        />
-      ))}
+      {diplomas
+        .filter((diploma) => !diploma.isDeleted)
+        .map((diploma, index) => (
+          <DiplomasItem
+            key={index}
+            diploma={diploma}
+            handleUpdateDiploma={handleUpdateDiploma}
+            handleDeleteDiploma={handleDeleteDiploma}
+            index={index}
+          />
+        ))}
     </>
   );
 };

@@ -33,7 +33,7 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
 
   const handleOnSelect = (term: string, option: any) => {
     const updatedLanguages = [...languages];
-    updatedLanguages.push({ code: option.key, name: option.children });
+    updatedLanguages.push({ code: option.key, name: option.children, isNew: true });
     updateLanguages(updatedLanguages);
     setValue('');
   };
@@ -44,7 +44,7 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
 
   const onDelete = (index: number) => {
     const updatedLanguages = [...languages];
-    updatedLanguages.splice(index, 1);
+    updatedLanguages[index].isDeleted = true;
     updateLanguages(updatedLanguages);
   };
 
@@ -76,22 +76,24 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
           </Col>
         </Row>
         <Row gutter={[8, 8]} align="middle">
-          {languages.map((language, index) => (
-            <Col key={language.code}>
-              <Tag key={language.code} style={{ display: 'flex', alignItems: 'center' }}>
-                <Text>{language.name}</Text>
-                <Button
-                  type="link"
-                  className="btn-language-delete"
-                  danger
-                  size="small"
-                  onClick={() => onDelete(index)}
-                >
-                  <Icon name="close-circle-line" />
-                </Button>
-              </Tag>
-            </Col>
-          ))}
+          {languages
+            .filter((language) => !language.isDeleted)
+            .map((language, index) => (
+              <Col key={language.code}>
+                <Tag key={language.code} style={{ display: 'flex', alignItems: 'center' }}>
+                  <Text>{language.name}</Text>
+                  <Button
+                    type="link"
+                    className="btn-language-delete"
+                    danger
+                    size="small"
+                    onClick={() => onDelete(index)}
+                  >
+                    <Icon name="close-circle-line" />
+                  </Button>
+                </Tag>
+              </Col>
+            ))}
           {visible ? (
             <Col>
               <Form.Item>

@@ -37,7 +37,7 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
     validationSchema,
     onSubmit: (values, { resetForm }) => {
       const updatedDiplomas = [...diplomas];
-      updatedDiplomas.push(values);
+      updatedDiplomas.push({ ...values, isNew: true });
       updateDiplomas(updatedDiplomas);
       resetForm();
     },

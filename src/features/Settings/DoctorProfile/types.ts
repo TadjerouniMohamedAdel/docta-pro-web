@@ -1,12 +1,19 @@
 export type Diploma = {
+  id?: string;
   name: string;
   institute: string;
   graduationDate: Date | null;
+  isNew?: boolean;
+  isDeleted?: boolean;
+  isEdited?: boolean;
 };
 
 export type Language = {
+  id?: string;
   code: string;
   name: string;
+  isNew?: boolean;
+  isDeleted?: boolean;
 };
 
 export type Service = {
@@ -57,10 +64,7 @@ export type FetchDoctorPersonalInfoResponse = {
   phone: string;
   picture: string;
   specialties: {
-    isMain: 0;
-    practitionerToSpecialtyId: string;
     specialty: {
-      id: string;
       name: string;
     };
   }[];

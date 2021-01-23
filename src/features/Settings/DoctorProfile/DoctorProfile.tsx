@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Avatar, Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormik } from 'formik';
+import { useMutation } from 'react-query';
 import Button from '../../../components/Button/Button';
 import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
@@ -9,7 +10,7 @@ import Tab from '../../../components/Tab/Tab';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
 import CabinetInfo from './CabinetInfo/CabinetInfo';
 import { AddressForm, DoctorInfo, DoctorCabinetInfoForm, DoctorPersonalInfoForm } from './types';
-import { fetchDoctorPersonalInfo } from './services';
+import { fetchDoctorPersonalInfo, updateDoctorPersonalInfo } from './services';
 
 type Props = {};
 
@@ -82,12 +83,16 @@ const DoctorProfile: React.FC<Props> = () => {
   };
 
   // personal info handlers-------------------------------------------
-  const updateDoctorPersonalInfo = (values: DoctorPersonalInfoForm) => {
+  const handleUpdateDoctorPersonalInfo = (values: DoctorPersonalInfoForm) => {
     setDoctorPersonalInfoForm(values);
   };
 
-  const handleSavePersonalInfo = () => {
-    console.log('doctorPersonalInfoForm', doctorPersonalInfoForm);
+  const { mutate: savePersonalInfoMutation, isLoading: isSavePersonalInfoLoading } = useMutation(
+    updateDoctorPersonalInfo,
+  );
+
+  const handleSavePersonalInfo = async () => {
+    savePersonalInfoMutation(doctorPersonalInfoForm);
   };
 
   const doctorPersonalInfoFormik: FormikProps<DoctorPersonalInfoForm> = useFormik({
@@ -130,7 +135,7 @@ const DoctorProfile: React.FC<Props> = () => {
             icon={<Icon name="save-line" />}
             size="small"
             onClick={() => submitDoctorPersonalInfoForm()}
-            //   loading={isLoading}
+            loading={isSavePersonalInfoLoading}
           >
             {t('save')}
           </Button>
@@ -195,7 +200,7 @@ const DoctorProfile: React.FC<Props> = () => {
             <PersonalInfo
               data={doctorPersonalInfoForm}
               formik={doctorPersonalInfoFormik}
-              handleUpdateData={updateDoctorPersonalInfo}
+              handleUpdateData={handleUpdateDoctorPersonalInfo}
             />
           </Tabs.TabPane>
           <Tabs.TabPane
