@@ -17,24 +17,40 @@ export const fetchDoctorPersonalInfo = async (): Promise<{
 };
 
 export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): Promise<any> => {
-  return fetcher('/api/v1/practitioners/profile', {
-    body: {
-      picture: params.picture,
-      firstName: params.firstName,
-      lastName: params.lastName,
-      bio: params.biography,
-      gender: params.gender,
-      birthDate: params.birthDate,
-      languages: params.languages.filter((language) => language.isNew || language.isDeleted),
-      formations: params.diplomas.filter(
+  const formData = new FormData();
+  formData.append('picture', params.file ?? new Blob());
+  formData.append('firstName', params.firstName);
+  formData.append('lastName', params.lastName);
+  formData.append('bio', params.biography);
+  formData.append('gender', params.gender || '');
+  formData.append('birthDate', params.birthDate);
+  formData.append(
+    'languages',
+    JSON.stringify(params.languages.filter((language) => language.isNew || language.isDeleted)),
+  );
+  formData.append(
+    'formations',
+    JSON.stringify(
+      params.diplomas.filter(
         (diplomas) =>
           (diplomas.isNew && !diplomas.isDeleted) ||
           (diplomas.isDeleted && diplomas.id) ||
           diplomas.isEdited,
       ),
+    ),
+  );
+
+  return fetcher(
+    '/api/v1/practitioners/profile',
+    {
+      body: formData,
+      method: 'POST',
+      headers: {
+        picture: formData,
+      },
     },
-    method: 'PUT',
-  });
+    true,
+  );
 };
 
 export const fetchDoctorCabinetProfile = async (): Promise<{

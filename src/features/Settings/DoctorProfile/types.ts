@@ -25,6 +25,7 @@ export type Service = {
 
 export type DoctorPersonalInfoForm = {
   picture: string;
+  file?: Blob;
   firstName: string;
   lastName: string;
   phone: string;

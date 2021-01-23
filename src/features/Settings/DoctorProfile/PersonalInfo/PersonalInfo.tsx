@@ -40,7 +40,7 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
   const handleUploadImage = async (file: Blob) => {
     try {
       const result = await getBase64(file);
-      handleUpdateData({ ...data, picture: result as string });
+      handleUpdateData({ ...data, picture: result as string, file });
     } catch (error) {
       console.log(error);
     }
