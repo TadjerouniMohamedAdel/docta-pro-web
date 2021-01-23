@@ -98,4 +98,6 @@ export type IconName =
   | 'send-plane-2-line'
   | 'drag-move-2-line'
   | 'fingerprint-line'
-  | 'article-line';
+  | 'article-line'
+  | 'more-2-fill'
+  | 'time-line';
