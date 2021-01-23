@@ -44,7 +44,7 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
     '/api/v1/practitioners/profile',
     {
       body: formData,
-      method: 'POST',
+      method: 'PUT',
       headers: {
         picture: formData,
       },
