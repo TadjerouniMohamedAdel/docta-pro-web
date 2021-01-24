@@ -55,5 +55,21 @@
   "medications": "Medications",
   "allergies": "Allergies",
   "surgeries": "Surgeries",
-  "chronic diseases": "Chronic Diseases"
+  "chronic diseases": "Chronic Diseases",
+  "change photo": "Change photo",
+  "male": "Male",
+  "female": "Female",
+  "Doctor Biography (max 240 words)": "Doctor Biography (max 240 words)",
+  "Tell your patients about you": "Tell your patients about you",
+  "diplomas / certificats": "Diplomas / certificats",
+  "diploma title": "Diploma title",
+  "institute": "Institute",
+  "date": "Date",
+  "Spoken Languages": "Spoken Languages",
+  "services": "Services",
+  "Cabinet Phone": "Cabinet Phone",
+  "cabinet on map": "cabinet on map",
+  "cabinet photos": "cabinet photos",
+  "upload": "upload",
+  "image preview": "Image preview"
 }

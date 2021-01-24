@@ -8,11 +8,16 @@ type FetchHeader = {
 
 const queryCache = new QueryCache();
 
-function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
+function fetcher(endpoint: string, { body, ...customConfig }: any = {}, hasFiles = false) {
   const token = localStorage.getItem('token');
   const locale = localStorage.getItem('locale') ?? 'en';
 
-  const headers: FetchHeader = { 'Content-Type': 'application/json', locale };
+  const headers: FetchHeader = {
+    locale,
+  };
+
+  if (!hasFiles) headers['Content-Type'] = 'application/json';
+
   if (token) {
     headers.authorization = token;
   }
@@ -27,8 +32,9 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}) {
   };
 
   if (body) {
-    config.body = JSON.stringify(body);
+    config.body = hasFiles ? body : JSON.stringify(body);
   }
+
   return window.fetch(endpoint, config).then(async (response) => {
     if (response.status === 401 && endpoint !== '/api/v1/users/auth?action=pro') {
       queryCache.clear();

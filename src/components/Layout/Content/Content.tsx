@@ -5,7 +5,7 @@ import Patients from '../../../features/Patients';
 import NotFound from '../../../features/NotFound';
 import Appointments from '../../../features/Appointments';
 import Settings from '../../../features/Settings';
-import ProtectedComponent from '../../../features/Auth/ProtectedComponent/ProtectedComponent';
+import ProtectedRoute from '../../../features/Auth/ProtectedRoute/ProtectedRoute';
 
 const Content: React.FC = () => {
   return (
@@ -13,9 +13,12 @@ const Content: React.FC = () => {
       <Switch>
         <Route path="/appointments" component={Appointments} />
         <Route path="/patients" component={Patients} />
-        <ProtectedComponent accessCode="settings" type="section">
-          <Route path="/settings" component={Settings} />
-        </ProtectedComponent>
+        <ProtectedRoute
+          accessCode="settings"
+          type="section"
+          path="/settings"
+          component={Settings}
+        />
         <Route exact path="/" component={Overview} />
         <Route path="*" component={NotFound} />
       </Switch>

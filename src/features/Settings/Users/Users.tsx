@@ -3,7 +3,6 @@ import { Col, Row, Table, Avatar } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
@@ -158,7 +157,7 @@ const Users: React.FC<Props> = () => {
               onClick={() => handleDeleteUser(record.id)}
             >
               {isDeleteUserLoading && record.id === userId ? (
-                <LoadingOutlined />
+                <span>loading</span>
               ) : (
                 <Icon name="delete-bin-7-line" />
               )}

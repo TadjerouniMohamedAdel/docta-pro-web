@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAuthState } from '../context';
+import { useCheckAccess } from '../hooks';
 
 type Props = {
   children: React.ReactNode;
@@ -13,29 +13,12 @@ const ProtectedComponent: React.FC<Props> = ({
   accessCode,
   ...rest
 }) => {
-  const { user } = useAuthState();
   const [accessible, setAccessible] = useState(false);
 
-  const CheckAccess = () => {
-    if (user) {
-      switch (type) {
-        case 'section':
-          if (user.permissions.find((item) => item.section.code === accessCode))
-            setAccessible(true);
-          break;
-
-        case 'permission':
-          if (user.permissions.find((item) => item.code === accessCode)) setAccessible(true);
-          break;
-
-        default:
-          break;
-      }
-    }
-  };
+  const { CheckAccess } = useCheckAccess(type, accessCode);
 
   useEffect(() => {
-    CheckAccess();
+    setAccessible(CheckAccess());
   }, []);
 
   return (

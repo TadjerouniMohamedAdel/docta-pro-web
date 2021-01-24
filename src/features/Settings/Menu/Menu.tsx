@@ -17,8 +17,15 @@ const Menu: React.FC = () => {
       defaultSelectedKeys={[pathname]}
       style={{ padding: '24px 0' }}
     >
+      <ProtectedComponent accessCode="clinic_profile/settings">
+        <MenuItem
+          title={t('doctor profile')}
+          iconName="hospital-line"
+          path="/settings/doctor-profile"
+        />
+      </ProtectedComponent>
       <MenuItem
-        title={t('working hours')}
+        title={t('my schedule')}
         iconName="calendar-event-line"
         path="/settings/working-hours"
       />

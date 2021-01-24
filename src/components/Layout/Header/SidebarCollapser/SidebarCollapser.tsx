@@ -1,6 +1,7 @@
 import React from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useLocaleState } from '../../../../i18n';
+import Button from '../../../Button/Button';
+import Icon from '../../../Icon/Icon';
 
 type Props = {
   handleCollapsed: () => void;
@@ -13,9 +14,13 @@ const SidebarCollapser: React.FC<Props> = ({ handleCollapsed, collapsed }) => {
   return (
     <div className="sidebar-collapser">
       {(locale === 'ar' && !collapsed) || (locale !== 'ar' && collapsed) ? (
-        <MenuUnfoldOutlined onClick={handleCollapsed} className="icons" />
+        <Button type="text" onClick={handleCollapsed}>
+          <Icon name="list-check-2" />
+        </Button>
       ) : (
-        <MenuFoldOutlined onClick={handleCollapsed} className="icons" />
+        <Button type="text" onClick={handleCollapsed}>
+          <Icon name="list-check-2" />
+        </Button>
       )}
     </div>
   );
