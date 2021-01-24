@@ -33,9 +33,7 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
     JSON.stringify(
       params.diplomas.filter(
         (diplomas) =>
-          (diplomas.isNew && !diplomas.isDeleted) ||
-          (diplomas.isDeleted && diplomas.id) ||
-          diplomas.isEdited,
+          (diplomas.isNew && !diplomas.isDeleted) || diplomas.isDeleted || diplomas.isEdited,
       ),
     ),
   );
@@ -60,16 +58,34 @@ export const fetchDoctorCabinetProfile = async (): Promise<{
 };
 
 export const updateDoctorCabinetProfile = async (params: DoctorCabinetInfoForm): Promise<any> => {
-  return fetcher('/api/v1/practitioners/cabinets/profile', {
-    body: {
-      contactNumber: params.cabinetForm.contactNumber,
-      secondaryContactNumber: params.cabinetForm.secondaryContactNumber,
-      services: params.services.filter(
-        (service) => (service.isNew && !service.isDeleted) || (service.isDeleted && service.id),
+  const formData = new FormData();
+  // eslint-disable-next-line no-plusplus
+  for (let index = 0; index < params.files.length; index++) {
+    formData.append('files', params.files[index]);
+  }
+  formData.append('contactNumber', params.cabinetForm.contactNumber);
+  formData.append('secondaryContactNumber', params.cabinetForm.secondaryContactNumber);
+  formData.append(
+    'services',
+    JSON.stringify(
+      params.services.filter(
+        (service) => (service.isNew && !service.isDeleted) || service.isDeleted,
       ),
+    ),
+  );
+  formData.append('images', JSON.stringify(params.images.filter((image) => image.isDeleted)));
+
+  return fetcher(
+    '/api/v1/practitioners/cabinets/profile',
+    {
+      body: formData,
+      method: 'PUT',
+      headers: {
+        picture: formData,
+      },
     },
-    method: 'PUT',
-  });
+    true,
+  );
 };
 
 export const fetchLanguages = async (term: string): Promise<any> => {

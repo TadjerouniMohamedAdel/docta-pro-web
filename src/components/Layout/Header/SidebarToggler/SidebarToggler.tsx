@@ -1,5 +1,6 @@
 import React from 'react';
-import { MenuOutlined } from '@ant-design/icons';
+import Button from '../../../Button/Button';
+import Icon from '../../../Icon/Icon';
 
 type Props = {
   handleToggled: (value: boolean) => void;
@@ -8,7 +9,9 @@ type Props = {
 const SidebarToggler: React.FC<Props> = ({ handleToggled }) => {
   return (
     <div className="sidebar-toggler break-point-xl">
-      <MenuOutlined onClick={() => handleToggled(true)} className="icons" />
+      <Button type="text" onClick={() => handleToggled(true)}>
+        <Icon name="list-check-2" />
+      </Button>
     </div>
   );
 };

@@ -12,18 +12,12 @@ import i18n from '../../../../../../../i18n';
 import './styles.less';
 
 type Props = {
-  index: number;
   diploma: Diploma;
-  handleUpdateDiploma: (index: number, diploma: Diploma) => void;
-  handleDeleteDiploma: (index: number) => void;
+  handleUpdateDiploma: (diploma: Diploma) => void;
+  handleDeleteDiploma: (id: string) => void;
 };
 
-const DiplomasItem: React.FC<Props> = ({
-  index,
-  diploma,
-  handleUpdateDiploma,
-  handleDeleteDiploma,
-}) => {
+const DiplomasItem: React.FC<Props> = ({ diploma, handleUpdateDiploma, handleDeleteDiploma }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const validationSchema = Yup.object().shape({
@@ -36,7 +30,7 @@ const DiplomasItem: React.FC<Props> = ({
     initialValues: diploma,
     validationSchema,
     onSubmit: (values) => {
-      handleUpdateDiploma(index, values);
+      handleUpdateDiploma(values);
     },
   });
 
@@ -52,7 +46,7 @@ const DiplomasItem: React.FC<Props> = ({
                 className="btn-delete-diploma"
                 type="text"
                 style={{ paddingRight: 0, paddingLeft: 0 }}
-                onClick={() => handleDeleteDiploma(index)}
+                onClick={() => handleDeleteDiploma(diploma.id)}
               >
                 <Icon name="delete-bin-7-line" />
               </Button>

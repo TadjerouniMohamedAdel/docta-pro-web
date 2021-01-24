@@ -231,8 +231,8 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
                     handleFieldsChange('gender', value);
                   }}
                 >
-                  <AntSelect.Option value="MALE">Male</AntSelect.Option>
-                  <AntSelect.Option value="Female">Female</AntSelect.Option>
+                  <AntSelect.Option value="MALE">{t('male')}</AntSelect.Option>
+                  <AntSelect.Option value="Female">{t('female')}</AntSelect.Option>
                 </Select>
               </Form.Item>
             </Col>

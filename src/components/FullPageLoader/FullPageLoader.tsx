@@ -1,5 +1,4 @@
 import React from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
 
 const FullPageLoader: React.FC = () => {
   return (
@@ -17,7 +16,7 @@ const FullPageLoader: React.FC = () => {
         zIndex: 1999,
       }}
     >
-      <LoadingOutlined />
+      <div>Loading ...</div>
     </div>
   );
 };

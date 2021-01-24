@@ -45,6 +45,7 @@ const DoctorProfile: React.FC<Props> = () => {
   const [doctorCabinetInfoForm, setDoctorCabinetInfoForm] = useState<DoctorCabinetInfoForm>({
     services: [],
     images: [],
+    files: [],
     cabinetForm: {
       contactNumber: '',
       secondaryContactNumber: '',
@@ -91,7 +92,8 @@ const DoctorProfile: React.FC<Props> = () => {
       if (data) {
         setDoctorCabinetInfoForm({
           services: data.services,
-          images: data.images,
+          files: [],
+          images: data.images || [],
           cabinetForm: {
             contactNumber: data.contactNumber,
             secondaryContactNumber: data.secondaryContactNumber,

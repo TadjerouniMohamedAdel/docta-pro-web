@@ -1,0 +1,60 @@
+@import '../../../../../../styles/variables.less';
+
+.cabinet-image-wrapper {
+  width: 104px;
+  height: 104px;
+  border-radius: @border-radius-base;
+  border: solid 1px @border-color-base;
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .image-actions {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    display: none;
+    button {
+      width: auto;
+      height: auto;
+      padding: 0;
+      .custom-icon {
+        font-size: 18px !important;
+        color: #fff;
+        font-weight: normal !important;
+      }
+    }
+  }
+
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    opacity: 0.5;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &:hover {
+    .image-actions {
+      display: flex;
+    }
+    .image-overlay {
+      opacity: 0.3;
+    }
+  }
+}

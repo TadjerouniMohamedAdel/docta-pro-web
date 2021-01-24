@@ -1,4 +1,3 @@
-import { LoginOutlined } from '@ant-design/icons';
 import { Button, Col, Dropdown, Menu, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
@@ -21,7 +20,6 @@ const UserProfile: React.FC = () => {
       overlay={
         <Menu style={{ minWidth: 150 }}>
           <Menu.Item key="1" onClick={handleLogout}>
-            <LoginOutlined />
             <span>{t('logout')}</span>
           </Menu.Item>
         </Menu>

@@ -1,8 +1,9 @@
 import React from 'react';
-import { GlobalOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Menu, message } from 'antd';
+import { Dropdown, Menu, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocaleState } from '../../../../i18n';
+import Button from '../../../Button/Button';
+import Icon from '../../../Icon/Icon';
 
 const Localization: React.FC = () => {
   const { locale, setLocale } = useLocaleState();
@@ -35,7 +36,7 @@ const Localization: React.FC = () => {
       trigger={['click']}
     >
       <Button type="text" style={{ height: 'auto' }}>
-        <GlobalOutlined className="icons" />
+        <Icon name="group-line" />
       </Button>
     </Dropdown>
   );

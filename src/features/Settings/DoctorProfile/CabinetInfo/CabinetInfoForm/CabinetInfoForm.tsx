@@ -70,7 +70,7 @@ const CabinetInfoForm: React.FC<Props> = ({ data, formik, handleUpdateData }) =>
         </Col>
         <Col span={12}>
           <Label
-            title={t('Cabinet Phone 2')}
+            title={`${t('Cabinet Phone')} 2`}
             error={
               touched.secondaryContactNumber ? (errors.secondaryContactNumber as string) : undefined
             }
@@ -87,7 +87,7 @@ const CabinetInfoForm: React.FC<Props> = ({ data, formik, handleUpdateData }) =>
               mask="+213 999 999 999"
               maskChar={null}
               placeholder={i18n.t('placeholders:enter', {
-                fieldName: t('Cabinet Phone 2'),
+                fieldName: t('Cabinet Phone'),
               })}
               value={values.secondaryContactNumber}
               onChange={(e) =>

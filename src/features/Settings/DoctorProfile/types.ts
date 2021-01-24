@@ -1,5 +1,5 @@
 export type Diploma = {
-  id?: string;
+  id: string;
   name: string;
   institute: string;
   graduationDate: Date | null;
@@ -17,7 +17,7 @@ export type Language = {
 };
 
 export type Service = {
-  id?: string;
+  id: string;
   name: string;
   isNew?: boolean;
   isDeleted?: boolean;
@@ -50,9 +50,18 @@ export type Location = {
   lng: number;
 };
 
+export type Image = {
+  id: string;
+  url: string;
+  uid?: string;
+  isNew?: boolean;
+  isDeleted?: boolean;
+};
+
 export type DoctorCabinetInfoForm = {
+  files: Blob[];
   services: Service[];
-  images: string[];
+  images: Image[];
   cabinetForm: CabinetForm;
   location: Location;
 };
@@ -85,7 +94,7 @@ export type FetchDoctorCabinetInfoResponse = {
     id: string;
     name: string;
   };
-  images: string[];
+  images: Image[];
   geolocation: {};
 };
 

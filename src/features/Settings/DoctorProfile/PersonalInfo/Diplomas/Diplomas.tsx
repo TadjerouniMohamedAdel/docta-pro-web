@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { v4 as uuidv4 } from 'uuid';
 import Button from '../../../../../components/Button/Button';
 import Label from '../../../../../components/Label/Label';
 import Icon from '../../../../../components/Icon/Icon';
@@ -21,6 +22,7 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const initialValues: Diploma = {
+    id: '',
     name: '',
     institute: '',
     graduationDate: null,
@@ -32,13 +34,18 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
     graduationDate: Yup.date().required(t('errors:required field')),
   });
 
+  const handleAddDiploma = (diploma: Diploma) => {
+    const updatedDiplomas = [...diplomas];
+    const id = uuidv4();
+    updatedDiplomas.push({ ...diploma, id, isNew: true });
+    updateDiplomas(updatedDiplomas);
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values, { resetForm }) => {
-      const updatedDiplomas = [...diplomas];
-      updatedDiplomas.push({ ...values, isNew: true });
-      updateDiplomas(updatedDiplomas);
+      handleAddDiploma(values);
       resetForm();
     },
   });

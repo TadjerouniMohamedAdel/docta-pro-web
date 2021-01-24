@@ -1,4 +1,3 @@
-import { LoadingOutlined } from '@ant-design/icons';
 import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
@@ -118,7 +117,7 @@ const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient 
           ))}
         </div>
         <div ref={loadMoreButtonRef} style={{ textAlign: 'center' }}>
-          {isLoading || isFetchingNextPage ? <LoadingOutlined /> : null}
+          {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
         </div>
       </Spacer>
     </div>

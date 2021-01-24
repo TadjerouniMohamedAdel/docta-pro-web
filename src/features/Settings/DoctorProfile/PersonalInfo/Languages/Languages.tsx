@@ -42,10 +42,15 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
     setValue(option.key);
   };
 
-  const onDelete = (index: number) => {
+  const onDelete = (code: string) => {
     const updatedLanguages = [...languages];
-    updatedLanguages[index].isDeleted = true;
-    updateLanguages(updatedLanguages);
+    const index = updatedLanguages.findIndex((item) => item.code === code);
+
+    if (index > -1) {
+      if (updatedLanguages[index].isNew) updatedLanguages.splice(index, 1);
+      else updatedLanguages[index].isDeleted = true;
+      updateLanguages(updatedLanguages);
+    }
   };
 
   const options = data.map((item) => (
@@ -78,7 +83,7 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
         <Row gutter={[8, 8]} align="middle">
           {languages
             .filter((language) => !language.isDeleted)
-            .map((language, index) => (
+            .map((language) => (
               <Col key={language.code}>
                 <Tag key={language.code} style={{ display: 'flex', alignItems: 'center' }}>
                   <Text>{language.name}</Text>
@@ -87,7 +92,7 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
                     className="btn-language-delete"
                     danger
                     size="small"
-                    onClick={() => onDelete(index)}
+                    onClick={() => onDelete(language.code)}
                   >
                     <Icon name="close-circle-line" />
                   </Button>

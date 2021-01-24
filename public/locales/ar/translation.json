@@ -55,5 +55,21 @@
   "medications": "الأدوية",
   "allergies": "الحساسية",
   "surgeries": "العمليات الجراحية",
-  "chronic diseases": "الأمراض المزمنة"
+  "chronic diseases": "الأمراض المزمنة",
+  "change photo": "غير الصوره",
+  "male": "ذكر",
+  "female": "أنثى",
+  "Doctor Biography (max 240 words)": "سيرة الطبيب (بحد أقصى 240 كلمة)",
+  "Tell your patients about you": "أخبر مرضاك عنك",
+  "diplomas / certificats": "الدبلومات / الشهادات",
+  "diploma title": "عنوان الدبلوم",
+  "institute": "معهد",
+  "date": "تاريخ",
+  "Spoken Languages": "اللغات المنطوقة",
+  "services": "خدمات",
+  "Cabinet Phone": "هاتف العيادة",
+  "cabinet on map": "العيادة على الخريطة",
+  "cabinet photos": "صور العيادة",
+  "upload": "رفع",
+  "image preview": "معاينة الصورة"
 }

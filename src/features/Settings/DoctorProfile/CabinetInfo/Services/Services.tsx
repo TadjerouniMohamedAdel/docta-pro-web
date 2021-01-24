@@ -1,6 +1,7 @@
 import { Col, Form, Input, Row, Tag } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 import Button from '../../../../../components/Button/Button';
 import Label from '../../../../../components/Label/Label';
 import Icon from '../../../../../components/Icon/Icon';
@@ -22,15 +23,22 @@ const Services: React.FC<Props> = ({ services, updateServices }) => {
 
   const handleAddService = () => {
     const updatedServices = [...services];
-    updatedServices.push({ name: value, isNew: true });
+    const id = uuidv4();
+    updatedServices.push({ id, name: value, isNew: true });
     updateServices(updatedServices);
     setValue('');
   };
 
-  const onDelete = (index: number) => {
+  const onDelete = (id: string) => {
     const updatedServices = [...services];
-    updatedServices[index].isDeleted = true;
-    updateServices(updatedServices);
+
+    const index = updatedServices.findIndex((item) => item.id === id);
+
+    if (index > -1) {
+      if (updatedServices[index].isNew) updatedServices.splice(index, 1);
+      else updatedServices[index].isDeleted = true;
+      updateServices(updatedServices);
+    }
   };
 
   return (
@@ -53,7 +61,7 @@ const Services: React.FC<Props> = ({ services, updateServices }) => {
         <Row gutter={[8, 8]} align="middle">
           {services
             .filter((item) => !item.isDeleted)
-            .map((service, index) => (
+            .map((service) => (
               <Col key={service.id}>
                 <Tag key={service.id} style={{ display: 'flex', alignItems: 'center' }}>
                   <Text>{service.name}</Text>
@@ -62,7 +70,7 @@ const Services: React.FC<Props> = ({ services, updateServices }) => {
                     className="btn-service-delete"
                     danger
                     size="small"
-                    onClick={() => onDelete(index)}
+                    onClick={() => onDelete(service.id)}
                   >
                     <Icon name="close-circle-line" />
                   </Button>
@@ -78,7 +86,7 @@ const Services: React.FC<Props> = ({ services, updateServices }) => {
                   name="value"
                   value={value}
                   placeholder={i18n.t('placeholders:enter', {
-                    fieldName: t('service'),
+                    fieldName: t('services'),
                   })}
                   onChange={(e: any) => setValue(e.target.value)}
                   onPressEnter={handleAddService}

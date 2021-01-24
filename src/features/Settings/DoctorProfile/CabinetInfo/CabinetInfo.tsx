@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 import React from 'react';
 import Spacer from '../../../../components/Spacer/Spacer';
-import { DoctorCabinetInfoForm, Service, CabinetForm } from '../types';
+import { DoctorCabinetInfoForm, Service, CabinetForm, Image } from '../types';
 import CabinetInfoForm from './CabinetInfoForm/CabinetInfoForm';
 import Images from './Images/Images';
 import Map from './Map/Map';
@@ -22,6 +22,10 @@ const CabinetInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
     handleUpdateData({ ...data, cabinetForm: values });
   };
 
+  const handleUpdateImages = (values: Image[]) => {
+    handleUpdateData({ ...data, images: values });
+  };
+
   return (
     <div style={{ padding: '24px 80px' }}>
       <Spacer direction="vertical" size="md">
@@ -32,7 +36,12 @@ const CabinetInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
           handleUpdateData={handleUpdateAdress}
         />
         <Map location={data.location} />
-        <Images images={data.images} />
+        <Images
+          images={data.images}
+          updateImages={handleUpdateImages}
+          data={data}
+          updateData={handleUpdateData}
+        />
       </Spacer>
     </div>
   );
