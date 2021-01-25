@@ -29,6 +29,11 @@ const Menu: React.FC = () => {
         iconName="calendar-event-line"
         path="/settings/working-hours"
       />
+      <MenuItem
+        title={t('Consultation Reasons')}
+        iconName="first-aid-kit-line"
+        path="/settings/visit-reasons"
+      />
       <ProtectedComponent accessCode="users_roles/settings">
         <MenuItem title={t('users')} iconName="shield-user-line" path="/settings/users" />
       </ProtectedComponent>
