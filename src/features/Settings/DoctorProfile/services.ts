@@ -43,9 +43,6 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
     {
       body: formData,
       method: 'PUT',
-      headers: {
-        picture: formData,
-      },
     },
     true,
   );
@@ -80,9 +77,6 @@ export const updateDoctorCabinetProfile = async (params: DoctorCabinetInfoForm):
     {
       body: formData,
       method: 'PUT',
-      headers: {
-        picture: formData,
-      },
     },
     true,
   );

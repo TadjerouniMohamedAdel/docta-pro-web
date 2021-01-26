@@ -45,7 +45,7 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
         <MenuItem
           title={t('settings')}
           iconName="settings-line"
-          path="/settings"
+          path="/settings/doctor-profile"
           collapsed={collapsed}
         />
       </ProtectedComponent>

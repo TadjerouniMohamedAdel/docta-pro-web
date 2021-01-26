@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
+import VisitReasons from './VisitReasons';
 import ProtectedRoute from '../Auth/ProtectedRoute/ProtectedRoute';
 import DoctorProfile from './DoctorProfile';
 import Menu from './Menu/Menu';
@@ -36,6 +37,7 @@ const Settings: React.FC<Props> = () => {
             path="/settings/users"
             component={Users}
           />
+          <Route path="/settings/visit-reasons" component={VisitReasons} />
         </Switch>
       </InnerContent>
     </InnerLayout>
