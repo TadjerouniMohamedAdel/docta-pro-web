@@ -30,7 +30,6 @@ const ColorPalette: React.FC<Props> = ({ onSelectColor }) => {
     'dark-taupe',
     'brownish-grey',
     'stone',
-    'last-color',
   ];
 
   const handleClick = (color: string) => {
