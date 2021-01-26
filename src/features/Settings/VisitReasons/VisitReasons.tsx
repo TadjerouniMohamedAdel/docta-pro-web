@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../../components/Button/Button';
 import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
-import { fetchSpecialties } from './services';
+import { fetchSpecialties, fetchVisitReasons, saveVisitReasons } from './services';
 import VisitReasonsItem from './VisitReasonsItem/VisitReasonsItem';
-import { Specialty } from './types';
+import { FetchSpecialtyResponse, Specialty, VisitReason } from './types';
 import Tab from '../../../components/Tab/Tab';
 
 type Props = {};
@@ -15,15 +15,11 @@ const VisitReasons: React.FC<Props> = () => {
   const { t } = useTranslation('translation');
 
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
+  const [activeKey, setActiveKey] = useState<string>('');
 
-  // const getVisitReasons = async (id: string) => {
-  //   try {
-  //     const response = await fetchVisitReasons(id);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleTabsChange = (value: string) => {
+    setActiveKey(value);
+  };
 
   const handleUpdate = (id: string, specialty: Specialty) => {
     const updatedSpecialties: Specialty[] = [...specialties];
@@ -33,23 +29,36 @@ const VisitReasons: React.FC<Props> = () => {
       updatedSpecialties[index] = specialty;
       setSpecialties(updatedSpecialties);
     }
-    console.log(id, specialty);
   };
 
   const getSpecialties = async () => {
     try {
-      const { data: result }: any = await fetchSpecialties();
-      // const { data: visitReasons }: { data: VisitReason[] } = await fetchVisitReasons(
-      //   result[0].specialty.id,
-      // );
+      const { data: result }: { data: FetchSpecialtyResponse[] } = await fetchSpecialties();
 
-      result[0].visitReasons = [
-        { id: 'zzz', title: 'Eye Makeup After Lasik', duration: 15, isEnabled: true, color: 'red' },
-      ];
+      result.forEach(async (item) => {
+        const { data: visitReasons }: { data: VisitReason[] } = await fetchVisitReasons(
+          result[0].specialty.id,
+        );
 
-      console.log(result);
+        const updatedSpecialties = [...specialties];
+        updatedSpecialties.push({
+          id: item.specialty.id,
+          name: item.specialty.name,
+          visitReasons,
+        });
+        setSpecialties(updatedSpecialties);
+      });
 
-      setSpecialties(result);
+      setActiveKey(result[0].specialty.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSaveChanges = (id: string) => {
+    try {
+      const specialty: Specialty | undefined = specialties.find((item) => item.id === id);
+      if (specialty) saveVisitReasons(specialty);
     } catch (error) {
       console.log(error);
     }
@@ -69,33 +78,43 @@ const VisitReasons: React.FC<Props> = () => {
             </Text>
           </Col>
           <Col>
-            <Button
-              type="primary"
-              icon={<Icon name="save-line" />}
-              size="small"
-              // onClick={handleAddUser}
-            >
-              {t('save')}
-            </Button>
+            {specialties.map((specialty) => {
+              if (activeKey === specialty.id)
+                return (
+                  <Button
+                    key={specialty.id}
+                    type="primary"
+                    icon={<Icon name="save-line" />}
+                    size="small"
+                    onClick={() => handleSaveChanges(specialty.id)}
+                  >
+                    {t('save')}
+                  </Button>
+                );
+              return null;
+            })}
           </Col>
         </Row>
       </div>
       <div style={{ flexGrow: 1 }}>
-        <Tabs
-          defaultActiveKey="1"
-          tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
-          //   onChange={handleTabsChange}
-        >
-          {specialties.map((specialty) => (
-            <Tabs.TabPane
-              tab={<Tab icon={<Icon name="first-aid-kit-line" />}> {t('main specialty')} </Tab>}
-              // eslint-disable-next-line react/no-array-index-key
-              key={specialty.id}
-            >
-              <VisitReasonsItem specialty={specialty} handleUpdateSpecialty={handleUpdate} />
-            </Tabs.TabPane>
-          ))}
-        </Tabs>
+        {activeKey ? (
+          <Tabs
+            defaultActiveKey={activeKey}
+            activeKey={activeKey}
+            tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
+            onChange={handleTabsChange}
+          >
+            {specialties.map((specialty) => (
+              <Tabs.TabPane
+                tab={<Tab icon={<Icon name="first-aid-kit-line" />}> {t('main specialty')} </Tab>}
+                // eslint-disable-next-line react/no-array-index-key
+                key={specialty.id}
+              >
+                <VisitReasonsItem specialty={specialty} handleUpdateSpecialty={handleUpdate} />
+              </Tabs.TabPane>
+            ))}
+          </Tabs>
+        ) : null}
       </div>
     </>
   );

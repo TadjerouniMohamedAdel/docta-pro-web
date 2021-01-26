@@ -33,6 +33,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
 
     if (index > -1) {
       updatedSpecialty.visitReasons[index][key] = value;
+      updatedSpecialty.visitReasons[index].isEdited = true;
       handleUpdateSpecialty(specialty.id, updatedSpecialty);
     }
   };
