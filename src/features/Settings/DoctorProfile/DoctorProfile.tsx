@@ -24,6 +24,7 @@ const DoctorProfile: React.FC<Props> = () => {
   const [activeKey, setActiveKey] = useState<string>('1');
 
   const [doctorInfo, setDoctorInfo] = useState<DoctorInfo>({
+    picture: '',
     firstName: '',
     lastName: '',
     specialties: [],
@@ -76,6 +77,7 @@ const DoctorProfile: React.FC<Props> = () => {
           languages: data.languages,
         });
         setDoctorInfo({
+          picture: data.picture,
           firstName: data.firstName,
           lastName: data.lastName,
           specialties: data.specialties.map((item) => ({ name: item.specialty.name })),
@@ -207,7 +209,7 @@ const DoctorProfile: React.FC<Props> = () => {
       <div style={{ padding: '18px 25px' }}>
         <Row align="middle" gutter={16}>
           <Col>
-            <Avatar src="" size={54} />
+            <Avatar src={doctorInfo.picture} size={54} />
           </Col>
           <Col flex={1}>
             <Text size="xxl" style={{ fontWeight: 'bold' }}>
