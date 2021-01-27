@@ -42,14 +42,14 @@ const VisitReasons: React.FC<Props> = () => {
 
         const updatedSpecialties = [...specialties];
         updatedSpecialties.push({
-          id: item.specialty.id,
+          id: item.practitionerToSpecialtyId,
           name: item.specialty.name,
           visitReasons,
         });
         setSpecialties(updatedSpecialties);
       });
 
-      setActiveKey(result[0].specialty.id);
+      setActiveKey(result[0].practitionerToSpecialtyId);
     } catch (error) {
       console.log(error);
     }
