@@ -99,6 +99,7 @@ export type FetchDoctorCabinetInfoResponse = {
 };
 
 export type DoctorInfo = {
+  picture: string;
   firstName: string;
   lastName: string;
   specialties: { name: string }[];
