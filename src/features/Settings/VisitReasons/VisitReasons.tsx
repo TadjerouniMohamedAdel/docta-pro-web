@@ -37,7 +37,7 @@ const VisitReasons: React.FC<Props> = () => {
 
       result.forEach(async (item) => {
         const { data: visitReasons }: { data: VisitReason[] } = await fetchVisitReasons(
-          result[0].specialty.id,
+          result[0].practitionerToSpecialtyId,
         );
 
         const updatedSpecialties = [...specialties];
