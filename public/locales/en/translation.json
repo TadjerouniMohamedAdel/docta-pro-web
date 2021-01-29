@@ -71,5 +71,22 @@
   "cabinet on map": "cabinet on map",
   "cabinet photos": "cabinet photos",
   "upload": "upload",
-  "image preview": "Image preview"
+  "image preview": "Image preview",
+  "Working Hours": "Working Hours",
+  "Days Off": "Days Off",
+  "sunday": "Sunday",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "open": "Open",
+  "closed": "Closed",
+  "Morning starts at": "Morning starts at",
+  "Morning ends at": "Morning ends at",
+  "Afternoon starts at": "Afternoon starts at",
+  "Afternoon ends at": "Afternoon ends at",
+  "Add afternoon hours": "Add afternoon hours",
+  "Add morning hours": "Add morning hours"
 }

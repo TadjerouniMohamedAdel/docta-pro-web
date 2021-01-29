@@ -71,5 +71,22 @@
   "cabinet on map": "العيادة على الخريطة",
   "cabinet photos": "صور العيادة",
   "upload": "رفع",
-  "image preview": "معاينة الصورة"
+  "image preview": "معاينة الصورة",
+  "Working Hours": "ساعات العمل",
+  "Days Off": "أيام العطلة",
+  "sunday": "الأحد",
+  "monday": "الإثنين",
+  "tuesday": "الثلاثاء",
+  "wednesday": "الأربعاء",
+  "thursday": "الخميس",
+  "friday": "الجمعة",
+  "saturday": "السبت",
+  "open": "افتح",
+  "closed": "مغلق",
+  "Morning starts at": "يبدأ الصباح في",
+  "Morning ends at": "ينتهي الصباح في",
+  "Afternoon starts at": "بعد الظهر يبدأ في",
+  "Afternoon ends at": "ينتهي بعد الظهر في",
+  "Add afternoon hours": "أضف ساعات بعد الظهر",
+  "Add morning hours": "أضف ساعات الصباح"
 }
