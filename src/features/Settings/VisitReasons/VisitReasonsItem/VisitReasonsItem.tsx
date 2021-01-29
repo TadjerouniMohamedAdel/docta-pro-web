@@ -23,11 +23,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
   const minute = t('minute');
   const hour = t('hour');
 
-  const handleChange = (
-    id: string,
-    key: 'color' | 'duration' | 'title' | 'isEnabled',
-    value: never,
-  ) => {
+  const handleChange = (id: string, key: 'color' | 'duration' | 'isEnabled', value: never) => {
     const updatedSpecialty: Specialty = { ...specialty };
     const index: number = updatedSpecialty.visitReasons.findIndex((item) => item.id === id);
 
@@ -40,9 +36,9 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
 
   const columns: ColumnsType<VisitReason> = [
     {
-      title: t('Reason title'),
-      dataIndex: 'title',
-      key: 'title',
+      title: t('Reason name'),
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: t('duration'),
