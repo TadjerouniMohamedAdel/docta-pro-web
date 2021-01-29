@@ -95,7 +95,7 @@ const Images: React.FC<Props> = ({ data, updateData }) => {
             showUploadList={false}
             onChange={handleChange}
           >
-            {data.images.filter((item) => !item.isDeleted).length >= 5 ? null : uploadButton}
+            {data.images.filter((item) => !item.isDeleted).length >= 6 ? null : uploadButton}
           </Upload>
         </Col>
       </Row>
