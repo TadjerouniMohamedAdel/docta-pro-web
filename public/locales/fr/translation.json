@@ -72,5 +72,22 @@
   "cabinet on map": "Cabinet sur la carte",
   "cabinet photos": "Photos du cabinet",
   "upload": "Télécharger",
-  "image preview": "Aperçu de l'image"
+  "image preview": "Aperçu de l'image",
+  "Working Hours": "Heures d'ouverture",
+  "Days Off": "Jours de congés",
+  "sunday": "Dimanche",
+  "monday": "Lundi",
+  "tuesday": "Mardi",
+  "wednesday": "Mercredi",
+  "thursday": "Jeudi",
+  "friday": "Vendredi",
+  "saturday": "Samedi",
+  "open": "Ouvert",
+  "closed": "Fermé",
+  "Morning starts at": "Le matin commence à",
+  "Morning ends at": "La matinée se termine à",
+  "Afternoon starts at": "L'après-midi commence à",
+  "Afternoon ends at": "L'après-midi se termine à",
+  "Add afternoon hours": "Ajouter les heures de l'après-midi",
+  "Add morning hours": "Ajouter les heures du matin"
 }

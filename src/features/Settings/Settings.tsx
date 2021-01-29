@@ -8,6 +8,7 @@ import ProtectedRoute from '../Auth/ProtectedRoute/ProtectedRoute';
 import DoctorProfile from './DoctorProfile';
 import Menu from './Menu/Menu';
 import Users from './Users';
+import Schedule from './Schedule';
 
 type Props = {};
 
@@ -32,12 +33,13 @@ const Settings: React.FC<Props> = () => {
             path="/settings/doctor-profile"
             component={DoctorProfile}
           />
+          <Route path="/settings/visit-reasons" component={VisitReasons} />
+          <Route path="/settings/schedule" component={Schedule} />
           <ProtectedRoute
             accessCode="users_roles/settings"
             path="/settings/users"
             component={Users}
           />
-          <Route path="/settings/visit-reasons" component={VisitReasons} />
         </Switch>
       </InnerContent>
     </InnerLayout>

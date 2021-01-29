@@ -1,6 +1,6 @@
 export type VisitReason = {
   id: string;
-  title: string;
+  name: string;
   duration: number;
   isEnabled: boolean;
   color: string;
