@@ -24,11 +24,7 @@ const Menu: React.FC = () => {
           path="/settings/doctor-profile"
         />
       </ProtectedComponent>
-      <MenuItem
-        title={t('my schedule')}
-        iconName="calendar-event-line"
-        path="/settings/working-hours"
-      />
+      <MenuItem title={t('my schedule')} iconName="calendar-event-line" path="/settings/schedule" />
       <MenuItem
         title={t('Consultation Reasons')}
         iconName="first-aid-kit-line"
