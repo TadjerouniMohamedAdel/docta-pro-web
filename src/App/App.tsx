@@ -1,7 +1,11 @@
 import { ConfigProvider } from 'antd';
 import React, { useEffect } from 'react';
-import en from 'antd/es/locale/en_GB';
 import ar from 'antd/es/locale/ar_EG';
+import en from 'antd/es/locale/en_GB';
+import fr from 'antd/es/locale/fr_FR';
+import moment from 'moment';
+import 'moment/locale/ar-tn';
+import 'moment/locale/fr';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryCache } from 'react-query';
 import FullPageLoader from '../components/FullPageLoader';
@@ -21,11 +25,19 @@ function App() {
   const language = {
     ar,
     en,
+    fr,
   };
 
   const { user, setUser } = useAuthState();
   const { locale } = useLocaleState();
   const token = localStorage.getItem('token');
+
+  moment.updateLocale(locale === 'ar' ? 'ar-tn' : locale || 'en', {
+    week: {
+      dow: 0,
+      doy: 0,
+    },
+  });
 
   const handleFetchCurrentUser = async (): Promise<void> => {
     try {
