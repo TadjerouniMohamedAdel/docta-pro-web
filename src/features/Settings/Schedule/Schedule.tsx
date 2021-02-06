@@ -16,11 +16,15 @@ type Props = {};
 const Schedule: React.FC<Props> = () => {
   const { t } = useTranslation('translation');
   const [activeKey, setActiveKey] = useState<string>('1');
+  const [showDaysOffModal, setShowDaysOffModal] = useState<boolean>(false);
   const [workingHoursSchedule, setWorkingHoursSchedule] = useState<WorkingHoursSchedule[]>([]);
 
   const handleTabsChange = (value: string) => {
     setActiveKey(value);
-    // if (value === '2') getDoctorCabinetInfo();
+  };
+
+  const handleCloseDaysOffModal = () => {
+    setShowDaysOffModal(false);
   };
 
   const handleUpdateWorkingHours = (values: WorkingHoursSchedule[]) => {
@@ -32,11 +36,7 @@ const Schedule: React.FC<Props> = () => {
   );
 
   const handleSaveWorkingHours = () => {
-    try {
-      saveWorkingHoursMutation(workingHoursSchedule);
-    } catch (error) {
-      console.log(error);
-    }
+    saveWorkingHoursMutation(workingHoursSchedule);
   };
 
   const getWorkingHours = async () => {
@@ -67,12 +67,11 @@ const Schedule: React.FC<Props> = () => {
         return (
           <Button
             type="primary"
-            icon={<Icon name="save-line" />}
+            icon={<Icon name="add-line" />}
             size="small"
-            // onClick={() => submitDoctorCabinetInfoForm()}
-            // loading={isSaveCabinetInfoLoading}
+            onClick={() => setShowDaysOffModal(true)}
           >
-            {t('save')}
+            {t('Add Days Off')}
           </Button>
         );
 
@@ -117,7 +116,7 @@ const Schedule: React.FC<Props> = () => {
             tab={<Tab icon={<Icon name="hotel-bed-line" />}>{t('Days Off')}</Tab>}
             key="2"
           >
-            <DaysOff />
+            <DaysOff showModal={showDaysOffModal} closeModal={handleCloseDaysOffModal} />
           </Tabs.TabPane>
         </Tabs>
       </div>
