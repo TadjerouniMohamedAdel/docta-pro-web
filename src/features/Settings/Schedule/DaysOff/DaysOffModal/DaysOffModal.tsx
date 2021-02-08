@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, DatePicker, Divider, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import moment from 'moment';
 import Modal from '../../../../../components/Modal/Modal';
 import Icon from '../../../../../components/Icon/Icon';
@@ -33,6 +33,8 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
   const [prevDate, setPrevDate] = useState<Date>(new Date());
   const [nextDate, setNextDate] = useState<Date>(moment().add(1, 'month').toDate());
 
+  const queryClient = useQueryClient();
+
   const changePanel = (action: string): void => {
     let btn;
     switch (action) {
@@ -47,7 +49,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
 
       case 'prev':
         btn = document.querySelector(
-          '.days-off-calendar button.ant-picker-header-next-btn',
+          '.days-off-calendar button.ant-picker-header-prev-btn',
         ) as HTMLButtonElement;
         if (btn) btn.click();
         setPrevDate(moment(prevDate).subtract(1, 'month').toDate());
@@ -62,7 +64,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
   const handleSelectRange = ([from, to]: any): void => {
     setDaysOff({
       ...daysOff,
-      from: from.toDate(),
+      from: from ? from.toDate() : null,
       to: to ? to.toDate() : null,
     });
   };
@@ -78,6 +80,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
 
   const handleSave = async () => {
     await mutateAsync(daysOff);
+    queryClient.invalidateQueries('days-off');
     closeModal();
   };
 
@@ -112,7 +115,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
                 </Col>
                 <Col>
                   <Text size="lg" type="secondary" style={{ fontWeight: 500 }}>
-                    7 Appointments
+                    {/* 7 Appointments */}
                   </Text>
                 </Col>
               </Row>
@@ -126,17 +129,19 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
                 </Col>
                 <Col>
                   <Text size="lg" type="secondary" style={{ fontWeight: 500 }}>
-                    7 Appointments
+                    {/* 7 Appointments */}
                   </Text>
                 </Col>
               </Row>
             </Col>
           </Row>
           <RangePicker
+            allowClear={false}
             open
             className="days-off-calendar"
             getPopupContainer={(triggerNode) => triggerNode}
             onCalendarChange={(values) => handleSelectRange(values)}
+            disabledDate={(currentDate) => currentDate.isBefore(moment(), 'day')}
           />
           <Row justify="space-between" align="middle">
             <Col>

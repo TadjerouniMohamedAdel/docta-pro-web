@@ -49,9 +49,9 @@ const DaysOff: React.FC<Props> = ({ showModal, closeModal }) => {
       key: 'date',
       render: (text: any, record: DaysOffSchedule) => (
         <div>
-          <span>{moment(record.from).format('LLL')}</span>
-          <span>-</span>
-          <span>{moment(record.to).format('LLL')}</span>
+          <span>{moment(record.from).format('LL')}</span>
+          <span> - </span>
+          <span>{moment(record.to).format('LL')}</span>
         </div>
       ),
     },
