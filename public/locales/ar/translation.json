@@ -18,6 +18,7 @@
   "forgot password description": "أدخل رقم الهاتف المرتبط بحسابك. سنرسل لك رمزًا لإعادة تعيين كلمة المرور الخاصة بك",
   "take me back to": "أعدني إلى",
   "next": "التالى",
+  "prev": "السابق",
   "Docta phone number": "رقم الهاتف الخاص بدوكتا",
   "reset password": "إعادة تعيين كلمة المرور",
   "new password": "كلمة سر جديدة",
@@ -88,5 +89,19 @@
   "Afternoon starts at": "بعد الظهر يبدأ في",
   "Afternoon ends at": "ينتهي بعد الظهر في",
   "Add afternoon hours": "أضف ساعات بعد الظهر",
-  "Add morning hours": "أضف ساعات الصباح"
+  "Add morning hours": "أضف ساعات الصباح",
+  "scheduled": "المقرر",
+  "in progress": "في تقدم",
+  "passed": "تجاوز",
+  "canceled appointments": "المواعيد الملغاة",
+  "appointment canceled": "تم إلغاء الموعد",
+  "notifications Message": "رسالة الإخطارات",
+  "status": "الحالة",
+  "add Days Off": "إضافة أيام العطلة",
+  "message to Patients": "رسالة للمرضى",
+  "Send a message to patients booked in those days": "إرسال رسالة إلى المرضى الذين حجزوا في تلك الأيام",
+  "Availability": "التوفر",
+  "Consultation Reasons": "سبب الاستشارة",
+  "cabinet info": "معلومات مجلس الوزراء",
+  "doctor profile": "ملف الطبيب"
 }
