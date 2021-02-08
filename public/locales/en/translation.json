@@ -18,6 +18,7 @@
   "forgot password description": "Enter the phone number associated with your account. We will send you a code to reset your password.",
   "take me back to": "take me back to",
   "next": "Next",
+  "prev": "Prev",
   "Docta phone number": "Docta phone number",
   "reset password": "Reset password",
   "new password": "New password",
@@ -88,5 +89,19 @@
   "Afternoon starts at": "Afternoon starts at",
   "Afternoon ends at": "Afternoon ends at",
   "Add afternoon hours": "Add afternoon hours",
-  "Add morning hours": "Add morning hours"
+  "Add morning hours": "Add morning hours",
+  "scheduled": "Scheduled",
+  "in progress": "In progress",
+  "passed": "Passed",
+  "canceled appointments": "Canceled appointments",
+  "appointment canceled": "Appointment canceled",
+  "notifications Message": "Notifications Message",
+  "status": "status",
+  "add Days Off": "Add Days Off",
+  "message to Patients": "Message to Patients",
+  "Send a message to patients booked in those days": "Send a message to patients booked in those days",
+  "Availability": "Availability",
+  "Consultation Reasons": "Consultation Reasons",
+  "cabinet info": "Cabinet info",
+  "doctor profile": "Doctor profile"
 }

@@ -71,7 +71,7 @@ const Schedule: React.FC<Props> = () => {
             size="small"
             onClick={() => setShowDaysOffModal(true)}
           >
-            {t('Add Days Off')}
+            {t('add Days Off')}
           </Button>
         );
 

@@ -41,7 +41,7 @@ const DaysOff: React.FC<Props> = ({ showModal, closeModal }) => {
           <Col>
             <Icon name="time-line" size={18} />
           </Col>
-          <Col>{t('Date')}</Col>
+          <Col>{t('date')}</Col>
         </Row>
       ),
 
@@ -78,7 +78,7 @@ const DaysOff: React.FC<Props> = ({ showModal, closeModal }) => {
           <Col>
             <Icon name="message-line" size={18} />
           </Col>
-          <Col>{t('Notifications Message')}</Col>
+          <Col>{t('notifications Message')}</Col>
         </Row>
       ),
       dataIndex: 'message',

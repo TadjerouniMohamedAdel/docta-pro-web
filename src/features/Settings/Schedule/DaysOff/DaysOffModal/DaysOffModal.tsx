@@ -86,7 +86,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
 
   return (
     <Modal
-      title={t('Add Days Off')}
+      title={t('add Days Off')}
       visible={visible}
       width={780}
       onCancel={closeModal}
@@ -157,8 +157,8 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
                     </Text>
                   </Col>
                   <Col>
-                    <Text size="md" style={{ fontWeight: 'bold' }}>
-                      PREV
+                    <Text size="md" style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
+                      {t('prev')}
                     </Text>
                   </Col>
                 </Row>
@@ -169,8 +169,8 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
               <Button type="link" style={{ display: 'flex' }} onClick={() => changePanel('next')}>
                 <Row align="middle">
                   <Col>
-                    <Text size="md" style={{ fontWeight: 'bold' }}>
-                      NEXT
+                    <Text size="md" style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
+                      {t('next')}
                     </Text>
                   </Col>
                   <Col>
@@ -189,7 +189,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
         </div>
         <Divider style={{ marginTop: 0 }} />
         <div style={{ padding: '0 45px' }}>
-          <Label title={t('Message to Patients')} />
+          <Label title={t('message to Patients')} />
           <Form.Item style={{ marginTop: 4 }}>
             <Input.TextArea
               name="message"

@@ -18,6 +18,7 @@
   "forgot password description": "Saisissez le numéro de téléphone associé à votre compte. Nous vous enverrons un code pour réinitialiser votre mot de passe.",
   "take me back to": "ramène-moi à",
   "next": "Suivant",
+  "prev": "Précédente",
   "Docta phone number": "Numéro de téléphone Docta",
   "reset password": "Réinitialiser le mot de passe",
   "new password": "Nouveau mot de passe",
@@ -89,5 +90,19 @@
   "Afternoon starts at": "L'après-midi commence à",
   "Afternoon ends at": "L'après-midi se termine à",
   "Add afternoon hours": "Ajouter les heures de l'après-midi",
-  "Add morning hours": "Ajouter les heures du matin"
+  "Add morning hours": "Ajouter les heures du matin",
+  "scheduled": "Programmé",
+  "in progress": "En cours",
+  "passed": "Passé",
+  "canceled appointments": "Rendez-vous annulés",
+  "appointment canceled": "Rendez-vous annulé",
+  "notifications Message": "Message de notifications",
+  "status": "Statut",
+  "add Days Off": "Ajouter des jours de congé",
+  "message to Patients": "Message aux patients",
+  "Send a message to patients booked in those days": "Envoyer un message aux patients réservés ces jours-là",
+  "Availability": "Disponibilité",
+  "Consultation Reasons": "Raison de la consultation",
+  "cabinet info": "Informations cabinet",
+  "doctor profile": "Profil de médecin"
 }
