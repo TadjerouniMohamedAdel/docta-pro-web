@@ -258,7 +258,7 @@ const AddAppointmentModal: React.FC<Props> = ({ visible, onClose, currentDate })
           </Row>
         </Form>
       </div>
-      <Divider />
+      <Divider style={{ marginTop: 0, marginBottom: 0 }} />
       <div style={{ padding: '16px 40px' }}>
         <Row gutter={[35, 16]}>
           <Col span={24}>
