@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../../components/Button/Button';
 import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
-import { fetchSpecialties, fetchVisitReasons, saveVisitReasons } from './services';
+import { fetchSpecialties, saveVisitReasons } from './services';
 import VisitReasonsItem from './VisitReasonsItem/VisitReasonsItem';
-import { FetchSpecialtyResponse, Specialty, VisitReason } from './types';
+import { FetchSpecialtyResponse, Specialty } from './types';
 import Tab from '../../../components/Tab/Tab';
 
 type Props = {};
@@ -34,22 +34,8 @@ const VisitReasons: React.FC<Props> = () => {
   const getSpecialties = async () => {
     try {
       const { data: result }: { data: FetchSpecialtyResponse[] } = await fetchSpecialties();
-
-      result.forEach(async (item) => {
-        const { data: visitReasons }: { data: VisitReason[] } = await fetchVisitReasons(
-          result[0].practitionerToSpecialtyId,
-        );
-
-        const updatedSpecialties = [...specialties];
-        updatedSpecialties.push({
-          id: item.practitionerToSpecialtyId,
-          name: item.specialty.name,
-          visitReasons,
-        });
-        setSpecialties(updatedSpecialties);
-      });
-
-      setActiveKey(result[0].practitionerToSpecialtyId);
+      setSpecialties(result.map((item) => ({ ...item, visitReasons: item.reasons })));
+      setActiveKey(result[0].id);
     } catch (error) {
       console.log(error);
     }
