@@ -1,25 +1,21 @@
 import { Checkbox } from 'antd';
 import React from 'react';
+import { useQuery } from 'react-query';
 import Text from '../../../components/Text/Text';
 import Select from '../../../components/Select/Select';
+import { fetchSpecialties } from '../../Settings/VisitReasons/services';
 
 export type Props = {};
 
+const useSpecialtiesList = () => {
+  const { data, ...rest } = useQuery('appointment-specialties', () => fetchSpecialties(), {
+    keepPreviousData: true,
+  });
+  return { specialties: data ?? { data: [] }, ...rest };
+};
+
 const VisitReasons: React.FC<Props> = () => {
-  const visitReasons = [
-    {
-      id: 1,
-      name: 'Dental Consultation',
-    },
-    {
-      id: 2,
-      name: 'Dental Follow Up',
-    },
-    {
-      id: 3,
-      name: 'Filling',
-    },
-  ];
+  const { specialties } = useSpecialtiesList();
 
   return (
     <Select
@@ -27,14 +23,21 @@ const VisitReasons: React.FC<Props> = () => {
       placeholder="VISIT REASONS"
       dropdownMatchSelectWidth={false}
       dropdownRender={() => (
-        <div>
-          {visitReasons.map((visitReason) => (
-            <div key={visitReason.id} style={{ padding: '12px 10px' }}>
-              <Checkbox value={visitReason.id}>
-                <Text>{visitReason.name}</Text>
-              </Checkbox>
-            </div>
-          ))}
+        <div style={{ padding: 10 }}>
+          {specialties
+            ? specialties.data.map((specialty) => (
+                <div>
+                  <Text>{specialty.name}</Text>
+                  {specialty.reasons.map((reason) => (
+                    <div key={reason.id} style={{ padding: '12px 10px' }}>
+                      <Checkbox value={reason.id}>
+                        <Text>{reason.name}</Text>
+                      </Checkbox>
+                    </div>
+                  ))}
+                </div>
+              ))
+            : null}
         </div>
       )}
     />

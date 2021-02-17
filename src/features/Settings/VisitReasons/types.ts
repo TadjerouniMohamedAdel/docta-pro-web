@@ -14,7 +14,7 @@ export type Specialty = {
 };
 
 export type FetchSpecialtyResponse = {
-  isMain: number;
-  practitionerToSpecialtyId: string;
-  specialty: { id: string; name: string };
+  id: string;
+  name: string;
+  reasons: VisitReason[];
 };

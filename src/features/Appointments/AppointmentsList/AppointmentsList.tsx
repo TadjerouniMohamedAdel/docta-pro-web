@@ -2,50 +2,49 @@ import React from 'react';
 import { Col, Dropdown, Menu, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
+import { useQuery } from 'react-query';
 import './styles.less';
 import Spacer from '../../../components/Spacer/Spacer';
 import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
 import Button from '../../../components/Button/Button';
+import { fetchAppointments } from '../services';
+import { Appointment } from '../types';
 
 export type Props = {
   currentDate: Date;
 };
 
-const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
-  console.log(currentDate);
+const useAppointmentsDayList = (date: Date) => {
+  const { data, ...rest } = useQuery(
+    ['appointments-day', date],
+    () => fetchAppointments(date, date),
+    {
+      keepPreviousData: true,
+    },
+  );
+  return {
+    resolvedData: data
+      ? data.data.map((item: any) => ({
+          ...item,
+          startDate: new Date(item.start),
+          picture: item.patient.picture,
+          firstName: item.patient.firstName,
+          lastName: item.patient.lastName,
+          visitReason: item.reason.name,
+        }))
+      : [],
+    ...rest,
+  };
+};
 
-  const appointments = [
-    {
-      id: 1,
-      startDate: new Date(),
-      picture: '',
-      firstName: 'Jayden',
-      lastName: 'Barnes',
-      visitReason: 'General consultation',
-    },
-    {
-      id: 2,
-      startDate: new Date(),
-      picture: '',
-      firstName: 'Jayden',
-      lastName: 'Barnes',
-      visitReason: 'General consultation',
-    },
-    {
-      id: 2,
-      startDate: new Date(),
-      picture: '',
-      firstName: 'Jayden',
-      lastName: 'Barnes',
-      visitReason: 'General consultation',
-    },
-  ];
+const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
+  const { resolvedData: appointments } = useAppointmentsDayList(currentDate);
 
   return (
     <div>
       <Spacer size="xs" direction="vertical">
-        {appointments.map((appointment) => (
+        {appointments.map((appointment: Appointment) => (
           <Row key={appointment.id} gutter={16}>
             <Col>
               <Text size="sm" style={{ fontWeight: 'bold' }}>

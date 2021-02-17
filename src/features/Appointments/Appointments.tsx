@@ -14,6 +14,7 @@ import { useLocaleState } from '../../i18n';
 import WeekCalendar from './WeekCalendar/WeekCalendar';
 import './styles.less';
 import HeaderDatePicker from './HeaderDatePicker/HeaderDatePicker';
+import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -24,6 +25,11 @@ const Appointments: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [prevDate, setPrevDate] = useState<Date>(currentDate);
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
+  const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
+
+  const handleCloseAddAppointmentModal = () => {
+    setShowAddAppointmentModal(false);
+  };
 
   const onPrevDateChange = (date: Date): void => {
     if (date > prevDate && moment(date).month() !== moment(prevDate).month())
@@ -200,7 +206,7 @@ const Appointments: React.FC = () => {
                     active={pathname === '/appointments'}
                     onClick={() => history.push('/appointments')}
                   >
-                    List
+                    {t('List')}
                   </Button>
                 </Col>
                 <Col>
@@ -212,7 +218,7 @@ const Appointments: React.FC = () => {
                     active={pathname === '/appointments/week'}
                     onClick={() => history.push('/appointments/week')}
                   >
-                    Week
+                    {t('Week')}
                   </Button>
                 </Col>
                 <Col>
@@ -221,8 +227,9 @@ const Appointments: React.FC = () => {
                     icon={<Icon name="add-line" />}
                     style={{ display: 'flex' }}
                     size="small"
+                    onClick={() => setShowAddAppointmentModal(true)}
                   >
-                    New Appointment
+                    {t('New Appointment')}
                   </Button>
                 </Col>
               </Row>
@@ -243,6 +250,11 @@ const Appointments: React.FC = () => {
           </Switch>
         </div>
       </InnerContent>
+      <AddAppointmentModal
+        visible={showAddAppointmentModal}
+        onClose={handleCloseAddAppointmentModal}
+        currentDate={currentDate}
+      />
     </InnerLayout>
   );
 };
