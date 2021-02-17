@@ -167,6 +167,7 @@ const AddAppointmentModal: React.FC<Props> = ({ visible, onClose, currentDate })
                   name="time"
                   value={values.time ? moment(values.time) : null}
                   format="HH:mm"
+                  minuteStep={5}
                   style={{ width: '100%' }}
                   placeholder={i18n.t('placeholders:select', {
                     fieldName: t('appointment time'),
