@@ -20,7 +20,7 @@ const usePatientsList = (term: string) => {
   const [total, setTotal] = useState(0);
 
   const { data, ...rest } = useInfiniteQuery(
-    'patients',
+    ['patients', term],
     async ({ pageParam = 0 }) => {
       const res = await fetchAllPatients(term, pageParam);
       setTotal(res.total);
@@ -48,7 +48,6 @@ const AllPatients: React.FC<Props> = ({
     isLoading,
     fetchNextPage,
     hasNextPage,
-    refetch,
     total,
   } = usePatientsList(term);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
@@ -66,10 +65,6 @@ const AllPatients: React.FC<Props> = ({
   const handleGetPatientDetails = (values: SelectedPatient): void => {
     setSelectedPatient(values);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [term]);
 
   useEffect(() => {
     handleSetPatientCount(total);

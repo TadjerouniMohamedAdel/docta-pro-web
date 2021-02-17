@@ -1,6 +1,6 @@
 import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useInfiniteQuery } from 'react-query';
 import classNames from 'classnames';
@@ -17,7 +17,7 @@ type Props = {
 
 const usePatientsList = (term: string) => {
   const { data, ...rest } = useInfiniteQuery(
-    'blocked-patients',
+    ['blocked-patients', term],
     async ({ pageParam = 0 }) => {
       const res = await fetchBlockedPatients(term, pageParam);
       return { ...res, patients: res.data };
@@ -34,14 +34,7 @@ const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient 
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
-  const {
-    data,
-    isFetchingNextPage,
-    isLoading,
-    fetchNextPage,
-    hasNextPage,
-    refetch,
-  } = usePatientsList(term);
+  const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } = usePatientsList(term);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
   useIntersectionObserver({
@@ -57,10 +50,6 @@ const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient 
   const handleGetPatientDetails = (values: SelectedPatient): void => {
     setSelectedPatient(values);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [term]);
 
   return (
     <div style={{ padding: '12px 0' }}>
