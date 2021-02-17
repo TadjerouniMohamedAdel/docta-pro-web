@@ -1,5 +1,5 @@
 import { AutoComplete, Avatar, Col, Input, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import Icon from '../../../../components/Icon/Icon';
@@ -13,9 +13,13 @@ type Props = {
 };
 
 const useSearchPatients = (term: string) => {
-  const { data, ...rest } = useQuery('searched-patients', () => fetchAllPatients(term, 0, 5), {
-    keepPreviousData: true,
-  });
+  const { data, ...rest } = useQuery(
+    ['searched-patients', term],
+    () => fetchAllPatients(term, 0, 5),
+    {
+      keepPreviousData: true,
+    },
+  );
   return { patients: data ?? [], ...rest };
 };
 
@@ -24,7 +28,7 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
 
   const [value, setValue] = useState('');
 
-  const { patients, refetch } = useSearchPatients(value);
+  const { patients } = useSearchPatients(value);
 
   const handleOnChange = (term: string) => {
     setValue(term);
@@ -50,10 +54,6 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    refetch();
-  }, [value]);
 
   const options = patients.data
     ? patients.data.map((patient: any) => ({
@@ -82,7 +82,6 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
       style={{ width: '100%' }}
       value={value}
       onSelect={handleOnSelect}
-      //   onSearch={handleOnSearch}
       onChange={handleOnChange}
       options={options}
     >
