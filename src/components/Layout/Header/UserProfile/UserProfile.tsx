@@ -1,5 +1,4 @@
-import { Button, Col, Dropdown, Menu, Row } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
+import { Button, Col, Dropdown, Menu, Row, Avatar } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthState } from '../../../../features/Auth';
@@ -29,7 +28,14 @@ const UserProfile: React.FC = () => {
       <Button type="text" style={{ height: 'auto' }}>
         <Row gutter={14} align="middle">
           <Col>
-            <Avatar shape="circle" src={user?.picture} />
+            {user?.picture ? (
+              <Avatar shape="circle" src={user?.picture} />
+            ) : (
+              <Avatar shape="circle">
+                {user?.firstName[0].toUpperCase()}
+                {user?.lastName[0].toUpperCase()}
+              </Avatar>
+            )}
           </Col>
           <Col>
             <Text style={{ fontWeight: 500, textTransform: 'capitalize' }} type="secondary">

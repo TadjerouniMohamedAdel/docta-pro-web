@@ -29,7 +29,14 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
     <Form onFinish={handleSubmit}>
       <Row gutter={[35, 16]} align="middle">
         <Col>
-          <Avatar src="" size={95} />
+          {values.picture ? (
+            <Avatar src={values.picture} size={95} />
+          ) : (
+            <Avatar src={values.picture} size={95}>
+              {values.firstName[0]?.toUpperCase()}
+              {values.lastName[0]?.toUpperCase()}
+            </Avatar>
+          )}
         </Col>
       </Row>
       <Row gutter={[35, 16]}>

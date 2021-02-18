@@ -80,7 +80,14 @@ const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient 
                     <Col>
                       <Row gutter={12} align="middle">
                         <Col>
-                          <Avatar src={patient.picture} size="large" />
+                          {patient.picture ? (
+                            <Avatar src={patient.picture} size="large" />
+                          ) : (
+                            <Avatar src={patient.picture} size="large">
+                              {patient.firstName[0].toUpperCase()}
+                              {patient.lastName[0].toUpperCase()}
+                            </Avatar>
+                          )}
                         </Col>
                         <Col>
                           <Spacer size="xss" direction="vertical">

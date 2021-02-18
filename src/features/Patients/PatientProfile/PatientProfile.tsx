@@ -224,7 +224,14 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
       <div style={{ padding: '18px 25px' }}>
         <Row align="middle" gutter={16}>
           <Col>
-            <Avatar src={selectedPatient?.picture} size={54} />
+            {selectedPatient?.picture ? (
+              <Avatar src={selectedPatient?.picture} size="large" />
+            ) : (
+              <Avatar src={selectedPatient?.picture} size="large">
+                {selectedPatient?.firstName[0].toUpperCase()}
+                {selectedPatient?.lastName[0].toUpperCase()}
+              </Avatar>
+            )}
           </Col>
           <Col flex={1}>
             <Text size="xxl" style={{ fontWeight: 'bold' }}>

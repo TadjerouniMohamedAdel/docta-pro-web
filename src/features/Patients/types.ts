@@ -4,6 +4,7 @@ export type FormField = {
 };
 
 export type PersonalInfoForm = {
+  picture?: string;
   firstName: string;
   lastName: string;
   phone: string;

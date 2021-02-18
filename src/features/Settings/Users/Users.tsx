@@ -101,7 +101,14 @@ const Users: React.FC<Props> = () => {
       render: (text: any, record: Professional) => (
         <Row gutter={16} align="middle">
           <Col>
-            <Avatar src={record.picture} className="picture" />
+            {record.picture ? (
+              <Avatar src={record.picture} />
+            ) : (
+              <Avatar src={record.picture}>
+                {record.firstName[0]?.toUpperCase()}
+                {record.lastName[0]?.toUpperCase()}
+              </Avatar>
+            )}
           </Col>
           <Col>
             {record.firstName} {record.lastName}

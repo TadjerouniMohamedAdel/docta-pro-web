@@ -209,7 +209,14 @@ const DoctorProfile: React.FC<Props> = () => {
       <div style={{ padding: '18px 25px' }}>
         <Row align="middle" gutter={16}>
           <Col>
-            <Avatar src={doctorInfo.picture} size={54} />
+            {doctorInfo.picture ? (
+              <Avatar src={doctorInfo.picture} size={95} />
+            ) : (
+              <Avatar src={doctorInfo.picture} size={95}>
+                {doctorInfo.firstName[0]?.toUpperCase()}
+                {doctorInfo.lastName[0]?.toUpperCase()}
+              </Avatar>
+            )}
           </Col>
           <Col flex={1}>
             <Text size="xxl" style={{ fontWeight: 'bold' }}>

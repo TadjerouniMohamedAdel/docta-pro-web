@@ -52,7 +52,14 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
         <Form>
           <Row gutter={[35, 16]} align="middle">
             <Col>
-              <Avatar src={data.picture} size={95} />
+              {data.picture ? (
+                <Avatar src={data.picture} size={95} />
+              ) : (
+                <Avatar src={data.picture} size={95}>
+                  {data.firstName[0]?.toUpperCase()}
+                  {data.lastName[0]?.toUpperCase()}
+                </Avatar>
+              )}
             </Col>
             <Col>
               <Upload
