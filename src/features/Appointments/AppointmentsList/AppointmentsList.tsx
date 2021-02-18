@@ -46,7 +46,7 @@ const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
       <Spacer size="xs" direction="vertical">
         {appointments.map((appointment: Appointment) => (
           <Row key={appointment.id} gutter={16}>
-            <Col>
+            <Col style={{ minWidth: 70 }}>
               <Text size="sm" style={{ fontWeight: 'bold' }}>
                 {moment(appointment.startDate).format('LT')}
               </Text>
