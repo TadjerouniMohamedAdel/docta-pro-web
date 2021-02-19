@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     phone: '',
     email: '',
     birthDate: '',
-    gender: '',
+    gender: undefined,
     state: undefined,
     city: undefined,
     generalStatus: '',
@@ -73,11 +73,13 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
   const personalInfoFormik: FormikProps<PersonalInfoForm> = useFormik({
     initialValues: personalInfoForm,
     validationSchema,
+    enableReinitialize: true,
     onSubmit: () => {},
   });
 
   const medicalRecordFormik: FormikProps<MedicalRecordsForm> = useFormik({
     initialValues: medicalRecordsForm,
+    enableReinitialize: true,
     onSubmit: () => {},
   });
 
@@ -122,6 +124,11 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
       }
     }
   };
+
+  useEffect(() => {
+    setPersonalInfoForm(personalInfoFormInitialValues);
+    setMedicalRecordsForm(medicalRecordsFormInitialValues);
+  }, [visible]);
 
   return (
     <Modal

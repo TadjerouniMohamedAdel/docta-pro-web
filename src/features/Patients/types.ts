@@ -1,3 +1,5 @@
+import { StateCity } from '../../types/types';
+
 export type FormField = {
   key: string;
   value: any;
@@ -10,7 +12,7 @@ export type PersonalInfoForm = {
   phone: string;
   email: string;
   birthDate: string;
-  gender: string;
+  gender?: string;
   state?: string;
   city?: string;
   generalStatus: string;
@@ -41,8 +43,8 @@ export type FetchPersonalInfoResponse = {
   firstName: string;
   lastName: string;
   picture: string;
-  state: string;
-  city: string;
+  state: StateCity;
+  city: StateCity;
   birthDate: string;
   gender: string;
   registered: boolean;
@@ -70,8 +72,8 @@ export type SelectedPatient = {
   firstName: string;
   lastName: string;
   picture?: string;
-  state?: string;
-  city?: string;
+  state?: StateCity;
+  city?: StateCity;
   user: {
     phone: string;
   };

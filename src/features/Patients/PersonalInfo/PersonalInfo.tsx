@@ -10,6 +10,9 @@ import Select from '../../../components/Select/Select';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import { FormField, PersonalInfoForm } from '../types';
 import i18n from '../../../i18n';
+import { useGetStatesList } from '../../../hooks/useGetStatesList';
+import { StateCity } from '../../../types/types';
+import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
 
 type Props = {
   handleFormChange: (values: FormField) => void;
@@ -24,6 +27,9 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   const handleFieldsChange = (key: string, value: any): void => {
     handleFormChange({ key, value });
   };
+
+  const { states } = useGetStatesList();
+  const { cities } = useGetCitiesList(values.state);
 
   return (
     <Form onFinish={handleSubmit}>
@@ -211,8 +217,20 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                   target: { name: 'state', value },
                 });
                 handleFieldsChange('state', value);
+                handleChange({
+                  target: { name: 'city', value: undefined },
+                });
+                handleFieldsChange('city', null);
               }}
-            />
+            >
+              {states.data
+                ? states.data.map((state: StateCity) => (
+                    <AntSelect.Option key={state.id} value={state.id}>
+                      {state.name}
+                    </AntSelect.Option>
+                  ))
+                : null}
+            </Select>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -231,7 +249,15 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 });
                 handleFieldsChange('city', value);
               }}
-            />
+            >
+              {cities.data
+                ? cities.data.map((city: StateCity) => (
+                    <AntSelect.Option key={city.id} value={city.id}>
+                      {city.name}
+                    </AntSelect.Option>
+                  ))
+                : null}
+            </Select>
           </Form.Item>
         </Col>
         <Col span={24}>

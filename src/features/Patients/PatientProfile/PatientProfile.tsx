@@ -110,8 +110,8 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
         email: response.data.user.email,
         birthDate: response.data.birthDate,
         gender: response.data.gender,
-        state: response.data.state,
-        city: response.data.city,
+        state: response.data.state?.id,
+        city: response.data.city?.id,
         generalStatus: response.data.generalStatus,
       });
     } catch (error) {
@@ -239,7 +239,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             </Text>
             <br />
             <Text type="secondary" style={{ fontWeight: 500 }}>
-              {selectedPatient?.state} - {selectedPatient?.city}
+              {selectedPatient?.state?.name} - {selectedPatient?.city?.name}
             </Text>
           </Col>
           <Col>

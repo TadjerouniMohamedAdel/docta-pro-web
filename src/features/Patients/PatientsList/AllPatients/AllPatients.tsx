@@ -114,7 +114,7 @@ const AllPatients: React.FC<Props> = ({
                               {patient.firstName} {patient.lastName}
                             </Text>
                             <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                              {patient.city ?? '-'} - {patient.state ?? '-'}
+                              {patient.city?.name ?? '-'} - {patient.state?.name ?? '-'}
                             </Text>
                           </Spacer>
                         </Col>
