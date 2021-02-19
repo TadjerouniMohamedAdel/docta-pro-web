@@ -39,11 +39,15 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
       title: t('Reason name'),
       dataIndex: 'name',
       key: 'name',
+      ellipsis: {
+        showTitle: false,
+      },
     },
     {
       title: t('duration'),
       dataIndex: 'duration',
       key: 'duration',
+      width: 200,
       render: (text: any, record: VisitReason) => (
         <Select
           prefixIcon={<Icon name="award-line" />}
@@ -73,6 +77,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
       title: t('color'),
       dataIndex: 'color',
       key: 'color',
+      width: 130,
       render: (text: any, record: VisitReason) => (
         <Popover
           content={
@@ -104,6 +109,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
       title: t('activation'),
       dataIndex: 'isEnabled',
       key: 'isEnabled',
+      width: 140,
       render: (text: any, record: VisitReason) => (
         <Row gutter={16}>
           <Col>
