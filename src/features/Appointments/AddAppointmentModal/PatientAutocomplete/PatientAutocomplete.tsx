@@ -42,12 +42,12 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
       onSelectPatient({
         id: option.value,
         birthDate: data.birthDate,
-        city: data.city,
+        state: data.state?.name,
+        city: data.city?.name,
         firstName: data.firstName,
         gender: data.gender,
         generalStatus: data.generalStatus,
         lastName: data.lastName,
-        state: data.state,
         phone: data.phone,
       });
     } catch (error) {
@@ -60,14 +60,23 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
         label: (
           <Row gutter={12} align="middle">
             <Col>
-              <Avatar src={patient.picture} size="large" />
+              {patient?.picture ? (
+                <Avatar src={patient?.picture} size="large" />
+              ) : (
+                <Avatar src={patient?.picture} size="large">
+                  {patient?.firstName[0].toUpperCase()}
+                  {patient?.lastName[0].toUpperCase()}
+                </Avatar>
+              )}
             </Col>
             <Col>
-              <Text style={{ fontWeight: 'bold' }}>
-                {patient.firstName} {patient.lastName}
-              </Text>
+              <div>
+                <Text style={{ fontWeight: 'bold' }}>
+                  {patient.firstName} {patient.lastName}
+                </Text>
+              </div>
               <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                {patient.city ?? '-'} - {patient.state ?? '-'}
+                {patient.state?.name ?? '-'} - {patient.city?.name ?? '-'}
               </Text>
             </Col>
           </Row>
