@@ -29,7 +29,11 @@ const VisitReasons: React.FC<Props> = () => {
                 <div>
                   <Text>{specialty.name}</Text>
                   {specialty.reasons.map((reason) => (
-                    <div key={reason.id} style={{ padding: '12px 10px' }}>
+                    <div
+                      key={reason.id}
+                      style={{ padding: '12px 10px' }}
+                      className={`reason-checkbox ${reason.color}`}
+                    >
                       <Checkbox value={reason.id}>
                         <Text>{reason.name}</Text>
                       </Checkbox>
