@@ -3,15 +3,15 @@ import { Calendar as AntCalendar, Col, Row } from 'antd';
 import moment from 'moment';
 import Text from '../../../components/Text/Text';
 import './styles.less';
+import AppointmentCount from '../AppointmentCount';
 
 export type Props = {
-  appointmentsCount: number;
   date: Date;
   currentDate: Date;
   onSelectDate: (value: Date) => void;
 };
 
-const Calendar: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, currentDate }) => {
+const Calendar: React.FC<Props> = ({ date, onSelectDate, currentDate }) => {
   return (
     <div className={`${currentDate === date ? '' : 'inactive-calendar'}`}>
       <AntCalendar
@@ -27,9 +27,7 @@ const Calendar: React.FC<Props> = ({ appointmentsCount, date, onSelectDate, curr
               </Text>
             </Col>
             <Col>
-              <Text type="secondary" style={{ fontWeight: 500 }}>
-                {appointmentsCount} Appointments
-              </Text>
+              <AppointmentCount date={date} type="month" />
             </Col>
           </Row>
         )}

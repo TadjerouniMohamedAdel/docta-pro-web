@@ -12,6 +12,9 @@ import './styles.less';
 import { useLocaleState } from '../../../../../i18n';
 import { DaysOffParams } from '../../types';
 import { addDaysOff } from '../../services';
+import AppointmentCount from '../../../../Appointments/AppointmentCount';
+import { fetchAppointmentsCount } from '../../../../Appointments/services';
+import Spacer from '../../../../../components/Spacer/Spacer';
 
 type Props = {
   visible: boolean;
@@ -32,6 +35,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
 
   const [prevDate, setPrevDate] = useState<Date>(new Date());
   const [nextDate, setNextDate] = useState<Date>(moment().add(1, 'month').toDate());
+  const [canceledAppointment, setCanceledAppointment] = useState(0);
 
   const queryClient = useQueryClient();
 
@@ -61,12 +65,23 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
     }
   };
 
+  const handleGetAppointmentCount = async (from: Date, to: Date) => {
+    try {
+      const response = await fetchAppointmentsCount(from, to);
+      setCanceledAppointment(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSelectRange = ([from, to]: any): void => {
     setDaysOff({
       ...daysOff,
       from: from ? from.toDate() : null,
       to: to ? to.toDate() : null,
     });
+
+    handleGetAppointmentCount(from, to ?? from);
   };
 
   const handleMessageChange = (message: string): void => {
@@ -114,9 +129,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
                   </Text>
                 </Col>
                 <Col>
-                  <Text size="lg" type="secondary" style={{ fontWeight: 500 }}>
-                    {/* 7 Appointments */}
-                  </Text>
+                  <AppointmentCount size="lg" date={prevDate} type="month" />
                 </Col>
               </Row>
             </Col>
@@ -128,9 +141,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
                   </Text>
                 </Col>
                 <Col>
-                  <Text size="lg" type="secondary" style={{ fontWeight: 500 }}>
-                    {/* 7 Appointments */}
-                  </Text>
+                  <AppointmentCount size="lg" date={nextDate} type="month" />
                 </Col>
               </Row>
             </Col>
@@ -201,7 +212,24 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
               onBlur={(e) => handleMessageChange(e.target.value)}
             />
           </Form.Item>
+          {canceledAppointment > 0 ? (
+            <Text
+              type="danger"
+              size="lg"
+              style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}
+            >
+              <Spacer direction="horizontal" size="xs">
+                <Icon name="information-fill" />
+                <span>
+                  {canceledAppointment} {t('Appointments will be canceled on the days from')}{' '}
+                  {daysOff.from ? moment(daysOff.from).format('DD MMM') : ''} {t('to')}{' '}
+                  {daysOff.to ? moment(daysOff.to).format('DD MMM') : ''}
+                </span>
+              </Spacer>
+            </Text>
+          ) : null}
         </div>
+
         <Divider />
       </>
     </Modal>

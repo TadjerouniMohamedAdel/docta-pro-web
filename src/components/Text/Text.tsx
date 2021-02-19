@@ -17,12 +17,11 @@ const sizes = {
   xxxl: 24,
 };
 
-const Spacer: React.FC<Props> = ({ children, size = 'md', style, ...rest }) => {
+const Text: React.FC<Props> = ({ children, size = 'md', style, ...rest }) => {
   return (
     <Typography.Text style={{ fontSize: sizes[size], ...style }} {...rest}>
       {children}
     </Typography.Text>
   );
 };
-
-export default Spacer;
+export default Text;

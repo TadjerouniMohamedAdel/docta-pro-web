@@ -15,6 +15,7 @@ import WeekCalendar from './WeekCalendar/WeekCalendar';
 import './styles.less';
 import HeaderDatePicker from './HeaderDatePicker/HeaderDatePicker';
 import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
+import AppointmentCount from './AppointmentCount';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -87,19 +88,9 @@ const Appointments: React.FC = () => {
                 </Text>
               </div>
               <Divider style={{ margin: 0 }} />
-              <Calendar
-                appointmentsCount={17}
-                date={prevDate}
-                onSelectDate={onPrevDateChange}
-                currentDate={currentDate}
-              />
+              <Calendar date={prevDate} onSelectDate={onPrevDateChange} currentDate={currentDate} />
               <Divider style={{ margin: 0 }} />
-              <Calendar
-                appointmentsCount={67}
-                date={nextDate}
-                onSelectDate={onNextDateChange}
-                currentDate={currentDate}
-              />
+              <Calendar date={nextDate} onSelectDate={onNextDateChange} currentDate={currentDate} />
             </div>
             <div>
               <div>
@@ -186,9 +177,7 @@ const Appointments: React.FC = () => {
                       </Col>
                     ) : null}
                   </Row>
-                  <Text type="secondary" style={{ fontWeight: 500 }}>
-                    6 Appointments
-                  </Text>
+                  <AppointmentCount date={currentDate} type="day" />
                 </Col>
               </Row>
             </Col>
