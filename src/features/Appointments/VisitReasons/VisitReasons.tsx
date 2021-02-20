@@ -26,7 +26,7 @@ const VisitReasons: React.FC<Props> = () => {
         <div style={{ padding: 10 }}>
           {specialties
             ? specialties.data.map((specialty) => (
-                <div>
+                <div key={specialty.id}>
                   <Text>{specialty.name}</Text>
                   {specialty.reasons.map((reason) => (
                     <div

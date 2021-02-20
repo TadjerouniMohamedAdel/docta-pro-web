@@ -1,0 +1,54 @@
+@import '../../../styles/variables.less';
+
+.week-calendar {
+  .rbc-time-view {
+    border: none;
+    .rbc-time-header {
+      .rbc-time-header-content {
+        border: none;
+      }
+      .rbc-time-header-content {
+        .rbc-allday-cell {
+          display: none;
+        }
+        .rbc-time-header-cell {
+          .rbc-header {
+            + .rbc-header {
+              border-left: none;
+            }
+            &.rbc-today {
+              .rbc-header-text {
+                color: @primary-color;
+              }
+            }
+          }
+        }
+      }
+    }
+    .rbc-time-content {
+      border-top: none;
+      .rbc-time-gutter {
+        &.rbc-time-column {
+        }
+      }
+      .rbc-day-slot {
+        .rbc-timeslot-group {
+          border-bottom: 1px solid @border-color-base;
+          .rbc-time-slot {
+            border-top: none;
+          }
+        }
+        &:last-child {
+          border-right: 1px solid @border-color-base;
+        }
+      }
+    }
+  }
+  .rbc-timeslot-group {
+    border-bottom: none;
+    min-height: 95px;
+  }
+  .rbc-today {
+    background: none;
+  }
+}

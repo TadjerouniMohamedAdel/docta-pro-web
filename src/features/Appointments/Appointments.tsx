@@ -230,11 +230,11 @@ const Appointments: React.FC = () => {
           <Switch>
             <Route
               path="/appointments/week"
-              render={() => <WeekCalendar currentDate={currentDate} />}
+              render={({ ...props }) => <WeekCalendar currentDate={currentDate} {...props} />}
             />
             <Route
               path="/appointments"
-              render={() => <AppointmentsList currentDate={currentDate} />}
+              render={({ ...props }) => <AppointmentsList currentDate={currentDate} {...props} />}
             />
           </Switch>
         </div>
