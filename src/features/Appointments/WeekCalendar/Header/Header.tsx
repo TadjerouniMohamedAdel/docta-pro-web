@@ -3,9 +3,7 @@ import { HeaderProps } from 'react-big-calendar';
 import moment from 'moment';
 import Text from '../../../../components/Text/Text';
 
-type Props = HeaderProps & {};
-
-const Header: React.FC<Props> = ({ date }) => {
+const Header: React.FC<HeaderProps> = ({ date }) => {
   return (
     <>
       <div>

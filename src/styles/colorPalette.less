@@ -53,8 +53,10 @@
   .event-wrapper {
     &.@{name} {
       .rbc-event {
-        background-color: @color;
-        border-color: @color;
+        background-color: lighten(@color, 40%);
+        border: none;
+        border-bottom: 1px solid #fff;
+        border-left: 2px solid @color;
         // &.rbc-selected {
         //   background-color: darken($color; 15%);
         // }
@@ -80,17 +82,17 @@
       border-color: @color;
     }
   }
-  .agenda-event {
-    &.@{name} {
-      background-color: @color;
-      border-color: @color;
-      color: #fff;
+  // .agenda-event {
+  //   &.@{name} {
+  //     background-color: @color;
+  //     border-color: @color;
+  //     color: #fff;
 
-      // &:hover {
-      //   background-color: darken(@color, 8%);
-      // }
-    }
-  }
+  // &:hover {
+  //   background-color: darken(@color, 8%);
+  // }
+  //   }
+  // }
 }
 
 // .for-each(@pair in @colors) {

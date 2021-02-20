@@ -7,6 +7,8 @@ import './styles.less';
 import Header from './Header/Header';
 import TimeSlotWrapper from './TimeSlotWrapper/TimeSlotWrapper';
 import { useAppointmentsWeekList } from '../hooks';
+import Event from './Event/Event';
+import EventWrapper from './EventWrapper/EventWrapper';
 
 export type Props = {
   currentDate: Date;
@@ -14,8 +16,8 @@ export type Props = {
 
 const localizer = momentLocalizer(moment);
 
-const min = new Date(0, 0, 0, 7, 0, 0);
-const max = new Date(0, 0, 0, 21, 0, 0);
+// const min = new Date(0, 0, 0, 7, 0, 0);
+// const max = new Date(0, 0, 0, 21, 0, 0);
 
 const WeekCalendar: React.FC<Props> = ({ currentDate }) => {
   const { resolvedData: appointments } = useAppointmentsWeekList(currentDate);
@@ -48,12 +50,14 @@ const WeekCalendar: React.FC<Props> = ({ currentDate }) => {
       length={6}
       step={5}
       timeslots={12}
-      min={min}
-      max={max}
+      // min={min}
+      // max={max}
       components={{
         toolbar: () => null,
         header: Header,
         timeSlotWrapper: TimeSlotWrapper,
+        event: Event,
+        eventWrapper: EventWrapper,
       }}
     />
   );
