@@ -16,6 +16,7 @@ const VisitReasons: React.FC<Props> = () => {
 
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
   const [activeKey, setActiveKey] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleTabsChange = (value: string) => {
     setActiveKey(value);
@@ -41,13 +42,15 @@ const VisitReasons: React.FC<Props> = () => {
     }
   };
 
-  const handleSaveChanges = (id: string) => {
+  const handleSaveChanges = async (id: string) => {
+    setLoading(true);
     try {
       const specialty: Specialty | undefined = specialties.find((item) => item.id === id);
-      if (specialty) saveVisitReasons(specialty);
+      if (specialty) await saveVisitReasons(specialty);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -73,6 +76,7 @@ const VisitReasons: React.FC<Props> = () => {
                     icon={<Icon name="save-line" />}
                     size="small"
                     onClick={() => handleSaveChanges(specialty.id)}
+                    loading={loading}
                   >
                     {t('save')}
                   </Button>
