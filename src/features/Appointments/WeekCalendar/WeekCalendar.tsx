@@ -6,6 +6,7 @@ import { useLocaleState } from '../../../i18n';
 import './styles.less';
 import Header from './Header/Header';
 import TimeSlotWrapper from './TimeSlotWrapper/TimeSlotWrapper';
+import { useAppointmentsWeekList } from '../hooks';
 
 export type Props = {
   currentDate: Date;
@@ -17,7 +18,8 @@ const min = new Date(0, 0, 0, 7, 0, 0);
 const max = new Date(0, 0, 0, 21, 0, 0);
 
 const WeekCalendar: React.FC<Props> = ({ currentDate }) => {
-  const appointments: any = [];
+  const { resolvedData: appointments } = useAppointmentsWeekList(currentDate);
+
   const { locale } = useLocaleState();
 
   const handleViewChange = () => {};
@@ -35,7 +37,7 @@ const WeekCalendar: React.FC<Props> = ({ currentDate }) => {
       selectable="ignoreEvents"
       onSelecting={() => false}
       rtl={locale === 'ar'}
-      events={appointments}
+      events={appointments ?? []}
       style={{ height: '100%' }}
       //   onRangeChange={handleRangeChange}
       //   onSelectEvent={handleSelectEvent}

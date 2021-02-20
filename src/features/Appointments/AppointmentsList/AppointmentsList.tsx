@@ -2,40 +2,16 @@ import React from 'react';
 import { Col, Dropdown, Menu, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
-import { useQuery } from 'react-query';
 import './styles.less';
 import Spacer from '../../../components/Spacer/Spacer';
 import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
 import Button from '../../../components/Button/Button';
-import { fetchAppointments } from '../services';
 import { Appointment } from '../types';
+import { useAppointmentsDayList } from '../hooks';
 
 export type Props = {
   currentDate: Date;
-};
-
-const useAppointmentsDayList = (date: Date) => {
-  const { data, ...rest } = useQuery(
-    ['appointments-day', date],
-    () => fetchAppointments(date, date),
-    {
-      keepPreviousData: true,
-    },
-  );
-  return {
-    resolvedData: data
-      ? data.data.map((item: any) => ({
-          ...item,
-          startDate: new Date(item.start),
-          picture: item.patient.picture,
-          firstName: item.patient.firstName,
-          lastName: item.patient.lastName,
-          visitReason: item.reason.name,
-        }))
-      : [],
-    ...rest,
-  };
 };
 
 const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
