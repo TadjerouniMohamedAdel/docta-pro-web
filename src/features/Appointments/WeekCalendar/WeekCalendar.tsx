@@ -9,9 +9,13 @@ import TimeSlotWrapper from './TimeSlotWrapper/TimeSlotWrapper';
 import { useAppointmentsWeekList } from '../hooks';
 import Event from './Event/Event';
 import EventWrapper from './EventWrapper/EventWrapper';
+import { AppointmentForm } from '../types';
 
 export type Props = {
   currentDate: Date;
+  appointmentForm: AppointmentForm;
+  setAddAppointmentForm: (appointmentForm: AppointmentForm) => void;
+  setShowAddAppointmentModal: (visible: boolean) => void;
 };
 
 const localizer = momentLocalizer(moment);
@@ -19,13 +23,34 @@ const localizer = momentLocalizer(moment);
 // const min = new Date(0, 0, 0, 7, 0, 0);
 // const max = new Date(0, 0, 0, 21, 0, 0);
 
-const WeekCalendar: React.FC<Props> = ({ currentDate }) => {
+type SlotInfo = {
+  start: string | Date;
+  end: string | Date;
+  slots: Date[] | string[];
+  action: 'select' | 'click' | 'doubleClick';
+};
+
+const WeekCalendar: React.FC<Props> = ({
+  currentDate,
+  appointmentForm,
+  setAddAppointmentForm,
+  setShowAddAppointmentModal,
+}) => {
   const { resolvedData: appointments } = useAppointmentsWeekList(currentDate);
 
   const { locale } = useLocaleState();
 
   const handleViewChange = () => {};
   const handleNavigate = () => {};
+
+  const handleSelectSlot = ({ start }: SlotInfo) => {
+    setAddAppointmentForm({
+      ...appointmentForm,
+      start: start as Date,
+      time: moment(start, 'HH:mm').toString(),
+    });
+    setShowAddAppointmentModal(true);
+  };
 
   return (
     <Calendar
@@ -43,8 +68,8 @@ const WeekCalendar: React.FC<Props> = ({ currentDate }) => {
       style={{ height: '100%' }}
       //   onRangeChange={handleRangeChange}
       //   onSelectEvent={handleSelectEvent}
-      //   onSelectSlot={handleSelectSlot}
       //   onDrillDown={handleDrillDown}
+      onSelectSlot={handleSelectSlot}
       onNavigate={handleNavigate}
       onView={handleViewChange}
       length={6}

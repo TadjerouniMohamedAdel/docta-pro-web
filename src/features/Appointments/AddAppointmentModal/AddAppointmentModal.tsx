@@ -19,27 +19,26 @@ import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import PatientAutocomplete from './PatientAutocomplete/PatientAutocomplete';
+import { getWeekRange } from '../../../utils/date';
 
 type Props = {
   visible: boolean;
   onClose: () => void;
   currentDate: Date;
+  appointmentForm: AppointmentForm;
 };
 
 const { Option } = AntSelect;
 
-const AddAppointmentModal: React.FC<Props> = ({ visible, onClose, currentDate }) => {
+const AddAppointmentModal: React.FC<Props> = ({
+  visible,
+  onClose,
+  currentDate,
+  appointmentForm,
+}) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   const minute = t('minute');
   const hour = t('hour');
-
-  const appointmentForm: AppointmentForm = {
-    patientId: '',
-    start: null,
-    time: '',
-    duration: undefined,
-    reasonId: '',
-  };
 
   const [patient, setPatient] = useState<Patient>({
     id: '',
@@ -52,7 +51,6 @@ const AddAppointmentModal: React.FC<Props> = ({ visible, onClose, currentDate })
     city: undefined,
     generalStatus: '',
   });
-
   const { mutateAsync, isLoading } = useMutation(addAppointment);
 
   const cache = useQueryClient();
@@ -74,7 +72,7 @@ const AddAppointmentModal: React.FC<Props> = ({ visible, onClose, currentDate })
 
   const handleAddAppointment = async (values: AppointmentForm) => {
     const time = moment(values.time).format('HH:mm').toString();
-    await mutateAsync({
+    const newAppointment: AppointmentForm = {
       ...values,
       start: moment(values.start)
         .set({
@@ -84,9 +82,12 @@ const AddAppointmentModal: React.FC<Props> = ({ visible, onClose, currentDate })
           ms: 0,
         })
         .toDate(),
-    });
+    };
+    await mutateAsync(newAppointment);
 
     queryClient.invalidateQueries(['appointments-day', currentDate]);
+    const { start, end } = getWeekRange(currentDate);
+    queryClient.invalidateQueries(['appointments-week', start, end]);
 
     onClose();
   };

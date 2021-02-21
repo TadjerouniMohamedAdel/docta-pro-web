@@ -29,14 +29,17 @@ export const useAppointmentsWeekList = (date: Date) => {
   const { start, end } = getWeekRange(date);
   const { data, ...rest } = useQuery(
     ['appointments-week', start, end],
-    () => fetchAppointments(start, end),
+    async () => {
+      const res = await fetchAppointments(start, end);
+      return res.data;
+    },
     {
       keepPreviousData: true,
     },
   );
   return {
     resolvedData: data
-      ? data.data.map((item: any) => ({
+      ? data.map((item: any) => ({
           ...item,
           start: new Date(item.start),
           end: new Date(item.end),
@@ -50,3 +53,16 @@ export const useAppointmentsWeekList = (date: Date) => {
     ...rest,
   };
 };
+
+// TODO update cache when adding new appointment
+// export const useUpdateAppointmentsWeekList = (date: Date) => {
+//   const { start, end } = getWeekRange(date);
+
+//   const queryClient = useQueryClient();
+//   const addNewAppointment = (appointmentId: string) => {
+//     // get appointment details and add it to cached data
+//     const data = queryClient.getQueryData(['appointments-week', start, end]);
+
+//   };
+//   return { addNewAppointment };
+// };

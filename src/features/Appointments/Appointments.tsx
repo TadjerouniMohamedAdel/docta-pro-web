@@ -16,6 +16,7 @@ import './styles.less';
 import HeaderDatePicker from './HeaderDatePicker/HeaderDatePicker';
 import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
 import AppointmentCount from './AppointmentCount';
+import { AppointmentForm } from './types';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -27,6 +28,13 @@ const Appointments: React.FC = () => {
   const [prevDate, setPrevDate] = useState<Date>(currentDate);
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
   const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
+  const [addAppointmentForm, setAddAppointmentForm] = useState<AppointmentForm>({
+    patientId: '',
+    start: null,
+    time: '',
+    duration: undefined,
+    reasonId: '',
+  });
 
   const handleCloseAddAppointmentModal = () => {
     setShowAddAppointmentModal(false);
@@ -230,7 +238,15 @@ const Appointments: React.FC = () => {
           <Switch>
             <Route
               path="/appointments/week"
-              render={({ ...props }) => <WeekCalendar currentDate={currentDate} {...props} />}
+              render={({ ...props }) => (
+                <WeekCalendar
+                  currentDate={currentDate}
+                  setAddAppointmentForm={setAddAppointmentForm}
+                  appointmentForm={addAppointmentForm}
+                  setShowAddAppointmentModal={setShowAddAppointmentModal}
+                  {...props}
+                />
+              )}
             />
             <Route
               path="/appointments"
@@ -243,6 +259,7 @@ const Appointments: React.FC = () => {
         visible={showAddAppointmentModal}
         onClose={handleCloseAddAppointmentModal}
         currentDate={currentDate}
+        appointmentForm={addAppointmentForm}
       />
     </InnerLayout>
   );
