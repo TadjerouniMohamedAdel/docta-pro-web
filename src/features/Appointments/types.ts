@@ -28,3 +28,13 @@ export type Patient = {
   generalStatus: string;
   picture?: string;
 };
+
+export type AppointmentStatus =
+  | 'BOOKED'
+  | 'CONFIRMED'
+  | 'PATIENT_CANCELED'
+  | 'DOCTOR_CANCELED'
+  | 'DOCTOR_REJECTED'
+  | 'DOCTOR_MISSED'
+  | 'PATIENT_MISSED'
+  | 'DONE';

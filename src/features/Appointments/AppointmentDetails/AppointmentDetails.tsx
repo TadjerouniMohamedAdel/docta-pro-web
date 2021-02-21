@@ -13,7 +13,7 @@ import Icon from '../../../components/Icon/Icon';
 import Label from '../../../components/Label/Label';
 import Select from '../../../components/Select/Select';
 import { AppointmentForm, Patient } from '../types';
-import { editAppointment, fetchAppointmentsDetails } from '../services';
+import { editAppointment, fetchAppointmentsDetails, updateAppointmentStatus } from '../services';
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
@@ -71,7 +71,10 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
     duration: Yup.number().required(t('errors:required field')),
   });
 
-  const { mutateAsync, isLoading } = useMutation(editAppointment);
+  const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
+  const { mutateAsync: mutateAsyncDelete, isLoading: isLoadingDelete } = useMutation(
+    updateAppointmentStatus,
+  );
   const queryClient = useQueryClient();
 
   const handleEditAppointment = async (values: AppointmentForm) => {
@@ -87,11 +90,21 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
         })
         .toDate(),
     };
-    await mutateAsync({
+    await mutateAsyncEdit({
       appointmentId,
       appointmentForm: data,
     });
 
+    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
+    queryClient.invalidateQueries(['appointments-day', currentDate]);
+    const { start, end } = getWeekRange(currentDate);
+    queryClient.invalidateQueries(['appointments-week', start, end]);
+
+    onClose();
+  };
+
+  const handleDeleteAppointment = async () => {
+    await mutateAsyncDelete({ appointmentId, status: 'DOCTOR_CANCELED' });
     // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
     queryClient.invalidateQueries(['appointments-day', currentDate]);
     const { start, end } = getWeekRange(currentDate);
@@ -152,7 +165,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
           type="primary"
           icon={<Icon name="save-line" />}
           onClick={form.submit}
-          loading={isLoading}
+          loading={isLoadingEdit}
           style={{ textTransform: 'uppercase' }}
         >
           {t('save')}
@@ -386,8 +399,8 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
               danger
               block
               icon={<Icon name="delete-bin-2-line" />}
-              //   onClick={}
-              //   loading={isLoading}
+              onClick={handleDeleteAppointment}
+              loading={isLoadingDelete}
               style={{ textTransform: 'uppercase' }}
             >
               {t('DELETE APPOINTMENT')}
