@@ -12,10 +12,21 @@ import { useAppointmentsDayList } from '../hooks';
 
 export type Props = {
   currentDate: Date;
+  setShowAppointmentDetailsModal: (visible: boolean) => void;
+  setAppointmentDetailsId: (appointmentId: string) => void;
 };
 
-const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
+const AppointmentsList: React.FC<Props> = ({
+  currentDate,
+  setShowAppointmentDetailsModal,
+  setAppointmentDetailsId,
+}) => {
   const { resolvedData: appointments } = useAppointmentsDayList(currentDate);
+
+  const handleSelectAppointment = (appointmentId: string) => {
+    setAppointmentDetailsId(appointmentId);
+    setShowAppointmentDetailsModal(true);
+  };
 
   return (
     <div>
@@ -31,6 +42,10 @@ const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
               <div
                 className="appointment-card"
                 style={{ height: 72, borderRadius: 8, padding: '0 16px' }}
+                onClick={() => handleSelectAppointment(appointment.id)}
+                onKeyPress={() => handleSelectAppointment(appointment.id)}
+                role="button"
+                tabIndex={0}
               >
                 <Row style={{ height: '100%' }} align="middle" gutter={16}>
                   <Col>

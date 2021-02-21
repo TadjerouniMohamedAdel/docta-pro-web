@@ -1,8 +1,8 @@
 /* eslint-disable radix */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQueryClient } from 'react-query';
-import { Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
+import { useQueryClient } from 'react-query';
+import { Avatar, Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
@@ -13,30 +13,23 @@ import Icon from '../../../components/Icon/Icon';
 import Label from '../../../components/Label/Label';
 import Select from '../../../components/Select/Select';
 import { AppointmentForm, Patient } from '../types';
-import { addAppointment } from '../services';
+import { fetchAppointmentsDetails } from '../services';
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
-import PatientAutocomplete from './PatientAutocomplete/PatientAutocomplete';
-import { getWeekRange } from '../../../utils/date';
 
 type Props = {
   visible: boolean;
   onClose: () => void;
-  currentDate: Date;
-  appointmentForm: AppointmentForm;
+  appointmentId: string;
 };
 
 const { Option } = AntSelect;
 
-const AddAppointmentModal: React.FC<Props> = ({
-  visible,
-  onClose,
-  currentDate,
-  appointmentForm,
-}) => {
+const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
+
   const minute = t('minute');
   const hour = t('hour');
 
@@ -47,14 +40,21 @@ const AddAppointmentModal: React.FC<Props> = ({
     phone: '',
     birthDate: '',
     gender: undefined,
-    state: undefined,
-    city: undefined,
     generalStatus: '',
+    picture: '',
   });
 
-  const { mutateAsync, isLoading } = useMutation(addAppointment);
+  const [appointmentForm, setAppointmentForm] = useState<AppointmentForm>({
+    id: '',
+    patientId: '',
+    start: null,
+    time: null,
+    duration: undefined,
+    reasonId: '',
+  });
 
   const cache = useQueryClient();
+
   const specialties = cache.getQueryData('appointment-specialties') as {
     data: FetchSpecialtyResponse[];
   };
@@ -69,35 +69,11 @@ const AddAppointmentModal: React.FC<Props> = ({
     duration: Yup.number().required(t('errors:required field')),
   });
 
-  const queryClient = useQueryClient();
-
-  const handleAddAppointment = async (values: AppointmentForm) => {
-    const time = moment(values.time).format('HH:mm').toString();
-    const newAppointment: AppointmentForm = {
-      ...values,
-      start: moment(values.start)
-        .set({
-          h: parseInt(time.split(':')[0]),
-          m: parseInt(time.split(':')[1]),
-          s: 0,
-          ms: 0,
-        })
-        .toDate(),
-    };
-    await mutateAsync(newAppointment);
-
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
-
-    onClose();
-  };
-
   const formik = useFormik({
     initialValues: appointmentForm as AppointmentForm,
     enableReinitialize: true,
     validationSchema,
-    onSubmit: handleAddAppointment,
+    onSubmit: (values) => console.log(values),
   });
 
   const { handleChange, values, handleSubmit, touched, errors, setFieldValue } = formik;
@@ -113,14 +89,30 @@ const AddAppointmentModal: React.FC<Props> = ({
     }
   };
 
-  const handleSelectPatient = (value: Patient) => {
-    setPatient(value);
-    setFieldValue('patientId', value.id);
+  const handleFetchAppointmentDetails = async () => {
+    try {
+      const response = await fetchAppointmentsDetails(appointmentId);
+      setAppointmentForm({
+        start: new Date(response.start),
+        time: new Date(response.start),
+        reasonId: response.reason.id,
+        duration: response.reason.duration,
+        patientId: response.patient.id,
+      });
+
+      setPatient(response.patient);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    if (appointmentId) handleFetchAppointmentDetails();
+  }, [appointmentId]);
 
   return (
     <Modal
-      title={t('New Appointment')}
+      title={t('Appointment Details')}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -129,7 +121,7 @@ const AddAppointmentModal: React.FC<Props> = ({
           type="primary"
           icon={<Icon name="save-line" />}
           onClick={form.submit}
-          loading={isLoading}
+          //   loading={isLoading}
           style={{ textTransform: 'uppercase' }}
         >
           {t('save')}
@@ -264,21 +256,29 @@ const AddAppointmentModal: React.FC<Props> = ({
       <Divider style={{ marginTop: 0, marginBottom: 0 }} />
       <div style={{ padding: '16px 40px' }}>
         <Row gutter={[35, 16]}>
-          <Col span={24}>
-            <Label
-              title={t('patient')}
-              error={touched.patientId ? errors.patientId : undefined}
-              required
-            />
-            <Form.Item
-              validateStatus={touched.patientId && Boolean(errors.patientId) ? 'error' : undefined}
-            >
-              <PatientAutocomplete
-                selectedPatient={patient}
-                onSelectPatient={handleSelectPatient}
+          <Col>
+            {patient.picture ? (
+              <Avatar src={patient.picture} size={75} shape="square" />
+            ) : (
+              <Avatar src={patient.picture} size={75} shape="square">
+                {patient.firstName[0]?.toUpperCase()}
+                {patient.lastName[0]?.toUpperCase()}
+              </Avatar>
+            )}
+          </Col>
+          <Col flex={1}>
+            <Label title={t('Patient')} />
+            <Form.Item>
+              <Input
+                disabled
+                prefix={<Icon name="search-2-line" />}
+                name="patient"
+                value={`${patient.firstName} ${patient.lastName}`}
               />
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={[35, 16]}>
           <Col span={12}>
             <Label title={t('birthday')} />
             <Form.Item>
@@ -349,37 +349,23 @@ const AddAppointmentModal: React.FC<Props> = ({
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Label title={t('state')} />
-            <Form.Item>
-              <Select
-                disabled
-                prefixIcon={<Icon name="map-pin-line" />}
-                placeholder={i18n.t('placeholders:select', {
-                  fieldName: t('state'),
-                })}
-                value={patient.state}
-                dropdownMatchSelectWidth={false}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('city')} />
-            <Form.Item>
-              <Select
-                disabled
-                prefixIcon={<Icon name="road-map-line" />}
-                placeholder={i18n.t('placeholders:select', {
-                  fieldName: t('city'),
-                })}
-                value={patient.city}
-                dropdownMatchSelectWidth={false}
-              />
-            </Form.Item>
+          <Col span={24}>
+            <Button
+              type="primary"
+              danger
+              block
+              icon={<Icon name="delete-bin-2-line" />}
+              //   onClick={}
+              //   loading={isLoading}
+              style={{ textTransform: 'uppercase' }}
+            >
+              {t('DELETE APPOINTMENT')}
+            </Button>
           </Col>
         </Row>
       </div>
     </Modal>
   );
 };
-export default AddAppointmentModal;
+
+export default AppointmentDetails;

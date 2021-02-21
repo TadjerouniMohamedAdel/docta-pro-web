@@ -16,6 +16,8 @@ export type Props = {
   appointmentForm: AppointmentForm;
   setAddAppointmentForm: (appointmentForm: AppointmentForm) => void;
   setShowAddAppointmentModal: (visible: boolean) => void;
+  setShowAppointmentDetailsModal: (visible: boolean) => void;
+  setAppointmentDetailsId: (appointmentId: string) => void;
 };
 
 const localizer = momentLocalizer(moment);
@@ -35,6 +37,8 @@ const WeekCalendar: React.FC<Props> = ({
   appointmentForm,
   setAddAppointmentForm,
   setShowAddAppointmentModal,
+  setShowAppointmentDetailsModal,
+  setAppointmentDetailsId,
 }) => {
   const { resolvedData: appointments } = useAppointmentsWeekList(currentDate);
 
@@ -47,9 +51,14 @@ const WeekCalendar: React.FC<Props> = ({
     setAddAppointmentForm({
       ...appointmentForm,
       start: start as Date,
-      time: moment(start, 'HH:mm').toString(),
+      time: start as Date,
     });
     setShowAddAppointmentModal(true);
+  };
+
+  const handleSelectEvent = (values: any) => {
+    setAppointmentDetailsId(values.id);
+    setShowAppointmentDetailsModal(true);
   };
 
   return (
@@ -67,8 +76,8 @@ const WeekCalendar: React.FC<Props> = ({
       events={appointments ?? []}
       style={{ height: '100%' }}
       //   onRangeChange={handleRangeChange}
-      //   onSelectEvent={handleSelectEvent}
       //   onDrillDown={handleDrillDown}
+      onSelectEvent={handleSelectEvent}
       onSelectSlot={handleSelectSlot}
       onNavigate={handleNavigate}
       onView={handleViewChange}

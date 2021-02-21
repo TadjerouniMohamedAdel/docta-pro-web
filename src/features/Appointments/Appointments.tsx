@@ -17,6 +17,7 @@ import HeaderDatePicker from './HeaderDatePicker/HeaderDatePicker';
 import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
 import AppointmentCount from './AppointmentCount';
 import { AppointmentForm } from './types';
+import AppointmentDetails from './AppointmentDetails/AppointmentDetails';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -28,16 +29,22 @@ const Appointments: React.FC = () => {
   const [prevDate, setPrevDate] = useState<Date>(currentDate);
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
   const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
+  const [showAppointmentDetailsModal, setShowAppointmentDetailsModal] = useState(false);
+  const [appointmentDetailsId, setAppointmentDetailsId] = useState('');
   const [addAppointmentForm, setAddAppointmentForm] = useState<AppointmentForm>({
     patientId: '',
     start: null,
-    time: '',
+    time: null,
     duration: undefined,
     reasonId: '',
   });
 
   const handleCloseAddAppointmentModal = () => {
     setShowAddAppointmentModal(false);
+  };
+
+  const handleCloseAppointmentDetailsModal = () => {
+    setShowAppointmentDetailsModal(false);
   };
 
   const onPrevDateChange = (date: Date): void => {
@@ -244,13 +251,22 @@ const Appointments: React.FC = () => {
                   setAddAppointmentForm={setAddAppointmentForm}
                   appointmentForm={addAppointmentForm}
                   setShowAddAppointmentModal={setShowAddAppointmentModal}
+                  setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
+                  setAppointmentDetailsId={setAppointmentDetailsId}
                   {...props}
                 />
               )}
             />
             <Route
               path="/appointments"
-              render={({ ...props }) => <AppointmentsList currentDate={currentDate} {...props} />}
+              render={({ ...props }) => (
+                <AppointmentsList
+                  currentDate={currentDate}
+                  setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
+                  setAppointmentDetailsId={setAppointmentDetailsId}
+                  {...props}
+                />
+              )}
             />
           </Switch>
         </div>
@@ -260,6 +276,11 @@ const Appointments: React.FC = () => {
         onClose={handleCloseAddAppointmentModal}
         currentDate={currentDate}
         appointmentForm={addAppointmentForm}
+      />
+      <AppointmentDetails
+        visible={showAppointmentDetailsModal}
+        onClose={handleCloseAppointmentDetailsModal}
+        appointmentId={appointmentDetailsId}
       />
     </InnerLayout>
   );
