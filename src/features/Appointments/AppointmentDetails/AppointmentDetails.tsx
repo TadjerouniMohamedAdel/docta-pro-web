@@ -96,7 +96,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId }
         start: new Date(response.start),
         time: new Date(response.start),
         reasonId: response.reason.id,
-        duration: response.reason.duration,
+        duration: response.duration,
         patientId: response.patient.id,
       });
 
