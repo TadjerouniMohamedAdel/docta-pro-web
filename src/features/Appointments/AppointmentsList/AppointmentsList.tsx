@@ -34,7 +34,14 @@ const AppointmentsList: React.FC<Props> = ({ currentDate }) => {
               >
                 <Row style={{ height: '100%' }} align="middle" gutter={16}>
                   <Col>
-                    <Avatar src={appointment.picture} size="large" />
+                    {appointment.picture ? (
+                      <Avatar src={appointment.picture} size="large" />
+                    ) : (
+                      <Avatar src={appointment.picture} size="large">
+                        {appointment.firstName[0]?.toUpperCase()}
+                        {appointment.lastName[0]?.toUpperCase()}
+                      </Avatar>
+                    )}
                   </Col>
                   <Col flex={1}>
                     <Row gutter={4}>
