@@ -2,7 +2,7 @@ export type AppointmentForm = {
   id?: string;
   patientId: string;
   start: Date | null;
-  time: Date | null;
+  time: Date | string | null;
   reasonId: string;
   duration: number | undefined;
 };

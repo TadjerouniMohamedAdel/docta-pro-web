@@ -86,6 +86,7 @@ const AddAppointmentModal: React.FC<Props> = ({
     };
     await mutateAsync(newAppointment);
 
+    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
     queryClient.invalidateQueries(['appointments-day', currentDate]);
     const { start, end } = getWeekRange(currentDate);
     queryClient.invalidateQueries(['appointments-week', start, end]);

@@ -281,6 +281,7 @@ const Appointments: React.FC = () => {
         visible={showAppointmentDetailsModal}
         onClose={handleCloseAppointmentDetailsModal}
         appointmentId={appointmentDetailsId}
+        currentDate={currentDate}
       />
     </InnerLayout>
   );

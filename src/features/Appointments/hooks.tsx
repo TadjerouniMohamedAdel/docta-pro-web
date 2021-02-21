@@ -1,6 +1,7 @@
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { getWeekRange } from '../../utils/date';
 import { fetchAppointments } from './services';
+import { AppointmentForm } from './types';
 
 export const useAppointmentsDayList = (date: Date) => {
   const { data, ...rest } = useQuery(
@@ -54,15 +55,34 @@ export const useAppointmentsWeekList = (date: Date) => {
   };
 };
 
-// TODO update cache when adding new appointment
-// export const useUpdateAppointmentsWeekList = (date: Date) => {
-//   const { start, end } = getWeekRange(date);
+// finish update appointment cache on add update and delete for both day and week view
+export const useUpdateAppointmentsCache = () => {
+  const queryClient = useQueryClient();
 
-//   const queryClient = useQueryClient();
-//   const addNewAppointment = (appointmentId: string) => {
-//     // get appointment details and add it to cached data
-//     const data = queryClient.getQueryData(['appointments-week', start, end]);
+  const updateAppointmentCache = async (
+    appointmentId: string,
+    view: 'day' | 'week',
+    appointment: AppointmentForm,
+    date: Date,
+  ) => {
+    if (view === 'week') {
+      const { start, end } = getWeekRange(date);
+      const data = (await queryClient.getQueryData(['appointments-week', start, end])) as any;
 
-//   };
-//   return { addNewAppointment };
-// };
+      if (data) {
+        const index = data.findIndex((item: any) => item.id === appointmentId);
+        if (index > -1) {
+          data[index] = {
+            ...data[index],
+            start: appointment.start,
+            time: appointment.start,
+            reasonId: appointment.reasonId,
+            duration: appointment.duration,
+          };
+          queryClient.setQueryData(['appointments-week', start, end], data);
+        }
+      }
+    }
+  };
+  return { updateAppointmentCache };
+};

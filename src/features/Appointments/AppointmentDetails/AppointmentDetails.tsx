@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Avatar, Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -13,21 +13,23 @@ import Icon from '../../../components/Icon/Icon';
 import Label from '../../../components/Label/Label';
 import Select from '../../../components/Select/Select';
 import { AppointmentForm, Patient } from '../types';
-import { fetchAppointmentsDetails } from '../services';
+import { editAppointment, fetchAppointmentsDetails } from '../services';
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
+import { getWeekRange } from '../../../utils/date';
 
 type Props = {
   visible: boolean;
   onClose: () => void;
   appointmentId: string;
+  currentDate: Date;
 };
 
 const { Option } = AntSelect;
 
-const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId }) => {
+const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, currentDate }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const minute = t('minute');
@@ -69,11 +71,40 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId }
     duration: Yup.number().required(t('errors:required field')),
   });
 
+  const { mutateAsync, isLoading } = useMutation(editAppointment);
+  const queryClient = useQueryClient();
+
+  const handleEditAppointment = async (values: AppointmentForm) => {
+    const time = moment(values.time).format('HH:mm').toString();
+    const data = {
+      ...values,
+      start: moment(values.start)
+        .set({
+          h: parseInt(time.split(':')[0]),
+          m: parseInt(time.split(':')[1]),
+          s: 0,
+          ms: 0,
+        })
+        .toDate(),
+    };
+    await mutateAsync({
+      appointmentId,
+      appointmentForm: data,
+    });
+
+    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
+    queryClient.invalidateQueries(['appointments-day', currentDate]);
+    const { start, end } = getWeekRange(currentDate);
+    queryClient.invalidateQueries(['appointments-week', start, end]);
+
+    onClose();
+  };
+
   const formik = useFormik({
     initialValues: appointmentForm as AppointmentForm,
     enableReinitialize: true,
     validationSchema,
-    onSubmit: (values) => console.log(values),
+    onSubmit: handleEditAppointment,
   });
 
   const { handleChange, values, handleSubmit, touched, errors, setFieldValue } = formik;
@@ -121,7 +152,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId }
           type="primary"
           icon={<Icon name="save-line" />}
           onClick={form.submit}
-          //   loading={isLoading}
+          loading={isLoading}
           style={{ textTransform: 'uppercase' }}
         >
           {t('save')}
@@ -143,9 +174,9 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId }
                   placeholder={i18n.t('placeholders:select', {
                     fieldName: t('appointment date'),
                   })}
-                  onChange={(date) => {
+                  onChange={(value) => {
                     handleChange({
-                      target: { name: 'start', value: date },
+                      target: { name: 'start', value },
                     });
                   }}
                 />
