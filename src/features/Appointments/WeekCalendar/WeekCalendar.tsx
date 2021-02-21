@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
@@ -13,6 +13,7 @@ import { AppointmentForm } from '../types';
 
 export type Props = {
   currentDate: Date;
+  visitReasonIds: string[];
   appointmentForm: AppointmentForm;
   setAddAppointmentForm: (appointmentForm: AppointmentForm) => void;
   setShowAddAppointmentModal: (visible: boolean) => void;
@@ -34,13 +35,17 @@ type SlotInfo = {
 
 const WeekCalendar: React.FC<Props> = ({
   currentDate,
+  visitReasonIds,
   appointmentForm,
   setAddAppointmentForm,
   setShowAddAppointmentModal,
   setShowAppointmentDetailsModal,
   setAppointmentDetailsId,
 }) => {
-  const { resolvedData: appointments } = useAppointmentsWeekList(currentDate);
+  const { resolvedData: appointments, refetch } = useAppointmentsWeekList(
+    currentDate,
+    visitReasonIds,
+  );
 
   const { locale } = useLocaleState();
 
@@ -60,6 +65,10 @@ const WeekCalendar: React.FC<Props> = ({
     setAppointmentDetailsId(values.id);
     setShowAppointmentDetailsModal(true);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [visitReasonIds]);
 
   return (
     <Calendar

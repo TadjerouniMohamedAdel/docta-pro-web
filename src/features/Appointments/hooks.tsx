@@ -3,10 +3,10 @@ import { getWeekRange } from '../../utils/date';
 import { fetchAppointments } from './services';
 import { AppointmentForm } from './types';
 
-export const useAppointmentsDayList = (date: Date) => {
+export const useAppointmentsDayList = (date: Date, reasons: string[]) => {
   const { data, ...rest } = useQuery(
     ['appointments-day', date],
-    () => fetchAppointments(date, date),
+    () => fetchAppointments(date, date, reasons),
     {
       keepPreviousData: true,
     },
@@ -26,12 +26,12 @@ export const useAppointmentsDayList = (date: Date) => {
   };
 };
 
-export const useAppointmentsWeekList = (date: Date) => {
+export const useAppointmentsWeekList = (date: Date, reasons: string[]) => {
   const { start, end } = getWeekRange(date);
   const { data, ...rest } = useQuery(
     ['appointments-week', start, end],
     async () => {
-      const res = await fetchAppointments(start, end);
+      const res = await fetchAppointments(start, end, reasons);
       return res.data;
     },
     {

@@ -38,6 +38,7 @@ const Appointments: React.FC = () => {
     duration: undefined,
     reasonId: '',
   });
+  const [visitReasonIds, setVisitReasonIds] = useState<string[]>([]);
 
   const handleCloseAddAppointmentModal = () => {
     setShowAddAppointmentModal(false);
@@ -199,7 +200,10 @@ const Appointments: React.FC = () => {
             <Col>
               <Row gutter={10}>
                 <Col>
-                  <VisitReasons />
+                  <VisitReasons
+                    visitReasonIds={visitReasonIds}
+                    setVisitReasonIds={setVisitReasonIds}
+                  />
                 </Col>
                 <Col>
                   <Button
@@ -248,6 +252,7 @@ const Appointments: React.FC = () => {
               render={({ ...props }) => (
                 <WeekCalendar
                   currentDate={currentDate}
+                  visitReasonIds={visitReasonIds}
                   setAddAppointmentForm={setAddAppointmentForm}
                   appointmentForm={addAppointmentForm}
                   setShowAddAppointmentModal={setShowAddAppointmentModal}
@@ -262,6 +267,7 @@ const Appointments: React.FC = () => {
               render={({ ...props }) => (
                 <AppointmentsList
                   currentDate={currentDate}
+                  visitReasonIds={visitReasonIds}
                   setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
                   setAppointmentDetailsId={setAppointmentDetailsId}
                   {...props}

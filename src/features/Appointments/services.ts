@@ -1,8 +1,12 @@
 import fetcher from '../../utils/fetcher';
 import { AppointmentForm, AppointmentStatus } from './types';
 
-export const fetchAppointments = async (from: Date, to: Date): Promise<any> => {
-  return fetcher(`/api/v1/practitioners/appointments/?from=${from}&to=${to}&reasons=[]&status=[]`);
+export const fetchAppointments = async (from: Date, to: Date, reasons: string[]): Promise<any> => {
+  return fetcher(
+    `/api/v1/practitioners/appointments/?from=${from}&to=${to}&reasons=${JSON.stringify(
+      reasons,
+    )}&status=[]`,
+  );
 };
 
 export const addAppointment = async (params: any): Promise<any> => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Dropdown, Menu, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
@@ -12,21 +12,30 @@ import { useAppointmentsDayList } from '../hooks';
 
 export type Props = {
   currentDate: Date;
+  visitReasonIds: string[];
   setShowAppointmentDetailsModal: (visible: boolean) => void;
   setAppointmentDetailsId: (appointmentId: string) => void;
 };
 
 const AppointmentsList: React.FC<Props> = ({
   currentDate,
+  visitReasonIds,
   setShowAppointmentDetailsModal,
   setAppointmentDetailsId,
 }) => {
-  const { resolvedData: appointments } = useAppointmentsDayList(currentDate);
+  const { resolvedData: appointments, refetch } = useAppointmentsDayList(
+    currentDate,
+    visitReasonIds,
+  );
 
   const handleSelectAppointment = (appointmentId: string) => {
     setAppointmentDetailsId(appointmentId);
     setShowAppointmentDetailsModal(true);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [visitReasonIds]);
 
   return (
     <div>
