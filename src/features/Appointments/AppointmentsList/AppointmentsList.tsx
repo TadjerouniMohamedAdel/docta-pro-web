@@ -20,18 +20,18 @@ export type Props = {
 const AppointmentsList: React.FC<Props> = ({
   currentDate,
   visitReasonIds,
-  setShowAppointmentDetailsModal,
-  setAppointmentDetailsId,
+  // setShowAppointmentDetailsModal,
+  // setAppointmentDetailsId,
 }) => {
   const { resolvedData: appointments, refetch } = useAppointmentsDayList(
     currentDate,
     visitReasonIds,
   );
 
-  const handleSelectAppointment = (appointmentId: string) => {
-    setAppointmentDetailsId(appointmentId);
-    setShowAppointmentDetailsModal(true);
-  };
+  // const handleSelectAppointment = (appointmentId: string) => {
+  //   setAppointmentDetailsId(appointmentId);
+  //   setShowAppointmentDetailsModal(true);
+  // };
 
   useEffect(() => {
     refetch();
@@ -51,10 +51,10 @@ const AppointmentsList: React.FC<Props> = ({
               <div
                 className="appointment-card"
                 style={{ height: 72, borderRadius: 8, padding: '0 16px' }}
-                onClick={() => handleSelectAppointment(appointment.id)}
-                onKeyPress={() => handleSelectAppointment(appointment.id)}
-                role="button"
-                tabIndex={0}
+                // onClick={() => handleSelectAppointment(appointment.id)}
+                // onKeyPress={() => handleSelectAppointment(appointment.id)}
+                // role="button"
+                // tabIndex={0}
               >
                 <Row style={{ height: '100%' }} align="middle" gutter={16}>
                   <Col>
