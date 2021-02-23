@@ -300,24 +300,39 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
       <Divider style={{ marginTop: 0, marginBottom: 0 }} />
       <div style={{ padding: '16px 40px' }}>
         <Row gutter={[35, 16]}>
-          <Col>
-            {patient.picture ? (
-              <Avatar src={patient.picture} size={75} shape="square" />
-            ) : (
-              <Avatar src={patient.picture} size={75} shape="square">
-                {patient.firstName[0]?.toUpperCase()}
-                {patient.lastName[0]?.toUpperCase()}
-              </Avatar>
-            )}
+          <Col span={12}>
+            <Row gutter={16}>
+              <Col>
+                {patient.picture ? (
+                  <Avatar src={patient.picture} size={75} shape="square" />
+                ) : (
+                  <Avatar src={patient.picture} size={75} shape="square">
+                    {patient.firstName[0]?.toUpperCase()}
+                    {patient.lastName[0]?.toUpperCase()}
+                  </Avatar>
+                )}
+              </Col>
+              <Col flex={1}>
+                <Label title={t('first name')} />
+                <Form.Item>
+                  <Input
+                    prefix={<Icon name="user-line" />}
+                    name="firstName"
+                    value={patient.firstName}
+                    disabled
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
           </Col>
-          <Col flex={1}>
-            <Label title={t('Patient')} />
+          <Col flex={12}>
+            <Label title={t('last name')} />
             <Form.Item>
               <Input
+                prefix={<Icon name="user-line" />}
+                name="lastName"
+                value={patient.lastName}
                 disabled
-                prefix={<Icon name="search-2-line" />}
-                name="patient"
-                value={`${patient.firstName} ${patient.lastName}`}
               />
             </Form.Item>
           </Col>
