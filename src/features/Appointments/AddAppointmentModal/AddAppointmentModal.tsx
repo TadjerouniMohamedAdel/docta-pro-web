@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from 'react-query';
-import { Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
+import { Avatar, Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
@@ -50,6 +50,7 @@ const AddAppointmentModal: React.FC<Props> = ({
     state: undefined,
     city: undefined,
     generalStatus: '',
+    picture: '',
   });
 
   const { mutateAsync, isLoading } = useMutation(addAppointment);
@@ -125,6 +126,7 @@ const AddAppointmentModal: React.FC<Props> = ({
       visible={visible}
       width={780}
       onCancel={onClose}
+      centered
       actions={
         <Button
           type="primary"
@@ -267,7 +269,7 @@ const AddAppointmentModal: React.FC<Props> = ({
         <Row gutter={[35, 16]}>
           <Col span={24}>
             <Label
-              title={t('patient')}
+              title={t('search patient')}
               error={touched.patientId ? errors.patientId : undefined}
               required
             />
@@ -279,6 +281,52 @@ const AddAppointmentModal: React.FC<Props> = ({
                 onSelectPatient={handleSelectPatient}
               />
             </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Row gutter={16}>
+                  <Col>
+                    {patient.picture ? (
+                      <Avatar src={patient.picture} size={75} shape="square" />
+                    ) : (
+                      <Avatar src={patient.picture} size={75} shape="square">
+                        {patient.firstName[0]?.toUpperCase()}
+                        {patient.lastName[0]?.toUpperCase()}
+                      </Avatar>
+                    )}
+                  </Col>
+                  <Col flex={1}>
+                    <Label title={t('first name')} />
+                    <Form.Item>
+                      <Input
+                        prefix={<Icon name="user-line" />}
+                        name="firstName"
+                        value={patient.firstName}
+                        placeholder={i18n.t('placeholders:enter', {
+                          fieldName: t('first name'),
+                        })}
+                        disabled
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Col>
+              <Col flex={12}>
+                <Label title={t('last name')} />
+                <Form.Item>
+                  <Input
+                    prefix={<Icon name="user-line" />}
+                    name="lastName"
+                    value={patient.lastName}
+                    placeholder={i18n.t('placeholders:enter', {
+                      fieldName: t('last name'),
+                    })}
+                    disabled
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
           </Col>
           <Col span={12}>
             <Label title={t('birthday')} />

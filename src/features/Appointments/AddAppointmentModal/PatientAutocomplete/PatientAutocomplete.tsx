@@ -49,6 +49,7 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
         generalStatus: data.generalStatus,
         lastName: data.lastName,
         phone: data.phone,
+        picture: data.picture,
       });
     } catch (error) {
       console.log(error);
