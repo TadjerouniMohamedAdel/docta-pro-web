@@ -247,7 +247,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
               {selectedPatient?.state?.name} - {selectedPatient?.city?.name}
             </Text>
           </Col>
-          <Col>
+          {/* <Col>
             <Button
               ghost
               type="primary"
@@ -257,7 +257,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             >
               Message
             </Button>
-          </Col>
+          </Col> */}
           <Col>
             <Dropdown
               overlay={
