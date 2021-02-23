@@ -216,11 +216,10 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 handleChange({
                   target: { name: 'state', value },
                 });
-                handleFieldsChange('state', value);
                 handleChange({
                   target: { name: 'city', value: undefined },
                 });
-                handleFieldsChange('city', null);
+                handleFieldsChange('state', value);
               }}
             >
               {states.data

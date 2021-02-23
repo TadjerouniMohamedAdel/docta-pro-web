@@ -86,7 +86,9 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
   const { handleSubmit, isValid } = personalInfoFormik;
 
   const handlePersonalInfoFormChange = ({ key, value }: FormField) => {
-    setPersonalInfoForm({ ...personalInfoForm, [key]: value });
+    if (key === 'state')
+      setPersonalInfoForm({ ...personalInfoForm, state: value, city: undefined });
+    else setPersonalInfoForm({ ...personalInfoForm, [key]: value });
   };
 
   const handleMedicalRecordsFormChange = ({ key, value }: any) => {
