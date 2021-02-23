@@ -103,4 +103,5 @@ export type IconName =
   | 'calendar-todo-line'
   | 'refresh-line'
   | 'user-unfollow-line'
-  | 'printer-line';
+  | 'printer-line'
+  | string;
