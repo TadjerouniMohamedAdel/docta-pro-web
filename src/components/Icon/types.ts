@@ -44,7 +44,6 @@ export type IconName =
   | 'file-text-line'
   | 'attachment-2'
   | 'capsule-line'
-  | 'user-line'
   | 'mail-line'
   | 'genderless-line'
   | 'women-line'
@@ -99,5 +98,9 @@ export type IconName =
   | 'drag-move-2-line'
   | 'fingerprint-line'
   | 'article-line'
-  | 'more-2-fill'
-  | 'time-line';
+  | 'user-fill'
+  | 'user-line'
+  | 'calendar-todo-line'
+  | 'refresh-line'
+  | 'user-unfollow-line'
+  | 'printer-line';
