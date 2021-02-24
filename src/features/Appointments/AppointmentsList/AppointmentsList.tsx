@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Col, Dropdown, Menu, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
+import { useTranslation } from 'react-i18next';
 import './styles.less';
 import Spacer from '../../../components/Spacer/Spacer';
 import Text from '../../../components/Text/Text';
@@ -14,15 +15,19 @@ export type Props = {
   currentDate: Date;
   visitReasonIds: string[];
   setShowAppointmentDetailsModal: (visible: boolean) => void;
+  setShowStartAppointmentModal: (visible: boolean) => void;
   setAppointmentDetailsId: (appointmentId: string) => void;
 };
 
 const AppointmentsList: React.FC<Props> = ({
   currentDate,
   visitReasonIds,
+  setShowStartAppointmentModal,
+  setAppointmentDetailsId,
   // setShowAppointmentDetailsModal,
-  // setAppointmentDetailsId,
 }) => {
+  const { t } = useTranslation('translation');
+
   const { resolvedData: appointments, refetch } = useAppointmentsDayList(
     currentDate,
     visitReasonIds,
@@ -32,6 +37,11 @@ const AppointmentsList: React.FC<Props> = ({
   //   setAppointmentDetailsId(appointmentId);
   //   setShowAppointmentDetailsModal(true);
   // };
+
+  const handleStartAppointment = (appointmentId: string) => {
+    setAppointmentDetailsId(appointmentId);
+    setShowStartAppointmentModal(true);
+  };
 
   useEffect(() => {
     refetch();
@@ -83,7 +93,10 @@ const AppointmentsList: React.FC<Props> = ({
                     </Row>
                   </Col>
                   <Col className="appointment-action">
-                    <Button size="small">Start Appointment</Button>
+                    <Button size="small" onClick={() => handleStartAppointment(appointment.id)}>
+                      {' '}
+                      {t('start appointment')}{' '}
+                    </Button>
                   </Col>
                   <Col className="appointment-action">
                     <Dropdown

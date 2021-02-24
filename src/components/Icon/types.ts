@@ -104,4 +104,5 @@ export type IconName =
   | 'refresh-line'
   | 'user-unfollow-line'
   | 'printer-line'
-  | string;
+  | 'time-line' // todo : icon missing
+  | 'more-2-fill'; // todo : icon missing

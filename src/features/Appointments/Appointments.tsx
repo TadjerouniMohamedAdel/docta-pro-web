@@ -18,6 +18,7 @@ import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
 import AppointmentCount from './AppointmentCount';
 import { AppointmentForm } from './types';
 import AppointmentDetails from './AppointmentDetails/AppointmentDetails';
+import StartAppointmentModal from './StartAppointmentModal/StartAppointmentModal';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -30,6 +31,7 @@ const Appointments: React.FC = () => {
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
   const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
   const [showAppointmentDetailsModal, setShowAppointmentDetailsModal] = useState(false);
+  const [showStartAppointmentModal, setShowStartAppointmentModal] = useState(false);
   const [appointmentDetailsId, setAppointmentDetailsId] = useState('');
   const [addAppointmentForm, setAddAppointmentForm] = useState<AppointmentForm>({
     patientId: '',
@@ -39,14 +41,6 @@ const Appointments: React.FC = () => {
     reasonId: '',
   });
   const [visitReasonIds, setVisitReasonIds] = useState<string[]>([]);
-
-  const handleCloseAddAppointmentModal = () => {
-    setShowAddAppointmentModal(false);
-  };
-
-  const handleCloseAppointmentDetailsModal = () => {
-    setShowAppointmentDetailsModal(false);
-  };
 
   const onPrevDateChange = (date: Date): void => {
     if (date > prevDate && moment(date).month() !== moment(prevDate).month())
@@ -269,6 +263,7 @@ const Appointments: React.FC = () => {
                   currentDate={currentDate}
                   visitReasonIds={visitReasonIds}
                   setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
+                  setShowStartAppointmentModal={setShowStartAppointmentModal}
                   setAppointmentDetailsId={setAppointmentDetailsId}
                   {...props}
                 />
@@ -277,15 +272,24 @@ const Appointments: React.FC = () => {
           </Switch>
         </div>
       </InnerContent>
+
       <AddAppointmentModal
         visible={showAddAppointmentModal}
-        onClose={handleCloseAddAppointmentModal}
+        onClose={() => setShowAddAppointmentModal(false)}
         currentDate={currentDate}
         appointmentForm={addAppointmentForm}
       />
+
       <AppointmentDetails
         visible={showAppointmentDetailsModal}
-        onClose={handleCloseAppointmentDetailsModal}
+        onClose={() => setShowAppointmentDetailsModal(false)}
+        appointmentId={appointmentDetailsId}
+        currentDate={currentDate}
+      />
+
+      <StartAppointmentModal
+        visible={showStartAppointmentModal}
+        onClose={() => setShowStartAppointmentModal(false)}
         appointmentId={appointmentDetailsId}
         currentDate={currentDate}
       />
