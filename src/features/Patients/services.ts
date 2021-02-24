@@ -37,3 +37,13 @@ export const deletePatientItem = async (
     },
   );
 };
+
+export const fetchPatientVisitHistory = async (
+  patientId: string,
+  page = 0,
+  size = 10,
+): Promise<any> => {
+  return fetcher(
+    `/api/v1/professionals/patients/${patientId}/appointments?skip=${page}&take=${size}`,
+  );
+};

@@ -303,7 +303,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             />
           </Tabs.TabPane>
           <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
-            <VisitsHistory />
+            <VisitsHistory patientId={selectedPatient?.id} />
           </Tabs.TabPane>
         </Tabs>
       </div>

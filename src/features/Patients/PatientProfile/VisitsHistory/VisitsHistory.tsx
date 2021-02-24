@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Row, Table } from 'antd';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Icon from '../../../../components/Icon/Icon';
+import { useGetVisitHistory } from '../../hooks';
 
-type Props = {};
+type Props = {
+  patientId?: string;
+};
 
-const VisitsHistory: React.FC<Props> = () => {
-  const dataSource = [
-    {
-      key: '1',
-      date: new Date(),
-      visitReason: 'Dental Consultation',
-      diagnostic: 'Precautionary Measures For Hernia',
-    },
-    {
-      key: '2',
-      date: new Date(),
-      visitReason: 'Dental Follow Up',
-      diagnostic: 'Diet And Cure For Candida Infections',
-    },
-  ];
+const VisitsHistory: React.FC<Props> = ({ patientId = '' }) => {
+  const { t } = useTranslation('translation');
+
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize] = useState(10);
+  const { resolvedData, isFetching } = useGetVisitHistory(patientId, pageIndex, pageSize);
+
+  const { data, total = 0 } = resolvedData;
+
+  const handleChange = ({ current }: any) => {
+    setPageIndex(current);
+  };
 
   const columns = [
     {
@@ -28,11 +29,11 @@ const VisitsHistory: React.FC<Props> = () => {
           <Col>
             <Icon name="time-line" size={18} />
           </Col>
-          <Col>Date</Col>
+          <Col>{t('date')}</Col>
         </Row>
       ),
-      dataIndex: 'date',
-      key: 'date',
+      dataIndex: 'start',
+      key: 'start',
       render: (text: Date) => <span>{moment(text).format('LLL')}</span>,
     },
     {
@@ -41,11 +42,12 @@ const VisitsHistory: React.FC<Props> = () => {
           <Col>
             <Icon name="first-aid-kit-line" size={18} />
           </Col>
-          <Col>Reason</Col>
+          <Col>{t('reason')}</Col>
         </Row>
       ),
       dataIndex: 'visitReason',
       key: 'visitReason',
+      render: (text: any, record: any) => <span>{record.reason.name}</span>,
     },
     {
       title: (
@@ -53,7 +55,7 @@ const VisitsHistory: React.FC<Props> = () => {
           <Col>
             <Icon name="stethoscope-line" size={18} />
           </Col>
-          <Col>Diagnostic</Col>
+          <Col>{t('diagnostic')}</Col>
         </Row>
       ),
       dataIndex: 'diagnostic',
@@ -62,7 +64,15 @@ const VisitsHistory: React.FC<Props> = () => {
   ];
 
   return (
-    <Table dataSource={dataSource} columns={columns} pagination={false} bordered size="small" />
+    <Table
+      rowKey="id"
+      dataSource={data}
+      columns={columns}
+      bordered
+      pagination={{ pageSize, total }}
+      onChange={handleChange}
+      loading={isFetching}
+    />
   );
 };
 
