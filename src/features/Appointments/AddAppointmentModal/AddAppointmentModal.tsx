@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from 'react-query';
 import { Avatar, Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
@@ -26,6 +26,7 @@ type Props = {
   onClose: () => void;
   currentDate: Date;
   appointmentForm: AppointmentForm;
+  selectedPatient?: Patient;
 };
 
 const { Option } = AntSelect;
@@ -35,12 +36,13 @@ const AddAppointmentModal: React.FC<Props> = ({
   onClose,
   currentDate,
   appointmentForm,
+  selectedPatient,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   const minute = t('minute');
   const hour = t('hour');
 
-  const [patient, setPatient] = useState<Patient>({
+  const initialPatientValues = {
     id: '',
     firstName: '',
     lastName: '',
@@ -51,7 +53,9 @@ const AddAppointmentModal: React.FC<Props> = ({
     city: undefined,
     generalStatus: '',
     picture: '',
-  });
+  };
+
+  const [patient, setPatient] = useState<Patient>(initialPatientValues);
 
   const { mutateAsync, isLoading } = useMutation(addAppointment);
 
@@ -119,6 +123,13 @@ const AddAppointmentModal: React.FC<Props> = ({
     setPatient(value);
     setFieldValue('patientId', value.id);
   };
+
+  useEffect(() => {
+    if (selectedPatient) {
+      setPatient(selectedPatient);
+      setFieldValue('patientId', selectedPatient.id);
+    } else setPatient(initialPatientValues);
+  }, [selectedPatient]);
 
   return (
     <Modal

@@ -27,6 +27,7 @@ type Props = {
   onClose: () => void;
   appointmentId: string;
   currentDate: Date;
+  scheduleNewAppointment: (patient: Patient) => void;
 };
 
 const { Option } = AntSelect;
@@ -36,6 +37,7 @@ const StartAppointmentModal: React.FC<Props> = ({
   onClose,
   appointmentId,
   currentDate,
+  scheduleNewAppointment,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -188,6 +190,11 @@ const StartAppointmentModal: React.FC<Props> = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleScheduleNewAppointment = () => {
+    onClose();
+    scheduleNewAppointment(patient);
   };
 
   useEffect(() => {
@@ -457,6 +464,12 @@ const StartAppointmentModal: React.FC<Props> = ({
                     overlayStyle={{ minWidth: 240 }}
                     overlay={
                       <Menu>
+                        <Menu.Item onClick={handleScheduleNewAppointment}>
+                          <Spacer size="sm">
+                            <Icon name="refresh-line" />
+                            <Text>{t('new appointment')}</Text>
+                          </Spacer>
+                        </Menu.Item>
                         <Menu.Item onClick={handlePatientAbsent}>
                           <Spacer size="sm">
                             <Icon name="user-unfollow-line" />

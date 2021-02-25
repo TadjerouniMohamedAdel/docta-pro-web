@@ -1,5 +1,5 @@
 import { Col, Divider, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ import './styles.less';
 import HeaderDatePicker from './HeaderDatePicker/HeaderDatePicker';
 import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
 import AppointmentCount from './AppointmentCount';
-import { AppointmentForm } from './types';
+import { AppointmentForm, Patient } from './types';
 import AppointmentDetails from './AppointmentDetails/AppointmentDetails';
 import StartAppointmentModal from './StartAppointmentModal/StartAppointmentModal';
 
@@ -41,6 +41,7 @@ const Appointments: React.FC = () => {
     reasonId: '',
   });
   const [visitReasonIds, setVisitReasonIds] = useState<string[]>([]);
+  const [patient, setPatient] = useState<Patient | undefined>();
 
   const onPrevDateChange = (date: Date): void => {
     if (date > prevDate && moment(date).month() !== moment(prevDate).month())
@@ -78,6 +79,15 @@ const Appointments: React.FC = () => {
         break;
     }
   };
+
+  const handleScheduleNewAppointment = (value: Patient) => {
+    setPatient(value);
+    setShowAddAppointmentModal(true);
+  };
+
+  useEffect(() => {
+    if (!showAddAppointmentModal) setPatient(undefined);
+  }, [showAddAppointmentModal]);
 
   return (
     <InnerLayout>
@@ -278,6 +288,7 @@ const Appointments: React.FC = () => {
         onClose={() => setShowAddAppointmentModal(false)}
         currentDate={currentDate}
         appointmentForm={addAppointmentForm}
+        selectedPatient={patient}
       />
 
       <AppointmentDetails
@@ -292,6 +303,7 @@ const Appointments: React.FC = () => {
         onClose={() => setShowStartAppointmentModal(false)}
         appointmentId={appointmentDetailsId}
         currentDate={currentDate}
+        scheduleNewAppointment={handleScheduleNewAppointment}
       />
     </InnerLayout>
   );
