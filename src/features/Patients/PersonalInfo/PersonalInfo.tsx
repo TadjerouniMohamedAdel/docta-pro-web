@@ -210,7 +210,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('state'),
               })}
-              value={values.state}
+              value={states?.data ? values.state : undefined}
               dropdownMatchSelectWidth={false}
               onChange={(value) => {
                 handleChange({
@@ -240,7 +240,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('city'),
               })}
-              value={values.city}
+              value={cities?.data ? values.city : undefined}
               dropdownMatchSelectWidth={false}
               onChange={(value) => {
                 handleChange({
