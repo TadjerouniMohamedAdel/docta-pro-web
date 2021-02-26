@@ -20,6 +20,10 @@ import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import PatientAutocomplete from './PatientAutocomplete/PatientAutocomplete';
 import { getWeekRange } from '../../../utils/date';
+import NewPatient from './NewPatient/NewPatient';
+import { StateCity } from '../../../types/types';
+import { useGetStatesList } from '../../../hooks/useGetStatesList';
+import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
 
 type Props = {
   visible: boolean;
@@ -56,6 +60,7 @@ const AddAppointmentModal: React.FC<Props> = ({
   };
 
   const [patient, setPatient] = useState<Patient>(initialPatientValues);
+  const [showNewPatientform, setShowNewPatientForm] = useState<boolean>(false);
 
   const { mutateAsync, isLoading } = useMutation(addAppointment);
 
@@ -63,6 +68,9 @@ const AddAppointmentModal: React.FC<Props> = ({
   const specialties = cache.getQueryData('appointment-specialties') as {
     data: FetchSpecialtyResponse[];
   };
+
+  const { states } = useGetStatesList();
+  const { cities } = useGetCitiesList(patient.state);
 
   const [form] = Form.useForm();
 
@@ -121,7 +129,15 @@ const AddAppointmentModal: React.FC<Props> = ({
 
   const handleSelectPatient = (value: Patient) => {
     setPatient(value);
+  };
+
+  const handleSelectNewPatient = (value: Patient) => {
+    setPatient(value);
     setFieldValue('patientId', value.id);
+  };
+
+  const handleAddNewPatient = () => {
+    setShowNewPatientForm(true);
   };
 
   useEffect(() => {
@@ -279,59 +295,53 @@ const AddAppointmentModal: React.FC<Props> = ({
       <div style={{ padding: '16px 40px' }}>
         <Row gutter={[35, 16]}>
           <Col span={24}>
-            <Label
-              title={t('search patient')}
-              error={touched.patientId ? errors.patientId : undefined}
-              required
-            />
+            <Row align="bottom">
+              <Col flex={1}>
+                <Label
+                  title={t('search patient')}
+                  error={touched.patientId ? errors.patientId : undefined}
+                  required
+                />
+              </Col>
+              <Col>
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<Icon name="user-add-line" size={18} />}
+                  onClick={handleAddNewPatient}
+                >
+                  {t('new patient')}
+                </Button>
+              </Col>
+            </Row>
+
             <Form.Item
               validateStatus={touched.patientId && Boolean(errors.patientId) ? 'error' : undefined}
             >
-              <PatientAutocomplete
-                selectedPatient={patient}
-                onSelectPatient={handleSelectPatient}
-              />
+              <PatientAutocomplete onSelectPatient={handleSelectPatient} />
             </Form.Item>
           </Col>
-          <Col span={24}>
+          <Col span={12}>
             <Row gutter={16}>
-              <Col span={12}>
-                <Row gutter={16}>
-                  <Col>
-                    {patient.picture ? (
-                      <Avatar src={patient.picture} size={75} shape="square" />
-                    ) : (
-                      <Avatar src={patient.picture} size={75} shape="square">
-                        {patient.firstName[0]?.toUpperCase()}
-                        {patient.lastName[0]?.toUpperCase()}
-                      </Avatar>
-                    )}
-                  </Col>
-                  <Col flex={1}>
-                    <Label title={t('first name')} />
-                    <Form.Item>
-                      <Input
-                        prefix={<Icon name="user-line" />}
-                        name="firstName"
-                        value={patient.firstName}
-                        placeholder={i18n.t('placeholders:enter', {
-                          fieldName: t('first name'),
-                        })}
-                        disabled
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
+              <Col>
+                {patient.picture ? (
+                  <Avatar src={patient.picture} size={75} shape="square" />
+                ) : (
+                  <Avatar src={patient.picture} size={75} shape="square">
+                    {patient.firstName[0]?.toUpperCase()}
+                    {patient.lastName[0]?.toUpperCase()}
+                  </Avatar>
+                )}
               </Col>
-              <Col flex={12}>
-                <Label title={t('last name')} />
+              <Col flex={1}>
+                <Label title={t('first name')} />
                 <Form.Item>
                   <Input
                     prefix={<Icon name="user-line" />}
-                    name="lastName"
-                    value={patient.lastName}
+                    name="firstName"
+                    value={patient.firstName}
                     placeholder={i18n.t('placeholders:enter', {
-                      fieldName: t('last name'),
+                      fieldName: t('first name'),
                     })}
                     disabled
                   />
@@ -339,6 +349,21 @@ const AddAppointmentModal: React.FC<Props> = ({
               </Col>
             </Row>
           </Col>
+          <Col flex={12}>
+            <Label title={t('last name')} />
+            <Form.Item>
+              <Input
+                prefix={<Icon name="user-line" />}
+                name="lastName"
+                value={patient.lastName}
+                placeholder={i18n.t('placeholders:enter', {
+                  fieldName: t('last name'),
+                })}
+                disabled
+              />
+            </Form.Item>
+          </Col>
+
           <Col span={12}>
             <Label title={t('birthday')} />
             <Form.Item>
@@ -380,17 +405,12 @@ const AddAppointmentModal: React.FC<Props> = ({
                 placeholder={`+213 ${i18n.t('placeholders:enter', {
                   fieldName: t('phone number'),
                 })}`}
-                value={patient.phone}
+                value={patient.phone ?? ''}
                 dir="ltr"
+                name="phone"
               >
                 {(inputProps: any) => (
-                  <Input
-                    disabled
-                    prefix={<Icon name="phone-line" />}
-                    name="phone"
-                    value={patient.phone}
-                    {...inputProps}
-                  />
+                  <Input disabled prefix={<Icon name="phone-line" />} {...inputProps} />
                 )}
               </ReactInputMask>
             </Form.Item>
@@ -418,9 +438,17 @@ const AddAppointmentModal: React.FC<Props> = ({
                 placeholder={i18n.t('placeholders:select', {
                   fieldName: t('state'),
                 })}
-                value={patient.state}
+                value={states?.data ? patient.state : undefined}
                 dropdownMatchSelectWidth={false}
-              />
+              >
+                {states?.data
+                  ? states.data.map((state: StateCity) => (
+                      <AntSelect.Option key={state.id} value={state.id}>
+                        {state.name}
+                      </AntSelect.Option>
+                    ))
+                  : null}
+              </Select>
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -432,13 +460,28 @@ const AddAppointmentModal: React.FC<Props> = ({
                 placeholder={i18n.t('placeholders:select', {
                   fieldName: t('city'),
                 })}
-                value={patient.city}
+                value={cities?.data ? patient.city : undefined}
                 dropdownMatchSelectWidth={false}
-              />
+              >
+                {cities?.data
+                  ? cities.data.map((city: StateCity) => (
+                      <AntSelect.Option key={city.id} value={city.id}>
+                        {city.name}
+                      </AntSelect.Option>
+                    ))
+                  : null}
+              </Select>
             </Form.Item>
           </Col>
         </Row>
       </div>
+      {showNewPatientform ? (
+        <NewPatient
+          visible={showNewPatientform}
+          onClose={() => setShowNewPatientForm(false)}
+          handleSelectPatient={handleSelectNewPatient}
+        />
+      ) : null}
     </Modal>
   );
 };

@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs } from 'antd';
+import { Col, Row, Tabs } from 'antd';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
-import Button from '../../../components/Button/Button';
-import Modal from '../../../components/Modal/Modal';
-import Icon from '../../../components/Icon/Icon';
-import Tab from '../../../components/Tab/Tab';
-import PersonalInfo from '../PersonalInfo/PersonalInfo';
-import MedicalRecords from '../MedicalRecords/MedicalRecords';
-import { FormField, MedicalItems, MedicalRecordsForm, PersonalInfoForm } from '../types';
-import i18n from '../../../i18n';
-import { addNewPatient } from '../services';
+import Button from '../../../../components/Button/Button';
+import Icon from '../../../../components/Icon/Icon';
+import Tab from '../../../../components/Tab/Tab';
+import {
+  PatientPersonalInfo,
+  PatientMedicalRecords,
+  FormField,
+  MedicalItems,
+  MedicalRecordsForm,
+  PersonalInfoForm,
+  addNewPatient,
+} from '../../../Patients';
+import i18n from '../../../../i18n';
+import Text from '../../../../components/Text/Text';
+import { Patient } from '../../types';
+import Spacer from '../../../../components/Spacer/Spacer';
 
 type Props = {
-  visible?: boolean;
-  setVisible: (value: boolean) => void;
+  visible: boolean;
+  handleSelectPatient: (value: Patient) => void;
+  onClose: () => void;
 };
 
-const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
+const NewPatient: React.FC<Props> = ({ visible, onClose, handleSelectPatient }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const personalInfoFormInitialValues: PersonalInfoForm = {
@@ -113,18 +121,33 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
     handleSubmit();
     if (isValid) {
       try {
-        await mutateAsync({
+        const response = await mutateAsync({
           ...personalInfoForm,
           phone: personalInfoForm.phone,
           ...medicalRecordsForm,
         });
+        handleSelectPatient({
+          id: response.patientId,
+          firstName: personalInfoForm.firstName,
+          lastName: personalInfoForm.lastName,
+          birthDate: personalInfoForm.birthDate,
+          gender: personalInfoForm.gender,
+          generalStatus: personalInfoForm.generalStatus,
+          phone: personalInfoForm.phone,
+          city: personalInfoForm.city,
+          state: personalInfoForm.state,
+        });
         setPersonalInfoForm(personalInfoFormInitialValues);
         setMedicalRecordsForm(medicalRecordsFormInitialValues);
-        setVisible(false);
+        onClose();
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const handleClose = () => {
+    onClose();
   };
 
   useEffect(() => {
@@ -133,24 +156,45 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
   }, [visible]);
 
   return (
-    <Modal
-      title={t('add patient')}
-      visible={visible}
-      centered
-      width={800}
-      onCancel={() => setVisible(false)}
-      borderedHeader={false}
-      actions={
-        <Button
-          type="primary"
-          icon={<Icon name="save-line" />}
-          onClick={handleSavePatient}
-          loading={isLoading}
-        >
-          {t('save')}
-        </Button>
-      }
+    <div
+      style={{
+        background: '#fff',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+        overflow: 'hidden',
+      }}
     >
+      <Row
+        justify="space-between"
+        align="middle"
+        style={{ height: 96, paddingLeft: 24, paddingRight: 24 }}
+      >
+        <Col>
+          <Spacer size="xs">
+            <Button type="text" size="small" onClick={handleClose}>
+              <Icon name="arrow-left-line" />
+            </Button>
+            <Text size="xxxl" style={{ fontWeight: 500 }}>
+              {t('new patient')}
+            </Text>
+          </Spacer>
+        </Col>
+        <Col>
+          <Button
+            type="primary"
+            icon={<Icon name="save-line" />}
+            onClick={handleSavePatient}
+            loading={isLoading}
+            style={{ textTransform: 'uppercase' }}
+          >
+            {t('save')}
+          </Button>
+        </Col>
+      </Row>
       <Tabs
         defaultActiveKey="1"
         tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
@@ -161,7 +205,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           key="1"
         >
           <div style={{ padding: '16px 40px' }}>
-            <PersonalInfo
+            <PatientPersonalInfo
               handleFormChange={handlePersonalInfoFormChange}
               formik={personalInfoFormik}
             />
@@ -171,7 +215,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           tab={<Tab icon={<Icon name="health-book-line" />}>{t('medical record')}</Tab>}
           key="2"
         >
-          <MedicalRecords
+          <PatientMedicalRecords
             medicalRecordsForm={medicalRecordsForm}
             handleFormChange={handleMedicalRecordsFormChange}
             handleAddNewItem={handleAddNewItem}
@@ -180,8 +224,8 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           />
         </Tabs.TabPane>
       </Tabs>
-    </Modal>
+    </div>
   );
 };
 
-export default PatientModal;
+export default NewPatient;

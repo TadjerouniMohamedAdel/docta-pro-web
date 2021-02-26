@@ -8,7 +8,6 @@ import { fetchAllPatients, fetchPatientDetails } from '../../../Patients/service
 import { Patient } from '../../types';
 
 type Props = {
-  selectedPatient: Patient;
   onSelectPatient: (value: Patient) => void;
 };
 
@@ -42,13 +41,13 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
       onSelectPatient({
         id: option.value,
         birthDate: data.birthDate,
-        state: data.state?.name,
-        city: data.city?.name,
+        state: data.state?.id,
+        city: data.city?.id,
         firstName: data.firstName,
         gender: data.gender,
         generalStatus: data.generalStatus,
         lastName: data.lastName,
-        phone: data.phone,
+        phone: data.user.phone,
         picture: data.picture,
       });
     } catch (error) {
