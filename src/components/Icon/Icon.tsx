@@ -8,11 +8,11 @@ export type Props = React.HTMLAttributes<HTMLElement> & {
   name: IconName;
 };
 
-const Spacer: React.FC<Props> = ({ name, size = 22, style, className, ...rest }) => {
+const Spacer: React.FC<Props> = ({ name, size, style, className, ...rest }) => {
   return (
     <i
-      className={classNames('custom-icon', `ri-${name}`, className)}
-      style={{ fontSize: size, ...style }}
+      className={classNames('custom-icon', `ri-${name}`, className, { 'is-size-applied': size })}
+      style={{ fontSize: size ?? 22, ...style }}
       {...rest}
     />
   );
