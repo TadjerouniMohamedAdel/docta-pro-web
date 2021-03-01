@@ -94,14 +94,7 @@ const MedicalRecords: React.FC<Props> = ({
                 }}
                 dir="ltr"
               >
-                {(inputProps: any) => (
-                  <Input
-                    prefix={<Icon name="ruler-line" />}
-                    name="weight"
-                    value={values.weight}
-                    {...inputProps}
-                  />
-                )}
+                {(inputProps: any) => <Input prefix={<Icon name="ruler-line" />} {...inputProps} />}
               </InputMask>
             </Form.Item>
           </Col>
