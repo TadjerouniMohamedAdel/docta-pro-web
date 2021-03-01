@@ -30,7 +30,7 @@ const Settings: React.FC<Props> = () => {
         <Switch>
           <ProtectedRoute
             accessCode="clinic_profile/settings"
-            path="/settings/doctor-profile"
+            path="/settings"
             component={DoctorProfile}
           />
           <Route path="/settings/visit-reasons" component={VisitReasons} />

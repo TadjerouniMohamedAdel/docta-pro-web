@@ -18,11 +18,7 @@ const Menu: React.FC = () => {
       style={{ padding: '24px 0' }}
     >
       <ProtectedComponent accessCode="clinic_profile/settings">
-        <MenuItem
-          title={t('doctor profile')}
-          iconName="hospital-line"
-          path="/settings/doctor-profile"
-        />
+        <MenuItem title={t('doctor profile')} iconName="hospital-line" path="/settings" exact />
       </ProtectedComponent>
       <MenuItem
         title={t('Availability')}
