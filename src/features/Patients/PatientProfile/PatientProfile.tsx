@@ -113,6 +113,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
         state: response.data.state?.id,
         city: response.data.city?.id,
         generalStatus: response.data.generalStatus,
+        picture: response.data.picture,
       });
     } catch (error) {
       console.log(error);
