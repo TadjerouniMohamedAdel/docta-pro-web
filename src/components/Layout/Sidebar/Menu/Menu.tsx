@@ -22,13 +22,13 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
       defaultSelectedKeys={[pathname]}
       style={{ padding: '24px 0' }}
     >
-      <MenuItem
+      {/* <MenuItem
         title={t('overview')}
         iconName="dashboard-3-line"
         path="/"
         collapsed={collapsed}
         exact
-      />
+      /> */}
       <MenuItem
         title={t('appointments')}
         iconName="calendar-2-line"
