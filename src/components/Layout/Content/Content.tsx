@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 // import Overview from '../../../features/Overview';
 import Patients from '../../../features/Patients';
 import NotFound from '../../../features/NotFound';
@@ -18,7 +18,10 @@ const Content: React.FC = () => {
           path="/settings"
           component={Settings}
         />
-        <Route exact path="/" component={Appointments} />
+        <Route path="/appointments" component={Appointments} />
+        <Route exact path="/">
+          <Redirect to="/appointments" />
+        </Route>
         {/* <Route exact path="/" component={Overview} /> */}
         <Route path="*" component={NotFound} />
       </Switch>

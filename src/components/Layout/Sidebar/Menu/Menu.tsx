@@ -32,9 +32,8 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
       <MenuItem
         title={t('appointments')}
         iconName="calendar-2-line"
-        path="/"
+        path="/appointments"
         collapsed={collapsed}
-        exact
       />
       <MenuItem
         title={t('patients')}
