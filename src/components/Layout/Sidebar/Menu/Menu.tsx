@@ -32,7 +32,7 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
       <MenuItem
         title={t('appointments')}
         iconName="calendar-2-line"
-        path="/appointments"
+        path="/"
         collapsed={collapsed}
       />
       <MenuItem
