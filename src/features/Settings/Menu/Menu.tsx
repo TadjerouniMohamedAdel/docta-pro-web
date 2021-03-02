@@ -27,6 +27,11 @@ const Menu: React.FC = () => {
       <ProtectedComponent accessCode="users_roles/settings">
         <MenuItem title={t('users')} iconName="shield-user-line" path="/settings/users" />
       </ProtectedComponent>
+      <MenuItem
+        title={t('password & login')}
+        iconName="lock-2-line"
+        path="/settings/password-login"
+      />
     </AntMenu>
   );
 };

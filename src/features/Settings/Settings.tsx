@@ -9,6 +9,7 @@ import DoctorProfile from './DoctorProfile';
 import Menu from './Menu/Menu';
 import Users from './Users';
 import Schedule from './Schedule';
+import PasswordLogin from './PasswordLogin';
 
 type Props = {};
 
@@ -41,6 +42,7 @@ const Settings: React.FC<Props> = () => {
             path="/settings/users"
             component={Users}
           />
+          <Route path="/settings/password-login" component={PasswordLogin} />
         </Switch>
       </InnerContent>
     </InnerLayout>
