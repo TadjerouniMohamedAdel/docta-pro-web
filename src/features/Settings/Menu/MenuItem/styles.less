@@ -2,9 +2,14 @@
 
 .setting-menu-item-wrapper {
   padding: 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  border-bottom: 1px solid @border-color-base;
+  &:first-child {
+    border-top: 1px solid @border-color-base;
+  }
   .setting-menu-item {
     width: 100%;
-
     .menu-item-arrow {
       color: @text-color-secondary;
     }

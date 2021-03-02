@@ -10,13 +10,7 @@ const Menu: React.FC = () => {
   const { pathname } = useLocation();
 
   return (
-    <AntMenu
-      theme="light"
-      mode="inline"
-      selectedKeys={[pathname]}
-      defaultSelectedKeys={[pathname]}
-      style={{ padding: '24px 0' }}
-    >
+    <AntMenu theme="light" mode="inline" selectedKeys={[pathname]} defaultSelectedKeys={[pathname]}>
       <ProtectedComponent accessCode="clinic_profile/settings">
         <MenuItem title={t('doctor profile')} iconName="hospital-line" path="/settings" exact />
       </ProtectedComponent>
