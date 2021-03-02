@@ -32,6 +32,7 @@ const Settings: React.FC<Props> = () => {
             accessCode="clinic_profile/settings"
             path="/settings"
             component={DoctorProfile}
+            exact
           />
           <Route path="/settings/visit-reasons" component={VisitReasons} />
           <Route path="/settings/schedule" component={Schedule} />
