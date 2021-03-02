@@ -10,7 +10,7 @@ export type PersonalInfoForm = {
   firstName: string;
   lastName: string;
   phone: string;
-  email: string;
+  email?: string;
   birthDate: string;
   gender?: string;
   state?: string;
@@ -29,9 +29,9 @@ export type MedicalRecordsForm = {
   height?: number;
   weight?: number;
   bloodType?: string;
-  smoking: boolean | null;
-  married: boolean | null;
-  alcohol: boolean | null;
+  smoking?: boolean;
+  married?: boolean;
+  alcohol?: boolean;
   medications: MedicalLists[];
   allergies: MedicalLists[];
   surgeries: MedicalLists[];
