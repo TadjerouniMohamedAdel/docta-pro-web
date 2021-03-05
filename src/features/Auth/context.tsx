@@ -23,5 +23,5 @@ export const useAuthState = (): ContextProps => {
   if (context === undefined) {
     throw new Error('useAuthState must be used within a AuthProvider');
   }
-  return context;
+  return { ...context };
 };

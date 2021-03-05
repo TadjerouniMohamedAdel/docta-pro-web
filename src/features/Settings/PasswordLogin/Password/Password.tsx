@@ -28,11 +28,11 @@ const Password: React.FC<Props> = () => {
     passwordConfirmation: '',
   };
 
-  const { mutate, isLoading, isError, isSuccess } = useMutation(resetProPassword);
+  const { mutateAsync, isLoading, isError, isSuccess } = useMutation(resetProPassword);
 
   const onResetPassword = async (values: FormValue, { resetForm }: FormikHelpers<FormValue>) => {
     try {
-      await mutate({ oldPassword: values.currentPassword, newPassword: values.newPassword });
+      await mutateAsync({ password: values.currentPassword, newPassword: values.newPassword });
       resetForm();
     } catch (error) {
       console.log(error);
