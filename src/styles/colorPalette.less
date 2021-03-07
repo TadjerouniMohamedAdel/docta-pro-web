@@ -1,0 +1,104 @@
+// color palette
+@red: #ad1b57;
+@lipstick: #d82461;
+@tomato-red: #d52103;
+@salmon: #e67c73;
+@reddish-orange: #f4501e;
+@orange: #ef6c10;
+@tangerine: #f09319;
+@macaroni-and-cheese: #f6bf26;
+@macaroni-and-cheese-two: #e4c441;
+@sick-green: #c0ca33;
+@green-apple: #52c41a;
+@greenish-teal: #33b679;
+@jungle-green: #0a8043;
+@teal: #029688;
+@azure: #039be5;
+@dodger-blue: #4285f4;
+@french-blue: #3f51b5;
+@soft-blue: #7886cb;
+@dark-lilac: #9e69af;
+@purple: #8e24aa;
+@dark-taupe: #795548;
+@brownish-grey: #616161de;
+@stone: #a79b8e;
+
+.colors() {
+  red: @red;
+  lipstick: @lipstick;
+  tomato-red: @tomato-red;
+  salmon: @salmon;
+  reddish-orange: @reddish-orange;
+  orange: @orange;
+  tangerine: @tangerine;
+  macaroni-and-cheese: @macaroni-and-cheese;
+  macaroni-and-cheese-two: @macaroni-and-cheese-two;
+  sick-green: @sick-green;
+  green-apple: @green-apple;
+  greenish-teal: @greenish-teal;
+  jungle-green: @jungle-green;
+  teal: @teal;
+  azure: @azure;
+  dodger-blue: @dodger-blue;
+  french-blue: @french-blue;
+  soft-blue: @soft-blue;
+  dark-lilac: @dark-lilac;
+  purple: @purple;
+  dark-taupe: @dark-taupe;
+  brownish-grey: @brownish-grey;
+  stone: @stone;
+}
+
+.paletteColorElement(@name; @color) {
+  .event-wrapper {
+    &.@{name} {
+      .rbc-event {
+        background-color: lighten(@color, 40%);
+        border: none;
+        border-bottom: 1px solid #fff;
+        border-left: 2px solid @color;
+        // &.rbc-selected {
+        //   background-color: darken($color; 15%);
+        // }
+        // &:hover {
+        //   background-color: darken(@color, 8%);
+        // }
+      }
+    }
+  }
+  .reason-checkbox {
+    &.@{name} {
+      .ant-checkbox-inner {
+        border-color: @color;
+      }
+      .ant-checkbox-checked .ant-checkbox-inner {
+        background-color: @color;
+      }
+    }
+  }
+  .reason-color {
+    &.@{name} {
+      background-color: @color;
+      border-color: @color;
+    }
+  }
+  // .agenda-event {
+  //   &.@{name} {
+  //     background-color: @color;
+  //     border-color: @color;
+  //     color: #fff;
+
+  // &:hover {
+  //   background-color: darken(@color, 8%);
+  // }
+  //   }
+  // }
+}
+
+// .for-each(@pair in @colors) {
+//   .paletteColorElement(at(@pair, 1), at(@pair, 2));
+// }
+
+each(.colors(), {
+    .paletteColorElement(@key, @value);
+  });

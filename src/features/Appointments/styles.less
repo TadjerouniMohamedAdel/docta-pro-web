@@ -1,0 +1,10 @@
+@import '../../styles/variables.less';
+
+.btn-view-swicther {
+  &:not(.active) {
+    color: @text-color-secondary;
+  }
+  &.active {
+    background-color: rgba(@primary-color, 0.1);
+  }
+}

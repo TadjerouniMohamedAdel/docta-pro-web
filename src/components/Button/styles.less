@@ -1,0 +1,38 @@
+@import '../../styles/variables.less';
+
+.custom-button {
+  .custom-icon {
+    margin: 0 5px;
+    &:not(.is-size-applied) {
+      font-size: 24px !important;
+    }
+  }
+  span {
+    margin: 0 5px;
+    font-weight: bold;
+  }
+
+  &.ant-btn-default {
+    color: @text-color-secondary;
+  }
+
+  &.ant-btn-text {
+    &.delete-action,
+    &.edit-action {
+      color: @text-color-secondary;
+      .custom-icon:not(.is-size-applied) {
+        font-size: 20px !important;
+      }
+    }
+    &.delete-action {
+      &:hover {
+        color: @error-color;
+      }
+    }
+    &.edit-action {
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+}

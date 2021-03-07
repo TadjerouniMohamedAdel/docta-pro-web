@@ -1,0 +1,8 @@
+{
+  "enter your": "Enter your {{fieldName}}",
+  "enter": "Enter {{fieldName}}",
+  "select": "Select {{fieldName}}",
+  "enter code we sent you to": "Enter code we sent you to",
+  "enter otp": "Enter OTP",
+  "confirm your": "Confirm your {{fieldName}}"
+}
