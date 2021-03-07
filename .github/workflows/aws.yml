@@ -24,7 +24,7 @@ jobs:
             echo "::set-output name=AWS_SERVICE_NAME::docta-pro-stg-service"
           elif [ "${{github.ref}}" == "refs/heads/main" ]
           then
-          echo "::set-output name=AWS_CLUSTER_NAME::docta-stg"
+          echo "::set-output name=AWS_CLUSTER_NAME::docta-prod"
           echo "::set-output name=AWS_REPOSITORY_NAME::docta-pro-ecr"
           echo "::set-output name=AWS_TASK_DEFINITION_NAME::docta-pro-td"
           echo "::set-output name=AWS_SERVICE_NAME::docta-pro-service"
