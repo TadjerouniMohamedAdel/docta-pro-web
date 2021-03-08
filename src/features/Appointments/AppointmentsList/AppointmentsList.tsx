@@ -129,7 +129,7 @@ const AppointmentsList: React.FC<Props> = ({
                   {appointment.status === 'PATIENT_MISSED' ? (
                     <Col className="appointment-status appointment-absent">
                       <Text style={{ fontWeight: 500, textTransform: 'uppercase' }}>
-                        {t('done')}
+                        {t('absent')}
                       </Text>
                     </Col>
                   ) : null}
