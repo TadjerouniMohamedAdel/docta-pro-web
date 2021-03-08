@@ -135,10 +135,6 @@ const AddAppointmentModal: React.FC<Props> = ({
 
   const handleSelectPatient = (value: Patient) => {
     setPatient(value);
-  };
-
-  const handleSelectNewPatient = (value: Patient) => {
-    setPatient(value);
     setFieldValue('patientId', value.id);
   };
 
@@ -485,7 +481,7 @@ const AddAppointmentModal: React.FC<Props> = ({
         <NewPatient
           visible={showNewPatientform}
           onClose={() => setShowNewPatientForm(false)}
-          handleSelectPatient={handleSelectNewPatient}
+          handleSelectPatient={handleSelectPatient}
         />
       ) : null}
     </Modal>
