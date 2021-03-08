@@ -119,8 +119,14 @@ const AddAppointmentModal: React.FC<Props> = ({
   const onReasonChange = (reasonId: string) => {
     if (specialties && specialties.data) {
       let duration;
-      specialties.data.forEach((specialty) => {
-        duration = specialty.reasons.filter((reason) => reason.id === reasonId)[0].duration;
+
+      specialties.data.some((specialty) => {
+        const reason = specialty.reasons.find((item) => item.id === reasonId);
+        if (reason) {
+          duration = reason.duration;
+          return true;
+        }
+        return false;
       });
 
       if (duration) setFieldValue('duration', duration);
