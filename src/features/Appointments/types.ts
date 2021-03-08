@@ -1,3 +1,13 @@
+export type AppointmentStatus =
+  | 'BOOKED'
+  | 'CONFIRMED'
+  | 'PATIENT_CANCELED'
+  | 'DOCTOR_CANCELED'
+  | 'DOCTOR_REJECTED'
+  | 'DOCTOR_MISSED'
+  | 'PATIENT_MISSED'
+  | 'DONE';
+
 export type AppointmentForm = {
   id?: string;
   patientId: string;
@@ -14,6 +24,7 @@ export type Appointment = {
   firstName: string;
   lastName: string;
   visitReason: string;
+  status: AppointmentStatus;
 };
 
 export type Patient = {
@@ -28,13 +39,3 @@ export type Patient = {
   generalStatus: string;
   picture?: string;
 };
-
-export type AppointmentStatus =
-  | 'BOOKED'
-  | 'CONFIRMED'
-  | 'PATIENT_CANCELED'
-  | 'DOCTOR_CANCELED'
-  | 'DOCTOR_REJECTED'
-  | 'DOCTOR_MISSED'
-  | 'PATIENT_MISSED'
-  | 'DONE';

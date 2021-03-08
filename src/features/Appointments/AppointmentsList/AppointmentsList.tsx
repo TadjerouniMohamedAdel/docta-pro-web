@@ -3,6 +3,7 @@ import { Col, Dropdown, Menu, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
 import { useTranslation } from 'react-i18next';
+import classnames from 'classnames';
 import './styles.less';
 import Spacer from '../../../components/Spacer/Spacer';
 import Text from '../../../components/Text/Text';
@@ -59,7 +60,10 @@ const AppointmentsList: React.FC<Props> = ({
             </Col>
             <Col flex={1}>
               <div
-                className="appointment-card"
+                className={classnames('appointment-card', {
+                  absent: appointment.status === 'PATIENT_MISSED',
+                  done: appointment.status === 'DONE',
+                })}
                 style={{ height: 72, borderRadius: 8, padding: '0 16px' }}
                 // onClick={() => handleSelectAppointment(appointment.id)}
                 // onKeyPress={() => handleSelectAppointment(appointment.id)}
@@ -92,26 +96,43 @@ const AppointmentsList: React.FC<Props> = ({
                       </Col>
                     </Row>
                   </Col>
-                  <Col className="appointment-action">
-                    <Button size="small" onClick={() => handleStartAppointment(appointment.id)}>
-                      {' '}
-                      {t('start appointment')}{' '}
-                    </Button>
-                  </Col>
-                  <Col className="appointment-action">
-                    <Dropdown
-                      overlay={
-                        <Menu>
-                          <Menu.Item> more actions</Menu.Item>
-                        </Menu>
-                      }
-                      trigger={['click']}
-                    >
-                      <Button type="text">
-                        <Icon name="more-fill" size={24} style={{ color: '#fff' }} />
-                      </Button>
-                    </Dropdown>
-                  </Col>
+                  {appointment.status === 'BOOKED' ? (
+                    <>
+                      <Col className="appointment-action">
+                        <Button size="small" onClick={() => handleStartAppointment(appointment.id)}>
+                          {t('start appointment')}
+                        </Button>
+                      </Col>
+                      <Col className="appointment-action">
+                        <Dropdown
+                          overlay={
+                            <Menu>
+                              <Menu.Item> more actions</Menu.Item>
+                            </Menu>
+                          }
+                          trigger={['click']}
+                        >
+                          <Button type="text">
+                            <Icon name="more-fill" size={24} style={{ color: '#fff' }} />
+                          </Button>
+                        </Dropdown>
+                      </Col>
+                    </>
+                  ) : null}
+                  {appointment.status === 'DONE' ? (
+                    <Col className="appointment-status appointment-done">
+                      <Text style={{ fontWeight: 500, textTransform: 'uppercase' }}>
+                        {t('done')}
+                      </Text>
+                    </Col>
+                  ) : null}
+                  {appointment.status === 'PATIENT_MISSED' ? (
+                    <Col className="appointment-status appointment-absent">
+                      <Text style={{ fontWeight: 500, textTransform: 'uppercase' }}>
+                        {t('done')}
+                      </Text>
+                    </Col>
+                  ) : null}
                 </Row>
               </div>
             </Col>
