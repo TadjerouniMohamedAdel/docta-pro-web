@@ -180,7 +180,7 @@ const Users: React.FC<Props> = () => {
       <Row style={{ height: 88, padding: '0 24px' }} align="middle" justify="space-between">
         <Col>
           <Text size="xxl" style={{ fontWeight: 'bold' }}>
-            {t('users')} (9)
+            {t('users')} ({total})
           </Text>
         </Col>
         <Col>
