@@ -19,6 +19,7 @@ import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import { getWeekRange } from '../../../utils/date';
+import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
 
 type Props = {
   visible: boolean;
@@ -161,15 +162,17 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
       width={780}
       onCancel={onClose}
       actions={
-        <Button
-          type="primary"
-          icon={<Icon name="save-line" />}
-          onClick={form.submit}
-          loading={isLoadingEdit}
-          style={{ textTransform: 'uppercase' }}
-        >
-          {t('save')}
-        </Button>
+        <ProtectedComponent accessCode="edit/appointments">
+          <Button
+            type="primary"
+            icon={<Icon name="save-line" />}
+            onClick={form.submit}
+            loading={isLoadingEdit}
+            style={{ textTransform: 'uppercase' }}
+          >
+            {t('save')}
+          </Button>
+        </ProtectedComponent>
       }
     >
       <div style={{ padding: '16px 40px' }}>
@@ -408,19 +411,21 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
               />
             </Form.Item>
           </Col>
-          <Col span={24}>
-            <Button
-              type="primary"
-              danger
-              block
-              icon={<Icon name="delete-bin-2-line" />}
-              onClick={handleDeleteAppointment}
-              loading={isLoadingDelete}
-              style={{ textTransform: 'uppercase' }}
-            >
-              {t('DELETE APPOINTMENT')}
-            </Button>
-          </Col>
+          <ProtectedComponent accessCode="delete/appointments">
+            <Col span={24}>
+              <Button
+                type="primary"
+                danger
+                block
+                icon={<Icon name="delete-bin-2-line" />}
+                onClick={handleDeleteAppointment}
+                loading={isLoadingDelete}
+                style={{ textTransform: 'uppercase' }}
+              >
+                {t('DELETE APPOINTMENT')}
+              </Button>
+            </Col>
+          </ProtectedComponent>
         </Row>
       </div>
     </Modal>

@@ -11,19 +11,23 @@ const Menu: React.FC = () => {
 
   return (
     <AntMenu theme="light" mode="inline" selectedKeys={[pathname]} defaultSelectedKeys={[pathname]}>
-      <ProtectedComponent accessCode="clinic_profile/settings">
+      <ProtectedComponent accessCode="doctor_profile/settings">
         <MenuItem title={t('doctor profile')} iconName="hospital-line" path="/settings" exact />
       </ProtectedComponent>
-      <MenuItem
-        title={t('Availability')}
-        iconName="calendar-event-line"
-        path="/settings/schedule"
-      />
-      <MenuItem
-        title={t('Consultation Reasons')}
-        iconName="first-aid-kit-line"
-        path="/settings/visit-reasons"
-      />
+      <ProtectedComponent accessCode="availability/settings">
+        <MenuItem
+          title={t('Availability')}
+          iconName="calendar-event-line"
+          path="/settings/schedule"
+        />
+      </ProtectedComponent>
+      <ProtectedComponent accessCode="reasons/settings">
+        <MenuItem
+          title={t('Consultation Reasons')}
+          iconName="first-aid-kit-line"
+          path="/settings/visit-reasons"
+        />
+      </ProtectedComponent>
       <ProtectedComponent accessCode="users_roles/settings">
         <MenuItem title={t('users')} iconName="shield-user-line" path="/settings/users" />
       </ProtectedComponent>

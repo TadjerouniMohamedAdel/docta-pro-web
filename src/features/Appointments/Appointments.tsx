@@ -19,6 +19,7 @@ import AppointmentCount from './AppointmentCount';
 import { AppointmentForm, Patient } from './types';
 import AppointmentDetails from './AppointmentDetails/AppointmentDetails';
 import StartAppointmentModal from './StartAppointmentModal/StartAppointmentModal';
+import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -233,17 +234,19 @@ const Appointments: React.FC = () => {
                     {t('Week')}
                   </Button>
                 </Col>
-                <Col>
-                  <Button
-                    type="primary"
-                    icon={<Icon name="add-line" />}
-                    style={{ display: 'flex' }}
-                    size="small"
-                    onClick={() => setShowAddAppointmentModal(true)}
-                  >
-                    {t('New Appointment')}
-                  </Button>
-                </Col>
+                <ProtectedComponent accessCode="add/appointments">
+                  <Col>
+                    <Button
+                      type="primary"
+                      icon={<Icon name="add-line" />}
+                      style={{ display: 'flex' }}
+                      size="small"
+                      onClick={() => setShowAddAppointmentModal(true)}
+                    >
+                      {t('New Appointment')}
+                    </Button>
+                  </Col>
+                </ProtectedComponent>
               </Row>
             </Col>
           </Row>
@@ -282,14 +285,15 @@ const Appointments: React.FC = () => {
           </Switch>
         </div>
       </InnerContent>
-
-      <AddAppointmentModal
-        visible={showAddAppointmentModal}
-        onClose={() => setShowAddAppointmentModal(false)}
-        currentDate={currentDate}
-        appointmentForm={addAppointmentForm}
-        selectedPatient={patient}
-      />
+      <ProtectedComponent accessCode="add/appointments">
+        <AddAppointmentModal
+          visible={showAddAppointmentModal}
+          onClose={() => setShowAddAppointmentModal(false)}
+          currentDate={currentDate}
+          appointmentForm={addAppointmentForm}
+          selectedPatient={patient}
+        />
+      </ProtectedComponent>
 
       <AppointmentDetails
         visible={showAppointmentDetailsModal}
@@ -297,14 +301,15 @@ const Appointments: React.FC = () => {
         appointmentId={appointmentDetailsId}
         currentDate={currentDate}
       />
-
-      <StartAppointmentModal
-        visible={showStartAppointmentModal}
-        onClose={() => setShowStartAppointmentModal(false)}
-        appointmentId={appointmentDetailsId}
-        currentDate={currentDate}
-        scheduleNewAppointment={handleScheduleNewAppointment}
-      />
+      <ProtectedComponent accessCode="edit/appointments">
+        <StartAppointmentModal
+          visible={showStartAppointmentModal}
+          onClose={() => setShowStartAppointmentModal(false)}
+          appointmentId={appointmentDetailsId}
+          currentDate={currentDate}
+          scheduleNewAppointment={handleScheduleNewAppointment}
+        />
+      </ProtectedComponent>
     </InnerLayout>
   );
 };
