@@ -204,7 +204,7 @@ const StartAppointmentModal: React.FC<Props> = ({
 
   return (
     <Modal
-      title={t('Appointment Details')}
+      title={t('start appointment')}
       visible={visible}
       width={780}
       onCancel={onClose}

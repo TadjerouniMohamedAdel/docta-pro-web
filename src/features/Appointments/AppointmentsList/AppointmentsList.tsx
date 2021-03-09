@@ -25,7 +25,7 @@ const AppointmentsList: React.FC<Props> = ({
   visitReasonIds,
   setShowStartAppointmentModal,
   setAppointmentDetailsId,
-  // setShowAppointmentDetailsModal,
+  setShowAppointmentDetailsModal,
 }) => {
   const { t } = useTranslation('translation');
 
@@ -34,10 +34,10 @@ const AppointmentsList: React.FC<Props> = ({
     visitReasonIds,
   );
 
-  // const handleSelectAppointment = (appointmentId: string) => {
-  //   setAppointmentDetailsId(appointmentId);
-  //   setShowAppointmentDetailsModal(true);
-  // };
+  const handleSelectAppointment = (appointmentId: string) => {
+    setAppointmentDetailsId(appointmentId);
+    setShowAppointmentDetailsModal(true);
+  };
 
   const handleStartAppointment = (appointmentId: string) => {
     setAppointmentDetailsId(appointmentId);
@@ -65,10 +65,10 @@ const AppointmentsList: React.FC<Props> = ({
                   done: appointment.status === 'DONE',
                 })}
                 style={{ height: 72, borderRadius: 8, padding: '0 16px' }}
-                // onClick={() => handleSelectAppointment(appointment.id)}
-                // onKeyPress={() => handleSelectAppointment(appointment.id)}
-                // role="button"
-                // tabIndex={0}
+                onClick={() => handleSelectAppointment(appointment.id)}
+                onKeyPress={() => handleSelectAppointment(appointment.id)}
+                role="button"
+                tabIndex={0}
               >
                 <Row style={{ height: '100%' }} align="middle" gutter={16}>
                   <Col>
@@ -99,7 +99,13 @@ const AppointmentsList: React.FC<Props> = ({
                   {appointment.status === 'BOOKED' ? (
                     <>
                       <Col className="appointment-action">
-                        <Button size="small" onClick={() => handleStartAppointment(appointment.id)}>
+                        <Button
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleStartAppointment(appointment.id);
+                          }}
+                        >
                           {t('start appointment')}
                         </Button>
                       </Col>
