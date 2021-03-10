@@ -4,7 +4,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import InputMask from 'react-input-mask';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import generatePassword from 'password-generator';
 import Modal from '../../../../components/Modal/Modal';
@@ -22,18 +22,22 @@ type Props = {
   visible?: boolean;
   setVisible: (value: boolean) => void;
   user: UserForm;
+  pageIndex: number;
+  pageSize: number;
 };
 
 const { Option } = AntSelect;
 
-const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
+const UserModal: React.FC<Props> = ({ visible, setVisible, user, pageIndex, pageSize }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const [roles, setRoles] = useState<Role[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
 
-  const { mutate: addUserMutate, isLoading: isAddUserLoading } = useMutation(addUser);
-  const { mutate: EditUserMutate, isLoading: isEditUserLoading } = useMutation(editUser);
+  const { mutateAsync: addUserMutate, isLoading: isAddUserLoading } = useMutation(addUser);
+  const { mutateAsync: EditUserMutate, isLoading: isEditUserLoading } = useMutation(editUser);
+
+  const queryClient = useQueryClient();
 
   const phoneRegEx = /(\+[0-9]{11,12})/;
 
@@ -68,6 +72,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
 
     try {
       await addUserMutate(addUserParams);
+      queryClient.invalidateQueries(['users', pageIndex, pageSize]);
       setVisible(false);
     } catch (error) {
       console.log(error);
@@ -88,6 +93,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user }) => {
 
     try {
       await EditUserMutate({ id: values.id || '', body: editUserParams });
+      queryClient.invalidateQueries(['users', pageIndex, pageSize]);
       setVisible(false);
     } catch (error) {
       console.log(error);
