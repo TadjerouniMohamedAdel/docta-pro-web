@@ -59,6 +59,7 @@ const Users: React.FC<Props> = () => {
       phone: record.user.phone,
       email: record.user.email,
       roleId: record.role.id,
+      picture: record.picture,
     });
   };
 
