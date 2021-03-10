@@ -29,9 +29,9 @@ const Content: React.FC = () => {
           path="/appointments"
           component={Appointments}
         />
-        <ProtectedRoute accessCode="appointments" type="section" exact path="/">
+        <Route exact path="/">
           <Redirect to="/appointments" />
-        </ProtectedRoute>
+        </Route>
         {/* <Route exact path="/" component={Overview} /> */}
         <Route path="*" component={NotFound} />
       </Switch>
