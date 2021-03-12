@@ -465,18 +465,22 @@ const StartAppointmentModal: React.FC<Props> = ({
                     overlayStyle={{ minWidth: 240 }}
                     overlay={
                       <Menu>
-                        <Menu.Item onClick={handleScheduleNewAppointment}>
-                          <Spacer size="sm">
-                            <Icon name="refresh-line" />
-                            <Text>{t('new appointment')}</Text>
-                          </Spacer>
-                        </Menu.Item>
-                        <Menu.Item onClick={handlePatientAbsent}>
-                          <Spacer size="sm">
-                            <Icon name="user-unfollow-line" />
-                            <Text>{t('patient absent')}</Text>
-                          </Spacer>
-                        </Menu.Item>
+                        <ProtectedComponent accessCode="add/appointments">
+                          <Menu.Item onClick={handleScheduleNewAppointment}>
+                            <Spacer size="sm">
+                              <Icon name="refresh-line" />
+                              <Text>{t('new appointment')}</Text>
+                            </Spacer>
+                          </Menu.Item>
+                        </ProtectedComponent>
+                        <ProtectedComponent accessCode="edit/appointments">
+                          <Menu.Item onClick={handlePatientAbsent}>
+                            <Spacer size="sm">
+                              <Icon name="user-unfollow-line" />
+                              <Text>{t('patient absent')}</Text>
+                            </Spacer>
+                          </Menu.Item>
+                        </ProtectedComponent>
                       </Menu>
                     }
                     trigger={['click']}
@@ -503,16 +507,18 @@ const StartAppointmentModal: React.FC<Props> = ({
                   </ProtectedComponent>
                 </Spacer>
               </Col>
-              <Col>
-                <Button
-                  type="primary"
-                  icon={<Icon name="calendar-todo-line" />}
-                  onClick={handleDoneAppointment}
-                  loading={isLoadingStatus && statusAction === 'DONE'}
-                >
-                  {t('appointment done')}
-                </Button>
-              </Col>
+              <ProtectedComponent accessCode="edit/appointments">
+                <Col>
+                  <Button
+                    type="primary"
+                    icon={<Icon name="calendar-todo-line" />}
+                    onClick={handleDoneAppointment}
+                    loading={isLoadingStatus && statusAction === 'DONE'}
+                  >
+                    {t('appointment done')}
+                  </Button>
+                </Col>
+              </ProtectedComponent>
             </Row>
           </Col>
         </Row>

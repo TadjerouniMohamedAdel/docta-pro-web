@@ -18,7 +18,7 @@ const sizes = {
   xxxl: 32,
 };
 
-const Spacer: React.FC<Props> = ({ children, size, style, ...rest }) => {
+const Spacer: React.FC<Props> = ({ children, size = 'md', style, ...rest }) => {
   return (
     <Space size={sizes[size]} {...rest} style={{ width: '100%', ...style }}>
       {children}

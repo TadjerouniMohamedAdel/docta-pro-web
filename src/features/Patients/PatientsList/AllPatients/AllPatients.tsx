@@ -42,6 +42,7 @@ const AllPatients: React.FC<Props> = ({
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
+
   const {
     data,
     isFetchingNextPage,
@@ -50,6 +51,7 @@ const AllPatients: React.FC<Props> = ({
     hasNextPage,
     total,
   } = usePatientsList(term);
+
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
   useIntersectionObserver({

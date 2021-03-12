@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import i18n from '../../../i18n';
 import Tab from '../../../components/Tab/Tab';
 import Icon from '../../../components/Icon/Icon';
@@ -22,7 +22,9 @@ import {
   MedicalItems,
   SelectedPatient,
 } from '../types';
-import { fetchPatientDetails, updatePatient, deletePatientItem } from '../services';
+import { fetchPatientDetails, updatePatient, deletePatientItem, unblockPatient } from '../services';
+import Spacer from '../../../components/Spacer/Spacer';
+import BlockPatientModal from './BlockPatientModal/BlockPatientModal';
 
 type Props = {
   selectedPatient?: SelectedPatient;
@@ -33,6 +35,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const [activeKey, setActiveKey] = useState<string>('1');
+  const [showBlockPatientModal, setShowBlockPatientModal] = useState<boolean>(false);
 
   const personalInfoFormInitialValues: PersonalInfoForm = {
     firstName: '',
@@ -202,7 +205,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
     }
   };
 
-  const handlegetPatientDetails = () => {
+  const handleGetPatientDetails = () => {
     switch (activeKey) {
       case '1':
         handleFetchPersonalInfo();
@@ -221,8 +224,25 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
     setActiveKey(value);
   };
 
+  const handleBlockPatient = () => {
+    setShowBlockPatientModal(true);
+  };
+
+  const { mutateAsync: mutateUnblockPatient, isLoading: unblockPatientLoading } = useMutation(
+    unblockPatient,
+  );
+
+  const handleUnBlockPatient = async () => {
+    if (selectedPatient?.id) {
+      await mutateUnblockPatient(selectedPatient.id);
+      queryClient.invalidateQueries(['blocked-patients']);
+      queryClient.invalidateQueries(['patients']);
+      setSelectedPatient({ ...selectedPatient, blocked: false });
+    }
+  };
+
   useEffect(() => {
-    if (selectedPatient) handlegetPatientDetails();
+    if (selectedPatient) handleGetPatientDetails();
   }, [selectedPatient, activeKey]);
 
   return (
@@ -259,16 +279,42 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
               Message
             </Button>
           </Col> */}
+          {selectedPatient?.blocked && selectedPatient?.registered ? (
+            <Col>
+              <Spacer size="xs">
+                {/* <Icon name="admin-line" /> */}
+                <Text size="lg" type="danger" style={{ fontWeight: 500 }}>
+                  {t('patient blocked')}
+                </Text>
+              </Spacer>
+            </Col>
+          ) : null}
+
           <Col>
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item> more actions</Menu.Item>
+                  {!selectedPatient?.blocked && selectedPatient?.registered ? (
+                    <Menu.Item onClick={handleBlockPatient}>
+                      <Spacer size="sm">
+                        {/* <Icon name="admin-line" /> */}
+                        <Text type="danger">{t('block patient')}</Text>
+                      </Spacer>
+                    </Menu.Item>
+                  ) : null}
+                  {selectedPatient?.blocked ? (
+                    <Menu.Item onClick={handleUnBlockPatient}>
+                      <Spacer size="sm">
+                        {/* <Icon name="user-follow-line" /> */}
+                        <Text>{t('unblock patient')}</Text>
+                      </Spacer>
+                    </Menu.Item>
+                  ) : null}
                 </Menu>
               }
               trigger={['click']}
             >
-              <Button type="default" size="small">
+              <Button type="default" size="small" loading={unblockPatientLoading}>
                 <Icon name="more-2-fill" size={24} />
               </Button>
             </Dropdown>
@@ -307,6 +353,12 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             <VisitsHistory patientId={selectedPatient?.id} />
           </Tabs.TabPane>
         </Tabs>
+        <BlockPatientModal
+          visible={showBlockPatientModal}
+          setVisible={setShowBlockPatientModal}
+          patient={selectedPatient}
+          setPatient={setSelectedPatient}
+        />
       </div>
     </>
   );

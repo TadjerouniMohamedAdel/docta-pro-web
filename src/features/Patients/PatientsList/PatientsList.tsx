@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tabs } from 'antd';
-// import BlockedPatients from './BlockedPatients/BlockedPatients';
+import BlockedPatients from './BlockedPatients/BlockedPatients';
 import AllPatients from './AllPatients/AllPatients';
 import './styles.less';
 import { SelectedPatient } from '../types';
@@ -28,12 +28,12 @@ const PatientsList: React.FC<Props> = ({
           setSelectedPatient={setSelectedPatient}
         />
       </Tabs.TabPane>
-      {/* <Tabs.TabPane tab={t('blocked patients')} key="2">
+      <Tabs.TabPane tab={t('blocked patients')} key="2">
         <BlockedPatients
           selectedPatient={selectedPatient}
           setSelectedPatient={setSelectedPatient}
         />
-      </Tabs.TabPane> */}
+      </Tabs.TabPane>
     </Tabs>
   );
 };
