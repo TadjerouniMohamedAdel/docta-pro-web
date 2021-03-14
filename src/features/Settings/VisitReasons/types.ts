@@ -10,6 +10,7 @@ export type VisitReason = {
 export type Specialty = {
   id: string;
   name: string;
+  isMain?: number;
   visitReasons: VisitReason[];
 };
 

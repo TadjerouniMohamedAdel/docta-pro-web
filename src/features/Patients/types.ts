@@ -74,7 +74,15 @@ export type SelectedPatient = {
   picture?: string;
   state?: StateCity;
   city?: StateCity;
+  blocked?: boolean;
+  registered?: boolean;
   user: {
     phone: string;
   };
+};
+
+export type BlockPatientParams = {
+  patientId: string;
+  reason: string;
+  comment?: string;
 };

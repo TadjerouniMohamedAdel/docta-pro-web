@@ -3,6 +3,7 @@ name: Deploy Docta Pro Web to Amazon ECS
 on:
   push:
     branches: [develop, main]
+  workflow_dispatch:
 
 jobs:
   deploy:

@@ -3,6 +3,14 @@
 .appointment-card {
   border: 1px solid @border-color-base;
   background-color: @input-bg;
+  outline: none;
+
+  &.done {
+    background-color: rgba(@success-color, 0.03);
+  }
+  &.absent {
+    background-color: rgba(@error-color, 0.03);
+  }
   .appointment-action {
     display: none;
   }
@@ -14,6 +22,33 @@
     }
     .appointment-action {
       display: initial;
+    }
+  }
+
+  .appointment-status {
+    &::before {
+      content: '\2713 ';
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      text-align: center;
+      line-height: 16px;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: bold;
+      margin: 0 5px;
+    }
+    &.appointment-done {
+      &::before {
+        background-color: @success-color;
+        color: #fff;
+      }
+    }
+    &.appointment-absent {
+      &::before {
+        background-color: @error-color;
+        color: #fff;
+      }
     }
   }
 }

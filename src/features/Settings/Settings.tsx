@@ -30,13 +30,21 @@ const Settings: React.FC<Props> = () => {
       <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
         <Switch>
           <ProtectedRoute
-            accessCode="clinic_profile/settings"
+            accessCode="doctor_profile/settings"
             path="/settings"
             component={DoctorProfile}
             exact
           />
-          <Route path="/settings/visit-reasons" component={VisitReasons} />
-          <Route path="/settings/schedule" component={Schedule} />
+          <ProtectedRoute
+            accessCode="reasons/settings"
+            path="/settings/visit-reasons"
+            component={VisitReasons}
+          />
+          <ProtectedRoute
+            accessCode="availability/settings"
+            path="/settings/schedule"
+            component={Schedule}
+          />
           <ProtectedRoute
             accessCode="users_roles/settings"
             path="/settings/users"

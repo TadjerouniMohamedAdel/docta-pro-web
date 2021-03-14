@@ -48,7 +48,7 @@ const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient 
   };
 
   const handleGetPatientDetails = (values: SelectedPatient): void => {
-    setSelectedPatient(values);
+    setSelectedPatient({ ...values, blocked: true });
   };
 
   return (

@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 import { fetchStates } from '../common/services';
 
-export const useGetStatesList = (countryId = 'e29a216e-0846-49a9-86e1-343791678031') => {
-  const { data, ...rest } = useQuery('states', () => fetchStates(countryId), {
+export const useGetStatesList = (countryCode = 'DZA') => {
+  const { data, ...rest } = useQuery('states', () => fetchStates(countryCode), {
     keepPreviousData: true,
   });
   return { states: data ?? [], ...rest };

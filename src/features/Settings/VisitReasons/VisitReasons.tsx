@@ -96,7 +96,11 @@ const VisitReasons: React.FC<Props> = () => {
           >
             {specialties.map((specialty) => (
               <Tabs.TabPane
-                tab={<Tab icon={<Icon name="first-aid-kit-line" />}> {t('main specialty')} </Tab>}
+                tab={
+                  <Tab icon={<Icon name="first-aid-kit-line" />}>
+                    {specialty.isMain === 0 ? t('main specialty') : t('secondary specialty')}{' '}
+                  </Tab>
+                }
                 // eslint-disable-next-line react/no-array-index-key
                 key={specialty.id}
               >

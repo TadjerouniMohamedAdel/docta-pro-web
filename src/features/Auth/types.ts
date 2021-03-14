@@ -30,6 +30,23 @@ export type LoginParams = {
   password: string;
 };
 
+export type AccessCode =
+  | 'appointments'
+  | 'delete/appointments'
+  | 'edit/appointments'
+  | 'add/appointments'
+  | 'patients'
+  | 'delete/patients'
+  | 'transfer/patients'
+  | 'edit/patients'
+  | 'add/patients'
+  | 'settings'
+  | 'users_roles/settings'
+  | 'doctor_profile/settings'
+  | 'reasons/settings'
+  | 'subscription/settings'
+  | 'availability/settings';
+
 export interface AuthResponse extends ApiResponse {
   data: User;
 }

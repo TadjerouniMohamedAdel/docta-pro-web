@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useCheckAccess } from '../hooks';
+import { AccessCode } from '../types';
 
 type Props = {
   children: React.ReactNode;
   type?: 'section' | 'permission';
-  accessCode: string;
+  accessCode: AccessCode;
 };
 
 const ProtectedComponent: React.FC<Props> = ({

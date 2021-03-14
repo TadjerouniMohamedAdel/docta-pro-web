@@ -29,18 +29,22 @@ const Menu: React.FC<Props> = ({ collapsed }) => {
         collapsed={collapsed}
         exact
       /> */}
-      <MenuItem
-        title={t('appointments')}
-        iconName="calendar-2-line"
-        path="/appointments"
-        collapsed={collapsed}
-      />
-      <MenuItem
-        title={t('patients')}
-        iconName="group-line"
-        path="/patients"
-        collapsed={collapsed}
-      />
+      <ProtectedComponent accessCode="appointments" type="section">
+        <MenuItem
+          title={t('appointments')}
+          iconName="calendar-2-line"
+          path="/appointments"
+          collapsed={collapsed}
+        />
+      </ProtectedComponent>
+      <ProtectedComponent accessCode="patients" type="section">
+        <MenuItem
+          title={t('patients')}
+          iconName="group-line"
+          path="/patients"
+          collapsed={collapsed}
+        />
+      </ProtectedComponent>
       <ProtectedComponent accessCode="settings" type="section">
         <MenuItem
           title={t('settings')}

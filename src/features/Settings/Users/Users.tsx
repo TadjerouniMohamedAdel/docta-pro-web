@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Col, Row, Table, Avatar } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import moment from 'moment';
 import Text from '../../../components/Text/Text';
 import Icon from '../../../components/Icon/Icon';
 import Button from '../../../components/Button/Button';
-import { deleteUser, fetchUsers } from './services';
+import { fetchUsers } from './services';
 import UserModal from './UserModal/UserModal';
 import { Professional, UserForm } from './types';
+import ConfirmDeleteModal from './ConfirmDeleteModal/ConfirmDeleteModal';
 
 type Props = {};
 
@@ -33,10 +34,10 @@ const initialValues: UserForm = {
 };
 
 const Users: React.FC<Props> = () => {
-  const [userId, setUserId] = useState('');
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize] = useState(10);
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const [userForm, setUserForm] = useState<UserForm>(initialValues);
 
   const { t } = useTranslation('translation');
@@ -49,7 +50,7 @@ const Users: React.FC<Props> = () => {
     setPageIndex(current);
   };
 
-  const handleEditUser = (record: Professional) => {
+  const handleSelectUser = (record: Professional) => {
     setUserForm({
       ...userForm,
       id: record.id,
@@ -58,39 +59,23 @@ const Users: React.FC<Props> = () => {
       phone: record.user.phone,
       email: record.user.email,
       roleId: record.role.id,
+      picture: record.picture,
     });
+  };
+
+  const handleEditUser = (record: Professional) => {
+    handleSelectUser(record);
     setShowModal(true);
+  };
+
+  const handleDeleteUser = (record: Professional) => {
+    handleSelectUser(record);
+    setShowConfirmDeleteModal(true);
   };
 
   const handleAddUser = () => {
     setUserForm(initialValues);
     setShowModal(true);
-  };
-
-  const { mutate, isLoading: isDeleteUserLoading } = useMutation(deleteUser);
-  const cache = useQueryClient();
-
-  const handleDeleteUser = async (id: string) => {
-    try {
-      setUserId(id);
-      await mutate(id);
-      const previousValue: { data: any[]; total: number } | undefined = cache.getQueryData([
-        'users',
-        pageIndex,
-        pageSize,
-      ]);
-      if (previousValue) {
-        const updatedValue = { ...previousValue };
-        const newData = updatedValue.data.filter((item) => item.id !== id);
-        cache.setQueryData(['users', pageIndex, pageSize], {
-          ...updatedValue,
-          data: newData,
-          total: updatedValue.total - 1,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const columns: ColumnsType<Professional> = [
@@ -161,13 +146,9 @@ const Users: React.FC<Props> = () => {
               type="text"
               size="small"
               className="delete-action"
-              onClick={() => handleDeleteUser(record.id)}
+              onClick={() => handleDeleteUser(record)}
             >
-              {isDeleteUserLoading && record.id === userId ? (
-                <span>loading</span>
-              ) : (
-                <Icon name="delete-bin-7-line" />
-              )}
+              <Icon name="delete-bin-7-line" />
             </Button>
           </Col>
         </Row>
@@ -180,7 +161,7 @@ const Users: React.FC<Props> = () => {
       <Row style={{ height: 88, padding: '0 24px' }} align="middle" justify="space-between">
         <Col>
           <Text size="xxl" style={{ fontWeight: 'bold' }}>
-            {t('users')} (9)
+            {t('users')} ({total})
           </Text>
         </Col>
         <Col>
@@ -203,7 +184,20 @@ const Users: React.FC<Props> = () => {
         onChange={handleChange}
         loading={isFetching}
       />
-      <UserModal visible={showModal} setVisible={setShowModal} user={userForm} />
+      <UserModal
+        visible={showModal}
+        setVisible={setShowModal}
+        user={userForm}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+      />
+      <ConfirmDeleteModal
+        visible={showConfirmDeleteModal}
+        setVisible={setShowConfirmDeleteModal}
+        user={userForm}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+      />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import PatientsList from './PatientsList/PatientsList';
 import PatientProfile from './PatientProfile/PatientProfile';
 import PatientModal from './PatientModal/PatientModal';
 import { SelectedPatient } from './types';
+import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
 
 const Patients: React.FC = () => {
   const { t } = useTranslation('translation');
@@ -37,9 +38,11 @@ const Patients: React.FC = () => {
             </Spacer>
           </Col>
           <Col>
-            <Button type="primary" size="small" onClick={() => setShowPatientModal(true)}>
-              <Icon name="add-line" />
-            </Button>
+            <ProtectedComponent accessCode="add/patients">
+              <Button type="primary" size="small" onClick={() => setShowPatientModal(true)}>
+                <Icon name="add-line" />
+              </Button>
+            </ProtectedComponent>
           </Col>
         </Row>
         <PatientsList
@@ -62,7 +65,9 @@ const Patients: React.FC = () => {
           </div>
         )}
       </InnerContent>
-      <PatientModal visible={showPatientModal} setVisible={setShowPatientModal} />
+      <ProtectedComponent accessCode="add/patients">
+        <PatientModal visible={showPatientModal} setVisible={setShowPatientModal} />
+      </ProtectedComponent>
     </InnerLayout>
   );
 };

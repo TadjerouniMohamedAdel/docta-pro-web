@@ -4,7 +4,7 @@ import UserProfile from './UserProfile/UserProfile';
 import SidebarCollapser from './SidebarCollapser/SidebarCollapser';
 import SidebarToggler from './SidebarToggler/SidebarToggler';
 import Localization from './Localization';
-import Search from './Search/Search';
+// import Search from './Search/Search';
 
 type Props = {
   handleCollapsed: () => void;
@@ -22,9 +22,9 @@ const Header: React.FC<Props> = ({ handleCollapsed, handleToggled, collapsed }) 
               <SidebarCollapser handleCollapsed={handleCollapsed} collapsed={collapsed} />
               <SidebarToggler handleToggled={handleToggled} />
             </Col>
-            <Col flex="auto">
+            {/* <Col flex="auto">
               <Search />
-            </Col>
+            </Col> */}
           </Row>
         </Col>
         <Col>

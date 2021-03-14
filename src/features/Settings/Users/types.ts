@@ -44,6 +44,7 @@ export type UserForm = {
   email: string;
   password: string;
   roleId: string | undefined;
+  picture?: string;
 };
 
 export type AddUserParams = {

@@ -11,14 +11,24 @@ const Content: React.FC = () => {
   return (
     <main className="content" style={{ padding: 16 }}>
       <Switch>
-        <Route path="/patients" component={Patients} />
+        <ProtectedRoute
+          accessCode="patients"
+          type="section"
+          path="/patients"
+          component={Patients}
+        />
         <ProtectedRoute
           accessCode="settings"
           type="section"
           path="/settings"
           component={Settings}
         />
-        <Route path="/appointments" component={Appointments} />
+        <ProtectedRoute
+          accessCode="appointments"
+          type="section"
+          path="/appointments"
+          component={Appointments}
+        />
         <Route exact path="/">
           <Redirect to="/appointments" />
         </Route>

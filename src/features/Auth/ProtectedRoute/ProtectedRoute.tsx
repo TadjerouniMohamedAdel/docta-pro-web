@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 import { useCheckAccess } from '../hooks';
+import { AccessCode } from '../types';
 
 type Props = RouteProps & {
   type?: 'section' | 'permission';
-  accessCode: string;
+  accessCode: AccessCode;
 };
 
 const ProtectedRoute: React.FC<Props> = ({
