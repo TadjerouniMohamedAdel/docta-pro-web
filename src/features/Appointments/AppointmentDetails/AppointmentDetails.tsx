@@ -232,7 +232,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
                 validateStatus={touched.reasonId && Boolean(errors.reasonId) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="award-line" />}
+                  prefixIcon={<Icon name="stethoscope-line" />}
                   placeholder={i18n.t('placeholders:select', {
                     fieldName: t('appointment reason'),
                   })}
@@ -270,7 +270,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
                 validateStatus={touched.duration && Boolean(errors.duration) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="time-line" />}
+                  prefixIcon={<Icon name="timer-line" />}
                   placeholder={t('appointment duration')}
                   dropdownMatchSelectWidth={false}
                   style={{ width: '100%' }}
@@ -346,7 +346,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
             <Form.Item>
               <DatePicker
                 disabled
-                prefixIcon={<Icon name="mail-line" />}
+                prefixIcon={<Icon name="cake-line" />}
                 name="birthDate"
                 value={patient.birthDate ? moment(patient.birthDate) : null}
                 placeholder={i18n.t('placeholders:enter', {

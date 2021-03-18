@@ -77,7 +77,7 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
                   validateStatus={touched.name && Boolean(errors.name) ? 'error' : undefined}
                 >
                   <Input
-                    prefix={<Icon name="file-text-line" />}
+                    prefix={<Icon name="file-list-3-line" />}
                     name="name"
                     value={values.name}
                     placeholder={i18n.t('placeholders:enter', {
@@ -95,7 +95,7 @@ const Diplomas: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
                   }
                 >
                   <Input
-                    prefix={<Icon name="user-line" />}
+                    prefix={<Icon name="government-line" />}
                     name="institute"
                     value={values.institute}
                     placeholder={i18n.t('placeholders:enter', {

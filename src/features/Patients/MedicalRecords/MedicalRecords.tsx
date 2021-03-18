@@ -94,7 +94,9 @@ const MedicalRecords: React.FC<Props> = ({
                 }}
                 dir="ltr"
               >
-                {(inputProps: any) => <Input prefix={<Icon name="ruler-line" />} {...inputProps} />}
+                {(inputProps: any) => (
+                  <Input prefix={<Icon name="scales-2-line" />} {...inputProps} />
+                )}
               </InputMask>
             </Form.Item>
           </Col>
@@ -139,7 +141,7 @@ const MedicalRecords: React.FC<Props> = ({
           <Col span={9}>
             <Form.Item>
               <RadioBox
-                icon={<Icon name="profile-line" />}
+                icon={<Icon name="user-6-fill" />}
                 value={values.married}
                 onChange={(e) => {
                   handleChange({

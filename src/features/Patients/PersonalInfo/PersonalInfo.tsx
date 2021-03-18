@@ -159,7 +159,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
             validateStatus={touched.birthDate && Boolean(errors.birthDate) ? 'error' : undefined}
           >
             <DatePicker
-              prefixIcon={<Icon name="mail-line" />}
+              prefixIcon={<Icon name="cake-line" />}
               name="birthDate"
               value={values.birthDate ? moment(values.birthDate) : null}
               placeholder={i18n.t('placeholders:enter', {
@@ -206,7 +206,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           <Label title={t('state')} error={touched.state ? (errors.state as string) : undefined} />
           <Form.Item validateStatus={touched.state && Boolean(errors.state) ? 'error' : undefined}>
             <Select
-              prefixIcon={<Icon name="map-pin-line" />}
+              prefixIcon={<Icon name="road-map-line" />}
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('state'),
               })}
@@ -236,7 +236,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           <Label title={t('city')} error={touched.city ? (errors.city as string) : undefined} />
           <Form.Item validateStatus={touched.city && Boolean(errors.city) ? 'error' : undefined}>
             <Select
-              prefixIcon={<Icon name="road-map-line" />}
+              prefixIcon={<Icon name="map-pin-line" />}
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('city'),
               })}

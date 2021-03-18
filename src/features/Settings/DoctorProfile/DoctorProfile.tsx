@@ -252,7 +252,7 @@ const DoctorProfile: React.FC<Props> = () => {
             />
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={<Tab icon={<Icon name="health-book-line" />}>{t('cabinet info')}</Tab>}
+            tab={<Tab icon={<Icon name="hospital-line" />}>{t('cabinet info')}</Tab>}
             key="2"
           >
             <CabinetInfo

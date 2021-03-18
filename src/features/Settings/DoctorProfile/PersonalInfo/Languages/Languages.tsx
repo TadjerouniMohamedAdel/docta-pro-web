@@ -94,7 +94,7 @@ const Languages: React.FC<Props> = ({ languages, updateLanguages }) => {
                     size="small"
                     onClick={() => onDelete(language.code)}
                   >
-                    <Icon name="close-circle-line" />
+                    <Icon name="close-circle-line" size={16} />
                   </Button>
                 </Tag>
               </Col>

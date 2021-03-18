@@ -72,7 +72,7 @@ const Services: React.FC<Props> = ({ services, updateServices }) => {
                     size="small"
                     onClick={() => onDelete(service.id)}
                   >
-                    <Icon name="close-circle-line" />
+                    <Icon name="close-circle-line" size={16} />
                   </Button>
                 </Tag>
               </Col>
