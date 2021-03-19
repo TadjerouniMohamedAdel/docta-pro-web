@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Col, Dropdown, Menu, Row } from 'antd';
+import { Col, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import './styles.less';
 import Spacer from '../../../components/Spacer/Spacer';
 import Text from '../../../components/Text/Text';
-import Icon from '../../../components/Icon/Icon';
+// import Icon from '../../../components/Icon/Icon';
 import Button from '../../../components/Button/Button';
 import { Appointment } from '../types';
 import { useAppointmentsDayList } from '../hooks';
@@ -109,7 +109,7 @@ const AppointmentsList: React.FC<Props> = ({
                           {t('start appointment')}
                         </Button>
                       </Col>
-                      <Col className="appointment-action">
+                      {/* <Col className="appointment-action">
                         <Dropdown
                           overlay={
                             <Menu>
@@ -122,7 +122,7 @@ const AppointmentsList: React.FC<Props> = ({
                             <Icon name="more-fill" size={24} style={{ color: '#fff' }} />
                           </Button>
                         </Dropdown>
-                      </Col>
+                      </Col> */}
                     </>
                   ) : null}
                   {appointment.status === 'DONE' ? (

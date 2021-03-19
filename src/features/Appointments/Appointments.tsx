@@ -131,8 +131,8 @@ const Appointments: React.FC = () => {
                             <Icon name="arrow-left-s-line" style={{ marginRight: 16 }} />
                           )}
                         </Text>
-                        <Text size="md" style={{ fontWeight: 'bold' }}>
-                          PREV
+                        <Text size="md" style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
+                          {t('prev')}
                         </Text>
                       </Button>
                     </Col>
@@ -145,8 +145,8 @@ const Appointments: React.FC = () => {
                         style={{ margin: '0 auto', display: 'flex' }}
                         onClick={() => changePanel('next')}
                       >
-                        <Text size="md" style={{ fontWeight: 'bold' }}>
-                          NEXT
+                        <Text size="md" style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
+                          {t('next')}
                         </Text>
                         <Text style={{ fontWeight: 'normal' }}>
                           {locale === 'ar' ? (
@@ -219,7 +219,7 @@ const Appointments: React.FC = () => {
                     active={pathname === '/appointments'}
                     onClick={() => history.push('/appointments')}
                   >
-                    {t('List')}
+                    {t('list')}
                   </Button>
                 </Col>
                 <Col>
@@ -231,7 +231,7 @@ const Appointments: React.FC = () => {
                     active={pathname === '/appointments/week'}
                     onClick={() => history.push('/appointments/week')}
                   >
-                    {t('Week')}
+                    {t('week')}
                   </Button>
                 </Col>
                 <ProtectedComponent accessCode="add/appointments">
@@ -243,7 +243,7 @@ const Appointments: React.FC = () => {
                       size="small"
                       onClick={() => setShowAddAppointmentModal(true)}
                     >
-                      {t('New Appointment')}
+                      {t('new appointment')}
                     </Button>
                   </Col>
                 </ProtectedComponent>

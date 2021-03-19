@@ -23,7 +23,7 @@ const Menu: React.FC = () => {
       </ProtectedComponent>
       <ProtectedComponent accessCode="reasons/settings">
         <MenuItem
-          title={t('Consultation Reasons')}
+          title={t('consultation reasons')}
           iconName="first-aid-kit-line"
           path="/settings/visit-reasons"
         />

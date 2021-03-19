@@ -157,7 +157,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
 
   return (
     <Modal
-      title={t('Appointment Details')}
+      title={t('appointment details')}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -422,7 +422,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
                 loading={isLoadingDelete}
                 style={{ textTransform: 'uppercase' }}
               >
-                {t('DELETE APPOINTMENT')}
+                {t('delete appointment')}
               </Button>
             </Col>
           </ProtectedComponent>

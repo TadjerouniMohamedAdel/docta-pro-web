@@ -36,7 +36,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
 
   const columns: ColumnsType<VisitReason> = [
     {
-      title: t('Reason name'),
+      title: t('reason name'),
       dataIndex: 'name',
       key: 'name',
       ellipsis: {

@@ -96,7 +96,7 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
     >
       <Input
         size="middle"
-        placeholder={t('Search and select patient')}
+        placeholder={t('search and select patient')}
         prefix={<Icon name="search-2-line" />}
       />
     </AutoComplete>

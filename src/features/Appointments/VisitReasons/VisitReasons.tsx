@@ -1,6 +1,7 @@
 import { Checkbox } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import Text from '../../../components/Text/Text';
 import Select from '../../../components/Select/Select';
 import { fetchSpecialties } from '../../Settings/VisitReasons/services';
@@ -18,6 +19,7 @@ const useSpecialtiesList = () => {
 };
 
 const VisitReasons: React.FC<Props> = ({ visitReasonIds, setVisitReasonIds }) => {
+  const { t } = useTranslation('translation');
   const { specialties } = useSpecialtiesList();
 
   const handleChange = (reasonId: string, checked: boolean) => {
@@ -34,7 +36,11 @@ const VisitReasons: React.FC<Props> = ({ visitReasonIds, setVisitReasonIds }) =>
   return (
     <Select
       size="small"
-      placeholder="VISIT REASONS"
+      placeholder={
+        <Text size="sm" type="secondary" style={{ textTransform: 'uppercase' }}>
+          {t('visit reasons')}
+        </Text>
+      }
       dropdownMatchSelectWidth={false}
       dropdownRender={() => (
         <div style={{ padding: 10 }}>

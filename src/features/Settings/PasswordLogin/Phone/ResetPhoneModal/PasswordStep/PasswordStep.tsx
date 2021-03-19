@@ -46,14 +46,14 @@ const PasswordStep: React.FC<Props> = ({ setStep }) => {
   return (
     <Form onFinish={handleSubmit}>
       <Form.Item style={{ marginBottom: 40 }}>
-        <Text size="lg">{t('Enter your password to be able to change login phone number')}</Text>
+        <Text size="lg">{t('change phone description')}</Text>
       </Form.Item>
       <Form.Item
         validateStatus={touched.password && Boolean(errors.password) ? 'error' : undefined}
         style={{ marginBottom: 16 }}
       >
         <Label
-          title={i18n.t('placeholders:enter', { fieldName: t(' password') })}
+          title={i18n.t('placeholders:enter', { fieldName: t('password') })}
           error={touched.password ? (errors.password as string) : undefined}
           required
         />

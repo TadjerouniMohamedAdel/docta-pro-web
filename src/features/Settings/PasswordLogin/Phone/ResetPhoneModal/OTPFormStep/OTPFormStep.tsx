@@ -55,7 +55,7 @@ const OTPFormStep: React.FC<Props> = ({ confirmationResult, phoneNumber, setVisi
     <Form onFinish={handleSubmit}>
       <Form.Item style={{ marginBottom: 40 }}>
         <Text size="lg">
-          {t('Enter the code from SMS we sent you to')} <strong>{phoneNumber}</strong>
+          {t('enter the code from SMS we sent you to')} <strong>{phoneNumber}</strong>
         </Text>
       </Form.Item>
       <Form.Item

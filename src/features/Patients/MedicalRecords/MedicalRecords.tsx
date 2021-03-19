@@ -141,7 +141,7 @@ const MedicalRecords: React.FC<Props> = ({
           <Col span={9}>
             <Form.Item>
               <RadioBox
-                icon={<Icon name="user-6-fill" />}
+                icon={<Icon name="parent-line" />}
                 value={values.married}
                 onChange={(e) => {
                   handleChange({
@@ -160,7 +160,7 @@ const MedicalRecords: React.FC<Props> = ({
           <Col span={9}>
             <Form.Item>
               <RadioBox
-                icon={<Icon name="profile-line" />}
+                icon={<Icon name="windy-line" />}
                 value={values.smoking}
                 onChange={(e) => {
                   handleChange({

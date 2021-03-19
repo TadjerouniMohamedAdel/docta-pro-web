@@ -384,4 +384,6 @@ export type IconName =
   | 'more-2-fill'
   | 'user-6-fill'
   | 'admin-line'
-  | 'calendar-check-line';
+  | 'calendar-check-line'
+  | 'windy-line'
+  | 'parent-line';

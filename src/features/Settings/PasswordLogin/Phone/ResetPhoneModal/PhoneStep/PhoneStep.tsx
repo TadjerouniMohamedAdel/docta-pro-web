@@ -46,7 +46,6 @@ const PhoneStep: React.FC<Props> = ({ setConfirmationResult, setStep, setPhoneNu
       });
 
       const result = await firebaseApp.auth().signInWithPhoneNumber(phone, recaptchaVerifier);
-      console.log('result', result);
       setConfirmationResult(result);
       setPhoneNumber(values.phone);
       setStep(3);
@@ -65,11 +64,7 @@ const PhoneStep: React.FC<Props> = ({ setConfirmationResult, setStep, setPhoneNu
   return (
     <Form onFinish={handleSubmit}>
       <Form.Item style={{ marginBottom: 40 }}>
-        <Text size="lg">
-          {t(
-            'Enter your new login phone number for your account. We will send you a code to reset your password.',
-          )}
-        </Text>
+        <Text size="lg">{t('new phone description')}</Text>
       </Form.Item>
       <Form.Item
         validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
@@ -77,7 +72,7 @@ const PhoneStep: React.FC<Props> = ({ setConfirmationResult, setStep, setPhoneNu
       >
         <Label
           title={i18n.t('placeholders:enter', {
-            fieldName: t('New Login Phone Number'),
+            fieldName: t('new login phone number'),
           })}
           error={touched.phone ? errors.phone : undefined}
         />

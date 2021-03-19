@@ -333,7 +333,10 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
           className="patient-profile-tab"
           onChange={handleTabsChange}
         >
-          <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
+          <Tabs.TabPane
+            tab={<Tab icon={<Icon name="profile-line" />}>{t('personal info')}</Tab>}
+            key="1"
+          >
             <div style={{ padding: '16px 80px' }}>
               <PersonalInfo
                 handleFormChange={handlePersonalInfoFormChange}
@@ -342,7 +345,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>}
+            tab={<Tab icon={<Icon name="health-book-line" />}>{t('medical record')}</Tab>}
             key="2"
           >
             <MedicalRecords
@@ -353,7 +356,10 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
               formik={medicalRecordFormik}
             />
           </Tabs.TabPane>
-          <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
+          <Tabs.TabPane
+            tab={<Tab icon={<Icon name="history-line" />}> {t('visits history')} </Tab>}
+            key="3"
+          >
             <VisitsHistory patientId={selectedPatient?.id} />
           </Tabs.TabPane>
         </Tabs>
