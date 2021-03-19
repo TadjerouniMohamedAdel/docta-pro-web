@@ -282,7 +282,9 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
           {selectedPatient?.blocked && selectedPatient?.registered ? (
             <Col>
               <Spacer size="xs">
-                {/* <Icon name="admin-line" /> */}
+                <Text type="danger">
+                  <Icon name="admin-line" />
+                </Text>
                 <Text size="lg" type="danger" style={{ fontWeight: 500 }}>
                   {t('patient blocked')}
                 </Text>
@@ -297,7 +299,9 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
                   {!selectedPatient?.blocked && selectedPatient?.registered ? (
                     <Menu.Item onClick={handleBlockPatient}>
                       <Spacer size="sm">
-                        {/* <Icon name="admin-line" /> */}
+                        <Text type="danger">
+                          <Icon name="admin-line" size={18} />
+                        </Text>
                         <Text type="danger">{t('block patient')}</Text>
                       </Spacer>
                     </Menu.Item>
@@ -305,7 +309,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
                   {selectedPatient?.blocked ? (
                     <Menu.Item onClick={handleUnBlockPatient}>
                       <Spacer size="sm">
-                        {/* <Icon name="user-follow-line" /> */}
+                        <Icon name="user-follow-line" size={18} />
                         <Text>{t('unblock patient')}</Text>
                       </Spacer>
                     </Menu.Item>

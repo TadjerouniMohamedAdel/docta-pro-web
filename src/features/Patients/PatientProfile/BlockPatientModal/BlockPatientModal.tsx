@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import Button from '../../../../components/Button/Button';
 import Modal from '../../../../components/Modal/Modal';
 import Text from '../../../../components/Text/Text';
-// import Icon from '../../../../components/Icon/Icon';
+import Icon from '../../../../components/Icon/Icon';
 import { blockPatient } from '../../services';
 import { SelectedPatient, BlockPatientParams } from '../../types';
 import Spacer from '../../../../components/Spacer/Spacer';
@@ -143,7 +143,7 @@ const BlockPatientModal: React.FC<Props> = ({ visible, setVisible, patient, setP
                 type="primary"
                 danger
                 block
-                // icon={<Icon name="admin-line" />}
+                icon={<Icon name="admin-line" />}
                 style={{ textTransform: 'uppercase' }}
                 onClick={form.submit}
                 loading={isLoading}

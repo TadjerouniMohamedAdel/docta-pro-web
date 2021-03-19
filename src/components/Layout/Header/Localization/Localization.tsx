@@ -36,7 +36,7 @@ const Localization: React.FC = () => {
       trigger={['click']}
     >
       <Button type="text" style={{ height: 'auto' }}>
-        <Icon name="group-line" />
+        <Icon name="earth-line" />
       </Button>
     </Dropdown>
   );

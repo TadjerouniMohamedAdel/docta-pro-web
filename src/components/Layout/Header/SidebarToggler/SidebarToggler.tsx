@@ -10,7 +10,7 @@ const SidebarToggler: React.FC<Props> = ({ handleToggled }) => {
   return (
     <div className="sidebar-toggler break-point-xl">
       <Button type="text" onClick={() => handleToggled(true)}>
-        <Icon name="list-check-2" />
+        <Icon name="menu-line" />
       </Button>
     </div>
   );
