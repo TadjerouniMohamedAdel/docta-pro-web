@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useQuery, useQueryClient } from 'react-query';
 import { getWeekRange } from '../../utils/date';
 import { fetchAppointments } from './services';
@@ -6,14 +7,17 @@ import { AppointmentForm } from './types';
 export const useAppointmentsDayList = (date: Date, reasons: string[]) => {
   const { data, ...rest } = useQuery(
     ['appointments-day', date],
-    () => fetchAppointments(date, date, reasons),
+    async () => {
+      const res = await fetchAppointments(date, date, reasons);
+      return res.data;
+    },
     {
       keepPreviousData: true,
     },
   );
   return {
     resolvedData: data
-      ? data.data.map((item: any) => ({
+      ? data.map((item: any) => ({
           ...item,
           startDate: new Date(item.start),
           picture: item.patient.picture,
@@ -65,22 +69,28 @@ export const useUpdateAppointmentsCache = () => {
     appointment: AppointmentForm,
     date: Date,
   ) => {
+    let cacheKey: any;
+
     if (view === 'week') {
       const { start, end } = getWeekRange(date);
-      const data = (await queryClient.getQueryData(['appointments-week', start, end])) as any;
+      cacheKey = ['appointments-week', start, end];
+    } else cacheKey = ['appointments-day', date];
 
-      if (data) {
-        const index = data.findIndex((item: any) => item.id === appointmentId);
-        if (index > -1) {
-          data[index] = {
-            ...data[index],
-            start: appointment.start,
-            time: appointment.start,
-            reasonId: appointment.reasonId,
-            duration: appointment.duration,
-          };
-          queryClient.setQueryData(['appointments-week', start, end], data);
-        }
+    let data = (await queryClient.getQueryData(cacheKey)) as any;
+    if (data) {
+      const index = data.findIndex((item: any) => item.id === appointmentId);
+      if (index > -1) {
+        data[index] = {
+          ...data[index],
+          start: appointment.start,
+          end: moment(appointment.start).add(appointment.duration, 'minutes'),
+          time: appointment.start,
+          reasonId: appointment.reasonId,
+          duration: appointment.duration,
+        };
+        if (view === 'day')
+          data = data.sort((a: any, b: any) => (moment(b.start).isBefore(a.start) ? 1 : -1));
+        queryClient.setQueryData(cacheKey, data);
       }
     }
   };

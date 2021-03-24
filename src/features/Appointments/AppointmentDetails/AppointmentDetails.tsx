@@ -20,6 +20,7 @@ import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import { getWeekRange } from '../../../utils/date';
 import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
+import { useUpdateAppointmentsCache } from '../hooks';
 
 type Props = {
   visible: boolean;
@@ -78,6 +79,8 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
   );
   const queryClient = useQueryClient();
 
+  const { updateAppointmentCache } = useUpdateAppointmentsCache();
+
   const handleEditAppointment = async (values: AppointmentForm) => {
     const time = moment(values.time).format('HH:mm').toString();
     const data = {
@@ -97,9 +100,9 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
     });
 
     // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
+    // queryClient.invalidateQueries(['appointments-day', currentDate]);
+    updateAppointmentCache(appointmentId, 'week', data, currentDate);
+    updateAppointmentCache(appointmentId, 'day', data, currentDate);
 
     onClose();
   };
