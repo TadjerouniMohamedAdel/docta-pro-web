@@ -206,6 +206,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           <Label title={t('state')} error={touched.state ? (errors.state as string) : undefined} />
           <Form.Item validateStatus={touched.state && Boolean(errors.state) ? 'error' : undefined}>
             <Select
+              showSearch
               prefixIcon={<Icon name="road-map-line" />}
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('state'),
@@ -221,6 +222,9 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 });
                 handleFieldsChange('state', value);
               }}
+              filterOption={(input, option) =>
+                option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
             >
               {states.data
                 ? states.data.map((state: StateCity) => (
@@ -236,6 +240,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           <Label title={t('city')} error={touched.city ? (errors.city as string) : undefined} />
           <Form.Item validateStatus={touched.city && Boolean(errors.city) ? 'error' : undefined}>
             <Select
+              showSearch
               prefixIcon={<Icon name="map-pin-line" />}
               placeholder={i18n.t('placeholders:select', {
                 fieldName: t('city'),
@@ -248,6 +253,9 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 });
                 handleFieldsChange('city', value);
               }}
+              filterOption={(input, option) =>
+                option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
             >
               {cities.data
                 ? cities.data.map((city: StateCity) => (
