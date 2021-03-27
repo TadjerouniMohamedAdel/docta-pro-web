@@ -13,14 +13,14 @@ import Icon from '../../../components/Icon/Icon';
 import Label from '../../../components/Label/Label';
 import Select from '../../../components/Select/Select';
 import { AppointmentForm, Patient } from '../types';
-import { editAppointment, fetchAppointmentsDetails, updateAppointmentStatus } from '../services';
+import { fetchAppointmentsDetails, updateAppointmentStatus } from '../services';
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import { getWeekRange } from '../../../utils/date';
 import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
-import { useUpdateAppointmentsCache } from '../hooks';
+import { useUpdateAppointment } from '../hooks';
 
 type Props = {
   visible: boolean;
@@ -73,13 +73,11 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
     duration: Yup.number().required(t('errors:required field')),
   });
 
-  const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
+  const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
   const { mutateAsync: mutateAsyncDelete, isLoading: isLoadingDelete } = useMutation(
     updateAppointmentStatus,
   );
   const queryClient = useQueryClient();
-
-  const { updateAppointmentCache } = useUpdateAppointmentsCache();
 
   const handleEditAppointment = async (values: AppointmentForm) => {
     const time = moment(values.time).format('HH:mm').toString();
@@ -97,12 +95,8 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
     await mutateAsyncEdit({
       appointmentId,
       appointmentForm: data,
+      date: currentDate,
     });
-
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    // queryClient.invalidateQueries(['appointments-day', currentDate]);
-    updateAppointmentCache(appointmentId, 'week', data, currentDate);
-    updateAppointmentCache(appointmentId, 'day', data, currentDate);
 
     onClose();
   };
