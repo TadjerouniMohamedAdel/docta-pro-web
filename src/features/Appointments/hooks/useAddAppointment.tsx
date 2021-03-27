@@ -1,18 +1,18 @@
 import moment from 'moment';
 import { useMutation, useQueryClient } from 'react-query';
 import { getWeekRange } from '../../../utils/date';
-import { editAppointment } from '../services';
-import { AppointmentForm } from '../types';
+import { addAppointment } from '../services';
+import { AppointmentForm, Patient } from '../types';
 import { getDateKey } from '../utils';
 
-export const useUpdateAppointment = () => {
+export const useAddAppointment = () => {
   const queryClient = useQueryClient();
 
   const updateAppointmentsList = async (
-    appointmentId: string,
     appointment: AppointmentForm,
     date: Date,
     view: 'day' | 'week',
+    patient: Patient,
   ) => {
     let cacheKey: any;
 
@@ -24,47 +24,42 @@ export const useUpdateAppointment = () => {
     let data = (await queryClient.getQueryData(cacheKey)) as any;
     const previousData = data ? [...data] : [];
     if (data) {
-      const index = data.findIndex((item: any) => item.id === appointmentId);
-      if (index > -1) {
-        data[index] = {
-          ...data[index],
-          start: appointment.start,
-          end: moment(appointment.start).add(appointment.duration, 'minutes'),
-          time: appointment.start,
-          reasonId: appointment.reasonId,
-          duration: appointment.duration,
-        };
-        if (view === 'day')
-          data = data.sort((a: any, b: any) => (moment(b.start).isBefore(a.start) ? 1 : -1));
-        queryClient.setQueryData(cacheKey, data);
-      }
+      data.push({
+        ...appointment,
+        start: appointment.start,
+        end: moment(appointment.start).add(appointment.duration, 'minutes'),
+        time: appointment.start,
+        reasonId: appointment.reasonId,
+        duration: appointment.duration,
+        patient,
+        reason: {
+          name: '...',
+        },
+      });
+      if (view === 'day')
+        data = data.sort((a: any, b: any) => (moment(b.start).isBefore(a.start) ? 1 : -1));
+      queryClient.setQueryData(cacheKey, data);
     }
 
     return { previousData, key: cacheKey };
   };
 
   return useMutation(
-    ({
-      appointmentId,
-      appointmentForm,
-    }: {
-      appointmentId: string;
-      appointmentForm: AppointmentForm;
-      date: Date;
-    }) => editAppointment({ appointmentId, appointmentForm }),
+    ({ appointmentForm }: { appointmentForm: AppointmentForm; date: Date; patient: Patient }) =>
+      addAppointment(appointmentForm),
     {
-      onMutate: async ({ appointmentId, appointmentForm, date }) => {
+      onMutate: async ({ appointmentForm, date, patient }) => {
         const { previousData: previousAppointmentDay, key: dayKey } = await updateAppointmentsList(
-          appointmentId,
           appointmentForm,
           date,
           'day',
+          patient,
         );
 
         const {
           previousData: previousAppointmentWeek,
           key: weekKey,
-        } = await updateAppointmentsList(appointmentId, appointmentForm, date, 'week');
+        } = await updateAppointmentsList(appointmentForm, date, 'week', patient);
 
         return { previousAppointmentDay, dayKey, previousAppointmentWeek, weekKey };
       },
