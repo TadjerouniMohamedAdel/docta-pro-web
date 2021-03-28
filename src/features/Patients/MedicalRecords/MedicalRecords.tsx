@@ -52,7 +52,7 @@ const MedicalRecords: React.FC<Props> = ({
                 placeholder={`${i18n.t('placeholders:enter', {
                   fieldName: t('height'),
                 })}`}
-                value={values.height}
+                value={values.height ?? ''}
                 onChange={(e) =>
                   handleChange({
                     target: { name: 'height', value: e.target.value },
@@ -60,7 +60,7 @@ const MedicalRecords: React.FC<Props> = ({
                 }
                 onBlur={(e) => {
                   handleBlur(e);
-                  handleFieldsChange(e.target.name, parseInt(e.target.value, 0));
+                  handleFieldsChange('height', parseInt(e.target.value, 0));
                 }}
                 dir="ltr"
               >
@@ -77,12 +77,13 @@ const MedicalRecords: React.FC<Props> = ({
           <Col span={9}>
             <Form.Item>
               <InputMask
+                name="weight"
                 mask="999"
                 maskChar={null}
                 placeholder={`${i18n.t('placeholders:enter', {
                   fieldName: t('weight'),
                 })}`}
-                value={values.weight}
+                value={values.weight ?? ''}
                 onChange={(e) =>
                   handleChange({
                     target: { name: 'weight', value: e.target.value },
@@ -90,7 +91,7 @@ const MedicalRecords: React.FC<Props> = ({
                 }
                 onBlur={(e) => {
                   handleBlur(e);
-                  handleFieldsChange(e.target.name, parseInt(e.target.value, 0));
+                  handleFieldsChange('weight', parseInt(e.target.value, 0));
                 }}
                 dir="ltr"
               >
