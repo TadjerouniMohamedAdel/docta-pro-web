@@ -5,6 +5,8 @@ import BlockedPatients from './BlockedPatients/BlockedPatients';
 import AllPatients from './AllPatients/AllPatients';
 import './styles.less';
 import { SelectedPatient } from '../types';
+import Tab from '../../../components/Tab/Tab';
+import Icon from '../../../components/Icon/Icon';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;
@@ -21,14 +23,17 @@ const PatientsList: React.FC<Props> = ({
 
   return (
     <Tabs defaultActiveKey="1" tabBarStyle={{ paddingLeft: 16, paddingRight: 16 }} size="small">
-      <Tabs.TabPane tab={t('all patients')} key="1">
+      <Tabs.TabPane tab={<Tab icon={<Icon name="group-line" />}>{t('all patients')}</Tab>} key="1">
         <AllPatients
           handleSetPatientCount={handleSetPatientCount}
           selectedPatient={selectedPatient}
           setSelectedPatient={setSelectedPatient}
         />
       </Tabs.TabPane>
-      <Tabs.TabPane tab={t('blocked patients')} key="2">
+      <Tabs.TabPane
+        tab={<Tab icon={<Icon name="admin-line" />}>{t('blocked patients')}</Tab>}
+        key="2"
+      >
         <BlockedPatients
           selectedPatient={selectedPatient}
           setSelectedPatient={setSelectedPatient}

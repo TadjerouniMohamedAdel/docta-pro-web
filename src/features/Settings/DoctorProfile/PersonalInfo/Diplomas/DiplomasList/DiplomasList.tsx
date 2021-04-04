@@ -21,7 +21,6 @@ const DiplomasList: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
 
   const handleDeleteDiploma = (id: string) => {
     const updatedDiplomas = [...diplomas];
-
     const index = updatedDiplomas.findIndex((item) => item.id === id);
 
     if (index > -1) {
@@ -35,9 +34,9 @@ const DiplomasList: React.FC<Props> = ({ diplomas, updateDiplomas }) => {
     <>
       {diplomas
         .filter((diploma) => !diploma.isDeleted)
-        .map((diploma, index) => (
+        .map((diploma) => (
           <DiplomasItem
-            key={index}
+            key={diploma.id}
             diploma={diploma}
             handleUpdateDiploma={handleUpdateDiploma}
             handleDeleteDiploma={handleDeleteDiploma}

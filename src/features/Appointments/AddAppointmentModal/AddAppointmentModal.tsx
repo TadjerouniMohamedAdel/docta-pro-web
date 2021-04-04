@@ -1,9 +1,9 @@
 /* eslint-disable radix */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { Avatar, Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import ReactInputMask from 'react-input-mask';
@@ -13,17 +13,16 @@ import Icon from '../../../components/Icon/Icon';
 import Label from '../../../components/Label/Label';
 import Select from '../../../components/Select/Select';
 import { AppointmentForm, Patient } from '../types';
-import { addAppointment } from '../services';
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import PatientAutocomplete from './PatientAutocomplete/PatientAutocomplete';
-import { getWeekRange } from '../../../utils/date';
 import NewPatient from './NewPatient/NewPatient';
 import { StateCity } from '../../../types/types';
 import { useGetStatesList } from '../../../hooks/useGetStatesList';
 import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
+import { useAddAppointment } from '../hooks/useAddAppointment';
 
 type Props = {
   visible: boolean;
@@ -62,7 +61,7 @@ const AddAppointmentModal: React.FC<Props> = ({
   const [patient, setPatient] = useState<Patient>(initialPatientValues);
   const [showNewPatientform, setShowNewPatientForm] = useState<boolean>(false);
 
-  const { mutateAsync, isLoading } = useMutation(addAppointment);
+  const { mutateAsync, isLoading } = useAddAppointment();
 
   const cache = useQueryClient();
   const specialties = cache.getQueryData('appointment-specialties') as {
@@ -82,9 +81,10 @@ const AddAppointmentModal: React.FC<Props> = ({
     duration: Yup.number().required(t('errors:required field')),
   });
 
-  const queryClient = useQueryClient();
-
-  const handleAddAppointment = async (values: AppointmentForm) => {
+  const handleAddAppointment = async (
+    values: AppointmentForm,
+    { resetForm }: FormikHelpers<AppointmentForm>,
+  ) => {
     const time = moment(values.time).format('HH:mm').toString();
     const newAppointment: AppointmentForm = {
       ...values,
@@ -97,13 +97,9 @@ const AddAppointmentModal: React.FC<Props> = ({
         })
         .toDate(),
     };
-    await mutateAsync(newAppointment);
-
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
-
+    await mutateAsync({ appointmentForm: newAppointment, date: currentDate, patient });
+    resetForm();
+    setPatient(initialPatientValues);
     onClose();
   };
 
@@ -151,7 +147,7 @@ const AddAppointmentModal: React.FC<Props> = ({
 
   return (
     <Modal
-      title={t('New Appointment')}
+      title={t('new appointment')}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -225,7 +221,7 @@ const AddAppointmentModal: React.FC<Props> = ({
                 validateStatus={touched.reasonId && Boolean(errors.reasonId) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="award-line" />}
+                  prefixIcon={<Icon name="stethoscope-line" />}
                   placeholder={i18n.t('placeholders:select', {
                     fieldName: t('appointment reason'),
                   })}
@@ -263,7 +259,7 @@ const AddAppointmentModal: React.FC<Props> = ({
                 validateStatus={touched.duration && Boolean(errors.duration) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="time-line" />}
+                  prefixIcon={<Icon name="timer-line" />}
                   placeholder={t('appointment duration')}
                   dropdownMatchSelectWidth={false}
                   style={{ width: '100%' }}
@@ -371,7 +367,7 @@ const AddAppointmentModal: React.FC<Props> = ({
             <Form.Item>
               <DatePicker
                 disabled
-                prefixIcon={<Icon name="mail-line" />}
+                prefixIcon={<Icon name="cake-line" />}
                 name="birthDate"
                 value={patient.birthDate ? moment(patient.birthDate) : null}
                 placeholder={i18n.t('placeholders:enter', {

@@ -153,7 +153,7 @@ const CabinetInfoForm: React.FC<Props> = ({ data, formik, handleUpdateData }) =>
           <Label title={t('city')} error={touched.city ? (errors.city as string) : undefined} />
           <Form.Item validateStatus={touched.city && Boolean(errors.city) ? 'error' : undefined}>
             <Input
-              prefix={<Icon name="map-pin-line" />}
+              prefix={<Icon name="map-pin-5-line" />}
               name="city"
               value={values.city}
               placeholder={t('city')}

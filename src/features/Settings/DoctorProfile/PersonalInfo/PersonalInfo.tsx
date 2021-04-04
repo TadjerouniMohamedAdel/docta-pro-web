@@ -201,7 +201,7 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
                 }
               >
                 <DatePicker
-                  prefixIcon={<Icon name="mail-line" />}
+                  prefixIcon={<Icon name="cake-line" />}
                   name="birthDate"
                   value={values.birthDate ? moment(values.birthDate) : null}
                   placeholder={i18n.t('placeholders:enter', {

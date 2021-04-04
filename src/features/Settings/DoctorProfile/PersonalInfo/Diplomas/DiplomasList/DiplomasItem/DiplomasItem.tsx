@@ -48,7 +48,7 @@ const DiplomasItem: React.FC<Props> = ({ diploma, handleUpdateDiploma, handleDel
                 style={{ paddingRight: 0, paddingLeft: 0 }}
                 onClick={() => handleDeleteDiploma(diploma.id)}
               >
-                <Icon name="delete-bin-7-line" />
+                <Icon name="delete-bin-7-line" size={20} />
               </Button>
             </Col>
           </Row>
@@ -58,7 +58,7 @@ const DiplomasItem: React.FC<Props> = ({ diploma, handleUpdateDiploma, handleDel
                 validateStatus={touched.name && Boolean(errors.name) ? 'error' : undefined}
               >
                 <Input
-                  prefix={<Icon name="file-text-line" />}
+                  prefix={<Icon name="file-list-3-line" />}
                   name="name"
                   value={values.name}
                   placeholder={i18n.t('placeholders:enter', {
@@ -79,7 +79,7 @@ const DiplomasItem: React.FC<Props> = ({ diploma, handleUpdateDiploma, handleDel
                 }
               >
                 <Input
-                  prefix={<Icon name="user-line" />}
+                  prefix={<Icon name="government-line" />}
                   name="institute"
                   value={values.institute}
                   placeholder={i18n.t('placeholders:enter', {

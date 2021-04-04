@@ -36,7 +36,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
 
   const columns: ColumnsType<VisitReason> = [
     {
-      title: t('Reason name'),
+      title: t('reason name'),
       dataIndex: 'name',
       key: 'name',
       ellipsis: {
@@ -50,7 +50,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
       width: 200,
       render: (text: any, record: VisitReason) => (
         <Select
-          prefixIcon={<Icon name="award-line" />}
+          prefixIcon={<Icon name="time-line" />}
           placeholder={i18n.t('placeholders:select', { fieldName: t('duration') })}
           dropdownMatchSelectWidth={false}
           size="small"

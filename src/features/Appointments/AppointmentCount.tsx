@@ -23,7 +23,7 @@ const AppointmentCount: React.FC<Props> = ({ date, type, size = 'md' }) => {
       from = moment(date).clone().startOf('month').toDate();
       to = moment(date).clone().endOf('month').toDate();
     }
-
+    // TODO : use react query to cache result by range ['appointment-count', from, to]
     try {
       setLoading(true);
       const response = await fetchAppointmentsCount(from, to);

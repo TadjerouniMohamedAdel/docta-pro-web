@@ -13,13 +13,14 @@ import Icon from '../../../components/Icon/Icon';
 import Label from '../../../components/Label/Label';
 import Select from '../../../components/Select/Select';
 import { AppointmentForm, Patient } from '../types';
-import { editAppointment, fetchAppointmentsDetails, updateAppointmentStatus } from '../services';
+import { fetchAppointmentsDetails, updateAppointmentStatus } from '../services';
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import { getWeekRange } from '../../../utils/date';
 import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
+import { useUpdateAppointment } from '../hooks';
 
 type Props = {
   visible: boolean;
@@ -72,7 +73,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
     duration: Yup.number().required(t('errors:required field')),
   });
 
-  const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
+  const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
   const { mutateAsync: mutateAsyncDelete, isLoading: isLoadingDelete } = useMutation(
     updateAppointmentStatus,
   );
@@ -94,12 +95,8 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
     await mutateAsyncEdit({
       appointmentId,
       appointmentForm: data,
+      date: currentDate,
     });
-
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
 
     onClose();
   };
@@ -157,7 +154,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
 
   return (
     <Modal
-      title={t('Appointment Details')}
+      title={t('appointment details')}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -232,7 +229,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
                 validateStatus={touched.reasonId && Boolean(errors.reasonId) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="award-line" />}
+                  prefixIcon={<Icon name="stethoscope-line" />}
                   placeholder={i18n.t('placeholders:select', {
                     fieldName: t('appointment reason'),
                   })}
@@ -270,7 +267,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
                 validateStatus={touched.duration && Boolean(errors.duration) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="time-line" />}
+                  prefixIcon={<Icon name="timer-line" />}
                   placeholder={t('appointment duration')}
                   dropdownMatchSelectWidth={false}
                   style={{ width: '100%' }}
@@ -346,7 +343,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
             <Form.Item>
               <DatePicker
                 disabled
-                prefixIcon={<Icon name="mail-line" />}
+                prefixIcon={<Icon name="cake-line" />}
                 name="birthDate"
                 value={patient.birthDate ? moment(patient.birthDate) : null}
                 placeholder={i18n.t('placeholders:enter', {
@@ -422,7 +419,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
                 loading={isLoadingDelete}
                 style={{ textTransform: 'uppercase' }}
               >
-                {t('DELETE APPOINTMENT')}
+                {t('delete appointment')}
               </Button>
             </Col>
           </ProtectedComponent>

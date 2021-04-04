@@ -282,7 +282,9 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
           {selectedPatient?.blocked && selectedPatient?.registered ? (
             <Col>
               <Spacer size="xs">
-                {/* <Icon name="admin-line" /> */}
+                <Text type="danger">
+                  <Icon name="admin-line" />
+                </Text>
                 <Text size="lg" type="danger" style={{ fontWeight: 500 }}>
                   {t('patient blocked')}
                 </Text>
@@ -297,7 +299,9 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
                   {!selectedPatient?.blocked && selectedPatient?.registered ? (
                     <Menu.Item onClick={handleBlockPatient}>
                       <Spacer size="sm">
-                        {/* <Icon name="admin-line" /> */}
+                        <Text type="danger">
+                          <Icon name="admin-line" size={18} />
+                        </Text>
                         <Text type="danger">{t('block patient')}</Text>
                       </Spacer>
                     </Menu.Item>
@@ -305,7 +309,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
                   {selectedPatient?.blocked ? (
                     <Menu.Item onClick={handleUnBlockPatient}>
                       <Spacer size="sm">
-                        {/* <Icon name="user-follow-line" /> */}
+                        <Icon name="user-follow-line" size={18} />
                         <Text>{t('unblock patient')}</Text>
                       </Spacer>
                     </Menu.Item>
@@ -329,7 +333,10 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
           className="patient-profile-tab"
           onChange={handleTabsChange}
         >
-          <Tabs.TabPane tab={<Tab icon={<Icon name="profile-line" />}>Personal info</Tab>} key="1">
+          <Tabs.TabPane
+            tab={<Tab icon={<Icon name="profile-line" />}>{t('personal info')}</Tab>}
+            key="1"
+          >
             <div style={{ padding: '16px 80px' }}>
               <PersonalInfo
                 handleFormChange={handlePersonalInfoFormChange}
@@ -338,7 +345,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={<Tab icon={<Icon name="health-book-line" />}>Medical Record</Tab>}
+            tab={<Tab icon={<Icon name="health-book-line" />}>{t('medical record')}</Tab>}
             key="2"
           >
             <MedicalRecords
@@ -349,7 +356,10 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
               formik={medicalRecordFormik}
             />
           </Tabs.TabPane>
-          <Tabs.TabPane tab={<Tab icon={<Icon name="history-line" />}>Visits History</Tab>} key="3">
+          <Tabs.TabPane
+            tab={<Tab icon={<Icon name="history-line" />}> {t('visits history')} </Tab>}
+            key="3"
+          >
             <VisitsHistory patientId={selectedPatient?.id} />
           </Tabs.TabPane>
         </Tabs>

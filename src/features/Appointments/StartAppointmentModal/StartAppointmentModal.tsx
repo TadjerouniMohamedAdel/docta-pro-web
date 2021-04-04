@@ -277,7 +277,7 @@ const StartAppointmentModal: React.FC<Props> = ({
                 validateStatus={touched.reasonId && Boolean(errors.reasonId) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="award-line" />}
+                  prefixIcon={<Icon name="stethoscope-line" />}
                   placeholder={i18n.t('placeholders:select', {
                     fieldName: t('appointment reason'),
                   })}
@@ -315,7 +315,7 @@ const StartAppointmentModal: React.FC<Props> = ({
                 validateStatus={touched.duration && Boolean(errors.duration) ? 'error' : undefined}
               >
                 <Select
-                  prefixIcon={<Icon name="time-line" />}
+                  prefixIcon={<Icon name="timer-line" />}
                   placeholder={t('appointment duration')}
                   dropdownMatchSelectWidth={false}
                   style={{ width: '100%' }}
@@ -391,7 +391,7 @@ const StartAppointmentModal: React.FC<Props> = ({
             <Form.Item>
               <DatePicker
                 disabled
-                prefixIcon={<Icon name="mail-line" />}
+                prefixIcon={<Icon name="cake-line" />}
                 name="birthDate"
                 value={patient.birthDate ? moment(patient.birthDate) : null}
                 placeholder={i18n.t('placeholders:enter', {
@@ -487,8 +487,8 @@ const StartAppointmentModal: React.FC<Props> = ({
                   >
                     <Button
                       type="default"
-                      size="small"
                       loading={isLoadingStatus && statusAction === 'PATIENT_MISSED'}
+                      style={{ paddingLeft: 5, paddingRight: 5 }}
                     >
                       <Icon name="more-2-fill" size={24} />
                     </Button>
@@ -511,7 +511,7 @@ const StartAppointmentModal: React.FC<Props> = ({
                 <Col>
                   <Button
                     type="primary"
-                    icon={<Icon name="calendar-todo-line" />}
+                    icon={<Icon name="calendar-check-line" />}
                     onClick={handleDoneAppointment}
                     loading={isLoadingStatus && statusAction === 'DONE'}
                   >
