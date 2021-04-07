@@ -15,7 +15,7 @@ import WeekCalendar from './WeekCalendar/WeekCalendar';
 import './styles.less';
 import HeaderDatePicker from './HeaderDatePicker/HeaderDatePicker';
 import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
-import AppointmentCount from './AppointmentCount';
+import AppointmentCount from './AppointmentCount/AppointmentCount';
 import { AppointmentForm, Patient } from './types';
 import AppointmentDetails from './AppointmentDetails/AppointmentDetails';
 import StartAppointmentModal from './StartAppointmentModal/StartAppointmentModal';
