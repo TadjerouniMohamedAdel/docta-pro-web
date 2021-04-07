@@ -51,32 +51,38 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
       <div style={{ padding: '24px 80px' }}>
         <Form>
           <Row gutter={[35, 16]} align="middle">
-            <Col>
-              {data.picture ? (
-                <Avatar src={data.picture} size={95} />
-              ) : (
-                <Avatar src={data.picture} size={95}>
-                  {data.firstName[0]?.toUpperCase()}
-                  {data.lastName[0]?.toUpperCase()}
-                </Avatar>
-              )}
+            <Col span={24}>
+              <Row gutter={35} align="middle">
+                <Col>
+                  {data.picture ? (
+                    <Avatar src={data.picture} size={95} />
+                  ) : (
+                    <Avatar src={data.picture} size={95}>
+                      {data.firstName[0]?.toUpperCase()}
+                      {data.lastName[0]?.toUpperCase()}
+                    </Avatar>
+                  )}
+                </Col>
+                <Col>
+                  <Upload
+                    accept="image/*"
+                    showUploadList={false}
+                    beforeUpload={(file) => {
+                      handleUploadImage(file);
+                      return false;
+                    }}
+                  >
+                    <Button
+                      type="default"
+                      size="small"
+                      style={{ paddingLeft: 24, paddingRight: 24 }}
+                    >
+                      {t('change photo')}
+                    </Button>
+                  </Upload>
+                </Col>
+              </Row>
             </Col>
-            <Col>
-              <Upload
-                accept="image/*"
-                showUploadList={false}
-                beforeUpload={(file) => {
-                  handleUploadImage(file);
-                  return false;
-                }}
-              >
-                <Button type="default" size="small" style={{ paddingLeft: 24, paddingRight: 24 }}>
-                  {t('change photo')}
-                </Button>
-              </Upload>
-            </Col>
-          </Row>
-          <Row gutter={[35, 16]}>
             <Col span={12}>
               <Label
                 title={t('first name')}
@@ -243,8 +249,6 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
                 </Select>
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[35, 16]}>
             <Col span={24}>
               <Label
                 title={t('Doctor Biography (max 240 words)')}

@@ -336,8 +336,6 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
               />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={[35, 16]}>
           <Col span={12}>
             <Label title={t('birthday')} />
             <Form.Item>
