@@ -13,6 +13,7 @@ export const useAppointmentsWeekList = (date: Date, reasons: string[]) => {
     },
     {
       keepPreviousData: true,
+      refetchInterval: 3000,
     },
   );
   return {
