@@ -4,6 +4,7 @@ import UserProfile from './UserProfile/UserProfile';
 import SidebarCollapser from './SidebarCollapser/SidebarCollapser';
 import SidebarToggler from './SidebarToggler/SidebarToggler';
 import Localization from './Localization';
+import FreeTrial from './FreeTrial/FreeTrial';
 // import Search from './Search/Search';
 
 type Props = {
@@ -29,6 +30,9 @@ const Header: React.FC<Props> = ({ handleCollapsed, handleToggled, collapsed }) 
         </Col>
         <Col>
           <Row align="middle">
+            <Col>
+              <FreeTrial />
+            </Col>
             <Col>
               <Localization />
             </Col>
