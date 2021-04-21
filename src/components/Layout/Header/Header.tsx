@@ -3,7 +3,6 @@ import { Col, Row } from 'antd';
 import UserProfile from './UserProfile/UserProfile';
 import SidebarCollapser from './SidebarCollapser/SidebarCollapser';
 import SidebarToggler from './SidebarToggler/SidebarToggler';
-import Localization from './Localization';
 import FreeTrial from './FreeTrial/FreeTrial';
 // import Search from './Search/Search';
 
@@ -32,9 +31,6 @@ const Header: React.FC<Props> = ({ handleCollapsed, handleToggled, collapsed }) 
           <Row align="middle">
             <Col>
               <FreeTrial />
-            </Col>
-            <Col>
-              <Localization />
             </Col>
             <Col>
               <UserProfile />
