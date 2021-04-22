@@ -92,7 +92,11 @@ const Auth: React.FC = () => {
 
           {isError ? (
             <Alert
-              message="Email or password incorrect !"
+              message={
+                <Text size="sm" style={{ color: 'white' }}>
+                  Invalid combination. Have another go.
+                </Text>
+              }
               type="error"
               style={{ textAlign: 'center' }}
             />
