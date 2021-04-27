@@ -8,7 +8,11 @@ import arFlag from '../../../../assets/img/ar.png';
 import enFlag from '../../../../assets/img/en.png';
 import frFlag from '../../../../assets/img/fr.png';
 
-const Localization: React.FC = () => {
+type Props = {
+  collapsed: boolean;
+};
+
+const Localization: React.FC<Props> = ({ collapsed }) => {
   const { locale, setLocale } = useLocaleState();
   const { t, i18n } = useTranslation();
 
@@ -71,7 +75,12 @@ const Localization: React.FC = () => {
       }
       trigger={['click']}
     >
-      <Button block type="default" size="small">
+      <Button
+        block
+        type="default"
+        size="small"
+        style={collapsed ? { margin: '0px -10px', width: 40 } : undefined}
+      >
         <Row justify="space-between" align="middle" style={{ width: '100%' }}>
           <Col>
             {locale ? (
@@ -79,15 +88,19 @@ const Localization: React.FC = () => {
                 <Col>
                   <img src={languages[locale].flag} alt="flag" />
                 </Col>
-                <Col>
-                  <Typography>{languages[locale].title}</Typography>
-                </Col>
+                {!collapsed ? (
+                  <Col>
+                    <Typography>{languages[locale].title}</Typography>
+                  </Col>
+                ) : null}
               </Row>
             ) : null}
           </Col>
-          <Col>
-            <Icon name="arrow-drop-up-line" size={32} />
-          </Col>
+          {!collapsed ? (
+            <Col>
+              <Icon name="arrow-drop-up-line" size={32} />
+            </Col>
+          ) : null}
         </Row>
       </Button>
     </Dropdown>
