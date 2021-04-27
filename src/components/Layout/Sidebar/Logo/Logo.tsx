@@ -1,10 +1,14 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import './styles.less';
+import logoImage from '../../../../assets/img/docta_Logo.png';
+import logoText from '../../../../assets/img/docta_text.png';
+import Spacer from '../../../Spacer/Spacer';
 
-const Logo: React.FC = () => {
-  const { t } = useTranslation();
+type Props = {
+  collapsed: boolean;
+};
 
+const Logo: React.FC<Props> = ({ collapsed }) => {
   return (
     <div
       className="logo-wrapper"
@@ -16,7 +20,10 @@ const Logo: React.FC = () => {
         padding: '0 5px',
       }}
     >
-      {t('title')}
+      <Spacer direction="horizontal" fullWidth={false}>
+        <img src={logoImage} alt="logo" />
+        {!collapsed ? <img src={logoText} alt="logo text" /> : null}
+      </Spacer>
     </div>
   );
 };

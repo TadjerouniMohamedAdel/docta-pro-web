@@ -5,6 +5,7 @@ import { SpaceProps } from 'antd/lib/space';
 export type Props = Omit<SpaceProps, 'size'> & {
   children: React.ReactNode;
   size?: 'xss' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
+  fullWidth?: boolean;
 };
 
 const sizes = {
@@ -18,9 +19,9 @@ const sizes = {
   xxxl: 32,
 };
 
-const Spacer: React.FC<Props> = ({ children, size = 'md', style, ...rest }) => {
+const Spacer: React.FC<Props> = ({ children, size = 'md', fullWidth = true, style, ...rest }) => {
   return (
-    <Space size={sizes[size]} {...rest} style={{ width: '100%', ...style }}>
+    <Space size={sizes[size]} {...rest} style={{ width: fullWidth ? '100%' : 'auto', ...style }}>
       {children}
     </Space>
   );

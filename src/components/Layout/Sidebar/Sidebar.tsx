@@ -21,7 +21,7 @@ const Sidebar: React.FC<Props> = ({ collapsed, toggled }) => {
       }}
     >
       <div>
-        <Logo />
+        <Logo collapsed={collapsed} />
         <Menu collapsed={collapsed} />
       </div>
       <div style={{ padding: '10px 30px' }}>

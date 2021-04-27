@@ -67,7 +67,7 @@ const Patients: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            <Spacer size="xl" direction="vertical" style={{ width: 'auto' }} align="center">
+            <Spacer size="xl" direction="vertical" fullWidth={false} align="center">
               <img src={emptyStateImg} alt="empty state" />
               <Text type="secondary">{t('Select a patient to see their info here')}</Text>
             </Spacer>
