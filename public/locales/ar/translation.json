@@ -153,5 +153,6 @@
   "patient absent": "المريض غائب",
   "block patient": "حظر المريض",
   "unblock patient": "إلغاء حظر المريض",
-  "patient blocked": "تم حظر المريض"
+  "patient blocked": "تم حظر المريض",
+  "Select a patient to see their info here": ""
 }

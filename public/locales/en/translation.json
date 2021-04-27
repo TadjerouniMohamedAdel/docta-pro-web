@@ -153,5 +153,6 @@
   "patient absent": "Patient absent",
   "block patient": "Block patient",
   "unblock patient": "Unblock patient",
-  "patient blocked": "Patient blocked"
+  "patient blocked": "Patient blocked",
+  "Select a patient to see their info here": "Select a patient to see their info here"
 }

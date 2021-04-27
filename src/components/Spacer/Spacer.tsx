@@ -4,7 +4,7 @@ import { SpaceProps } from 'antd/lib/space';
 
 export type Props = Omit<SpaceProps, 'size'> & {
   children: React.ReactNode;
-  size: 'xss' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
+  size?: 'xss' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
 };
 
 const sizes = {
