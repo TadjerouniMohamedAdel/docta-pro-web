@@ -21,16 +21,24 @@ body {
   .header {
     box-shadow: @box-shadow-base;
     background-color: @white;
+    z-index: 2;
   }
   .sidebar {
     background-color: @white;
-    z-index: 100;
     box-shadow: 4px 0 4px 0 rgba(43, 45, 55, 0.01);
+    overflow-x: hidden;
+    height: 100%;
   }
   &.rtl {
     .sidebar {
       box-shadow: -4px 0 4px 0 rgba(43, 45, 55, 0.01);
     }
+  }
+}
+
+.layout.inner-layout {
+  .sidebar {
+    height: auto;
   }
 }
 
