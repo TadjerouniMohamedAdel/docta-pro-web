@@ -1,4 +1,6 @@
 import { QueryCache } from 'react-query';
+import i18n from '../i18n';
+import { isInErrorsList, openNotification } from './notification';
 
 type FetchHeader = {
   'Content-Type'?: string;
@@ -56,6 +58,10 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}, hasFiles
       if (authorization) localStorage.setItem('token', authorization);
       return data;
     }
+
+    if (isInErrorsList(data?.error?.code))
+      openNotification('error', { message: i18n.t(data.error.code) });
+
     return Promise.reject(data);
   });
 }
