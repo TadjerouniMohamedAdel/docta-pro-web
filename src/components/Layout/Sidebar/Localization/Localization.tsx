@@ -81,10 +81,10 @@ const Localization: React.FC<Props> = ({ collapsed }) => {
         size="small"
         style={collapsed ? { margin: '0px -10px', width: 40 } : undefined}
       >
-        <Row justify="space-between" align="middle" style={{ width: '100%' }}>
+        <Row justify="space-between" align="middle" style={{ width: '100%' }} wrap={false}>
           <Col>
             {locale ? (
-              <Row align="middle" gutter={16}>
+              <Row align="middle" gutter={16} wrap={false}>
                 <Col>
                   <img src={languages[locale].flag} alt="flag" />
                 </Col>

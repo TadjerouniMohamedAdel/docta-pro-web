@@ -4163,10 +4163,10 @@ css-prefers-color-scheme@^3.1.1:
   dependencies:
     postcss "^7.0.5"
 
-css-pro-layout@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/css-pro-layout/-/css-pro-layout-1.0.2.tgz#085931a394ef6b8386d984bdedfd08eb0183fe9b"
-  integrity sha512-+EYXkHNSpgPkUoczmPqIz01Q7LLV3JjH/Ow5gmUn75E4AfcjqCUxV6L7ABB4FFdmOI6V22HJdZ8zSIshLxfcjA==
+css-pro-layout@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/css-pro-layout/-/css-pro-layout-1.1.0.tgz#741d62a01891d81ae24580dbc1427a8dade39420"
+  integrity sha512-rmz9qy33SVIsqBRdg6kpD31JWJJHrXvWITVgi5r4BxLuIRJD3NEKhK4588mWoLAI0P+yfxBM7TFWDm91p/pfhw==
 
 css-select-base-adapter@^0.1.1:
   version "0.1.1"
