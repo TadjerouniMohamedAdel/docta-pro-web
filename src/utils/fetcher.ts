@@ -8,9 +8,18 @@ type FetchHeader = {
   locale: string;
 };
 
+type FetcherOptions = Omit<RequestInit, 'body'> & {
+  body?: any;
+  hasFiles?: boolean;
+  showError?: boolean;
+};
+
 const queryCache = new QueryCache();
 
-function fetcher(endpoint: string, { body, ...customConfig }: any = {}, hasFiles = false) {
+function fetcher(
+  endpoint: string,
+  { body, hasFiles = false, showError = true, ...customConfig }: FetcherOptions = {},
+) {
   const token = localStorage.getItem('token');
   const locale = localStorage.getItem('locale') ?? 'en';
 
@@ -34,10 +43,10 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}, hasFiles
   };
 
   if (body) {
-    config.body = hasFiles ? body : JSON.stringify(body);
+    (config as RequestInit).body = hasFiles ? body : JSON.stringify(body);
   }
 
-  return window.fetch(endpoint, config).then(async (response) => {
+  return window.fetch(endpoint, config as RequestInit).then(async (response) => {
     if (response.status === 401 && endpoint !== '/api/v1/users/auth?action=pro') {
       queryCache.clear();
       localStorage.removeItem('token');
@@ -58,9 +67,12 @@ function fetcher(endpoint: string, { body, ...customConfig }: any = {}, hasFiles
       if (authorization) localStorage.setItem('token', authorization);
       return data;
     }
-
-    if (isInErrorsList(data?.error?.code))
-      openNotification('error', { message: i18n.t(data.error.code) });
+    if (showError)
+      openNotification('error', {
+        message: isInErrorsList(data?.error?.code)
+          ? i18n.t(data.error.code)
+          : i18n.t('something went wrong!'),
+      });
 
     return Promise.reject(data);
   });

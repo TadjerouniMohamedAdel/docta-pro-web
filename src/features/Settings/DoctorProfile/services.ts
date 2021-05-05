@@ -38,14 +38,11 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
     ),
   );
 
-  return fetcher(
-    '/api/v1/practitioners/profile',
-    {
-      body: formData,
-      method: 'PUT',
-    },
-    true,
-  );
+  return fetcher('/api/v1/practitioners/profile', {
+    body: formData,
+    method: 'PUT',
+    hasFiles: true,
+  });
 };
 
 export const fetchDoctorCabinetProfile = async (): Promise<{
@@ -72,14 +69,11 @@ export const updateDoctorCabinetProfile = async (params: DoctorCabinetInfoForm):
   );
   formData.append('images', JSON.stringify(params.images.filter((image) => image.isDeleted)));
 
-  return fetcher(
-    '/api/v1/practitioners/cabinets/profile',
-    {
-      body: formData,
-      method: 'PUT',
-    },
-    true,
-  );
+  return fetcher('/api/v1/practitioners/cabinets/profile', {
+    body: formData,
+    method: 'PUT',
+    hasFiles: true,
+  });
 };
 
 export const fetchLanguages = async (term: string): Promise<any> => {
