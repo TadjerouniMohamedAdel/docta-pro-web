@@ -22,6 +22,7 @@ import { getWeekRange } from '../../../utils/date';
 import Spacer from '../../../components/Spacer/Spacer';
 import Text from '../../../components/Text/Text';
 import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
+import { useCheckAccess } from '../../Auth/hooks';
 
 type Props = {
   visible: boolean;
@@ -41,6 +42,8 @@ const StartAppointmentModal: React.FC<Props> = ({
   scheduleNewAppointment,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
+
+  const { CheckAccess } = useCheckAccess();
 
   const minute = t('minute');
   const hour = t('hour');
@@ -463,22 +466,22 @@ const StartAppointmentModal: React.FC<Props> = ({
                     overlayStyle={{ minWidth: 240 }}
                     overlay={
                       <Menu>
-                        <ProtectedComponent accessCode="add/appointments">
+                        {CheckAccess('permission', 'add/appointments') ? (
                           <Menu.Item onClick={handleScheduleNewAppointment}>
                             <Spacer size="sm">
                               <Icon name="refresh-line" />
                               <Text>{t('new appointment')}</Text>
                             </Spacer>
                           </Menu.Item>
-                        </ProtectedComponent>
-                        <ProtectedComponent accessCode="edit/appointments">
+                        ) : null}
+                        {CheckAccess('permission', 'edit/appointments') ? (
                           <Menu.Item onClick={handlePatientAbsent}>
                             <Spacer size="sm">
                               <Icon name="user-unfollow-line" />
                               <Text>{t('patient absent')}</Text>
                             </Spacer>
                           </Menu.Item>
-                        </ProtectedComponent>
+                        ) : null}
                       </Menu>
                     }
                     trigger={['click']}
