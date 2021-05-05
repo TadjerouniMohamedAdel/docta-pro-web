@@ -11,6 +11,7 @@ export const useAppointmentsDayList = (date: Date, reasons: string[]) => {
     },
     {
       keepPreviousData: true,
+      refetchInterval: 3000,
     },
   );
   return {
