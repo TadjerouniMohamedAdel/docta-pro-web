@@ -1,9 +1,10 @@
-import { useAuthState } from './context';
+import { useAuthState } from '../context';
+import { AccessCode } from '../types';
 
-export const useCheckAccess = (type: string, accessCode: string) => {
+export const useCheckAccess = () => {
   const { user } = useAuthState();
 
-  const CheckAccess = () => {
+  const CheckAccess = (type: 'section' | 'permission', accessCode: AccessCode) => {
     if (user) {
       if (user.role.code === 'practitioner') return true;
       switch (type) {

@@ -16,10 +16,10 @@ const ProtectedRoute: React.FC<Props> = ({
 }) => {
   const [accessible, setAccessible] = useState(false);
 
-  const { CheckAccess } = useCheckAccess(type, accessCode);
+  const { CheckAccess } = useCheckAccess();
 
   useEffect(() => {
-    setAccessible(CheckAccess());
+    setAccessible(CheckAccess(type, accessCode));
   }, []);
 
   return <>{accessible ? <Route {...rest} /> : null}</>;

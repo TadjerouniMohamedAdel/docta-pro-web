@@ -16,21 +16,15 @@ const ProtectedComponent: React.FC<Props> = ({
 }) => {
   const [accessible, setAccessible] = useState(false);
 
-  const { CheckAccess } = useCheckAccess(type, accessCode);
+  const { CheckAccess } = useCheckAccess();
 
   useEffect(() => {
-    setAccessible(CheckAccess());
+    setAccessible(CheckAccess(type, accessCode));
   }, []);
 
-  return (
-    <>
-      {accessible
-        ? React.Children.map(children, (child) =>
-            React.cloneElement(child as React.ReactElement, { ...rest }),
-          )
-        : null}
-    </>
-  );
+  const childNodes = React.Children.toArray(children)?.filter(Boolean) as React.ReactElement[];
+
+  return <>{accessible ? childNodes.map((node) => React.cloneElement(node, { ...rest })) : null}</>;
 };
 
 export default ProtectedComponent;
