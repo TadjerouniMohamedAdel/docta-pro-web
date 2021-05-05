@@ -204,12 +204,14 @@ const Appointments: React.FC = () => {
             </Col>
             <Col>
               <Row gutter={10}>
-                <Col>
-                  <VisitReasons
-                    visitReasonIds={visitReasonIds}
-                    setVisitReasonIds={setVisitReasonIds}
-                  />
-                </Col>
+                <ProtectedComponent accessCode="reasons/settings">
+                  <Col>
+                    <VisitReasons
+                      visitReasonIds={visitReasonIds}
+                      setVisitReasonIds={setVisitReasonIds}
+                    />
+                  </Col>
+                </ProtectedComponent>
                 <Col>
                   <Button
                     className="btn-view-swicther"
