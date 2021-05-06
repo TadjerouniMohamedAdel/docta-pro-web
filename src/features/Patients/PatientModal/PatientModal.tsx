@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import Button from '../../../components/Button/Button';
 import Modal from '../../../components/Modal/Modal';
 import Icon from '../../../components/Icon/Icon';
@@ -21,7 +21,7 @@ type Props = {
 
 const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
-
+  const queryClient = useQueryClient();
   const personalInfoFormInitialValues: PersonalInfoForm = {
     firstName: '',
     lastName: '',
@@ -112,18 +112,15 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
   const handleSavePatient = async () => {
     handleSubmit();
     if (isValid) {
-      try {
-        await mutateAsync({
-          ...personalInfoForm,
-          phone: personalInfoForm.phone,
-          ...medicalRecordsForm,
-        });
-        setPersonalInfoForm(personalInfoFormInitialValues);
-        setMedicalRecordsForm(medicalRecordsFormInitialValues);
-        setVisible(false);
-      } catch (error) {
-        console.log(error);
-      }
+      await mutateAsync({
+        ...personalInfoForm,
+        phone: personalInfoForm.phone,
+        ...medicalRecordsForm,
+      });
+      setPersonalInfoForm(personalInfoFormInitialValues);
+      setMedicalRecordsForm(medicalRecordsFormInitialValues);
+      setVisible(false);
+      queryClient.invalidateQueries('patients');
     }
   };
 
