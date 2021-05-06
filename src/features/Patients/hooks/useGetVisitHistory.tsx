@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { fetchPatientVisitHistory } from './services';
+import { fetchPatientVisitHistory } from '../services';
 
 export const useGetVisitHistory = (patientId: string, page: number, size: number) => {
   const { data, isLoading, isError, isFetching } = useQuery(

@@ -2,39 +2,25 @@ import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useInfiniteQuery } from 'react-query';
 import classNames from 'classnames';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
-import { fetchBlockedPatients } from '../../services';
 import { SelectedPatient } from '../../types';
+import { useBlockedPatients } from '../../hooks/useBlockedPatients';
 
 type Props = {
   selectedPatient?: SelectedPatient;
   setSelectedPatient: (values: SelectedPatient) => void;
 };
 
-const usePatientsList = (term: string) => {
-  const { data, ...rest } = useInfiniteQuery(
-    ['blocked-patients', term],
-    async ({ pageParam = 0 }) => {
-      const res = await fetchBlockedPatients(term, pageParam);
-      return { ...res, patients: res.data };
-    },
-    {
-      getNextPageParam: (lastPage) =>
-        lastPage.nextCursor < lastPage.total ? lastPage.nextCursor : undefined,
-    },
-  );
-  return { data: data && data.pages ? data : ({ pages: [] } as any), ...rest };
-};
-
 const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient }) => {
   const { t } = useTranslation('translation');
 
   const [term, setTerm] = useState<string>('');
-  const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } = usePatientsList(term);
+  const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } = useBlockedPatients(
+    term,
+  );
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
   useIntersectionObserver({

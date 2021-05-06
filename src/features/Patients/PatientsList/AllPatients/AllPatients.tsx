@@ -2,36 +2,17 @@ import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useInfiniteQuery } from 'react-query';
 import classNames from 'classnames';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
-import { fetchAllPatients } from '../../services';
 import { SelectedPatient } from '../../types';
+import { usePatientsList } from '../../hooks';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;
   selectedPatient?: SelectedPatient;
   setSelectedPatient: (values: SelectedPatient) => void;
-};
-
-const usePatientsList = (term: string) => {
-  const [total, setTotal] = useState(0);
-
-  const { data, ...rest } = useInfiniteQuery(
-    ['patients', term],
-    async ({ pageParam = 0 }) => {
-      const res = await fetchAllPatients(term, pageParam);
-      setTotal(res.total);
-      return { ...res, patients: res.data };
-    },
-    {
-      getNextPageParam: (lastPage) =>
-        lastPage.nextCursor < lastPage.total ? lastPage.nextCursor : undefined,
-    },
-  );
-  return { data: data && data.pages ? data : ({ pages: [] } as any), total, ...rest };
 };
 
 const AllPatients: React.FC<Props> = ({
