@@ -67,7 +67,7 @@ function fetcher(
       if (authorization) localStorage.setItem('token', authorization);
       return data;
     }
-    if (showError) {
+    if (showError && config.method !== 'GET') {
       const isWarning = isInErrorsList(data?.error?.code);
       openNotification(isWarning ? 'warning' : 'error', {
         message: isWarning ? i18n.t(data.error.code) : i18n.t('Something went wrong!'),
