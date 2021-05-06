@@ -4,37 +4,41 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Patients from '../../../features/Patients';
 import NotFound from '../../../features/NotFound';
 import Appointments from '../../../features/Appointments';
-import Settings from '../../../features/Settings';
 import ProtectedRoute from '../../../features/Auth/ProtectedRoute/ProtectedRoute';
+import FullPageLoader from '../../FullPageLoader';
+
+const Settings = React.lazy(() => import('../../../features/Settings'));
 
 const Content: React.FC = () => {
   return (
     <main className="content" style={{ padding: 16 }}>
-      <Switch>
-        <ProtectedRoute
-          accessCode="patients"
-          type="section"
-          path="/patients"
-          component={Patients}
-        />
-        <ProtectedRoute
-          accessCode="settings"
-          type="section"
-          path="/settings"
-          component={Settings}
-        />
-        <ProtectedRoute
-          accessCode="appointments"
-          type="section"
-          path="/appointments"
-          component={Appointments}
-        />
-        <Route exact path="/">
-          <Redirect to="/appointments" />
-        </Route>
-        {/* <Route exact path="/" component={Overview} /> */}
-        <Route path="*" component={NotFound} />
-      </Switch>
+      <React.Suspense fallback={<FullPageLoader />}>
+        <Switch>
+          <ProtectedRoute
+            accessCode="patients"
+            type="section"
+            path="/patients"
+            component={Patients}
+          />
+          <ProtectedRoute
+            accessCode="settings"
+            type="section"
+            path="/settings"
+            component={Settings}
+          />
+          <ProtectedRoute
+            accessCode="appointments"
+            type="section"
+            path="/appointments"
+            component={Appointments}
+          />
+          <Route exact path="/">
+            <Redirect to="/appointments" />
+          </Route>
+          <Route path="*" component={NotFound} />
+          {/* <Route exact path="/" component={Overview} /> */}
+        </Switch>
+      </React.Suspense>
     </main>
   );
 };
