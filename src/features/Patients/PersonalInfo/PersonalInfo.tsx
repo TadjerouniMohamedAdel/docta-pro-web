@@ -34,7 +34,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   return (
     <Form onFinish={handleSubmit}>
       <Row gutter={[35, 16]} align="middle">
-        <Col>
+        <Col span={24}>
           {values.picture ? (
             <Avatar src={values.picture} size={95} />
           ) : (
@@ -44,8 +44,6 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
             </Avatar>
           )}
         </Col>
-      </Row>
-      <Row gutter={[35, 16]}>
         <Col span={12}>
           <Label
             title={t('first name')}

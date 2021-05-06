@@ -137,7 +137,6 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
               <Label
                 title={t('phone number')}
                 error={touched.phone ? (errors.phone as string) : undefined}
-                required
               />
               <Form.Item
                 validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
