@@ -17,31 +17,28 @@ export const fetchDoctorPersonalInfo = async (): Promise<{
 };
 
 export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): Promise<any> => {
-  const formData = new FormData();
-  formData.append('picture', params.file ?? new Blob());
-  formData.append('firstName', params.firstName);
-  formData.append('lastName', params.lastName);
-  formData.append('bio', params.biography);
-  formData.append('gender', params.gender || '');
-  formData.append('birthDate', params.birthDate);
-  formData.append(
-    'languages',
-    JSON.stringify(params.languages.filter((language) => language.isNew || language.isDeleted)),
-  );
-  formData.append(
-    'formations',
-    JSON.stringify(
+  const body = {
+    ...(params.file ? { picture: params.file } : undefined),
+    firstName: params.firstName,
+    lastName: params.lastName,
+    birthDate: params.birthDate,
+    bio: params.biography,
+    gender: params.gender ?? '',
+    languages: JSON.stringify(
+      params.languages.filter((language) => language.isNew || language.isDeleted),
+    ),
+    formations: JSON.stringify(
       params.diplomas.filter(
         (diplomas) =>
           (diplomas.isNew && !diplomas.isDeleted) || diplomas.isDeleted || diplomas.isEdited,
       ),
     ),
-  );
+  };
 
   return fetcher('/api/v1/practitioners/profile', {
-    body: formData,
+    body,
     method: 'PUT',
-    hasFiles: true,
+    hasFiles: !!params.file,
   });
 };
 
@@ -52,27 +49,22 @@ export const fetchDoctorCabinetProfile = async (): Promise<{
 };
 
 export const updateDoctorCabinetProfile = async (params: DoctorCabinetInfoForm): Promise<any> => {
-  const formData = new FormData();
-  // eslint-disable-next-line no-plusplus
-  for (let index = 0; index < params.files.length; index++) {
-    formData.append('files', params.files[index]);
-  }
-  formData.append('contactNumber', params.cabinetForm.contactNumber);
-  formData.append('secondaryContactNumber', params.cabinetForm.secondaryContactNumber);
-  formData.append(
-    'services',
-    JSON.stringify(
+  const body = {
+    ...(params.files && params.files.length > 0 ? { files: params.files } : undefined),
+    contactNumber: params.cabinetForm.contactNumber,
+    secondaryContactNumber: params.cabinetForm.secondaryContactNumber,
+    services: JSON.stringify(
       params.services.filter(
         (service) => (service.isNew && !service.isDeleted) || service.isDeleted,
       ),
     ),
-  );
-  formData.append('images', JSON.stringify(params.images.filter((image) => image.isDeleted)));
+    images: JSON.stringify(params.images.filter((image) => image.isDeleted)),
+  };
 
   return fetcher('/api/v1/practitioners/cabinets/profile', {
-    body: formData,
+    body,
     method: 'PUT',
-    hasFiles: true,
+    hasFiles: params.files.length > 0,
   });
 };
 

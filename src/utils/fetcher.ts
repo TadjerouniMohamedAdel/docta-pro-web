@@ -1,5 +1,6 @@
 import { QueryCache } from 'react-query';
 import i18n from '../i18n';
+import { convertToFormData } from './formData';
 import { isInErrorsList, openNotification } from './notification';
 
 type FetchHeader = {
@@ -43,7 +44,7 @@ function fetcher(
   };
 
   if (body) {
-    (config as RequestInit).body = hasFiles ? body : JSON.stringify(body);
+    (config as RequestInit).body = hasFiles ? convertToFormData(body) : JSON.stringify(body);
   }
 
   return window.fetch(endpoint, config as RequestInit).then(async (response) => {
