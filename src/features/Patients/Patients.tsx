@@ -12,6 +12,7 @@ import PatientModal from './PatientModal/PatientModal';
 import { SelectedPatient } from './types';
 import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
 import emptyStateImg from '../../assets/img/empty-state.png';
+import './styles.less';
 
 const Patients: React.FC = () => {
   const { t } = useTranslation('translation');
@@ -25,7 +26,7 @@ const Patients: React.FC = () => {
   };
 
   return (
-    <InnerLayout>
+    <InnerLayout className="patient-layout">
       <InnerSidebar>
         <Row justify="space-between" style={{ padding: 13 }}>
           <Col style={{ display: 'flex' }}>

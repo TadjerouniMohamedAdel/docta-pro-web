@@ -1,0 +1,25 @@
+.patient-layout {
+  height: calc(100vh - 96px) !important;
+
+  .inner-layout {
+    height: 100% !important;
+  }
+  .sidebar {
+    .ant-tabs {
+      height: calc(100% - 66px);
+    }
+    height: 100% !important;
+    .ant-tabs-content-holder,
+    .ant-tabs-content,
+    .ant-tabs-tabpane,
+    .patients-list {
+      height: 100% !important;
+    }
+  }
+
+  .patient-list-wrapper {
+    height: calc(100% - 50px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}

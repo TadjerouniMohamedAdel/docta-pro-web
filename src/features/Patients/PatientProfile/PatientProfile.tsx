@@ -327,7 +327,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
           ) : null}
         </Row>
       </div>
-      <div style={{ flexGrow: 1 }}>
+      <div style={{ flexGrow: 1, height: 'calc(100% - 90px)' }}>
         <Tabs
           defaultActiveKey="1"
           activeKey={activeKey}

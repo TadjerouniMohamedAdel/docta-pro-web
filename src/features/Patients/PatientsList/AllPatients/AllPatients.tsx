@@ -54,70 +54,68 @@ const AllPatients: React.FC<Props> = ({
   }, [total]);
 
   return (
-    <div style={{ padding: '12px 0' }}>
-      <Spacer size="xl" direction="vertical">
-        <div style={{ padding: '0 12px' }}>
-          <Input
-            size="small"
-            placeholder={t('search patients')}
-            onChange={(e) => handleSearchChange(e.target.value)}
-          />
-        </div>
+    <div style={{ padding: '12px 0' }} className="patients-list">
+      <div style={{ padding: '0 12px', marginBottom: 24 }}>
+        <Input
+          size="small"
+          placeholder={t('search patients')}
+          onChange={(e) => handleSearchChange(e.target.value)}
+        />
+      </div>
 
-        <div className="patients-list">
-          {data.pages.map((page: any) => (
-            <>
-              {page.patients.map((patient: SelectedPatient) => (
-                <div
-                  key={patient.id}
-                  className={classNames('patient-box', {
-                    selected: patient.id === selectedPatient?.id,
-                  })}
-                  onClick={() => handleGetPatientDetails(patient)}
-                  onKeyPress={() => handleGetPatientDetails(patient)}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <Row justify="space-between" gutter={12} style={{ padding: '12px' }}>
-                    <Col>
-                      <Row gutter={12} align="middle">
-                        <Col>
-                          {patient.picture ? (
-                            <Avatar src={patient.picture} size="large" />
-                          ) : (
-                            <Avatar src={patient.picture} size="large">
-                              {patient.firstName[0].toUpperCase()}
-                              {patient.lastName[0].toUpperCase()}
-                            </Avatar>
-                          )}
-                        </Col>
-                        <Col>
-                          <Spacer size="xss" direction="vertical">
-                            <Text style={{ fontWeight: 'bold' }}>
-                              {patient.firstName} {patient.lastName}
-                            </Text>
-                            <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                              {patient.city?.name ?? '-'} - {patient.state?.name ?? '-'}
-                            </Text>
-                          </Spacer>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col>
-                      <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                        {patient.user.phone}
-                      </Text>
-                    </Col>
-                  </Row>
-                </div>
-              ))}
-            </>
-          ))}
-        </div>
-        <div ref={loadMoreButtonRef} style={{ textAlign: 'center' }}>
-          {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
-        </div>
-      </Spacer>
+      <div className='patient-list-wrapper'>
+        {data.pages.map((page: any) => (
+          <>
+            {page.patients.map((patient: SelectedPatient) => (
+              <div
+                key={patient.id}
+                className={classNames('patient-box', {
+                  selected: patient.id === selectedPatient?.id,
+                })}
+                onClick={() => handleGetPatientDetails(patient)}
+                onKeyPress={() => handleGetPatientDetails(patient)}
+                role="button"
+                tabIndex={0}
+              >
+                <Row justify="space-between" gutter={12} style={{ padding: '12px' }}>
+                  <Col>
+                    <Row gutter={12} align="middle">
+                      <Col>
+                        {patient.picture ? (
+                          <Avatar src={patient.picture} size="large" />
+                        ) : (
+                          <Avatar src={patient.picture} size="large">
+                            {patient.firstName[0].toUpperCase()}
+                            {patient.lastName[0].toUpperCase()}
+                          </Avatar>
+                        )}
+                      </Col>
+                      <Col>
+                        <Spacer size="xss" direction="vertical">
+                          <Text style={{ fontWeight: 'bold' }}>
+                            {patient.firstName} {patient.lastName}
+                          </Text>
+                          <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
+                            {patient.city?.name ?? '-'} - {patient.state?.name ?? '-'}
+                          </Text>
+                        </Spacer>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col>
+                    <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
+                      {patient.user.phone}
+                    </Text>
+                  </Col>
+                </Row>
+              </div>
+            ))}
+          </>
+        ))}
+      </div>
+      <div ref={loadMoreButtonRef} style={{ textAlign: 'center' }}>
+        {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
+      </div>
     </div>
   );
 };
