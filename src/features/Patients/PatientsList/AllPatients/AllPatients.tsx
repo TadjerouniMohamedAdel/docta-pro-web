@@ -63,7 +63,7 @@ const AllPatients: React.FC<Props> = ({
         />
       </div>
 
-      <div className='patient-list-wrapper'>
+      <div className="patient-list-wrapper">
         {data.pages.map((page: any) => (
           <>
             {page.patients.map((patient: SelectedPatient) => (
@@ -112,9 +112,10 @@ const AllPatients: React.FC<Props> = ({
             ))}
           </>
         ))}
-      </div>
-      <div ref={loadMoreButtonRef} style={{ textAlign: 'center' }}>
-        {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
+        <div ref={loadMoreButtonRef} style={{ textAlign: 'center', height: 35, marginTop: 16 }}>
+          {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
+          {!hasNextPage && !isLoading ? <span style={{ opacity: 0.5 }}>No more data</span> : null}
+        </div>
       </div>
     </div>
   );
