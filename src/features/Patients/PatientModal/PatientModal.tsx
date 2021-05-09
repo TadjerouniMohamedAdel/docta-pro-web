@@ -115,6 +115,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
       await mutateAsync({
         ...personalInfoForm,
         phone: personalInfoForm.phone,
+        email: personalInfoForm.email || undefined,
         ...medicalRecordsForm,
       });
       setPersonalInfoForm(personalInfoFormInitialValues);
