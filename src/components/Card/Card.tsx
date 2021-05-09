@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Props = {
+export type Props = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
   style?: React.CSSProperties;
   shadow?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -14,7 +14,7 @@ const shadows = {
   xl: '0 32px 40px -2px rgba(10, 22, 70, 0.12), 0 0 1px 0 rgba(10, 22, 70, 0.06)',
 };
 
-const Spacer: React.FC<Props> = ({ children, shadow = 'md', style, ...rest }) => {
+const Card: React.FC<Props> = ({ children, shadow = 'md', style, ...rest }) => {
   return (
     <div
       style={{ boxShadow: shadows[shadow], borderRadius: 8, backgroundColor: 'white', ...style }}
@@ -25,4 +25,5 @@ const Spacer: React.FC<Props> = ({ children, shadow = 'md', style, ...rest }) =>
   );
 };
 
-export default Spacer;
+export default Card;
+export type { Props as CardProps };
