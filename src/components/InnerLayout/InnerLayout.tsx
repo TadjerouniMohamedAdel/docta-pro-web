@@ -1,17 +1,17 @@
 import React from 'react';
 import { useLocaleState } from '../../i18n';
-import Card from '../Card/Card';
+import Card, { CardProps } from '../Card/Card';
 import './styles.less';
 
-export type Props = {
+export type Props = CardProps & {
   children: React.ReactNode;
 };
 
-const InnerLayout: React.FC<Props> = ({ children }) => {
+const InnerLayout: React.FC<Props> = ({ children, ...rest }) => {
   const { locale } = useLocaleState();
 
   return (
-    <Card style={{ height: '100%', overflow: 'hidden' }}>
+    <Card style={{ height: '100%', overflow: 'hidden' }} {...rest}>
       <div className={`layout inner-layout has-sidebar ${locale === 'ar' ? 'rtl' : ''}`}>
         {children}
       </div>
