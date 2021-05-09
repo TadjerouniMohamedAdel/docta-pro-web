@@ -1,7 +1,7 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
-import { Col, Row, Form, Input, Avatar, Select as AntSelect } from 'antd';
+import { Col, Row, Form, Input, Select as AntSelect } from 'antd';
 import { FormikProps } from 'formik';
 import moment from 'moment';
 import Label from '../../../components/Label/Label';
@@ -34,7 +34,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   return (
     <Form onFinish={handleSubmit}>
       <Row gutter={[35, 16]} align="middle">
-        <Col span={24}>
+        {/* <Col span={24}>
           {values.picture ? (
             <Avatar src={values.picture} size={95} />
           ) : (
@@ -43,7 +43,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               {values.lastName[0]?.toUpperCase()}
             </Avatar>
           )}
-        </Col>
+        </Col> */}
         <Col span={12}>
           <Label
             title={t('first name')}

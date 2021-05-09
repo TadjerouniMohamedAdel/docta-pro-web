@@ -157,7 +157,7 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           tab={<Tab icon={<Icon name="profile-line" />}>{t('personal info')} </Tab>}
           key="1"
         >
-          <div style={{ padding: '16px 40px' }}>
+          <div style={{ padding: '16px 40px 40px 40px' }}>
             <PersonalInfo
               handleFormChange={handlePersonalInfoFormChange}
               formik={personalInfoFormik}
@@ -168,13 +168,15 @@ const PatientModal: React.FC<Props> = ({ visible = false, setVisible }) => {
           tab={<Tab icon={<Icon name="health-book-line" />}>{t('medical record')}</Tab>}
           key="2"
         >
-          <MedicalRecords
-            medicalRecordsForm={medicalRecordsForm}
-            handleFormChange={handleMedicalRecordsFormChange}
-            handleAddNewItem={handleAddNewItem}
-            handleDeleteItem={handleDeleteItem}
-            formik={medicalRecordFormik}
-          />
+          <div style={{ minHeight: 490, display: 'flex' }}>
+            <MedicalRecords
+              medicalRecordsForm={medicalRecordsForm}
+              handleFormChange={handleMedicalRecordsFormChange}
+              handleAddNewItem={handleAddNewItem}
+              handleDeleteItem={handleDeleteItem}
+              formik={medicalRecordFormik}
+            />
+          </div>
         </Tabs.TabPane>
       </Tabs>
     </Modal>

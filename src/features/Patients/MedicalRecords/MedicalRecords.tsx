@@ -35,7 +35,7 @@ const MedicalRecords: React.FC<Props> = ({
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: 600 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
       <Form style={{ padding: '30px 40px' }}>
         <Row gutter={[35, 24]} align="middle">
           <Col span={3}>
