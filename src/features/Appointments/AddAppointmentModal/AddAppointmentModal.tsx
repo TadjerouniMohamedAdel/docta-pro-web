@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from 'react-query';
-import { Avatar, Col, Divider, Form, Input, Row, Select as AntSelect } from 'antd';
+import { Avatar, Col, Divider, Empty, Form, Input, Row, Select as AntSelect } from 'antd';
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
@@ -19,9 +19,9 @@ import TimePicker from '../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import PatientAutocomplete from './PatientAutocomplete/PatientAutocomplete';
 import NewPatient from './NewPatient/NewPatient';
-import { StateCity } from '../../../types/types';
-import { useGetStatesList } from '../../../hooks/useGetStatesList';
-import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
+// import { StateCity } from '../../../types/types';
+// import { useGetStatesList } from '../../../hooks/useGetStatesList';
+// import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
 import { useAddAppointment } from '../hooks/useAddAppointment';
 
 type Props = {
@@ -68,8 +68,8 @@ const AddAppointmentModal: React.FC<Props> = ({
     data: FetchSpecialtyResponse[];
   };
 
-  const { states } = useGetStatesList();
-  const { cities } = useGetCitiesList(patient.state);
+  // const { states } = useGetStatesList();
+  // const { cities } = useGetCitiesList(patient.state);
 
   const [form] = Form.useForm();
 
@@ -290,7 +290,7 @@ const AddAppointmentModal: React.FC<Props> = ({
         </Form>
       </div>
       <Divider style={{ marginTop: 0, marginBottom: 0 }} />
-      <div style={{ padding: '16px 40px' }}>
+      <div style={{ padding: '16px 40px  24px 40px' }}>
         <Row gutter={[35, 16]}>
           <Col span={24}>
             <Row align="bottom">
@@ -319,158 +319,169 @@ const AddAppointmentModal: React.FC<Props> = ({
               <PatientAutocomplete onSelectPatient={handleSelectPatient} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Row gutter={16}>
-              <Col>
-                {patient.picture ? (
-                  <Avatar src={patient.picture} size={75} shape="square" />
-                ) : (
-                  <Avatar src={patient.picture} size={75} shape="square">
-                    {patient.firstName[0]?.toUpperCase()}
-                    {patient.lastName[0]?.toUpperCase()}
-                  </Avatar>
-                )}
+          {!patient.id ? (
+            <Col span={24}>
+              <Row style={{ height: 250 }} align="middle">
+                <Col flex={1}>
+                  <Empty description={t('No patient is selected!')} />
+                </Col>
+              </Row>
+            </Col>
+          ) : (
+            <>
+              <Col span={12}>
+                <Row gutter={16}>
+                  <Col>
+                    {patient.picture ? (
+                      <Avatar src={patient.picture} size={75} shape="square" />
+                    ) : (
+                      <Avatar src={patient.picture} size={75} shape="square">
+                        {patient.firstName[0]?.toUpperCase()}
+                        {patient.lastName[0]?.toUpperCase()}
+                      </Avatar>
+                    )}
+                  </Col>
+                  <Col flex={1}>
+                    <Label title={t('first name')} />
+                    <Form.Item>
+                      <Input
+                        prefix={<Icon name="user-line" />}
+                        name="firstName"
+                        value={patient.firstName}
+                        placeholder={i18n.t('placeholders:enter', {
+                          fieldName: t('first name'),
+                        })}
+                        disabled
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Col>
-              <Col flex={1}>
-                <Label title={t('first name')} />
+              <Col flex={12}>
+                <Label title={t('last name')} />
                 <Form.Item>
                   <Input
                     prefix={<Icon name="user-line" />}
-                    name="firstName"
-                    value={patient.firstName}
+                    name="lastName"
+                    value={patient.lastName}
                     placeholder={i18n.t('placeholders:enter', {
-                      fieldName: t('first name'),
+                      fieldName: t('last name'),
                     })}
                     disabled
                   />
                 </Form.Item>
               </Col>
-            </Row>
-          </Col>
-          <Col flex={12}>
-            <Label title={t('last name')} />
-            <Form.Item>
-              <Input
-                prefix={<Icon name="user-line" />}
-                name="lastName"
-                value={patient.lastName}
-                placeholder={i18n.t('placeholders:enter', {
-                  fieldName: t('last name'),
-                })}
-                disabled
-              />
-            </Form.Item>
-          </Col>
-
-          <Col span={12}>
-            <Label title={t('birthday')} />
-            <Form.Item>
-              <DatePicker
-                disabled
-                prefixIcon={<Icon name="cake-line" />}
-                name="birthDate"
-                value={patient.birthDate ? moment(patient.birthDate) : null}
-                placeholder={i18n.t('placeholders:enter', {
-                  fieldName: t('birthday'),
-                })}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('gender')} />
-            <Form.Item>
-              <Select
-                disabled
-                prefixIcon={<Icon name="genderless-line" />}
-                placeholder={i18n.t('placeholders:select', {
-                  fieldName: t('gender'),
-                })}
-                dropdownMatchSelectWidth={false}
-                value={patient.gender}
-              >
-                <AntSelect.Option value="MALE">Male</AntSelect.Option>
-                <AntSelect.Option value="Female">Female</AntSelect.Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('phone number')} />
-            <Form.Item>
-              <ReactInputMask
-                disabled
-                mask="+213 999 999 999"
-                maskChar={null}
-                placeholder={`+213 ${i18n.t('placeholders:enter', {
-                  fieldName: t('phone number'),
-                })}`}
-                value={patient.phone ?? ''}
-                dir="ltr"
-                name="phone"
-              >
-                {(inputProps: any) => (
-                  <Input disabled prefix={<Icon name="phone-line" />} {...inputProps} />
-                )}
-              </ReactInputMask>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('general status')} />
-            <Form.Item>
-              <Input
-                disabled
-                prefix={<Icon name="heart-pulse-line" />}
-                name="generalStatus"
-                value={patient.generalStatus}
-                placeholder={i18n.t('placeholders:enter', {
-                  fieldName: t('general status'),
-                })}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('state')} />
-            <Form.Item>
-              <Select
-                disabled
-                prefixIcon={<Icon name="map-pin-line" />}
-                placeholder={i18n.t('placeholders:select', {
-                  fieldName: t('state'),
-                })}
-                value={states?.data ? patient.state : undefined}
-                dropdownMatchSelectWidth={false}
-              >
-                {states?.data
-                  ? states.data.map((state: StateCity) => (
-                      <AntSelect.Option key={state.id} value={state.id}>
-                        {state.name}
-                      </AntSelect.Option>
-                    ))
-                  : null}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('city')} />
-            <Form.Item>
-              <Select
-                disabled
-                prefixIcon={<Icon name="road-map-line" />}
-                placeholder={i18n.t('placeholders:select', {
-                  fieldName: t('city'),
-                })}
-                value={cities?.data ? patient.city : undefined}
-                dropdownMatchSelectWidth={false}
-              >
-                {cities?.data
-                  ? cities.data.map((city: StateCity) => (
-                      <AntSelect.Option key={city.id} value={city.id}>
-                        {city.name}
-                      </AntSelect.Option>
-                    ))
-                  : null}
-              </Select>
-            </Form.Item>
-          </Col>
+              <Col span={12}>
+                <Label title={t('birthday')} />
+                <Form.Item>
+                  <DatePicker
+                    disabled
+                    prefixIcon={<Icon name="cake-line" />}
+                    name="birthDate"
+                    value={patient.birthDate ? moment(patient.birthDate) : null}
+                    placeholder={i18n.t('placeholders:enter', {
+                      fieldName: t('birthday'),
+                    })}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Label title={t('gender')} />
+                <Form.Item>
+                  <Select
+                    disabled
+                    prefixIcon={<Icon name="genderless-line" />}
+                    placeholder={i18n.t('placeholders:select', {
+                      fieldName: t('gender'),
+                    })}
+                    dropdownMatchSelectWidth={false}
+                    value={patient.gender}
+                  >
+                    <AntSelect.Option value="MALE">Male</AntSelect.Option>
+                    <AntSelect.Option value="Female">Female</AntSelect.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Label title={t('phone number')} />
+                <Form.Item>
+                  <ReactInputMask
+                    disabled
+                    mask="+213 999 999 999"
+                    maskChar={null}
+                    placeholder={`+213 ${i18n.t('placeholders:enter', {
+                      fieldName: t('phone number'),
+                    })}`}
+                    value={patient.phone ?? ''}
+                    dir="ltr"
+                    name="phone"
+                  >
+                    {(inputProps: any) => (
+                      <Input disabled prefix={<Icon name="phone-line" />} {...inputProps} />
+                    )}
+                  </ReactInputMask>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Label title={t('general status')} />
+                <Form.Item>
+                  <Input
+                    disabled
+                    prefix={<Icon name="heart-pulse-line" />}
+                    name="generalStatus"
+                    value={patient.generalStatus}
+                    placeholder={i18n.t('placeholders:enter', {
+                      fieldName: t('general status'),
+                    })}
+                  />
+                </Form.Item>
+              </Col>
+              {/* <Col span={12}>
+                <Label title={t('state')} />
+                <Form.Item>
+                  <Select
+                    disabled
+                    prefixIcon={<Icon name="map-pin-line" />}
+                    placeholder={i18n.t('placeholders:select', {
+                      fieldName: t('state'),
+                    })}
+                    value={states?.data ? patient.state : undefined}
+                    dropdownMatchSelectWidth={false}
+                  >
+                    {states?.data
+                      ? states.data.map((state: StateCity) => (
+                          <AntSelect.Option key={state.id} value={state.id}>
+                            {state.name}
+                          </AntSelect.Option>
+                        ))
+                      : null}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Label title={t('city')} />
+                <Form.Item>
+                  <Select
+                    disabled
+                    prefixIcon={<Icon name="road-map-line" />}
+                    placeholder={i18n.t('placeholders:select', {
+                      fieldName: t('city'),
+                    })}
+                    value={cities?.data ? patient.city : undefined}
+                    dropdownMatchSelectWidth={false}
+                  >
+                    {cities?.data
+                      ? cities.data.map((city: StateCity) => (
+                          <AntSelect.Option key={city.id} value={city.id}>
+                            {city.name}
+                          </AntSelect.Option>
+                        ))
+                      : null}
+                  </Select>
+                </Form.Item>
+              </Col> */}
+            </>
+          )}
         </Row>
       </div>
       {showNewPatientform ? (
