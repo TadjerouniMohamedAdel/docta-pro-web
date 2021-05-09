@@ -5,14 +5,14 @@ import Patients from '../../../features/Patients';
 import NotFound from '../../../features/NotFound';
 import Appointments from '../../../features/Appointments';
 import ProtectedRoute from '../../../features/Auth/ProtectedRoute/ProtectedRoute';
-import FullPageLoader from '../../FullPageLoader';
+import PageLoader from '../../PageLoader/PageLoader';
 
 const Settings = React.lazy(() => import('../../../features/Settings'));
 
 const Content: React.FC = () => {
   return (
     <main className="content" style={{ padding: 16 }}>
-      <React.Suspense fallback={<FullPageLoader />}>
+      <React.Suspense fallback={<PageLoader />}>
         <Switch>
           <ProtectedRoute
             accessCode="patients"

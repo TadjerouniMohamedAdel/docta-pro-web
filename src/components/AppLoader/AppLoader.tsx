@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FullPageLoader: React.FC = () => {
+const AppLoader: React.FC = () => {
   return (
     <div
       style={{
@@ -21,4 +21,4 @@ const FullPageLoader: React.FC = () => {
   );
 };
 
-export default FullPageLoader;
+export default AppLoader;
