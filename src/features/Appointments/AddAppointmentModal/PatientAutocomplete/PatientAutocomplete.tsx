@@ -4,11 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import Icon from '../../../../components/Icon/Icon';
 import Text from '../../../../components/Text/Text';
-import { fetchAllPatients, fetchPatientDetails } from '../../../Patients/services';
-import { Patient } from '../../types';
+import { fetchAllPatients } from '../../../Patients/services';
 
 type Props = {
-  onSelectPatient: (value: Patient) => void;
+  onSelectPatient: (patientId: string) => void;
 };
 
 const useSearchPatients = (term: string) => {
@@ -35,24 +34,7 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
 
   const handleOnSelect = async (term: string, option: any) => {
     setValue(value);
-    try {
-      const { data } = await fetchPatientDetails(option.value, 'personal-info');
-
-      onSelectPatient({
-        id: option.value,
-        birthDate: data.birthDate,
-        state: data.state?.id,
-        city: data.city?.id,
-        firstName: data.firstName,
-        gender: data.gender,
-        generalStatus: data.generalStatus,
-        lastName: data.lastName,
-        phone: data.user.phone,
-        picture: data.picture,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    onSelectPatient(option.value);
   };
 
   const options = patients.data

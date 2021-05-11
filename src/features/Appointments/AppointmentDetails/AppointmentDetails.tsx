@@ -21,6 +21,7 @@ import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
 import { getWeekRange } from '../../../utils/date';
 import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
 import { useUpdateAppointment } from '../hooks';
+import AppointmentSkeleton from '../AppointmentSkeleton/AppointmentSkeleton';
 
 type Props = {
   visible: boolean;
@@ -33,6 +34,7 @@ const { Option } = AntSelect;
 
 const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, currentDate }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
+  const [fetchAppointmentLoading, setFetchAppointmentLoading] = useState(false);
 
   const minute = t('minute');
   const hour = t('hour');
@@ -133,6 +135,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
 
   const handleFetchAppointmentDetails = async () => {
     try {
+      setFetchAppointmentLoading(true);
       const response = await fetchAppointmentsDetails(appointmentId);
       setAppointmentForm({
         start: new Date(response.start),
@@ -146,6 +149,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
     } catch (error) {
       console.log(error);
     }
+    setFetchAppointmentLoading(false);
   };
 
   useEffect(() => {
@@ -159,270 +163,282 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
       width={780}
       onCancel={onClose}
       actions={
-        <ProtectedComponent accessCode="edit/appointments">
-          <Button
-            type="primary"
-            icon={<Icon name="save-line" />}
-            onClick={form.submit}
-            loading={isLoadingEdit}
-            style={{ textTransform: 'uppercase' }}
-          >
-            {t('save')}
-          </Button>
-        </ProtectedComponent>
+        !fetchAppointmentLoading ? (
+          <ProtectedComponent accessCode="edit/appointments">
+            <Button
+              type="primary"
+              icon={<Icon name="save-line" />}
+              onClick={form.submit}
+              loading={isLoadingEdit}
+              style={{ textTransform: 'uppercase' }}
+            >
+              {t('save')}
+            </Button>
+          </ProtectedComponent>
+        ) : null
       }
     >
-      <div style={{ padding: '16px 40px' }}>
-        <Form onFinish={handleSubmit} form={form}>
-          <Row gutter={[35, 16]}>
-            <Col span={15}>
-              <Label title={t('date')} required />
-              <Form.Item
-                validateStatus={touched.start && Boolean(errors.start) ? 'error' : undefined}
-              >
-                <DatePicker
-                  prefixIcon={<Icon name="calendar-event-line" />}
-                  name="date"
-                  value={values.start ? moment(values.start) : null}
-                  placeholder={i18n.t('placeholders:select', {
-                    fieldName: t('appointment date'),
-                  })}
-                  onChange={(value) => {
-                    handleChange({
-                      target: { name: 'start', value },
-                    });
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={9}>
-              <Label title={t('time')} required />
-              <Form.Item
-                validateStatus={touched.time && Boolean(errors.time) ? 'error' : undefined}
-              >
-                <TimePicker
-                  prefixIcon={<Icon name="time-line" />}
-                  name="time"
-                  value={values.time ? moment(values.time) : null}
-                  format="HH:mm"
-                  minuteStep={5}
-                  style={{ width: '100%' }}
-                  placeholder={i18n.t('placeholders:select', {
-                    fieldName: t('appointment time'),
-                  })}
-                  onChange={(time) => {
-                    handleChange({
-                      target: { name: 'time', value: time },
-                    });
-                  }}
-                />
-              </Form.Item>
-            </Col>
+      {fetchAppointmentLoading ? (
+        <AppointmentSkeleton.AppointmentDetails />
+      ) : (
+        <>
+          <div style={{ padding: '16px 40px' }}>
+            <Form onFinish={handleSubmit} form={form}>
+              <Row gutter={[35, 16]}>
+                <Col span={15}>
+                  <Label title={t('date')} required />
+                  <Form.Item
+                    validateStatus={touched.start && Boolean(errors.start) ? 'error' : undefined}
+                  >
+                    <DatePicker
+                      prefixIcon={<Icon name="calendar-event-line" />}
+                      name="date"
+                      value={values.start ? moment(values.start) : null}
+                      placeholder={i18n.t('placeholders:select', {
+                        fieldName: t('appointment date'),
+                      })}
+                      onChange={(value) => {
+                        handleChange({
+                          target: { name: 'start', value },
+                        });
+                      }}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={9}>
+                  <Label title={t('time')} required />
+                  <Form.Item
+                    validateStatus={touched.time && Boolean(errors.time) ? 'error' : undefined}
+                  >
+                    <TimePicker
+                      prefixIcon={<Icon name="time-line" />}
+                      name="time"
+                      value={values.time ? moment(values.time) : null}
+                      format="HH:mm"
+                      minuteStep={5}
+                      style={{ width: '100%' }}
+                      placeholder={i18n.t('placeholders:select', {
+                        fieldName: t('appointment time'),
+                      })}
+                      onChange={(time) => {
+                        handleChange({
+                          target: { name: 'time', value: time },
+                        });
+                      }}
+                    />
+                  </Form.Item>
+                </Col>
 
-            <Col span={15}>
-              <Label
-                title={t('reason')}
-                error={touched.reasonId ? errors.reasonId : undefined}
-                required
-              />
-              <Form.Item
-                validateStatus={touched.reasonId && Boolean(errors.reasonId) ? 'error' : undefined}
-              >
-                <Select
-                  prefixIcon={<Icon name="stethoscope-line" />}
-                  placeholder={i18n.t('placeholders:select', {
-                    fieldName: t('appointment reason'),
-                  })}
-                  dropdownMatchSelectWidth={false}
-                  value={values.reasonId || undefined}
-                  onChange={(value) => {
-                    handleChange({
-                      target: {
-                        name: 'reasonId',
-                        value,
-                      },
-                    });
-                    onReasonChange(value);
-                  }}
-                >
-                  {specialties && specialties.data
-                    ? specialties.data.map((specialty) =>
-                        specialty.reasons.map((visitReason) => (
-                          <Option key={visitReason.id} value={visitReason.id}>
-                            {visitReason.name}
-                          </Option>
-                        )),
-                      )
-                    : null}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={9}>
-              <Label
-                title={t('duration')}
-                error={touched.duration ? errors.duration : undefined}
-                required
-              />
-              <Form.Item
-                validateStatus={touched.duration && Boolean(errors.duration) ? 'error' : undefined}
-              >
-                <Select
-                  prefixIcon={<Icon name="timer-line" />}
-                  placeholder={t('appointment duration')}
-                  dropdownMatchSelectWidth={false}
-                  style={{ width: '100%' }}
-                  value={values.duration}
-                  onChange={(value) => {
-                    handleChange({
-                      target: {
-                        name: 'duration',
-                        value,
-                      },
-                    });
-                  }}
-                >
-                  <Option value={15}> 15 {minute}</Option>
-                  <Option value={20}> 20 {minute}</Option>
-                  <Option value={25}> 25 {minute}</Option>
-                  <Option value={30}> 30 {minute}</Option>
-                  <Option value={35}> 35 {minute}</Option>
-                  <Option value={40}> 40 {minute}</Option>
-                  <Option value={45}> 45 {minute}</Option>
-                  <Option value={50}> 50 {minute}</Option>
-                  <Option value={55}> 55 {minute}</Option>
-                  <Option value={60}> 1 {hour}</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </div>
-      <Divider style={{ marginTop: 0, marginBottom: 0 }} />
-      <div style={{ padding: '16px 40px' }}>
-        <Row gutter={[35, 16]}>
-          <Col span={12}>
-            <Row gutter={16}>
-              <Col>
-                {patient.picture ? (
-                  <Avatar src={patient.picture} size={75} shape="square" />
-                ) : (
-                  <Avatar src={patient.picture} size={75} shape="square">
-                    {patient.firstName[0]?.toUpperCase()}
-                    {patient.lastName[0]?.toUpperCase()}
-                  </Avatar>
-                )}
+                <Col span={15}>
+                  <Label
+                    title={t('reason')}
+                    error={touched.reasonId ? errors.reasonId : undefined}
+                    required
+                  />
+                  <Form.Item
+                    validateStatus={
+                      touched.reasonId && Boolean(errors.reasonId) ? 'error' : undefined
+                    }
+                  >
+                    <Select
+                      prefixIcon={<Icon name="stethoscope-line" />}
+                      placeholder={i18n.t('placeholders:select', {
+                        fieldName: t('appointment reason'),
+                      })}
+                      dropdownMatchSelectWidth={false}
+                      value={values.reasonId || undefined}
+                      onChange={(value) => {
+                        handleChange({
+                          target: {
+                            name: 'reasonId',
+                            value,
+                          },
+                        });
+                        onReasonChange(value);
+                      }}
+                    >
+                      {specialties && specialties.data
+                        ? specialties.data.map((specialty) =>
+                            specialty.reasons.map((visitReason) => (
+                              <Option key={visitReason.id} value={visitReason.id}>
+                                {visitReason.name}
+                              </Option>
+                            )),
+                          )
+                        : null}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={9}>
+                  <Label
+                    title={t('duration')}
+                    error={touched.duration ? errors.duration : undefined}
+                    required
+                  />
+                  <Form.Item
+                    validateStatus={
+                      touched.duration && Boolean(errors.duration) ? 'error' : undefined
+                    }
+                  >
+                    <Select
+                      prefixIcon={<Icon name="timer-line" />}
+                      placeholder={t('appointment duration')}
+                      dropdownMatchSelectWidth={false}
+                      style={{ width: '100%' }}
+                      value={values.duration}
+                      onChange={(value) => {
+                        handleChange({
+                          target: {
+                            name: 'duration',
+                            value,
+                          },
+                        });
+                      }}
+                    >
+                      <Option value={15}> 15 {minute}</Option>
+                      <Option value={20}> 20 {minute}</Option>
+                      <Option value={25}> 25 {minute}</Option>
+                      <Option value={30}> 30 {minute}</Option>
+                      <Option value={35}> 35 {minute}</Option>
+                      <Option value={40}> 40 {minute}</Option>
+                      <Option value={45}> 45 {minute}</Option>
+                      <Option value={50}> 50 {minute}</Option>
+                      <Option value={55}> 55 {minute}</Option>
+                      <Option value={60}> 1 {hour}</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+          <Divider style={{ marginTop: 0, marginBottom: 0 }} />
+          <div style={{ padding: '16px 40px' }}>
+            <Row gutter={[35, 16]}>
+              <Col span={12}>
+                <Row gutter={16}>
+                  <Col>
+                    {patient.picture ? (
+                      <Avatar src={patient.picture} size={75} shape="square" />
+                    ) : (
+                      <Avatar src={patient.picture} size={75} shape="square">
+                        {patient.firstName[0]?.toUpperCase()}
+                        {patient.lastName[0]?.toUpperCase()}
+                      </Avatar>
+                    )}
+                  </Col>
+                  <Col flex={1}>
+                    <Label title={t('first name')} />
+                    <Form.Item>
+                      <Input
+                        prefix={<Icon name="user-line" />}
+                        name="firstName"
+                        value={patient.firstName}
+                        disabled
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Col>
-              <Col flex={1}>
-                <Label title={t('first name')} />
+              <Col flex={12}>
+                <Label title={t('last name')} />
                 <Form.Item>
                   <Input
                     prefix={<Icon name="user-line" />}
-                    name="firstName"
-                    value={patient.firstName}
+                    name="lastName"
+                    value={patient.lastName}
                     disabled
                   />
                 </Form.Item>
               </Col>
-            </Row>
-          </Col>
-          <Col flex={12}>
-            <Label title={t('last name')} />
-            <Form.Item>
-              <Input
-                prefix={<Icon name="user-line" />}
-                name="lastName"
-                value={patient.lastName}
-                disabled
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('birthday')} />
-            <Form.Item>
-              <DatePicker
-                disabled
-                prefixIcon={<Icon name="cake-line" />}
-                name="birthDate"
-                value={patient.birthDate ? moment(patient.birthDate) : null}
-                placeholder={i18n.t('placeholders:enter', {
-                  fieldName: t('birthday'),
-                })}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('gender')} />
-            <Form.Item>
-              <Select
-                disabled
-                prefixIcon={<Icon name="genderless-line" />}
-                placeholder={i18n.t('placeholders:select', {
-                  fieldName: t('gender'),
-                })}
-                dropdownMatchSelectWidth={false}
-                value={patient.gender}
-              >
-                <AntSelect.Option value="MALE">Male</AntSelect.Option>
-                <AntSelect.Option value="Female">Female</AntSelect.Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('phone number')} />
-            <Form.Item>
-              <ReactInputMask
-                disabled
-                mask="+213 999 999 999"
-                maskChar={null}
-                placeholder={`+213 ${i18n.t('placeholders:enter', {
-                  fieldName: t('phone number'),
-                })}`}
-                value={patient.phone}
-                dir="ltr"
-              >
-                {(inputProps: any) => (
+              <Col span={12}>
+                <Label title={t('birthday')} />
+                <Form.Item>
+                  <DatePicker
+                    disabled
+                    prefixIcon={<Icon name="cake-line" />}
+                    name="birthDate"
+                    value={patient.birthDate ? moment(patient.birthDate) : null}
+                    placeholder={i18n.t('placeholders:enter', {
+                      fieldName: t('birthday'),
+                    })}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Label title={t('gender')} />
+                <Form.Item>
+                  <Select
+                    disabled
+                    prefixIcon={<Icon name="genderless-line" />}
+                    placeholder={i18n.t('placeholders:select', {
+                      fieldName: t('gender'),
+                    })}
+                    dropdownMatchSelectWidth={false}
+                    value={patient.gender}
+                  >
+                    <AntSelect.Option value="MALE">Male</AntSelect.Option>
+                    <AntSelect.Option value="Female">Female</AntSelect.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Label title={t('phone number')} />
+                <Form.Item>
+                  <ReactInputMask
+                    disabled
+                    mask="+213 999 999 999"
+                    maskChar={null}
+                    placeholder={`+213 ${i18n.t('placeholders:enter', {
+                      fieldName: t('phone number'),
+                    })}`}
+                    value={patient.phone}
+                    dir="ltr"
+                  >
+                    {(inputProps: any) => (
+                      <Input
+                        disabled
+                        prefix={<Icon name="phone-line" />}
+                        name="phone"
+                        value={patient.phone}
+                        {...inputProps}
+                      />
+                    )}
+                  </ReactInputMask>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Label title={t('general status')} />
+                <Form.Item>
                   <Input
                     disabled
-                    prefix={<Icon name="phone-line" />}
-                    name="phone"
-                    value={patient.phone}
-                    {...inputProps}
+                    prefix={<Icon name="heart-pulse-line" />}
+                    name="generalStatus"
+                    value={patient.generalStatus}
+                    placeholder={i18n.t('placeholders:enter', {
+                      fieldName: t('general status'),
+                    })}
                   />
-                )}
-              </ReactInputMask>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Label title={t('general status')} />
-            <Form.Item>
-              <Input
-                disabled
-                prefix={<Icon name="heart-pulse-line" />}
-                name="generalStatus"
-                value={patient.generalStatus}
-                placeholder={i18n.t('placeholders:enter', {
-                  fieldName: t('general status'),
-                })}
-              />
-            </Form.Item>
-          </Col>
-          <ProtectedComponent accessCode="delete/appointments">
-            <Col span={24}>
-              <Button
-                type="primary"
-                danger
-                block
-                icon={<Icon name="delete-bin-2-line" />}
-                onClick={handleDeleteAppointment}
-                loading={isLoadingDelete}
-                style={{ textTransform: 'uppercase' }}
-              >
-                {t('delete appointment')}
-              </Button>
-            </Col>
-          </ProtectedComponent>
-        </Row>
-      </div>
+                </Form.Item>
+              </Col>
+              <ProtectedComponent accessCode="delete/appointments">
+                <Col span={24}>
+                  <Button
+                    type="primary"
+                    danger
+                    block
+                    icon={<Icon name="delete-bin-2-line" />}
+                    onClick={handleDeleteAppointment}
+                    loading={isLoadingDelete}
+                    style={{ textTransform: 'uppercase' }}
+                  >
+                    {t('delete appointment')}
+                  </Button>
+                </Col>
+              </ProtectedComponent>
+            </Row>
+          </div>
+        </>
+      )}
     </Modal>
   );
 };

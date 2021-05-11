@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +24,8 @@ import NewPatient from './NewPatient/NewPatient';
 // import { useGetStatesList } from '../../../hooks/useGetStatesList';
 // import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
 import { useAddAppointment } from '../hooks/useAddAppointment';
+import { fetchPatientDetails } from '../../Patients/services';
+import AppointmentSkeleton from '../AppointmentSkeleton/AppointmentSkeleton';
 
 type Props = {
   visible: boolean;
@@ -60,6 +63,7 @@ const AddAppointmentModal: React.FC<Props> = ({
 
   const [patient, setPatient] = useState<Patient>(initialPatientValues);
   const [showNewPatientform, setShowNewPatientForm] = useState<boolean>(false);
+  const [loadingPatient, setLoadingPatient] = useState(false);
 
   const { mutateAsync, isLoading } = useAddAppointment();
 
@@ -129,7 +133,31 @@ const AddAppointmentModal: React.FC<Props> = ({
     }
   };
 
-  const handleSelectPatient = (value: Patient) => {
+  const handleSelectPatient = async (patientId: string) => {
+    try {
+      setLoadingPatient(true);
+      const { data } = await fetchPatientDetails(patientId, 'personal-info');
+
+      setPatient({
+        id: patientId,
+        birthDate: data.birthDate,
+        state: data.state?.id,
+        city: data.city?.id,
+        firstName: data.firstName,
+        gender: data.gender,
+        generalStatus: data.generalStatus,
+        lastName: data.lastName,
+        phone: data.user.phone,
+        picture: data.picture,
+      });
+      setFieldValue('patientId', patientId);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoadingPatient(false);
+  };
+
+  const handleSelectNewPatient = (value: Patient) => {
     setPatient(value);
     setFieldValue('patientId', value.id);
   };
@@ -319,7 +347,16 @@ const AddAppointmentModal: React.FC<Props> = ({
               <PatientAutocomplete onSelectPatient={handleSelectPatient} />
             </Form.Item>
           </Col>
-          {!patient.id ? (
+
+          {loadingPatient ? (
+            <Col span={24}>
+              <Row style={{ height: 253 }} align="middle">
+                <Col flex={1}>
+                  <AppointmentSkeleton.PatientForm />
+                </Col>
+              </Row>
+            </Col>
+          ) : !patient.id ? (
             <Col span={24}>
               <Row style={{ height: 250 }} align="middle">
                 <Col flex={1}>
@@ -488,7 +525,7 @@ const AddAppointmentModal: React.FC<Props> = ({
         <NewPatient
           visible={showNewPatientform}
           onClose={() => setShowNewPatientForm(false)}
-          handleSelectPatient={handleSelectPatient}
+          handleSelectPatient={handleSelectNewPatient}
         />
       ) : null}
     </Modal>
