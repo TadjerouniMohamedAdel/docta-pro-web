@@ -1,5 +1,6 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
-import { Col, Row } from 'antd';
+import { Col, Empty, Row } from 'antd';
 import moment from 'moment';
 import Avatar from 'antd/lib/avatar/avatar';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +12,7 @@ import Text from '../../../components/Text/Text';
 import Button from '../../../components/Button/Button';
 import { Appointment } from '../types';
 import { useAppointmentsDayList } from '../hooks';
+import AppointmentSkeleton from '../AppointmentSkeleton/AppointmentSkeleton';
 
 export type Props = {
   currentDate: Date;
@@ -29,7 +31,7 @@ const AppointmentsList: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('translation');
 
-  const { resolvedData: appointments, refetch } = useAppointmentsDayList(
+  const { resolvedData: appointments, refetch, isFetching, isFetched } = useAppointmentsDayList(
     currentDate,
     visitReasonIds,
   );
@@ -48,7 +50,9 @@ const AppointmentsList: React.FC<Props> = ({
     refetch();
   }, [visitReasonIds]);
 
-  return (
+  return isFetching && !isFetched ? (
+    <AppointmentSkeleton.AppointmentCard />
+  ) : appointments && appointments.length > 0 ? (
     <div>
       <Spacer size="xs" direction="vertical">
         {appointments.map((appointment: Appointment) => (
@@ -145,6 +149,10 @@ const AppointmentsList: React.FC<Props> = ({
           </Row>
         ))}
       </Spacer>
+    </div>
+  ) : (
+    <div style={{ display: 'flex', height: 400, alignItems: 'center', justifyContent: 'center' }}>
+      <Empty description={t('No appointments available!')} />
     </div>
   );
 };
