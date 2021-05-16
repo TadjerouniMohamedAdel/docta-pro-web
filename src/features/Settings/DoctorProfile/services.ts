@@ -1,3 +1,4 @@
+import i18n from '../../../i18n';
 import fetcher from '../../../utils/fetcher';
 import {
   DoctorCabinetInfoForm,
@@ -39,6 +40,9 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
     body,
     method: 'PUT',
     hasFiles: !!params.file,
+    successMessage: i18n.t('change success', {
+      name: i18n.t('personal info'),
+    }),
   });
 };
 
@@ -65,6 +69,9 @@ export const updateDoctorCabinetProfile = async (params: DoctorCabinetInfoForm):
     body,
     method: 'PUT',
     hasFiles: params.files.length > 0,
+    successMessage: i18n.t('change success', {
+      name: i18n.t('cabinet info'),
+    }),
   });
 };
 

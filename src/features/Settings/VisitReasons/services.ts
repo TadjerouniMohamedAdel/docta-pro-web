@@ -1,3 +1,4 @@
+import i18n from '../../../i18n';
 import fetcher from '../../../utils/fetcher';
 import { FetchSpecialtyResponse, Specialty } from './types';
 
@@ -13,5 +14,8 @@ export const saveVisitReasons = async (specialty: Specialty): Promise<any> => {
   return fetcher('/api/v1/practitioners/reasons', {
     body: specialty.visitReasons.filter((visitReason) => visitReason.isEdited),
     method: 'PUT',
+    successMessage: i18n.t('change success', {
+      name: i18n.t('consultation reasons'),
+    }),
   });
 };

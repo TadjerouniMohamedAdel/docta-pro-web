@@ -1,3 +1,4 @@
+import i18n from '../../../i18n';
 import fetcher from '../../../utils/fetcher';
 
 type ResetPasswordParams = {
@@ -22,5 +23,8 @@ export const updatePhone = async (params: { tokenId: string }): Promise<void> =>
   return fetcher('/api/v1/professionals/settings/phone ', {
     body: params,
     method: 'PUT',
+    successMessage: i18n.t('change success', {
+      name: i18n.t('phone'),
+    }),
   });
 };

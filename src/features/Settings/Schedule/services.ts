@@ -1,3 +1,4 @@
+import i18n from '../../../i18n';
 import fetcher from '../../../utils/fetcher';
 import { DaysOffParams, WorkingHoursSchedule } from './types';
 
@@ -9,6 +10,9 @@ export const saveWorkingHours = async (params: WorkingHoursSchedule[]): Promise<
   return fetcher('/api/v1/practitioners/schedule', {
     body: params.filter((item) => item.isEdited),
     method: 'PUT',
+    successMessage: i18n.t('change success', {
+      name: i18n.t('Working Hours'),
+    }),
   });
 };
 
