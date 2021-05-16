@@ -10,9 +10,9 @@ import Select from '../../../components/Select/Select';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import { FormField, PersonalInfoForm } from '../types';
 import i18n from '../../../i18n';
-import { useGetStatesList } from '../../../hooks/useGetStatesList';
+import { useGetStatesList } from '../../../common/hooks/useGetStatesList';
 import { StateCity } from '../../../common/types';
-import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
+import { useGetCitiesList } from '../../../common/hooks/useGetCitiesList';
 
 type Props = {
   handleFormChange: (values: FormField) => void;

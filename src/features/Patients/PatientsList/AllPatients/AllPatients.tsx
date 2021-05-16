@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
-import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
+import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 import { SelectedPatient } from '../../types';
 import { usePatientsList } from '../../hooks';
 
