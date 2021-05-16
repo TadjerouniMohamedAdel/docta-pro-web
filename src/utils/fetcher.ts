@@ -13,13 +13,20 @@ type FetcherOptions = Omit<RequestInit, 'body'> & {
   body?: any;
   hasFiles?: boolean;
   showError?: boolean;
+  successMessage?: string;
 };
 
 const queryCache = new QueryCache();
 
 function fetcher(
   endpoint: string,
-  { body, hasFiles = false, showError = true, ...customConfig }: FetcherOptions = {},
+  {
+    body,
+    hasFiles = false,
+    showError = true,
+    successMessage,
+    ...customConfig
+  }: FetcherOptions = {},
 ) {
   const token = localStorage.getItem('token');
   const locale = localStorage.getItem('locale') ?? 'en';
@@ -64,10 +71,16 @@ function fetcher(
     } = response.headers;
 
     if (response.ok) {
+      if (successMessage)
+        openNotification('success', {
+          message: successMessage,
+        });
+
       const authorization: string | null = responseHeaders.get('authorization');
       if (authorization) localStorage.setItem('token', authorization);
       return data;
     }
+
     if (showError && config.method !== 'GET') {
       const isWarning = isInErrorsList(data?.error?.code);
       openNotification(isWarning ? 'warning' : 'error', {
