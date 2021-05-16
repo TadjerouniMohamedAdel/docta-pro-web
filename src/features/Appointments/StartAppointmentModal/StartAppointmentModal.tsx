@@ -17,7 +17,7 @@ import { editAppointment, fetchAppointmentsDetails, updateAppointmentStatus } fr
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
-import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
+import { FetchSpecialtyResponse } from '../../Settings/views/VisitReasons/types';
 import { getWeekRange } from '../../../utils/date';
 import Spacer from '../../../components/Spacer/Spacer';
 import Text from '../../../components/Text/Text';

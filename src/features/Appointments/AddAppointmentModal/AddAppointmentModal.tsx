@@ -17,7 +17,7 @@ import { AppointmentForm, Patient } from '../types';
 import i18n from '../../../i18n';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../components/TimePicker/TimePicker';
-import { FetchSpecialtyResponse } from '../../Settings/VisitReasons/types';
+import { FetchSpecialtyResponse } from '../../Settings/views/VisitReasons/types';
 import PatientAutocomplete from './PatientAutocomplete/PatientAutocomplete';
 import NewPatient from './NewPatient/NewPatient';
 // import { StateCity } from '../../../types/types';

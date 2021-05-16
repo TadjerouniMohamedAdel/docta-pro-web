@@ -1,0 +1,96 @@
+@import '../../../../../../styles/variables.less';
+
+.days-off-calendar {
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  width: 100%;
+  .ant-picker-input {
+    display: none;
+  }
+  .ant-picker-range-separator {
+    display: none;
+  }
+  .ant-picker-active-bar {
+    display: none;
+  }
+  .ant-picker-suffix {
+    display: none;
+    + div {
+      position: relative !important;
+      .ant-picker-dropdown {
+        position: static !important;
+        .ant-picker-range-wrapper {
+          .ant-picker-range-arrow {
+            display: none;
+          }
+          .ant-picker-panel-container {
+            box-shadow: none;
+            width: 100%;
+            .ant-picker-panels {
+              width: 100%;
+              justify-content: space-between;
+              .ant-picker-panel {
+                border: none;
+                .ant-picker-date-panel {
+                  width: auto;
+                  .ant-picker-header {
+                    display: none;
+                  }
+                  .ant-picker-body {
+                    .ant-picker-content {
+                      font-size: 17px;
+                      th,
+                      td {
+                        width: 45px;
+                        height: 40px !important;
+                      }
+                      .ant-picker-cell {
+                        .ant-picker-cell-inner {
+                          height: 28px;
+                          line-height: 28px;
+                          min-width: 45px;
+                        }
+                        &::before {
+                          height: 28px;
+                        }
+                        &.ant-picker-cell-in-view {
+                          &.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single):not(.ant-picker-cell-range-end)
+                            .ant-picker-cell-inner {
+                            border-radius: 14px 0 0 14px;
+                          }
+                          &.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single):not(.ant-picker-cell-range-start)
+                            .ant-picker-cell-inner {
+                            border-radius: 0 14px 14px 0;
+                          }
+                          &.ant-picker-cell-in-range {
+                            color: #fff;
+                            &::before {
+                              background: @primary-color;
+                            }
+                          }
+                          &.ant-picker-cell-today {
+                            .ant-picker-cell-inner {
+                              &:before {
+                                border-radius: 14px;
+                              }
+                            }
+                          }
+                          &.ant-picker-cell-range-start-single {
+                            .ant-picker-cell-inner {
+                              border-radius: 14px;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

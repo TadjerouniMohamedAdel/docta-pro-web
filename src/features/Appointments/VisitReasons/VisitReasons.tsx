@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import Text from '../../../components/Text/Text';
 import Select from '../../../components/Select/Select';
-import { fetchSpecialties } from '../../Settings/VisitReasons/services';
+import { fetchSpecialties } from '../../Settings/views/VisitReasons/services';
 
 export type Props = {
   visitReasonIds: string[];
