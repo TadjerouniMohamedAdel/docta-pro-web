@@ -11,7 +11,7 @@ import DatePicker from '../../../components/DatePicker/DatePicker';
 import { FormField, PersonalInfoForm } from '../types';
 import i18n from '../../../i18n';
 import { useGetStatesList } from '../../../hooks/useGetStatesList';
-import { StateCity } from '../../../types/types';
+import { StateCity } from '../../../common/types';
 import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
 
 type Props = {
