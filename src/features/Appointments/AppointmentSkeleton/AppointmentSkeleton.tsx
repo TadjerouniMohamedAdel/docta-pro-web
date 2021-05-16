@@ -26,7 +26,7 @@ const AppointmentCard: React.FC = () => {
               <Col span={16}>
                 <Skeleton.Input active size="small" style={{ height: 20 }} />
               </Col>
-              <Col flex={8}>
+              <Col span={4}>
                 <Skeleton.Input active size="small" style={{ height: 20 }} />
               </Col>
             </Row>
