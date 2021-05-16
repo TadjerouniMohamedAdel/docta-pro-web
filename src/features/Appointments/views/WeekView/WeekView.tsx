@@ -2,22 +2,22 @@ import React, { useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-import { useLocaleState } from '../../../i18n';
+import { useLocaleState } from '../../../../i18n';
 import './styles.less';
 import Header from './Header/Header';
 import TimeSlotWrapper from './TimeSlotWrapper/TimeSlotWrapper';
-import { useAppointmentsWeekList } from '../hooks';
+import { useAppointmentsWeekList } from '../../hooks';
 import Event from './Event/Event';
 import EventWrapper from './EventWrapper/EventWrapper';
-import { AppointmentForm } from '../types';
+import { AppointmentForm } from '../../types';
 
 export type Props = {
   currentDate: Date;
   visitReasonIds: string[];
   appointmentForm: AppointmentForm;
   setAddAppointmentForm: (appointmentForm: AppointmentForm) => void;
-  setShowAddAppointmentModal: (visible: boolean) => void;
-  setShowAppointmentDetailsModal: (visible: boolean) => void;
+  setShowAppointmentAdd: (visible: boolean) => void;
+  setShowAppointmentDetails: (visible: boolean) => void;
   setAppointmentDetailsId: (appointmentId: string) => void;
 };
 
@@ -33,13 +33,13 @@ type SlotInfo = {
   action: 'select' | 'click' | 'doubleClick';
 };
 
-const WeekCalendar: React.FC<Props> = ({
+const WeekView: React.FC<Props> = ({
   currentDate,
   visitReasonIds,
   appointmentForm,
   setAddAppointmentForm,
-  setShowAddAppointmentModal,
-  setShowAppointmentDetailsModal,
+  setShowAppointmentAdd,
+  setShowAppointmentDetails,
   setAppointmentDetailsId,
 }) => {
   const { resolvedData: appointments, refetch } = useAppointmentsWeekList(
@@ -58,12 +58,12 @@ const WeekCalendar: React.FC<Props> = ({
       start: start as Date,
       time: start as Date,
     });
-    setShowAddAppointmentModal(true);
+    setShowAppointmentAdd(true);
   };
 
   const handleSelectEvent = (values: any) => {
     setAppointmentDetailsId(values.id);
-    setShowAppointmentDetailsModal(true);
+    setShowAppointmentDetails(true);
   };
 
   useEffect(() => {
@@ -106,4 +106,4 @@ const WeekCalendar: React.FC<Props> = ({
   );
 };
 
-export default WeekCalendar;
+export default WeekView;

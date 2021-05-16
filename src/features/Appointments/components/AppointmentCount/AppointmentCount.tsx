@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Text from '../../../components/Text/Text';
-import { useAppointmentCount } from '../hooks';
+import Text from '../../../../components/Text/Text';
+import { useAppointmentCount } from '../../hooks';
 
 type Props = {
   date: Date;

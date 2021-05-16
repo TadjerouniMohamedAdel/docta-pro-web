@@ -8,24 +8,24 @@ import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import ReactInputMask from 'react-input-mask';
-import Button from '../../../components/Button/Button';
-import Modal from '../../../components/Modal/Modal';
-import Icon from '../../../components/Icon/Icon';
-import Label from '../../../components/Label/Label';
-import Select from '../../../components/Select/Select';
-import { AppointmentForm, Patient } from '../types';
-import i18n from '../../../i18n';
-import DatePicker from '../../../components/DatePicker/DatePicker';
-import TimePicker from '../../../components/TimePicker/TimePicker';
-import { FetchSpecialtyResponse } from '../../Settings/views/VisitReasons/types';
+import Button from '../../../../components/Button/Button';
+import Modal from '../../../../components/Modal/Modal';
+import Icon from '../../../../components/Icon/Icon';
+import Label from '../../../../components/Label/Label';
+import Select from '../../../../components/Select/Select';
+import { AppointmentForm, Patient } from '../../types';
+import i18n from '../../../../i18n';
+import DatePicker from '../../../../components/DatePicker/DatePicker';
+import TimePicker from '../../../../components/TimePicker/TimePicker';
+import { FetchSpecialtyResponse } from '../../../Settings/views/VisitReasons/types';
 import PatientAutocomplete from './PatientAutocomplete/PatientAutocomplete';
 import NewPatient from './NewPatient/NewPatient';
 // import { StateCity } from '../../../types/types';
 // import { useGetStatesList } from '../../../hooks/useGetStatesList';
 // import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
-import { useAddAppointment } from '../hooks/useAddAppointment';
-import { fetchPatientDetails } from '../../Patients/services';
-import AppointmentSkeleton from '../AppointmentSkeleton/AppointmentSkeleton';
+import { useAddAppointment } from '../../hooks/useAddAppointment';
+import { fetchPatientDetails } from '../../../Patients/services';
+import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
 
 type Props = {
   visible: boolean;
@@ -37,7 +37,7 @@ type Props = {
 
 const { Option } = AntSelect;
 
-const AddAppointmentModal: React.FC<Props> = ({
+const AppointmentAdd: React.FC<Props> = ({
   visible,
   onClose,
   currentDate,
@@ -531,4 +531,4 @@ const AddAppointmentModal: React.FC<Props> = ({
     </Modal>
   );
 };
-export default AddAppointmentModal;
+export default AppointmentAdd;

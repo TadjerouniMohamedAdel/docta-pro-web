@@ -12,7 +12,7 @@ import './styles.less';
 import { useLocaleState } from '../../../../../../i18n';
 import { DaysOffParams } from '../../types';
 import { addDaysOff } from '../../services';
-import AppointmentCount from '../../../../../Appointments/AppointmentCount/AppointmentCount';
+import AppointmentCount from '../../../../../Appointments/components/AppointmentCount/AppointmentCount';
 import { fetchAppointmentsCount } from '../../../../../Appointments/services';
 import Spacer from '../../../../../../components/Spacer/Spacer';
 

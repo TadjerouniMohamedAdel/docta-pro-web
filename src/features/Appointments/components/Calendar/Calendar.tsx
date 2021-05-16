@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar as AntCalendar, Col, Row } from 'antd';
 import moment from 'moment';
-import Text from '../../../components/Text/Text';
+import Text from '../../../../components/Text/Text';
 import './styles.less';
 import AppointmentCount from '../AppointmentCount/AppointmentCount';
 

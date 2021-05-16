@@ -7,23 +7,23 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import ReactInputMask from 'react-input-mask';
-import Button from '../../../components/Button/Button';
-import Modal from '../../../components/Modal/Modal';
-import Icon from '../../../components/Icon/Icon';
-import Label from '../../../components/Label/Label';
-import Select from '../../../components/Select/Select';
-import { AppointmentForm, AppointmentStatus, Patient } from '../types';
-import { editAppointment, fetchAppointmentsDetails, updateAppointmentStatus } from '../services';
-import i18n from '../../../i18n';
-import DatePicker from '../../../components/DatePicker/DatePicker';
-import TimePicker from '../../../components/TimePicker/TimePicker';
-import { FetchSpecialtyResponse } from '../../Settings/views/VisitReasons/types';
-import { getWeekRange } from '../../../utils/date';
-import Spacer from '../../../components/Spacer/Spacer';
-import Text from '../../../components/Text/Text';
-import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
-import { useCheckAccess } from '../../Auth/hooks';
-import AppointmentSkeleton from '../AppointmentSkeleton/AppointmentSkeleton';
+import Button from '../../../../components/Button/Button';
+import Modal from '../../../../components/Modal/Modal';
+import Icon from '../../../../components/Icon/Icon';
+import Label from '../../../../components/Label/Label';
+import Select from '../../../../components/Select/Select';
+import { AppointmentForm, AppointmentStatus, Patient } from '../../types';
+import { editAppointment, fetchAppointmentsDetails, updateAppointmentStatus } from '../../services';
+import i18n from '../../../../i18n';
+import DatePicker from '../../../../components/DatePicker/DatePicker';
+import TimePicker from '../../../../components/TimePicker/TimePicker';
+import { FetchSpecialtyResponse } from '../../../Settings/views/VisitReasons/types';
+import { getWeekRange } from '../../../../utils/date';
+import Spacer from '../../../../components/Spacer/Spacer';
+import Text from '../../../../components/Text/Text';
+import ProtectedComponent from '../../../Auth/ProtectedComponent/ProtectedComponent';
+import { useCheckAccess } from '../../../Auth/hooks';
+import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
 
 type Props = {
   visible: boolean;
@@ -35,7 +35,7 @@ type Props = {
 
 const { Option } = AntSelect;
 
-const StartAppointmentModal: React.FC<Props> = ({
+const AppointmentStart: React.FC<Props> = ({
   visible,
   onClose,
   appointmentId,
@@ -542,4 +542,4 @@ const StartAppointmentModal: React.FC<Props> = ({
   );
 };
 
-export default StartAppointmentModal;
+export default AppointmentStart;

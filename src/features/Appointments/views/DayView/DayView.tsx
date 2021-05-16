@@ -6,28 +6,28 @@ import Avatar from 'antd/lib/avatar/avatar';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import './styles.less';
-import Spacer from '../../../components/Spacer/Spacer';
-import Text from '../../../components/Text/Text';
+import Spacer from '../../../../components/Spacer/Spacer';
+import Text from '../../../../components/Text/Text';
 // import Icon from '../../../components/Icon/Icon';
-import Button from '../../../components/Button/Button';
-import { Appointment } from '../types';
-import { useAppointmentsDayList } from '../hooks';
-import AppointmentSkeleton from '../AppointmentSkeleton/AppointmentSkeleton';
+import Button from '../../../../components/Button/Button';
+import { Appointment } from '../../types';
+import { useAppointmentsDayList } from '../../hooks';
+import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
 
 export type Props = {
   currentDate: Date;
   visitReasonIds: string[];
-  setShowAppointmentDetailsModal: (visible: boolean) => void;
-  setShowStartAppointmentModal: (visible: boolean) => void;
+  setShowAppointmentDetails: (visible: boolean) => void;
+  setShowAppointmentStart: (visible: boolean) => void;
   setAppointmentDetailsId: (appointmentId: string) => void;
 };
 
-const AppointmentsList: React.FC<Props> = ({
+const DayView: React.FC<Props> = ({
   currentDate,
   visitReasonIds,
-  setShowStartAppointmentModal,
+  setShowAppointmentStart,
   setAppointmentDetailsId,
-  setShowAppointmentDetailsModal,
+  setShowAppointmentDetails,
 }) => {
   const { t } = useTranslation('translation');
 
@@ -38,12 +38,12 @@ const AppointmentsList: React.FC<Props> = ({
 
   const handleSelectAppointment = (appointmentId: string) => {
     setAppointmentDetailsId(appointmentId);
-    setShowAppointmentDetailsModal(true);
+    setShowAppointmentDetails(true);
   };
 
   const handleStartAppointment = (appointmentId: string) => {
     setAppointmentDetailsId(appointmentId);
-    setShowStartAppointmentModal(true);
+    setShowAppointmentStart(true);
   };
 
   useEffect(() => {
@@ -157,4 +157,4 @@ const AppointmentsList: React.FC<Props> = ({
   );
 };
 
-export default AppointmentsList;
+export default DayView;

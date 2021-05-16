@@ -1,8 +1,8 @@
 import { DatePicker } from 'antd';
 import React, { useState } from 'react';
 import moment from 'moment';
-import Button from '../../../components/Button/Button';
-import Icon from '../../../components/Icon/Icon';
+import Button from '../../../../components/Button/Button';
+import Icon from '../../../../components/Icon/Icon';
 import './styles.less';
 
 type Props = {
