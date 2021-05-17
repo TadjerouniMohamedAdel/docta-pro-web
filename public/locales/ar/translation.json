@@ -154,5 +154,11 @@
   "block patient": "حظر المريض",
   "unblock patient": "إلغاء حظر المريض",
   "patient blocked": "تم حظر المريض",
-  "Select a patient to see their info here": ""
+  "Select a patient to see their info here": "",
+  "delete success": "",
+  "add success": "",
+  "block success": "",
+  "unblock success": "",
+  "change success": "",
+  "time slot already booked": ""
 }

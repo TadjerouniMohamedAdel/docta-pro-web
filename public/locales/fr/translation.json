@@ -155,5 +155,11 @@
   "block patient": "Bloquer le patient",
   "unblock patient": "Débloquer le patient",
   "patient blocked": "Patient bloqué",
-  "Select a patient to see their info here": ""
+  "Select a patient to see their info here": "",
+  "delete success": "",
+  "add success": "",
+  "block success": "",
+  "unblock success": "",
+  "change success": "",
+  "time slot already booked": ""
 }

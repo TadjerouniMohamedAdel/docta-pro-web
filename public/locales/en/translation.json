@@ -154,5 +154,11 @@
   "block patient": "Block patient",
   "unblock patient": "Unblock patient",
   "patient blocked": "Patient blocked",
-  "Select a patient to see their info here": "Select a patient to see their info here"
+  "Select a patient to see their info here": "Select a patient to see their info here",
+  "delete success": "{{name}} deleted successfully",
+  "add success": "{{name}} adedd successfully",
+  "block success": "{{name}} blocked successfully",
+  "unblock success": "{{name}} unblocked successfully",
+  "change success": "{{name}} updated successfully",
+  "time slot already booked": "Time slot already booked"
 }
