@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Icon from '../../../../../../components/Icon/Icon';
 import Text from '../../../../../../components/Text/Text';
-import { getBase64 } from '../../../../../../utils/base64';
+import { getBase64 } from '../../../../../../common/utilities/base64';
 import { DoctorCabinetInfoForm, Image } from '../../types';
 import ImageItem from './ImageItem/ImageItem';
 

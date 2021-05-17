@@ -12,7 +12,7 @@ import i18n from '../../../../../i18n';
 import { Diploma, DoctorPersonalInfoForm, Language } from '../types';
 import Diplomas from './Diplomas/Diplomas';
 import Languages from './Languages/Languages';
-import { getBase64 } from '../../../../../utils/base64';
+import { getBase64 } from '../../../../../common/utilities/base64';
 
 type Props = {
   data: DoctorPersonalInfoForm;

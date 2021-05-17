@@ -1,5 +1,5 @@
+import { fetcher } from '../../../../common/utilities';
 import i18n from '../../../../i18n';
-import fetcher from '../../../../utils/fetcher';
 import {
   DoctorCabinetInfoForm,
   DoctorPersonalInfoForm,

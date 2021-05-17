@@ -1,5 +1,5 @@
 import { QueryCache } from 'react-query';
-import i18n from '../i18n';
+import i18n from '../../i18n';
 import { convertToFormData } from './formData';
 import { isInErrorsList, openNotification } from './notification';
 
@@ -18,7 +18,7 @@ type FetcherOptions = Omit<RequestInit, 'body'> & {
 
 const queryCache = new QueryCache();
 
-function fetcher(
+const fetcher = (
   endpoint: string,
   {
     body,
@@ -27,7 +27,7 @@ function fetcher(
     successMessage,
     ...customConfig
   }: FetcherOptions = {},
-) {
+) => {
   const token = localStorage.getItem('token');
   const locale = localStorage.getItem('locale') ?? 'en';
 
@@ -90,6 +90,6 @@ function fetcher(
 
     return Promise.reject(data);
   });
-}
+};
 
 export default fetcher;

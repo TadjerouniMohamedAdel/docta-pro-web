@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useMutation, useQueryClient } from 'react-query';
-import { getWeekRange } from '../../../utils/date';
+import { getWeekRange } from '../../../common/utilities';
 import { addAppointment } from '../services';
 import { AppointmentForm, Patient } from '../types';
 import { getDateKey } from '../utils';

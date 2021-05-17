@@ -1,4 +1,4 @@
-import fetcher from '../../../../utils/fetcher';
+import { fetcher } from '../../../../common/utilities';
 import { AddUserParams, EditUserParams } from './types';
 
 export const fetchUsers = async (page = 1, size = 10): Promise<any> => {

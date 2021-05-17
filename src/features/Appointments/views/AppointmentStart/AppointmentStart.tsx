@@ -18,12 +18,12 @@ import i18n from '../../../../i18n';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../../Settings/views/VisitReasons/types';
-import { getWeekRange } from '../../../../utils/date';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import ProtectedComponent from '../../../Auth/ProtectedComponent/ProtectedComponent';
 import { useCheckAccess } from '../../../Auth/hooks';
 import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
+import { getWeekRange } from '../../../../common/utilities';
 
 type Props = {
   visible: boolean;

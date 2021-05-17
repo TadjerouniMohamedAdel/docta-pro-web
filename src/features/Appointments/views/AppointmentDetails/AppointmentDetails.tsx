@@ -18,10 +18,10 @@ import i18n from '../../../../i18n';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
 import TimePicker from '../../../../components/TimePicker/TimePicker';
 import { FetchSpecialtyResponse } from '../../../Settings/views/VisitReasons/types';
-import { getWeekRange } from '../../../../utils/date';
 import ProtectedComponent from '../../../Auth/ProtectedComponent/ProtectedComponent';
 import { useUpdateAppointment } from '../../hooks';
 import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
+import { getWeekRange } from '../../../../common/utilities';
 
 type Props = {
   visible: boolean;
