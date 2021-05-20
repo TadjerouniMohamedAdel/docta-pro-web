@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'simplebar/dist/simplebar.min.css';
 import './styles/index.less';
-// import 'remixicon/fonts/remixicon.css';
 import './assets/Remixicons/remixicon.css';
 import App from './App';
 import './i18n';
