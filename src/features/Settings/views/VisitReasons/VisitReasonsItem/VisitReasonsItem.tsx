@@ -10,6 +10,7 @@ import { Specialty, VisitReason } from '../types';
 import i18n from '../../../../../i18n';
 import './styles.less';
 import ColorPalette from './ColorPalette/ColorPalette';
+import { useFieldByLocal } from '../../../../../common/hooks/useFieldByLocal';
 
 type Props = {
   specialty: Specialty;
@@ -22,6 +23,8 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
   const { t } = useTranslation('translation');
   const minute = t('minute');
   const hour = t('hour');
+
+  const { getFieldNameByLocal } = useFieldByLocal();
 
   const handleChange = (id: string, key: 'color' | 'duration' | 'isEnabled', value: never) => {
     const updatedSpecialty: Specialty = { ...specialty };
@@ -37,7 +40,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
   const columns: ColumnsType<VisitReason> = [
     {
       title: t('reason name'),
-      dataIndex: 'name',
+      dataIndex: getFieldNameByLocal(),
       key: 'name',
       ellipsis: {
         showTitle: false,

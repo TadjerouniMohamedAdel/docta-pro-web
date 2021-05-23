@@ -26,6 +26,7 @@ import NewPatient from './NewPatient/NewPatient';
 import { useAddAppointment } from '../../hooks/useAddAppointment';
 import { fetchPatientDetails } from '../../../Patients/services';
 import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
+import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
 
 type Props = {
   visible: boolean;
@@ -47,6 +48,8 @@ const AppointmentAdd: React.FC<Props> = ({
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   const minute = t('minute');
   const hour = t('hour');
+
+  const { getFieldNameByLocal } = useFieldByLocal();
 
   const initialPatientValues = {
     id: '',
@@ -269,7 +272,7 @@ const AppointmentAdd: React.FC<Props> = ({
                     ? specialties.data.map((specialty) =>
                         specialty.reasons.map((visitReason) => (
                           <Option key={visitReason.id} value={visitReason.id}>
-                            {visitReason.name}
+                            {(visitReason as any)[getFieldNameByLocal()]}
                           </Option>
                         )),
                       )

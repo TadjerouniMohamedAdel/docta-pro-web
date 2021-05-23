@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Text from '../../../../components/Text/Text';
 import Select from '../../../../components/Select/Select';
 import { fetchSpecialties } from '../../../Settings/views/VisitReasons/services';
+import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
 
 export type Props = {
   visitReasonIds: string[];
@@ -21,6 +22,7 @@ const useSpecialtiesList = () => {
 const VisitReasons: React.FC<Props> = ({ visitReasonIds, setVisitReasonIds }) => {
   const { t } = useTranslation('translation');
   const { specialties } = useSpecialtiesList();
+  const { getFieldNameByLocal } = useFieldByLocal();
 
   const handleChange = (reasonId: string, checked: boolean) => {
     const visitReasonIdsUpdated = [...visitReasonIds];
@@ -47,7 +49,7 @@ const VisitReasons: React.FC<Props> = ({ visitReasonIds, setVisitReasonIds }) =>
           {specialties
             ? specialties.data.map((specialty) => (
                 <div key={specialty.id}>
-                  <Text>{specialty.name}</Text>
+                  <Text>{(specialty as any)[getFieldNameByLocal()]}</Text>
                   {specialty.reasons.map((reason) => (
                     <div
                       key={reason.id}
@@ -58,7 +60,7 @@ const VisitReasons: React.FC<Props> = ({ visitReasonIds, setVisitReasonIds }) =>
                         value={reason.id}
                         onChange={(e) => handleChange(reason.id, e.target.checked)}
                       >
-                        <Text>{reason.name}</Text>
+                        <Text>{(reason as any)[getFieldNameByLocal()]}</Text>
                       </Checkbox>
                     </div>
                   ))}
