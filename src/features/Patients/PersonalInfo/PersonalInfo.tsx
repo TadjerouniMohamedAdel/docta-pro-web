@@ -13,6 +13,7 @@ import i18n from '../../../i18n';
 import { useGetStatesList } from '../../../common/hooks/useGetStatesList';
 import { StateCity } from '../../../common/types';
 import { useGetCitiesList } from '../../../common/hooks/useGetCitiesList';
+import { useFieldByLocal } from '../../../common/hooks/useFieldByLocal';
 
 type Props = {
   handleFormChange: (values: FormField) => void;
@@ -21,6 +22,7 @@ type Props = {
 
 const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
+  const { getFieldNameByLocal } = useFieldByLocal();
 
   const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
 
@@ -227,7 +229,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               {states.data
                 ? states.data.map((state: StateCity) => (
                     <AntSelect.Option key={state.id} value={state.id}>
-                      {state.name}
+                      {(state as any)[getFieldNameByLocal()] ?? state.name}
                     </AntSelect.Option>
                   ))
                 : null}
@@ -258,7 +260,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               {cities.data
                 ? cities.data.map((city: StateCity) => (
                     <AntSelect.Option key={city.id} value={city.id}>
-                      {city.name}
+                      {(city as any)[getFieldNameByLocal()] ?? city.name}
                     </AntSelect.Option>
                   ))
                 : null}

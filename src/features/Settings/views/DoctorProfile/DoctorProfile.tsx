@@ -16,12 +16,14 @@ import {
   updateDoctorCabinetProfile,
   updateDoctorPersonalInfo,
 } from './services';
+import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
 
 type Props = {};
 
 const DoctorProfile: React.FC<Props> = () => {
   const { t } = useTranslation('translation');
   const [activeKey, setActiveKey] = useState<string>('1');
+  const { getFieldNameByLocal } = useFieldByLocal();
 
   const [doctorInfo, setDoctorInfo] = useState<DoctorInfo>({
     picture: '',
@@ -100,8 +102,8 @@ const DoctorProfile: React.FC<Props> = () => {
             contactNumber: data.contactNumber,
             secondaryContactNumber: data.secondaryContactNumber,
             address: data.address,
-            state: data.state.name,
-            city: data.city.name,
+            state: (data.state as any)[getFieldNameByLocal()] ?? data.state.name,
+            city: (data.city as any)[getFieldNameByLocal()] ?? data.city.name,
           },
           location: {
             lat: 0,
