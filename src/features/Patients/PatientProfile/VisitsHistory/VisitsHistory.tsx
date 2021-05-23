@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Icon from '../../../../components/Icon/Icon';
 import { useGetVisitHistory } from '../../hooks';
+import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
 
 type Props = {
   patientId?: string;
@@ -11,6 +12,7 @@ type Props = {
 
 const VisitsHistory: React.FC<Props> = ({ patientId = '' }) => {
   const { t } = useTranslation('translation');
+  const { getFieldNameByLocal } = useFieldByLocal();
 
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize] = useState(10);
@@ -47,7 +49,7 @@ const VisitsHistory: React.FC<Props> = ({ patientId = '' }) => {
       ),
       dataIndex: 'visitReason',
       key: 'visitReason',
-      render: (text: any, record: any) => <span>{record.reason.name}</span>,
+      render: (text: any, record: any) => <span>{record.reason[getFieldNameByLocal()]}</span>,
     },
     {
       title: (
