@@ -79,14 +79,6 @@ const Auth: React.FC = () => {
                 />
               )}
             </ReactInputMask>
-            {/* <Input
-              prefix={<Icon name="phone-line" />}
-              name="phone"
-              placeholder={i18n.t('placeholders:enter your', { fieldName: t('phone') })}
-              value={values.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            /> */}
           </Form.Item>
         </Spacer>
         <Spacer size="xss" direction="vertical">
