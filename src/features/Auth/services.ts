@@ -1,9 +1,10 @@
-import fetcher from '../../utils/fetcher';
+import { fetcher } from '../../common/utilities';
 import { AuthResponse, LoginParams } from './types';
 
 export const login = async (params: LoginParams): Promise<AuthResponse> => {
   return fetcher('/api/v1/users/auth?action=pro', {
     body: params,
+    showError: false,
   });
 };
 

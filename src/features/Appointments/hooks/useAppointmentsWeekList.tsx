@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getWeekRange } from '../../../utils/date';
+import { getWeekRange } from '../../../common/utilities';
 import { fetchAppointments } from '../services';
 import { getDateKey } from '../utils';
 

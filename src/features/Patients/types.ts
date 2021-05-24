@@ -1,4 +1,4 @@
-import { StateCity } from '../../types/types';
+import { StateCity } from '../../common/types';
 
 export type FormField = {
   key: string;

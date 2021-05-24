@@ -1,4 +1,4 @@
-import fetcher from '../../utils/fetcher';
+import { fetcher } from '../../common/utilities';
 import { AppointmentForm, AppointmentStatus } from './types';
 
 export const fetchAppointments = async (from: Date, to: Date, reasons: string[]): Promise<any> => {

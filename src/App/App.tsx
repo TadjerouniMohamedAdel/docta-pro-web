@@ -8,7 +8,7 @@ import 'moment/locale/ar-tn';
 import 'moment/locale/fr';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryCache } from 'react-query';
-import FullPageLoader from '../components/FullPageLoader';
+import FullPageLoader from '../components/AppLoader';
 import { useAuthState } from '../features/Auth/context';
 import { useLocaleState } from '../i18n';
 import { getCurrentUser } from '../features/Auth/services';

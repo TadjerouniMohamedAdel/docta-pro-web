@@ -24,12 +24,8 @@ const Auth: React.FC = () => {
   const { mutateAsync, isLoading, isError } = useMutation(login);
 
   const onLogin = async (values: LoginParams): Promise<void> => {
-    try {
-      const response: AuthResponse | undefined = await mutateAsync(values);
-      if (response) setUser(response.data);
-    } catch (err) {
-      console.log(err);
-    }
+    const response: AuthResponse | undefined = await mutateAsync(values);
+    if (response) setUser(response.data);
   };
 
   const initialValues: LoginParams = { phone: '', password: '' };
@@ -92,7 +88,11 @@ const Auth: React.FC = () => {
 
           {isError ? (
             <Alert
-              message="Email or password incorrect !"
+              message={
+                <Text size="sm" style={{ color: 'white' }}>
+                  Invalid combination. Have another go.
+                </Text>
+              }
               type="error"
               style={{ textAlign: 'center' }}
             />

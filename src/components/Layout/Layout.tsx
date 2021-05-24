@@ -20,7 +20,11 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <div className={`layout main-layout has-sidebar ${locale === 'ar' ? 'rtl' : ''}`}>
+    <div
+      className={`layout main-layout fixed-sidebar fixed-header has-sidebar ${
+        locale === 'ar' ? 'rtl' : ''
+      }`}
+    >
       <Sidebar collapsed={collapsed} toggled={toggled} />
       <Overlay handleToggled={handleToggled} />
       <div className="layout">

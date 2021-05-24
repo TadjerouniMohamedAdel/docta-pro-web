@@ -1,4 +1,4 @@
-import { Col, Empty, Row } from 'antd';
+import { Col, Row } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
@@ -11,6 +11,8 @@ import PatientProfile from './PatientProfile/PatientProfile';
 import PatientModal from './PatientModal/PatientModal';
 import { SelectedPatient } from './types';
 import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
+import emptyStateImg from '../../assets/img/empty-state.png';
+import './styles.less';
 
 const Patients: React.FC = () => {
   const { t } = useTranslation('translation');
@@ -24,7 +26,7 @@ const Patients: React.FC = () => {
   };
 
   return (
-    <InnerLayout>
+    <InnerLayout className="patient-layout">
       <InnerSidebar>
         <Row justify="space-between" style={{ padding: 13 }}>
           <Col style={{ display: 'flex' }}>
@@ -59,9 +61,17 @@ const Patients: React.FC = () => {
           />
         ) : (
           <div
-            style={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
-            <Empty />
+            <Spacer size="xl" direction="vertical" fullWidth={false} align="center">
+              <img src={emptyStateImg} alt="empty state" />
+              <Text type="secondary">{t('Select a patient to see their info here')}</Text>
+            </Spacer>
           </div>
         )}
       </InnerContent>

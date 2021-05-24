@@ -1,37 +1,19 @@
 import { Col, Input, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React, { useEffect, useState } from 'react';
+import SimpleBar from 'simplebar-react';
 import { useTranslation } from 'react-i18next';
-import { useInfiniteQuery } from 'react-query';
 import classNames from 'classnames';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
-import useIntersectionObserver from '../../../../hooks/useIntersectionObserver';
-import { fetchAllPatients } from '../../services';
+import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 import { SelectedPatient } from '../../types';
+import { usePatientsList } from '../../hooks';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;
   selectedPatient?: SelectedPatient;
   setSelectedPatient: (values: SelectedPatient) => void;
-};
-
-const usePatientsList = (term: string) => {
-  const [total, setTotal] = useState(0);
-
-  const { data, ...rest } = useInfiniteQuery(
-    ['patients', term],
-    async ({ pageParam = 0 }) => {
-      const res = await fetchAllPatients(term, pageParam);
-      setTotal(res.total);
-      return { ...res, patients: res.data };
-    },
-    {
-      getNextPageParam: (lastPage) =>
-        lastPage.nextCursor < lastPage.total ? lastPage.nextCursor : undefined,
-    },
-  );
-  return { data: data && data.pages ? data : ({ pages: [] } as any), total, ...rest };
 };
 
 const AllPatients: React.FC<Props> = ({
@@ -73,17 +55,17 @@ const AllPatients: React.FC<Props> = ({
   }, [total]);
 
   return (
-    <div style={{ padding: '12px 0' }}>
-      <Spacer size="xl" direction="vertical">
-        <div style={{ padding: '0 12px' }}>
-          <Input
-            size="small"
-            placeholder={t('search patients')}
-            onChange={(e) => handleSearchChange(e.target.value)}
-          />
-        </div>
+    <div style={{ padding: '12px 0' }} className="patients-list">
+      <div style={{ padding: '0 12px', marginBottom: 24 }}>
+        <Input
+          size="small"
+          placeholder={t('search patients')}
+          onChange={(e) => handleSearchChange(e.target.value)}
+        />
+      </div>
 
-        <div className="patients-list">
+      <SimpleBar style={{ maxHeight: 'calc(100% - 52px)' }}>
+        <div className="patient-list-wrapper">
           {data.pages.map((page: any) => (
             <>
               {page.patients.map((patient: SelectedPatient) => (
@@ -132,11 +114,12 @@ const AllPatients: React.FC<Props> = ({
               ))}
             </>
           ))}
+          <div ref={loadMoreButtonRef} style={{ textAlign: 'center', height: 35, marginTop: 16 }}>
+            {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
+            {!hasNextPage && !isLoading ? <span style={{ opacity: 0.5 }}>No more data</span> : null}
+          </div>
         </div>
-        <div ref={loadMoreButtonRef} style={{ textAlign: 'center' }}>
-          {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
-        </div>
-      </Spacer>
+      </SimpleBar>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import fetcher from '../../utils/fetcher';
+import { fetcher } from '../../common/utilities';
 import { BlockPatientParams } from './types';
 
 export const fetchAllPatients = async (term = '', page = 0, size = 10): Promise<any> => {

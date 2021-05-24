@@ -24,13 +24,20 @@ body {
   }
   .sidebar {
     background-color: @white;
-    z-index: 100;
     box-shadow: 4px 0 4px 0 rgba(43, 45, 55, 0.01);
+    overflow-x: hidden;
+    height: 100%;
   }
   &.rtl {
     .sidebar {
       box-shadow: -4px 0 4px 0 rgba(43, 45, 55, 0.01);
     }
+  }
+}
+
+.layout.inner-layout {
+  .sidebar {
+    height: auto;
   }
 }
 
@@ -98,4 +105,23 @@ body {
 .ant-menu-vertical,
 .ant-menu-vertical-left {
   border-right: none;
+}
+
+//skeleton
+.ant-skeleton-element {
+  width: 100%;
+  .ant-skeleton-input,
+  .ant-skeleton-avatar {
+    border-radius: 6px;
+  }
+}
+
+//simplebar scrollbar
+.simplebar-scrollbar {
+  &:before {
+    opacity: 0.2;
+  }
+  &.simplebar-visible:before {
+    opacity: 0.4;
+  }
 }

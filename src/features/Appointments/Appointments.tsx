@@ -4,21 +4,21 @@ import moment from 'moment';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
-import Calendar from './Calendar/Calendar';
+import Calendar from './components/Calendar/Calendar';
 import Text from '../../components/Text/Text';
 import Icon from '../../components/Icon/Icon';
-import AppointmentsList from './AppointmentsList/AppointmentsList';
-import VisitReasons from './VisitReasons/VisitReasons';
+import DayView from './views/DayView/DayView';
+import VisitReasons from './components/VisitReasons/VisitReasons';
 import Button from '../../components/Button/Button';
 import { useLocaleState } from '../../i18n';
-import WeekCalendar from './WeekCalendar/WeekCalendar';
+import WeekView from './views/WeekView/WeekView';
 import './styles.less';
-import HeaderDatePicker from './HeaderDatePicker/HeaderDatePicker';
-import AddAppointmentModal from './AddAppointmentModal/AddAppointmentModal';
-import AppointmentCount from './AppointmentCount/AppointmentCount';
+import HeaderDatePicker from './components/HeaderDatePicker/HeaderDatePicker';
+import AppointmentAdd from './views/AppointmentAdd/AppointmentAdd';
+import AppointmentCount from './components/AppointmentCount/AppointmentCount';
 import { AppointmentForm, Patient } from './types';
-import AppointmentDetails from './AppointmentDetails/AppointmentDetails';
-import StartAppointmentModal from './StartAppointmentModal/StartAppointmentModal';
+import AppointmentDetails from './views/AppointmentDetails/AppointmentDetails';
+import AppointmentStart from './views/AppointmentStart/AppointmentStart';
 import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
 
 const Appointments: React.FC = () => {
@@ -30,9 +30,9 @@ const Appointments: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [prevDate, setPrevDate] = useState<Date>(currentDate);
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
-  const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
-  const [showAppointmentDetailsModal, setShowAppointmentDetailsModal] = useState(false);
-  const [showStartAppointmentModal, setShowStartAppointmentModal] = useState(false);
+  const [showAppointmentAdd, setShowAppointmentAdd] = useState(false);
+  const [showAppointmentDetails, setShowAppointmentDetails] = useState(false);
+  const [showAppointmentStart, setShowAppointmentStart] = useState(false);
   const [appointmentDetailsId, setAppointmentDetailsId] = useState('');
   const [addAppointmentForm, setAddAppointmentForm] = useState<AppointmentForm>({
     patientId: '',
@@ -83,12 +83,12 @@ const Appointments: React.FC = () => {
 
   const handleScheduleNewAppointment = (value: Patient) => {
     setPatient(value);
-    setShowAddAppointmentModal(true);
+    setShowAppointmentAdd(true);
   };
 
   useEffect(() => {
-    if (!showAddAppointmentModal) setPatient(undefined);
-  }, [showAddAppointmentModal]);
+    if (!showAppointmentAdd) setPatient(undefined);
+  }, [showAppointmentAdd]);
 
   return (
     <InnerLayout>
@@ -204,12 +204,14 @@ const Appointments: React.FC = () => {
             </Col>
             <Col>
               <Row gutter={10}>
-                <Col>
-                  <VisitReasons
-                    visitReasonIds={visitReasonIds}
-                    setVisitReasonIds={setVisitReasonIds}
-                  />
-                </Col>
+                <ProtectedComponent accessCode="reasons/settings">
+                  <Col>
+                    <VisitReasons
+                      visitReasonIds={visitReasonIds}
+                      setVisitReasonIds={setVisitReasonIds}
+                    />
+                  </Col>
+                </ProtectedComponent>
                 <Col>
                   <Button
                     className="btn-view-swicther"
@@ -241,7 +243,7 @@ const Appointments: React.FC = () => {
                       icon={<Icon name="add-line" />}
                       style={{ display: 'flex' }}
                       size="small"
-                      onClick={() => setShowAddAppointmentModal(true)}
+                      onClick={() => setShowAppointmentAdd(true)}
                     >
                       {t('new appointment')}
                     </Button>
@@ -257,13 +259,13 @@ const Appointments: React.FC = () => {
             <Route
               path="/appointments/week"
               render={({ ...props }) => (
-                <WeekCalendar
+                <WeekView
                   currentDate={currentDate}
                   visitReasonIds={visitReasonIds}
                   setAddAppointmentForm={setAddAppointmentForm}
                   appointmentForm={addAppointmentForm}
-                  setShowAddAppointmentModal={setShowAddAppointmentModal}
-                  setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
+                  setShowAppointmentAdd={setShowAppointmentAdd}
+                  setShowAppointmentDetails={setShowAppointmentDetails}
                   setAppointmentDetailsId={setAppointmentDetailsId}
                   {...props}
                 />
@@ -272,11 +274,11 @@ const Appointments: React.FC = () => {
             <Route
               path="/appointments"
               render={({ ...props }) => (
-                <AppointmentsList
+                <DayView
                   currentDate={currentDate}
                   visitReasonIds={visitReasonIds}
-                  setShowAppointmentDetailsModal={setShowAppointmentDetailsModal}
-                  setShowStartAppointmentModal={setShowStartAppointmentModal}
+                  setShowAppointmentDetails={setShowAppointmentDetails}
+                  setShowAppointmentStart={setShowAppointmentStart}
                   setAppointmentDetailsId={setAppointmentDetailsId}
                   {...props}
                 />
@@ -286,9 +288,9 @@ const Appointments: React.FC = () => {
         </div>
       </InnerContent>
       <ProtectedComponent accessCode="add/appointments">
-        <AddAppointmentModal
-          visible={showAddAppointmentModal}
-          onClose={() => setShowAddAppointmentModal(false)}
+        <AppointmentAdd
+          visible={showAppointmentAdd}
+          onClose={() => setShowAppointmentAdd(false)}
           currentDate={currentDate}
           appointmentForm={addAppointmentForm}
           selectedPatient={patient}
@@ -296,15 +298,15 @@ const Appointments: React.FC = () => {
       </ProtectedComponent>
 
       <AppointmentDetails
-        visible={showAppointmentDetailsModal}
-        onClose={() => setShowAppointmentDetailsModal(false)}
+        visible={showAppointmentDetails}
+        onClose={() => setShowAppointmentDetails(false)}
         appointmentId={appointmentDetailsId}
         currentDate={currentDate}
       />
       <ProtectedComponent accessCode="edit/appointments">
-        <StartAppointmentModal
-          visible={showStartAppointmentModal}
-          onClose={() => setShowStartAppointmentModal(false)}
+        <AppointmentStart
+          visible={showAppointmentStart}
+          onClose={() => setShowAppointmentStart(false)}
           appointmentId={appointmentDetailsId}
           currentDate={currentDate}
           scheduleNewAppointment={handleScheduleNewAppointment}

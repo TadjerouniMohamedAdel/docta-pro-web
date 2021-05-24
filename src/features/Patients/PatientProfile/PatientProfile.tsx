@@ -292,40 +292,42 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             </Col>
           ) : null}
 
-          <Col>
-            <Dropdown
-              overlay={
-                <Menu>
-                  {!selectedPatient?.blocked && selectedPatient?.registered ? (
-                    <Menu.Item onClick={handleBlockPatient}>
-                      <Spacer size="sm">
-                        <Text type="danger">
-                          <Icon name="admin-line" size={18} />
-                        </Text>
-                        <Text type="danger">{t('block patient')}</Text>
-                      </Spacer>
-                    </Menu.Item>
-                  ) : null}
-                  {selectedPatient?.blocked ? (
-                    <Menu.Item onClick={handleUnBlockPatient}>
-                      <Spacer size="sm">
-                        <Icon name="user-follow-line" size={18} />
-                        <Text>{t('unblock patient')}</Text>
-                      </Spacer>
-                    </Menu.Item>
-                  ) : null}
-                </Menu>
-              }
-              trigger={['click']}
-            >
-              <Button type="default" size="small" loading={unblockPatientLoading}>
-                <Icon name="more-2-fill" size={24} />
-              </Button>
-            </Dropdown>
-          </Col>
+          {selectedPatient?.registered ? (
+            <Col>
+              <Dropdown
+                overlay={
+                  <Menu>
+                    {!selectedPatient?.blocked && selectedPatient?.registered ? (
+                      <Menu.Item onClick={handleBlockPatient}>
+                        <Spacer size="sm">
+                          <Text type="danger">
+                            <Icon name="admin-line" size={18} />
+                          </Text>
+                          <Text type="danger">{t('block patient')}</Text>
+                        </Spacer>
+                      </Menu.Item>
+                    ) : null}
+                    {selectedPatient?.blocked ? (
+                      <Menu.Item onClick={handleUnBlockPatient}>
+                        <Spacer size="sm">
+                          <Icon name="user-follow-line" size={18} />
+                          <Text>{t('unblock patient')}</Text>
+                        </Spacer>
+                      </Menu.Item>
+                    ) : null}
+                  </Menu>
+                }
+                trigger={['click']}
+              >
+                <Button type="default" size="small" loading={unblockPatientLoading}>
+                  <Icon name="more-2-fill" size={24} />
+                </Button>
+              </Dropdown>
+            </Col>
+          ) : null}
         </Row>
       </div>
-      <div style={{ flexGrow: 1 }}>
+      <div style={{ flexGrow: 1, height: 'calc(100% - 90px)' }}>
         <Tabs
           defaultActiveKey="1"
           activeKey={activeKey}

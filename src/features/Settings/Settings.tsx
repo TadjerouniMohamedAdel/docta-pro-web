@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Route, Switch } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
-import VisitReasons from './VisitReasons';
+import VisitReasons from './views/VisitReasons';
 import ProtectedRoute from '../Auth/ProtectedRoute/ProtectedRoute';
-import DoctorProfile from './DoctorProfile';
+import DoctorProfile from './views/DoctorProfile';
 import Menu from './Menu/Menu';
-import Users from './Users';
-import Schedule from './Schedule';
-import PasswordLogin from './PasswordLogin';
+import Users from './views/Users';
+import Schedule from './views/Schedule';
+import PasswordLogin from './views/PasswordLogin';
 
 type Props = {};
 

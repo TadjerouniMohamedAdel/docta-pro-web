@@ -1,7 +1,7 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
-import { Col, Row, Form, Input, Avatar, Select as AntSelect } from 'antd';
+import { Col, Row, Form, Input, Select as AntSelect } from 'antd';
 import { FormikProps } from 'formik';
 import moment from 'moment';
 import Label from '../../../components/Label/Label';
@@ -10,9 +10,10 @@ import Select from '../../../components/Select/Select';
 import DatePicker from '../../../components/DatePicker/DatePicker';
 import { FormField, PersonalInfoForm } from '../types';
 import i18n from '../../../i18n';
-import { useGetStatesList } from '../../../hooks/useGetStatesList';
-import { StateCity } from '../../../types/types';
-import { useGetCitiesList } from '../../../hooks/useGetCitiesList';
+import { useGetStatesList } from '../../../common/hooks/useGetStatesList';
+import { StateCity } from '../../../common/types';
+import { useGetCitiesList } from '../../../common/hooks/useGetCitiesList';
+import { useFieldByLocal } from '../../../common/hooks/useFieldByLocal';
 
 type Props = {
   handleFormChange: (values: FormField) => void;
@@ -21,6 +22,7 @@ type Props = {
 
 const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
+  const { getFieldNameByLocal } = useFieldByLocal();
 
   const { handleChange, handleBlur, values, handleSubmit, touched, errors } = formik;
 
@@ -34,7 +36,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
   return (
     <Form onFinish={handleSubmit}>
       <Row gutter={[35, 16]} align="middle">
-        <Col>
+        {/* <Col span={24}>
           {values.picture ? (
             <Avatar src={values.picture} size={95} />
           ) : (
@@ -43,9 +45,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               {values.lastName[0]?.toUpperCase()}
             </Avatar>
           )}
-        </Col>
-      </Row>
-      <Row gutter={[35, 16]}>
+        </Col> */}
         <Col span={12}>
           <Label
             title={t('first name')}
@@ -229,7 +229,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               {states.data
                 ? states.data.map((state: StateCity) => (
                     <AntSelect.Option key={state.id} value={state.id}>
-                      {state.name}
+                      {(state as any)[getFieldNameByLocal()] ?? state.name}
                     </AntSelect.Option>
                   ))
                 : null}
@@ -260,7 +260,7 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
               {cities.data
                 ? cities.data.map((city: StateCity) => (
                     <AntSelect.Option key={city.id} value={city.id}>
-                      {city.name}
+                      {(city as any)[getFieldNameByLocal()] ?? city.name}
                     </AntSelect.Option>
                   ))
                 : null}

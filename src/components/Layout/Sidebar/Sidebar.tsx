@@ -1,4 +1,5 @@
 import React from 'react';
+import Localization from './Localization';
 import Logo from './Logo/Logo';
 import Menu from './Menu/Menu';
 
@@ -13,9 +14,19 @@ const Sidebar: React.FC<Props> = ({ collapsed, toggled }) => {
       className={`sidebar break-point-xl ${collapsed ? 'collapsed' : ''} ${
         toggled ? 'toggled' : ''
       }`}
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+      }}
     >
-      <Logo />
-      <Menu collapsed={collapsed} />
+      <div>
+        <Logo collapsed={collapsed} />
+        <Menu collapsed={collapsed} />
+      </div>
+      <div style={{ padding: '10px 30px' }}>
+        <Localization collapsed={collapsed} />
+      </div>
     </aside>
   );
 };

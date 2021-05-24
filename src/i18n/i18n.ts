@@ -6,7 +6,7 @@ i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: localStorage.getItem('locale') ?? 'en',
+    lng: localStorage.getItem('locale') ?? 'fr',
     keySeparator: false,
 
     interpolation: {

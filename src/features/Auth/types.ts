@@ -1,4 +1,4 @@
-import { ApiResponse } from '../../interfaces/api';
+import { ApiResponse } from '../../common/types/api';
 
 type Section = {
   id: string;
