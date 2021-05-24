@@ -32,7 +32,7 @@ function App() {
   const { locale } = useLocaleState();
   const token = localStorage.getItem('token');
 
-  moment.updateLocale(locale === 'ar' ? 'ar-tn' : locale || 'en', {
+  moment.updateLocale(locale === 'ar' ? 'ar-tn' : locale || 'fr', {
     week: {
       dow: 0,
       doy: 0,
@@ -59,7 +59,7 @@ function App() {
 
   return (
     <ConfigProvider
-      locale={(language as any)[locale ?? 'en']}
+      locale={(language as any)[locale ?? 'fr']}
       direction={locale === 'ar' ? 'rtl' : 'ltr'}
     >
       <Router>
