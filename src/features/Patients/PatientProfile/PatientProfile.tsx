@@ -25,6 +25,7 @@ import {
 import { fetchPatientDetails, updatePatient, deletePatientItem, unblockPatient } from '../services';
 import Spacer from '../../../components/Spacer/Spacer';
 import BlockPatientModal from './BlockPatientModal/BlockPatientModal';
+import PatientSkeleton from '../PatientSkeleton/PatientSkeleton';
 
 type Props = {
   selectedPatient?: SelectedPatient;
@@ -35,7 +36,8 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const [activeKey, setActiveKey] = useState<string>('1');
-  const [showBlockPatientModal, setShowBlockPatientModal] = useState<boolean>(false);
+  const [showBlockPatientModal, setShowBlockPatientModal] = useState(false);
+  const [isPersonalInfoLoading, setIsPersonalInfoLoading] = useState(false);
 
   const personalInfoFormInitialValues: PersonalInfoForm = {
     firstName: '',
@@ -100,6 +102,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
   });
 
   const handleFetchPersonalInfo = async () => {
+    setIsPersonalInfoLoading(true);
     try {
       const response: { data: FetchPersonalInfoResponse } = await fetchPatientDetails(
         selectedPatient?.id,
@@ -121,6 +124,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
     } catch (error) {
       console.log(error);
     }
+    setIsPersonalInfoLoading(false);
   };
 
   const handleFetchMedicalRecord = async () => {
@@ -340,10 +344,14 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             key="1"
           >
             <div style={{ padding: '16px 80px' }}>
-              <PersonalInfo
-                handleFormChange={handlePersonalInfoFormChange}
-                formik={personalInfoFormik}
-              />
+              {isPersonalInfoLoading ? (
+                <PatientSkeleton.PersonalInfo />
+              ) : (
+                <PersonalInfo
+                  handleFormChange={handlePersonalInfoFormChange}
+                  formik={personalInfoFormik}
+                />
+              )}
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane
