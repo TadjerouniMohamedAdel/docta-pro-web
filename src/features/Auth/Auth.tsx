@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Input, Form, Alert } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import ReactInputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
@@ -49,14 +50,43 @@ const Auth: React.FC = () => {
         <Spacer size="xss" direction="vertical">
           <Label title={t('phone')} error={touched.phone ? errors.phone : undefined} />
           <Form.Item validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}>
-            <Input
+            <ReactInputMask
+              mask="+213 999 999 999"
+              maskChar={null}
+              placeholder={`+213 ${t('placeholders:enter', {
+                fieldName: t('phone'),
+              })}`}
+              name="phone"
+              value={values.phone}
+              onChange={(e) =>
+                handleChange({
+                  target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
+                })
+              }
+              onBlur={(e) => {
+                handleBlur({
+                  target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
+                });
+              }}
+              dir="ltr"
+            >
+              {(inputProps: any) => (
+                <Input
+                  prefix={<Icon name="phone-line" />}
+                  name="phone"
+                  value={values.phone}
+                  {...inputProps}
+                />
+              )}
+            </ReactInputMask>
+            {/* <Input
               prefix={<Icon name="phone-line" />}
               name="phone"
               placeholder={i18n.t('placeholders:enter your', { fieldName: t('phone') })}
               value={values.phone}
               onChange={handleChange}
               onBlur={handleBlur}
-            />
+            /> */}
           </Form.Item>
         </Spacer>
         <Spacer size="xss" direction="vertical">
