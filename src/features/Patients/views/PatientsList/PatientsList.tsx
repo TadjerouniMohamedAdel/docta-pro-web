@@ -4,9 +4,9 @@ import { Tabs } from 'antd';
 import BlockedPatients from './BlockedPatients/BlockedPatients';
 import AllPatients from './AllPatients/AllPatients';
 import './styles.less';
-import { SelectedPatient } from '../types';
-import Tab from '../../../components/Tab/Tab';
-import Icon from '../../../components/Icon/Icon';
+import { SelectedPatient } from '../../types';
+import Tab from '../../../../components/Tab/Tab';
+import Icon from '../../../../components/Icon/Icon';
 
 type Props = {
   handleSetPatientCount: (value: number) => void;

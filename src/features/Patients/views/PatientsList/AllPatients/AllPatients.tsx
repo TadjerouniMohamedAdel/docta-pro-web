@@ -2,9 +2,9 @@ import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
 import { useTranslation } from 'react-i18next';
-import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
-import { SelectedPatient } from '../../types';
-import { usePatientsList } from '../../hooks';
+import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
+import { SelectedPatient } from '../../../types';
+import { usePatientsList } from '../../../hooks';
 import PatientItem from '../PatientItem/PatientItem';
 
 type Props = {

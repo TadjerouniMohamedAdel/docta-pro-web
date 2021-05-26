@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import './styles.less';
 import RecordBox from '../RecordBox/RecordBox';
-import { MedicalItems, MedicalRecordsForm } from '../../types';
+import { MedicalItems, MedicalRecordsForm } from '../../../types';
 
 type Props = {
   medicalRecordsForm: MedicalRecordsForm;

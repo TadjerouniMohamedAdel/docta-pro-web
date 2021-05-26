@@ -4,14 +4,14 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query';
-import Button from '../../../../components/Button/Button';
-import Modal from '../../../../components/Modal/Modal';
-import Text from '../../../../components/Text/Text';
-import Icon from '../../../../components/Icon/Icon';
-import { blockPatient } from '../../services';
-import { SelectedPatient, BlockPatientParams } from '../../types';
-import Spacer from '../../../../components/Spacer/Spacer';
-import Label from '../../../../components/Label/Label';
+import Button from '../../../../../components/Button/Button';
+import Modal from '../../../../../components/Modal/Modal';
+import Text from '../../../../../components/Text/Text';
+import Icon from '../../../../../components/Icon/Icon';
+import { blockPatient } from '../../../services';
+import { SelectedPatient, BlockPatientParams } from '../../../types';
+import Spacer from '../../../../../components/Spacer/Spacer';
+import Label from '../../../../../components/Label/Label';
 
 type Props = {
   visible: boolean;

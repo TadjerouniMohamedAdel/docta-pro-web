@@ -1,9 +1,9 @@
 import { Input } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
-import { SelectedPatient } from '../../types';
-import { useBlockedPatients } from '../../hooks/useBlockedPatients';
+import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
+import { SelectedPatient } from '../../../types';
+import { useBlockedPatients } from '../../../hooks/useBlockedPatients';
 import PatientItem from '../PatientItem/PatientItem';
 
 type Props = {

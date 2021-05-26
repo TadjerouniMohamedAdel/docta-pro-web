@@ -4,15 +4,15 @@ import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient } from 'react-query';
-import Button from '../../../components/Button/Button';
-import Modal from '../../../components/Modal/Modal';
-import Icon from '../../../components/Icon/Icon';
-import Tab from '../../../components/Tab/Tab';
-import PersonalInfo from '../PersonalInfo/PersonalInfo';
-import MedicalRecords from '../MedicalRecords/MedicalRecords';
-import { FormField, MedicalItems, MedicalRecordsForm, PersonalInfoForm } from '../types';
-import i18n from '../../../i18n';
-import { addNewPatient } from '../services';
+import Button from '../../../../components/Button/Button';
+import Modal from '../../../../components/Modal/Modal';
+import Icon from '../../../../components/Icon/Icon';
+import Tab from '../../../../components/Tab/Tab';
+import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
+import MedicalRecords from '../../components/MedicalRecords/MedicalRecords';
+import { FormField, MedicalItems, MedicalRecordsForm, PersonalInfoForm } from '../../types';
+import i18n from '../../../../i18n';
+import { addNewPatient } from '../../services';
 
 type Props = {
   visible?: boolean;

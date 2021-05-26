@@ -4,14 +4,14 @@ import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from 'react-query';
-import i18n from '../../../i18n';
-import Tab from '../../../components/Tab/Tab';
-import Icon from '../../../components/Icon/Icon';
-import Text from '../../../components/Text/Text';
-import Button from '../../../components/Button/Button';
-import PersonalInfo from '../PersonalInfo/PersonalInfo';
-import MedicalRecords from '../MedicalRecords/MedicalRecords';
-import VisitsHistory from './VisitsHistory/VisitsHistory';
+import i18n from '../../../../i18n';
+import Tab from '../../../../components/Tab/Tab';
+import Icon from '../../../../components/Icon/Icon';
+import Text from '../../../../components/Text/Text';
+import Button from '../../../../components/Button/Button';
+import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
+import MedicalRecords from '../../components/MedicalRecords/MedicalRecords';
+import VisitsHistory from '../../components/VisitsHistory/VisitsHistory';
 import './styles.less';
 import {
   FetchMedicalRecordResponse,
@@ -21,9 +21,14 @@ import {
   PersonalInfoForm,
   MedicalItems,
   SelectedPatient,
-} from '../types';
-import { fetchPatientDetails, updatePatient, deletePatientItem, unblockPatient } from '../services';
-import Spacer from '../../../components/Spacer/Spacer';
+} from '../../types';
+import {
+  fetchPatientDetails,
+  updatePatient,
+  deletePatientItem,
+  unblockPatient,
+} from '../../services';
+import Spacer from '../../../../components/Spacer/Spacer';
 import BlockPatientModal from './BlockPatientModal/BlockPatientModal';
 // import PatientSkeleton from '../PatientSkeleton/PatientSkeleton';
 
