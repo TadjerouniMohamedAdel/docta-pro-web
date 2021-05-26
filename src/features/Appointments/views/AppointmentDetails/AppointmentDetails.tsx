@@ -6,7 +6,6 @@ import { Avatar, Col, Divider, Form, Input, Row, Select as AntSelect } from 'ant
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import ReactInputMask from 'react-input-mask';
 import Button from '../../../../components/Button/Button';
 import Modal from '../../../../components/Modal/Modal';
 import Icon from '../../../../components/Icon/Icon';
@@ -22,6 +21,7 @@ import ProtectedComponent from '../../../Auth/ProtectedComponent/ProtectedCompon
 import { useUpdateAppointment } from '../../hooks';
 import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
 import { getWeekRange } from '../../../../common/utilities';
+import PhoneInput from '../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   visible: boolean;
@@ -382,29 +382,14 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Label title={t('phone number')} />
-                <Form.Item>
-                  <ReactInputMask
-                    disabled
-                    mask="+213 999 999 999"
-                    maskChar={null}
-                    placeholder={`+213 ${i18n.t('placeholders:enter', {
-                      fieldName: t('phone number'),
-                    })}`}
-                    value={patient.phone}
-                    dir="ltr"
-                  >
-                    {(inputProps: any) => (
-                      <Input
-                        disabled
-                        prefix={<Icon name="phone-line" />}
-                        name="phone"
-                        value={patient.phone}
-                        {...inputProps}
-                      />
-                    )}
-                  </ReactInputMask>
-                </Form.Item>
+                <PhoneInput
+                  value={patient.phone}
+                  name="phone"
+                  label={t('phone number')}
+                  placeholder={`+213 ${t('placeholders:enter', {
+                    fieldName: t('phone number'),
+                  })}`}
+                />
               </Col>
               <Col span={12}>
                 <Label title={t('general status')} />

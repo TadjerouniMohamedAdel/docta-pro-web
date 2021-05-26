@@ -1,18 +1,16 @@
 import React, { useRef, useState } from 'react';
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import firebase from 'firebase';
-import InputMask from 'react-input-mask';
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
-import Label from '../../../../components/Label/Label';
 import Button from '../../../../components/Button/Button';
-import Icon from '../../../../components/Icon/Icon';
 import i18n from '../../../../i18n';
 import firebaseApp from '../../../../firebase';
 import { CheckPhoneNumber } from '../../services';
+import PhoneInput from '../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   setConfirmationResult: (value: firebase.auth.ConfirmationResult) => void;
@@ -36,8 +34,12 @@ const ForgetPasswordForm: React.FC<Props> = ({
 
   const initialValues: FormValue = { phone: '' };
 
+  const phoneRegEx = /(\+[0-9]{11,12})/;
+
   const validationSchema = Yup.object().shape({
-    phone: Yup.string().required(t('errors:required field')),
+    phone: Yup.string()
+      .required(t('errors:required field'))
+      .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
   });
 
   const onPhoneVerification = async (values: FormValue) => {
@@ -76,36 +78,18 @@ const ForgetPasswordForm: React.FC<Props> = ({
         </Text>
         <Text size="md">{t('forgot password description')}</Text>
         <Spacer size="md" direction="vertical">
-          <Spacer size="xs" direction="vertical">
-            <Label title={t('phone')} error={touched.phone ? errors.phone : undefined} />
-            <Form.Item
-              validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
-            >
-              <InputMask
-                mask="+213 999 999 999"
-                maskChar={null}
-                placeholder={`+213 ${i18n.t('placeholders:enter your', {
-                  fieldName: t('Docta phone number'),
-                })}`}
-                value={values.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                dir="ltr"
-              >
-                {(inputProps: any) => (
-                  <Input
-                    dir="ltr"
-                    prefix={<Icon name="phone-line" />}
-                    name="phone"
-                    value={values.phone}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    {...inputProps}
-                  />
-                )}
-              </InputMask>
-            </Form.Item>
-          </Spacer>
+          <PhoneInput
+            required
+            value={values.phone}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            name="phone"
+            label={t('phone')}
+            error={touched.phone ? errors.phone : undefined}
+            placeholder={`+213 ${i18n.t('placeholders:enter your', {
+              fieldName: t('Docta phone number'),
+            })}`}
+          />
 
           <Button type="primary" htmlType="submit" block loading={loading}>
             {t('next')}

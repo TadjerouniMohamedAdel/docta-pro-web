@@ -3,7 +3,6 @@ import { Checkbox, Col, Form, Input, Row, Select as AntSelect, Table } from 'ant
 import { ColumnsType } from 'antd/lib/table';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import InputMask from 'react-input-mask';
 import { useMutation, useQueryClient } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import generatePassword from 'password-generator';
@@ -17,6 +16,7 @@ import Select from '../../../../../components/Select/Select';
 import i18n from '../../../../../i18n';
 import { addUser, editUser, fetchPermissions, fetchRoles } from '../services';
 import Link from '../../../../../components/Link/Link';
+import PhoneInput from '../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   visible?: boolean;
@@ -296,41 +296,18 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user, pageIndex, page
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Label title={t('phone')} error={touched.phone ? errors.phone : undefined} required />
-              <Form.Item
-                validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
-              >
-                <InputMask
-                  mask="+213 999 999 999"
-                  maskChar={null}
-                  placeholder={`+213 ${i18n.t('placeholders:enter', {
-                    fieldName: t('phone number'),
-                  })}`}
-                  value={values.phone}
-                  onChange={(e) =>
-                    handleChange({
-                      target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
-                    })
-                  }
-                  onBlur={(e) =>
-                    handleBlur({
-                      target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
-                    })
-                  }
-                >
-                  {(inputProps: any) => (
-                    <Input
-                      prefix={<Icon name="phone-line" />}
-                      name="phone"
-                      value={values.phone}
-                      placeholder={`+213 ${i18n.t('placeholders:enter', {
-                        fieldName: t('phone number'),
-                      })}`}
-                      {...inputProps}
-                    />
-                  )}
-                </InputMask>
-              </Form.Item>
+              <PhoneInput
+                required
+                value={values.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="phone"
+                label={t('phone')}
+                error={touched.phone ? errors.phone : undefined}
+                placeholder={`+213 ${i18n.t('placeholders:enter', {
+                  fieldName: t('phone number'),
+                })}`}
+              />
             </Col>
             <Col span={12}>
               <Label title={t('email')} error={touched.email ? errors.email : undefined} required />

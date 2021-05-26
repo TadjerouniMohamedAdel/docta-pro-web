@@ -1,6 +1,5 @@
 import React from 'react';
 import { Avatar, Button, Col, Form, Input, Row, Select as AntSelect, Upload } from 'antd';
-import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { FormikProps } from 'formik';
 import moment from 'moment';
@@ -13,6 +12,7 @@ import { Diploma, DoctorPersonalInfoForm, Language } from '../types';
 import Diplomas from './Diplomas/Diplomas';
 import Languages from './Languages/Languages';
 import { getBase64 } from '../../../../../common/utilities/base64';
+import PhoneInput from '../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   data: DoctorPersonalInfoForm;
@@ -134,43 +134,7 @@ const PersonalInfo: React.FC<Props> = ({ data, formik, handleUpdateData }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Label
-                title={t('phone number')}
-                error={touched.phone ? (errors.phone as string) : undefined}
-              />
-              <Form.Item
-                validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
-              >
-                <InputMask
-                  mask="+213 999 999 999"
-                  maskChar={null}
-                  placeholder={t('phone number')}
-                  value={values.phone}
-                  disabled
-                  onChange={(e) =>
-                    handleChange({
-                      target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
-                    })
-                  }
-                  onBlur={(e) => {
-                    handleBlur({
-                      target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
-                    });
-
-                    handleFieldsChange('phone', e.target.value.replace(/ /g, ''));
-                  }}
-                >
-                  {(inputProps: any) => (
-                    <Input
-                      prefix={<Icon name="phone-line" />}
-                      name="phone"
-                      value={values.phone}
-                      disabled
-                      {...inputProps}
-                    />
-                  )}
-                </InputMask>
-              </Form.Item>
+              <PhoneInput disabled value={values.phone} name="phone" label={t('phone number')} />
             </Col>
             <Col span={12}>
               <Label
