@@ -1,13 +1,10 @@
-import { Col, Input, Row } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
+import { Input } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
-import Spacer from '../../../../components/Spacer/Spacer';
-import Text from '../../../../components/Text/Text';
 import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 import { SelectedPatient } from '../../types';
 import { useBlockedPatients } from '../../hooks/useBlockedPatients';
+import PatientItem from '../PatientItem/PatientItem';
 
 type Props = {
   selectedPatient?: SelectedPatient;
@@ -51,48 +48,11 @@ const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient 
         {data.pages.map((page: any) => (
           <>
             {page.patients.map((patient: SelectedPatient) => (
-              <div
-                key={patient.id}
-                className={classNames('patient-box', {
-                  selected: patient.id === selectedPatient?.id,
-                })}
-                onClick={() => handleGetPatientDetails(patient)}
-                onKeyPress={() => handleGetPatientDetails(patient)}
-                role="button"
-                tabIndex={0}
-              >
-                <Row justify="space-between" gutter={12} style={{ padding: '12px' }}>
-                  <Col>
-                    <Row gutter={12} align="middle">
-                      <Col>
-                        {patient.picture ? (
-                          <Avatar src={patient.picture} size="large" />
-                        ) : (
-                          <Avatar src={patient.picture} size="large">
-                            {patient.firstName[0].toUpperCase()}
-                            {patient.lastName[0].toUpperCase()}
-                          </Avatar>
-                        )}
-                      </Col>
-                      <Col>
-                        <Spacer size="xss" direction="vertical">
-                          <Text style={{ fontWeight: 'bold' }}>
-                            {patient.firstName} {patient.lastName}
-                          </Text>
-                          <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                            {patient.city?.name ?? '-'} - {patient.state?.name ?? '-'}
-                          </Text>
-                        </Spacer>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col>
-                    <Text style={{ fontWeight: 500 }} type="secondary" size="sm">
-                      {patient.user.phone}
-                    </Text>
-                  </Col>
-                </Row>
-              </div>
+              <PatientItem
+                patient={patient}
+                selectedPatient={selectedPatient}
+                handleGetPatientDetails={handleGetPatientDetails}
+              />
             ))}
           </>
         ))}
