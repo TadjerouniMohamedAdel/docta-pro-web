@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
 import Text from '../../components/Text/Text';
 import VisitReasons from './views/VisitReasons';
-import ProtectedRoute from '../Auth/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../Auth/components/ProtectedRoute/ProtectedRoute';
 import DoctorProfile from './views/DoctorProfile';
 import Menu from './Menu/Menu';
 import Users from './views/Users';

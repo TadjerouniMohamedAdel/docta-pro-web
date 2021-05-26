@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Patients from '../../../features/Patients';
 import NotFound from '../../../features/NotFound';
 import Appointments from '../../../features/Appointments';
-import ProtectedRoute from '../../../features/Auth/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../../../features/Auth/components/ProtectedRoute/ProtectedRoute';
 import PageLoader from '../../PageLoader/PageLoader';
 
 const Settings = React.lazy(() => import('../../../features/Settings'));

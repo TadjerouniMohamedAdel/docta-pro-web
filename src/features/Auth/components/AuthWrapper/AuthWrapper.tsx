@@ -1,9 +1,9 @@
 import React from 'react';
-import bgImage from '../../../assets/img/background.jpg';
-import Spacer from '../../../components/Spacer/Spacer';
-import Card from '../../../components/Card/Card';
-import illustration from '../../../assets/img/illustration.png';
-import logo from '../../../assets/img/logo.png';
+import bgImage from '../../../../assets/img/background.jpg';
+import Spacer from '../../../../components/Spacer/Spacer';
+import Card from '../../../../components/Card/Card';
+import illustration from '../../../../assets/img/illustration.png';
+import logo from '../../../../assets/img/logo.png';
 
 export type Props = {
   children: React.ReactNode;

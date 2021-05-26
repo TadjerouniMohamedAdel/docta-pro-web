@@ -4,13 +4,13 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import firebase from 'firebase';
-import Spacer from '../../../../components/Spacer/Spacer';
-import Text from '../../../../components/Text/Text';
-import Button from '../../../../components/Button/Button';
-import i18n from '../../../../i18n';
-import firebaseApp from '../../../../firebase';
-import { CheckPhoneNumber } from '../../services';
-import PhoneInput from '../../../../components/PhoneInput/PhoneInput';
+import Spacer from '../../../../../components/Spacer/Spacer';
+import Text from '../../../../../components/Text/Text';
+import Button from '../../../../../components/Button/Button';
+import i18n from '../../../../../i18n';
+import firebaseApp from '../../../../../firebase';
+import { CheckPhoneNumber } from '../../../services';
+import PhoneInput from '../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   setConfirmationResult: (value: firebase.auth.ConfirmationResult) => void;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
-import { useCheckAccess } from '../hooks';
-import { AccessCode } from '../types';
+import { useCheckAccess } from '../../hooks';
+import { AccessCode } from '../../types';
 
 type Props = RouteProps & {
   type?: 'section' | 'permission';

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as AntMenu } from 'antd';
 import MenuItem from './MenuItem/MenuItem';
-import ProtectedComponent from '../../../../features/Auth/ProtectedComponent/ProtectedComponent';
+import ProtectedComponent from '../../../../features/Auth/components/ProtectedComponent/ProtectedComponent';
 
 type Props = {
   collapsed: boolean;

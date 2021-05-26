@@ -10,7 +10,7 @@ import PatientsList from './views/PatientsList/PatientsList';
 import PatientProfile from './views/PatientProfile/PatientProfile';
 import AddPatient from './views/AddPatient/AddPatient';
 import { SelectedPatient } from './types';
-import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
+import ProtectedComponent from '../Auth/components/ProtectedComponent/ProtectedComponent';
 import emptyStateImg from '../../assets/img/empty-state.png';
 import './styles.less';
 

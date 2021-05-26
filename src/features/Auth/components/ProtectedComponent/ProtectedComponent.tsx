@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useCheckAccess } from '../hooks';
-import { AccessCode } from '../types';
+import { useCheckAccess } from '../../hooks';
+import { AccessCode } from '../../types';
 
 type Props = {
   children: React.ReactNode;
