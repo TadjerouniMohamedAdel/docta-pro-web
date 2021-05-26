@@ -25,7 +25,7 @@ import {
 import { fetchPatientDetails, updatePatient, deletePatientItem, unblockPatient } from '../services';
 import Spacer from '../../../components/Spacer/Spacer';
 import BlockPatientModal from './BlockPatientModal/BlockPatientModal';
-import PatientSkeleton from '../PatientSkeleton/PatientSkeleton';
+// import PatientSkeleton from '../PatientSkeleton/PatientSkeleton';
 
 type Props = {
   selectedPatient?: SelectedPatient;
@@ -37,7 +37,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
 
   const [activeKey, setActiveKey] = useState<string>('1');
   const [showBlockPatientModal, setShowBlockPatientModal] = useState(false);
-  const [isPersonalInfoLoading, setIsPersonalInfoLoading] = useState(false);
+  const [, setIsPersonalInfoLoading] = useState(false);
 
   const personalInfoFormInitialValues: PersonalInfoForm = {
     firstName: '',
@@ -344,14 +344,14 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             key="1"
           >
             <div style={{ padding: '16px 80px' }}>
-              {isPersonalInfoLoading ? (
+              {/* {isPersonalInfoLoading ? (
                 <PatientSkeleton.PersonalInfo />
-              ) : (
-                <PersonalInfo
-                  handleFormChange={handlePersonalInfoFormChange}
-                  formik={personalInfoFormik}
-                />
-              )}
+              ) : ( */}
+              <PersonalInfo
+                handleFormChange={handlePersonalInfoFormChange}
+                formik={personalInfoFormik}
+              />
+              {/* )} */}
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane

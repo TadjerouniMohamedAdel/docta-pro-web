@@ -1,5 +1,4 @@
 import React from 'react';
-import InputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import { Col, Row, Form, Input, Select as AntSelect } from 'antd';
 import { FormikProps } from 'formik';
@@ -14,6 +13,7 @@ import { useGetStatesList } from '../../../common/hooks/useGetStatesList';
 import { StateCity } from '../../../common/types';
 import { useGetCitiesList } from '../../../common/hooks/useGetCitiesList';
 import { useFieldByLocal } from '../../../common/hooks/useFieldByLocal';
+import PhoneInput from '../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   handleFormChange: (values: FormField) => void;
@@ -95,42 +95,21 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Label
-            title={t('phone number')}
-            error={touched.phone ? (errors.phone as string) : undefined}
+          <PhoneInput
             required
+            value={values.phone}
+            onChange={handleChange}
+            onBlur={(e) => {
+              handleBlur(e);
+              handleFieldsChange(e.target.name, e.target.value);
+            }}
+            name="phone"
+            label={t('phone number')}
+            error={touched.phone ? (errors.phone as string) : undefined}
+            placeholder={`+213 ${t('placeholders:enter', {
+              fieldName: t('phone number'),
+            })}`}
           />
-          <Form.Item validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}>
-            <InputMask
-              mask="+213 999 999 999"
-              maskChar={null}
-              placeholder={`+213 ${i18n.t('placeholders:enter', {
-                fieldName: t('phone number'),
-              })}`}
-              value={values.phone}
-              onChange={(e) =>
-                handleChange({
-                  target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
-                })
-              }
-              onBlur={(e) => {
-                handleBlur({
-                  target: { name: 'phone', value: e.target.value.replace(/ /g, '') },
-                });
-                handleFieldsChange(e.target.name, e.target.value.replace(/ /g, ''));
-              }}
-              dir="ltr"
-            >
-              {(inputProps: any) => (
-                <Input
-                  prefix={<Icon name="phone-line" />}
-                  name="phone"
-                  value={values.phone}
-                  {...inputProps}
-                />
-              )}
-            </InputMask>
-          </Form.Item>
         </Col>
         <Col span={12}>
           <Label title={t('email')} error={touched.email ? (errors.email as string) : undefined} />
