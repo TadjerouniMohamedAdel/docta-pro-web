@@ -5,7 +5,7 @@ import Patients from '../../../features/Patients';
 import NotFound from '../../../features/NotFound';
 import Appointments from '../../../features/Appointments';
 import { ProtectedRoute } from '../../../features/Auth';
-import PageLoader from '../../PageLoader/PageLoader';
+import PageLoader from '../../../components/PageLoader/PageLoader';
 
 const Settings = React.lazy(() => import('../../../features/Settings'));
 

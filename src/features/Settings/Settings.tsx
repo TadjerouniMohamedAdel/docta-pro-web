@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch } from 'react-router-dom';
-import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
+import { InnerLayout } from '../../Layout';
 import Text from '../../components/Text/Text';
 import VisitReasons from './views/VisitReasons';
 import { ProtectedRoute } from '../Auth';
@@ -17,7 +17,7 @@ const Settings: React.FC<Props> = () => {
   const { t } = useTranslation('translation');
   return (
     <InnerLayout>
-      <InnerSidebar>
+      <InnerLayout.Sidebar>
         <div style={{ padding: '18px 24px' }}>
           <Text size="xxl" style={{ fontWeight: 'bold' }}>
             {t('settings')}
@@ -26,8 +26,8 @@ const Settings: React.FC<Props> = () => {
         <div>
           <Menu />
         </div>
-      </InnerSidebar>
-      <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
+      </InnerLayout.Sidebar>
+      <InnerLayout.Content style={{ display: 'flex', flexDirection: 'column' }}>
         <Switch>
           <ProtectedRoute
             accessCode="doctor_profile/settings"
@@ -52,7 +52,7 @@ const Settings: React.FC<Props> = () => {
           />
           <Route path="/settings/password-login" component={PasswordLogin} />
         </Switch>
-      </InnerContent>
+      </InnerLayout.Content>
     </InnerLayout>
   );
 };

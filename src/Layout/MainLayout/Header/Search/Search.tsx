@@ -1,6 +1,6 @@
 import React from 'react';
 import { AutoComplete, Input } from 'antd';
-import Icon from '../../../Icon/Icon';
+import Icon from '../../../../components/Icon/Icon';
 
 type Props = {};
 

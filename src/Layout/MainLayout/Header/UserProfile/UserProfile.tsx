@@ -2,8 +2,8 @@ import { Button, Col, Dropdown, Menu, Row, Avatar } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthState } from '../../../../features/Auth';
-import Text from '../../../Text/Text';
-import Icon from '../../../Icon/Icon';
+import Text from '../../../../components/Text/Text';
+import Icon from '../../../../components/Icon/Icon';
 
 const UserProfile: React.FC = () => {
   const { t } = useTranslation();

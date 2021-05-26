@@ -5,7 +5,7 @@ import Overlay from './Overlay/Overlay';
 import Sidebar from './Sidebar/Sidebar';
 import Content from './Content/Content';
 
-const Layout: React.FC = () => {
+const MainLayout: React.FC = () => {
   const { locale } = useLocaleState();
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -39,4 +39,4 @@ const Layout: React.FC = () => {
   );
 };
 
-export default Layout;
+export default MainLayout;

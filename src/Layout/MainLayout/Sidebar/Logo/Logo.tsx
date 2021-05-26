@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.less';
 import logoImage from '../../../../assets/img/docta_Logo.png';
 import logoText from '../../../../assets/img/docta_text.png';
-import Spacer from '../../../Spacer/Spacer';
+import Spacer from '../../../../components/Spacer/Spacer';
 
 type Props = {
   collapsed: boolean;

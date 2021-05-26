@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
+import { InnerLayout } from '../../Layout';
 import Text from '../../components/Text/Text';
 import Button from '../../components/Button/Button';
 import Icon from '../../components/Icon/Icon';
@@ -27,7 +27,7 @@ const Patients: React.FC = () => {
 
   return (
     <InnerLayout className="patient-layout">
-      <InnerSidebar>
+      <InnerLayout.Sidebar>
         <Row justify="space-between" style={{ padding: 13 }}>
           <Col style={{ display: 'flex' }}>
             <Spacer size="xs">
@@ -52,8 +52,8 @@ const Patients: React.FC = () => {
           selectedPatient={selectedPatient}
           setSelectedPatient={setSelectedPatient}
         />
-      </InnerSidebar>
-      <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
+      </InnerLayout.Sidebar>
+      <InnerLayout.Content style={{ display: 'flex', flexDirection: 'column' }}>
         {selectedPatient ? (
           <PatientProfile
             selectedPatient={selectedPatient}
@@ -74,7 +74,7 @@ const Patients: React.FC = () => {
             </Spacer>
           </div>
         )}
-      </InnerContent>
+      </InnerLayout.Content>
       <ProtectedComponent accessCode="add/patients">
         <AddPatient visible={showAddPatient} setVisible={setShowAddPatient} />
       </ProtectedComponent>
