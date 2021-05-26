@@ -19,7 +19,7 @@ import AppointmentCount from './components/AppointmentCount/AppointmentCount';
 import { AppointmentForm, Patient } from './types';
 import AppointmentDetails from './views/AppointmentDetails/AppointmentDetails';
 import AppointmentStart from './views/AppointmentStart/AppointmentStart';
-import ProtectedComponent from '../Auth/components/ProtectedComponent/ProtectedComponent';
+import { ProtectedComponent } from '../Auth';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
