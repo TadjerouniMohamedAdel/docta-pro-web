@@ -8,7 +8,7 @@ import 'moment/locale/ar-tn';
 import 'moment/locale/fr';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryCache } from 'react-query';
-import FullPageLoader from '../components/AppLoader';
+import AppLoader from '../components/AppLoader';
 import { useAuthState } from '../features/Auth/context';
 import { useLocaleState } from '../i18n';
 import { getCurrentUser } from '../features/Auth/services';
@@ -64,9 +64,9 @@ function App() {
     >
       <Router>
         {token && !user ? (
-          <FullPageLoader />
+          <AppLoader />
         ) : (
-          <React.Suspense fallback={<FullPageLoader />}>
+          <React.Suspense fallback={<AppLoader />}>
             {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
           </React.Suspense>
         )}
