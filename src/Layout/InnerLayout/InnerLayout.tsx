@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocaleState } from '../../i18n';
-import Card, { CardProps } from '../../components/Card/Card';
+import { Card, CardProps } from '../../components';
 import './styles.less';
 
 export type Props = CardProps & {

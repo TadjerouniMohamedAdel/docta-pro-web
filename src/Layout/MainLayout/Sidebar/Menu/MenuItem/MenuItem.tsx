@@ -2,10 +2,8 @@ import React from 'react';
 import { Link, useLocation, matchPath } from 'react-router-dom';
 import { Col, Menu, Row } from 'antd';
 import { MenuItemProps } from 'antd/lib/menu/MenuItem';
-import Icon from '../../../../../components/Icon/Icon';
-import Text from '../../../../../components/Text/Text';
+import { Icon, Text, IconName } from '../../../../../components';
 import './styles.less';
-import { IconName } from '../../../../../components/Icon/types';
 
 type Props = Omit<MenuItemProps, 'key'> & {
   collapsed: boolean;

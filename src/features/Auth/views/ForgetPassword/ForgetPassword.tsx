@@ -5,9 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ForgetPasswordForm from './ForgetPasswordForm/ForgetPasswordForm';
 import OTPForm from './OTPForm/OTPForm';
 import ResetPasswordForm from './ResetPasswordForm/ResetPasswordForm';
-import Link from '../../../../components/Link/Link';
-import Text from '../../../../components/Text/Text';
-import Spacer from '../../../../components/Spacer/Spacer';
+import { Link, Text, Spacer } from '../../../../components';
 
 const ForgetPassword: React.FC = () => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);

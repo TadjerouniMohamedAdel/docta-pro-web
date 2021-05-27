@@ -7,11 +7,7 @@ import { Avatar, Col, Divider, Empty, Form, Input, Row, Select as AntSelect } fr
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import Button from '../../../../components/Button/Button';
-import Modal from '../../../../components/Modal/Modal';
-import Icon from '../../../../components/Icon/Icon';
-import Label from '../../../../components/Label/Label';
-import Select from '../../../../components/Select/Select';
+import { Button, Modal, Icon, Label, Select } from '../../../../components';
 import { AppointmentForm, Patient } from '../../types';
 import i18n from '../../../../i18n';
 import DatePicker from '../../../../components/DatePicker/DatePicker';

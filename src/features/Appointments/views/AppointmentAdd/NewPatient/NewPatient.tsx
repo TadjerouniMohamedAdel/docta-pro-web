@@ -4,9 +4,7 @@ import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
-import Button from '../../../../../components/Button/Button';
-import Icon from '../../../../../components/Icon/Icon';
-import Tab from '../../../../../components/Tab/Tab';
+import { Button, Icon, Tab, Text, Spacer } from '../../../../../components';
 import {
   PatientPersonalInfo,
   PatientMedicalRecords,
@@ -17,9 +15,7 @@ import {
   addNewPatient,
 } from '../../../../Patients';
 import i18n from '../../../../../i18n';
-import Text from '../../../../../components/Text/Text';
 import { Patient } from '../../../types';
-import Spacer from '../../../../../components/Spacer/Spacer';
 
 type Props = {
   visible: boolean;

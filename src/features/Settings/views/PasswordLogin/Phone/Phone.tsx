@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from '../../../../../components/Button/Button';
+import { Button, Spacer, PhoneInput } from '../../../../../components';
 import { useAuthState } from '../../../../Auth';
-import Spacer from '../../../../../components/Spacer/Spacer';
 import ResetPhoneModal from './ResetPhoneModal/ResetPhoneModal';
-import PhoneInput from '../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {};
 

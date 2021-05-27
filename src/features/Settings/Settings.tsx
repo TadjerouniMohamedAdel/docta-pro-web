@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch } from 'react-router-dom';
 import { InnerLayout } from '../../Layout';
-import Text from '../../components/Text/Text';
+import { Text } from '../../components';
 import VisitReasons from './views/VisitReasons';
 import { ProtectedRoute } from '../Auth';
 import DoctorProfile from './views/DoctorProfile';

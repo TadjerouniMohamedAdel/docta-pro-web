@@ -4,9 +4,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import InputMask from 'react-input-mask';
-import Spacer from '../../../../../components/Spacer/Spacer';
-import Text from '../../../../../components/Text/Text';
-import Button from '../../../../../components/Button/Button';
+import { Spacer, Text, Button } from '../../../../../components';
 
 type Props = {
   confirmationResult: firebase.auth.ConfirmationResult | undefined;

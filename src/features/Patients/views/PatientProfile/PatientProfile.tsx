@@ -5,10 +5,7 @@ import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from 'react-query';
 import i18n from '../../../../i18n';
-import Tab from '../../../../components/Tab/Tab';
-import Icon from '../../../../components/Icon/Icon';
-import Text from '../../../../components/Text/Text';
-import Button from '../../../../components/Button/Button';
+import { Tab, Icon, Text, Button, Spacer } from '../../../../components';
 import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
 import MedicalRecords from '../../components/MedicalRecords/MedicalRecords';
 import VisitsHistory from '../../components/VisitsHistory/VisitsHistory';
@@ -28,7 +25,6 @@ import {
   deletePatientItem,
   unblockPatient,
 } from '../../services';
-import Spacer from '../../../../components/Spacer/Spacer';
 import BlockPatientModal from './BlockPatientModal/BlockPatientModal';
 // import PatientSkeleton from '../PatientSkeleton/PatientSkeleton';
 

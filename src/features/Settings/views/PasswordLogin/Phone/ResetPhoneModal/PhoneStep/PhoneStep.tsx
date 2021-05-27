@@ -4,12 +4,10 @@ import React, { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
-import Text from '../../../../../../../components/Text/Text';
+import { Text, Button, PhoneInput } from '../../../../../../../components';
 import i18n from '../../../../../../../i18n';
-import Button from '../../../../../../../components/Button/Button';
 import firebaseApp from '../../../../../../../firebase';
 import { CheckPhoneNumber } from '../../../../../../Auth/services';
-import PhoneInput from '../../../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   setConfirmationResult: (value: firebase.auth.ConfirmationResult) => void;

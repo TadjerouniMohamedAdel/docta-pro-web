@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from '../../../../components/Button/Button';
-import Icon from '../../../../components/Icon/Icon';
+import { Button, Icon } from '../../../../components';
 
 type Props = {
   handleToggled: (value: boolean) => void;

@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
-import Button from '../../../../components/Button/Button';
-import Text from '../../../../components/Text/Text';
-import Icon from '../../../../components/Icon/Icon';
+import { Button, Text, Icon, Tab } from '../../../../components';
 import { fetchSpecialties, saveVisitReasons } from './services';
 import VisitReasonsItem from './VisitReasonsItem/VisitReasonsItem';
 import { FetchSpecialtyResponse, Specialty } from './types';
-import Tab from '../../../../components/Tab/Tab';
 
-type Props = {};
-
-const VisitReasons: React.FC<Props> = () => {
+const VisitReasons: React.FC = () => {
   const { t } = useTranslation('translation');
 
   const [specialties, setSpecialties] = useState<Specialty[]>([]);

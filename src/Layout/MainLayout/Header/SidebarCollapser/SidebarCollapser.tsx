@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocaleState } from '../../../../i18n';
-import Button from '../../../../components/Button/Button';
-import Icon from '../../../../components/Icon/Icon';
+import { Button, Icon } from '../../../../components';
 
 type Props = {
   handleCollapsed: () => void;

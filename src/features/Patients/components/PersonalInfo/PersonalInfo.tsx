@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Col, Row, Form, Input, Select as AntSelect } from 'antd';
 import { FormikProps } from 'formik';
 import moment from 'moment';
-import Label from '../../../../components/Label/Label';
-import Icon from '../../../../components/Icon/Icon';
-import Select from '../../../../components/Select/Select';
+import { Label, Icon, Select, PhoneInput } from '../../../../components';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
 import { FormField, PersonalInfoForm } from '../../types';
 import i18n from '../../../../i18n';
@@ -13,7 +11,6 @@ import { useGetStatesList } from '../../../../common/hooks/useGetStatesList';
 import { StateCity } from '../../../../common/types';
 import { useGetCitiesList } from '../../../../common/hooks/useGetCitiesList';
 import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
-import PhoneInput from '../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   handleFormChange: (values: FormField) => void;

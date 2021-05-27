@@ -2,8 +2,7 @@ import { AutoComplete, Avatar, Col, Input, Row } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
-import Icon from '../../../../../components/Icon/Icon';
-import Text from '../../../../../components/Text/Text';
+import { Icon, Text } from '../../../../../components';
 import { fetchAllPatients } from '../../../../Patients/services';
 
 type Props = {

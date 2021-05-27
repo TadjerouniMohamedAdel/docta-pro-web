@@ -1,7 +1,7 @@
 import React from 'react';
 import { EventProps } from 'react-big-calendar';
 import moment from 'moment';
-import Text from '../../../../../components/Text/Text';
+import { Text } from '../../../../../components';
 
 const Event: React.FC<EventProps> = ({ event, title }) => {
   const { start } = event;

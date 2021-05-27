@@ -6,11 +6,7 @@ import { Avatar, Col, Divider, Dropdown, Form, Input, Menu, Row, Select as AntSe
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import Button from '../../../../components/Button/Button';
-import Modal from '../../../../components/Modal/Modal';
-import Icon from '../../../../components/Icon/Icon';
-import Label from '../../../../components/Label/Label';
-import Select from '../../../../components/Select/Select';
+import { Button, Modal, Icon, Label, Select } from '../../../../components';
 import { AppointmentForm, AppointmentStatus, Patient } from '../../types';
 import { editAppointment, fetchAppointmentsDetails, updateAppointmentStatus } from '../../services';
 import i18n from '../../../../i18n';

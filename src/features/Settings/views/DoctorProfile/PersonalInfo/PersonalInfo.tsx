@@ -3,16 +3,12 @@ import { Avatar, Button, Col, Form, Input, Row, Select as AntSelect, Upload } fr
 import { useTranslation } from 'react-i18next';
 import { FormikProps } from 'formik';
 import moment from 'moment';
-import Label from '../../../../../components/Label/Label';
-import Icon from '../../../../../components/Icon/Icon';
-import Select from '../../../../../components/Select/Select';
-import DatePicker from '../../../../../components/DatePicker/DatePicker';
+import { Label, Icon, Select, DatePicker, PhoneInput } from '../../../../../components';
 import i18n from '../../../../../i18n';
 import { Diploma, DoctorPersonalInfoForm, Language } from '../types';
 import Diplomas from './Diplomas/Diplomas';
 import Languages from './Languages/Languages';
 import { getBase64 } from '../../../../../common/utilities/base64';
-import PhoneInput from '../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   data: DoctorPersonalInfoForm;

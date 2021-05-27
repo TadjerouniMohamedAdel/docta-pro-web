@@ -2,8 +2,7 @@ import { Checkbox } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
-import Text from '../../../../components/Text/Text';
-import Select from '../../../../components/Select/Select';
+import { Text, Select } from '../../../../components';
 import { fetchSpecialties } from '../../../Settings/views/VisitReasons/services';
 import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'antd';
-import Text from '../../../../../components/Text/Text';
-import Icon from '../../../../../components/Icon/Icon';
-import Button from '../../../../../components/Button/Button';
+import { Text, Icon, Button } from '../../../../../components';
 import './styles.less';
 
 type Props = {

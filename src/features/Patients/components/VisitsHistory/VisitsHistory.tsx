@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Col, Row, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import Icon from '../../../../components/Icon/Icon';
+import { Icon } from '../../../../components';
 import { useGetVisitHistory } from '../../hooks';
 import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
 

@@ -4,11 +4,7 @@ import { FormikHelpers, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import * as Yup from 'yup';
-import Spacer from '../../../../../components/Spacer/Spacer';
-import Text from '../../../../../components/Text/Text';
-import Label from '../../../../../components/Label/Label';
-import Button from '../../../../../components/Button/Button';
-import Icon from '../../../../../components/Icon/Icon';
+import { Spacer, Text, Label, Button, Icon } from '../../../../../components';
 import i18n from '../../../../../i18n';
 import { resetPassword } from '../../../services';
 

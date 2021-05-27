@@ -6,17 +6,19 @@ import * as Yup from 'yup';
 import { useMutation, useQueryClient } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import generatePassword from 'password-generator';
-import Modal from '../../../../../components/Modal/Modal';
-import Icon from '../../../../../components/Icon/Icon';
-import Button from '../../../../../components/Button/Button';
-import Text from '../../../../../components/Text/Text';
+import {
+  Modal,
+  Icon,
+  Button,
+  Text,
+  Label,
+  Select,
+  PhoneInput,
+  Link,
+} from '../../../../../components';
 import { Role, UserForm, Section, AddUserParams, EditUserParams } from '../types';
-import Label from '../../../../../components/Label/Label';
-import Select from '../../../../../components/Select/Select';
 import i18n from '../../../../../i18n';
 import { addUser, editUser, fetchPermissions, fetchRoles } from '../services';
-import Link from '../../../../../components/Link/Link';
-import PhoneInput from '../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   visible?: boolean;

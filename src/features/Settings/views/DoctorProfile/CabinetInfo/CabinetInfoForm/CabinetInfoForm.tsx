@@ -2,11 +2,9 @@ import { Col, Form, Input, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps } from 'formik';
-import Label from '../../../../../../components/Label/Label';
-import Icon from '../../../../../../components/Icon/Icon';
+import { Label, Icon, PhoneInput } from '../../../../../../components';
 import i18n from '../../../../../../i18n';
 import { CabinetForm } from '../../types';
-import PhoneInput from '../../../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   data: CabinetForm;

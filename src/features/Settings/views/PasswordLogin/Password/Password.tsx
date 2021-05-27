@@ -5,11 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import { Alert, Form, Input } from 'antd';
 import { resetProPassword } from '../services';
-import Spacer from '../../../../../components/Spacer/Spacer';
-import Label from '../../../../../components/Label/Label';
-import Icon from '../../../../../components/Icon/Icon';
+import { Spacer, Label, Icon, Button } from '../../../../../components';
 import i18n from '../../../../../i18n';
-import Button from '../../../../../components/Button/Button';
 
 type FormValue = {
   currentPassword: string;

@@ -8,13 +8,8 @@ import { useHistory } from 'react-router-dom';
 import { useAuthState } from '../../context';
 import { login } from '../../services';
 import { AuthResponse, LoginParams } from '../../types';
-import Spacer from '../../../../components/Spacer/Spacer';
-import Link from '../../../../components/Link/Link';
-import Text from '../../../../components/Text/Text';
-import Icon from '../../../../components/Icon/Icon';
-import Label from '../../../../components/Label/Label';
+import { Spacer, Link, Text, Icon, Label, PhoneInput } from '../../../../components';
 import i18n from '../../../../i18n';
-import PhoneInput from '../../../../components/PhoneInput/PhoneInput';
 
 const Login: React.FC = () => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);

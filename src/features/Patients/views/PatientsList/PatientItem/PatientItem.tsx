@@ -2,8 +2,7 @@ import { Col, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
 import classNames from 'classnames';
-import Spacer from '../../../../../components/Spacer/Spacer';
-import Text from '../../../../../components/Text/Text';
+import { Spacer, Text } from '../../../../../components';
 import { SelectedPatient } from '../../../types';
 
 type Props = {
