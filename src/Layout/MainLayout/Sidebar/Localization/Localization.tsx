@@ -13,10 +13,10 @@ type Props = {
 
 const Localization: React.FC<Props> = ({ collapsed }) => {
   const { locale, setLocale } = useLocaleState();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const handleLocaleChange = (e: any): void => {
-    const result = message.loading(t('changing language'), 0) as unknown;
+    const result = message.loading('', 0) as unknown;
     const hide = result as () => void;
 
     i18n.changeLanguage(e.key, () => {

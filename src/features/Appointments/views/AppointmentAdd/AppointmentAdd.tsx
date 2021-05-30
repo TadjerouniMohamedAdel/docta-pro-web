@@ -359,7 +359,7 @@ const AppointmentAdd: React.FC<Props> = ({
             <Col span={24}>
               <Row style={{ height: 250 }} align="middle">
                 <Col flex={1}>
-                  <Empty description={t('No patient is selected!')} />
+                  <Empty description={t('no patient selected')} />
                 </Col>
               </Row>
             </Col>

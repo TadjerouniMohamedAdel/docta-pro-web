@@ -205,7 +205,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user, pageIndex, page
       title: t('sections'),
       dataIndex: 'sections',
       key: 'sections',
-      render: (text: any, record: Section) => <Text>{record.name}</Text>,
+      render: (text: any, record: Section) => <Text>{t(record.name.toLowerCase())}</Text>,
     },
     {
       title: t('permissions'),
@@ -219,7 +219,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user, pageIndex, page
               checked={permission.checked}
               onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
             >
-              {permission.name}
+              {t(permission.name.toLowerCase())}
             </Checkbox>
           ))}
         </Row>
@@ -353,7 +353,7 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user, pageIndex, page
                 >
                   {roles.map((role: Role) => (
                     <Option key={role.id} value={role.id}>
-                      {role.name}
+                      {t(role.name.toLowerCase())}
                     </Option>
                   ))}
                 </Select>
