@@ -160,5 +160,9 @@
   "block success": "{{name}} blocked successfully",
   "unblock success": "{{name}} unblocked successfully",
   "change success": "{{name}} updated successfully",
-  "time slot already booked": "Time slot already booked"
+  "time slot already booked": "Time slot already booked",
+  "invalid combination": "Invalid combination. Have another go.",
+  "No appointments available": "No appointments available!",
+  "loading": "loading...",
+  "no more data": "No more data"
 }

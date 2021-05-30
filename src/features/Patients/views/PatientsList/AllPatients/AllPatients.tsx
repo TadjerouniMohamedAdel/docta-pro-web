@@ -75,8 +75,10 @@ const AllPatients: React.FC<Props> = ({
             </>
           ))}
           <div ref={loadMoreButtonRef} style={{ textAlign: 'center', height: 35, marginTop: 16 }}>
-            {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
-            {!hasNextPage && !isLoading ? <span style={{ opacity: 0.5 }}>No more data</span> : null}
+            {isLoading || isFetchingNextPage ? <span>{t('loading')}</span> : null}
+            {!hasNextPage && !isLoading ? (
+              <span style={{ opacity: 0.5 }}>{t('no more data')}</span>
+            ) : null}
           </div>
         </div>
       </SimpleBar>

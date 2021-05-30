@@ -57,8 +57,11 @@ const BlockedPatients: React.FC<Props> = ({ selectedPatient, setSelectedPatient 
           </>
         ))}
       </div>
-      <div ref={loadMoreButtonRef} style={{ textAlign: 'center' }}>
-        {isLoading || isFetchingNextPage ? <span>loading...</span> : null}
+      <div ref={loadMoreButtonRef} style={{ textAlign: 'center', height: 35, marginTop: 16 }}>
+        {isLoading || isFetchingNextPage ? <span>{t('loading')}</span> : null}
+        {!hasNextPage && !isLoading ? (
+          <span style={{ opacity: 0.5 }}>{t('no more data')}</span>
+        ) : null}
       </div>
     </div>
   );

@@ -151,7 +151,7 @@ const DayView: React.FC<Props> = ({
     </div>
   ) : (
     <div style={{ display: 'flex', height: 400, alignItems: 'center', justifyContent: 'center' }}>
-      <Empty description={t('No appointments available!')} />
+      <Empty description={t('No appointments available')} />
     </div>
   );
 };

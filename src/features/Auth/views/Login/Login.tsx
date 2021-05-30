@@ -91,7 +91,7 @@ const Login: React.FC = () => {
             <Alert
               message={
                 <Text size="sm" style={{ color: 'white' }}>
-                  Invalid combination. Have another go.
+                  {t('invalid combination')}
                 </Text>
               }
               type="error"

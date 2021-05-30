@@ -14,7 +14,7 @@ import {
   PersonalInfoForm,
   addNewPatient,
 } from '../../../../Patients';
-import i18n from '../../../../../i18n';
+import i18n, { useLocaleState } from '../../../../../i18n';
 import { Patient } from '../../../types';
 
 type Props = {
@@ -25,6 +25,7 @@ type Props = {
 
 const NewPatient: React.FC<Props> = ({ visible, onClose, handleSelectPatient }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
+  const { locale } = useLocaleState();
 
   const personalInfoFormInitialValues: PersonalInfoForm = {
     firstName: '',
@@ -172,7 +173,7 @@ const NewPatient: React.FC<Props> = ({ visible, onClose, handleSelectPatient }) 
         <Col>
           <Spacer size="xs">
             <Button type="text" size="small" onClick={handleClose}>
-              <Icon name="arrow-left-line" />
+              <Icon name={locale === 'ar' ? 'arrow-right-line' : 'arrow-left-line'} />
             </Button>
             <Text size="xxxl" style={{ fontWeight: 500 }}>
               {t('new patient')}
