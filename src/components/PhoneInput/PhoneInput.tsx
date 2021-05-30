@@ -1,8 +1,11 @@
 import { Form, Input } from 'antd';
 import React from 'react';
 import ReactInputMask from 'react-input-mask';
+import classnames from 'classnames';
 import Label from '../Label/Label';
 import Icon from '../Icon/Icon';
+import { useLocaleState } from '../../i18n';
+import './styles.less';
 
 type Props = {
   label?: string;
@@ -37,6 +40,7 @@ const PhoneInput: React.FC<Props> = ({
   onChange,
   onBlur,
 }) => {
+  const { locale } = useLocaleState();
   return (
     <>
       {label ? <Label title={label} error={error} required={required} /> : null}
@@ -59,9 +63,11 @@ const PhoneInput: React.FC<Props> = ({
             });
           }}
           dir="ltr"
+          className={classnames('phone-input', { rtl: locale === 'ar' })}
         >
           {(inputProps: any) => (
             <Input
+              style={{ textAlign: 'right' }}
               disabled={disabled}
               prefix={<Icon name="phone-line" />}
               name={name}
