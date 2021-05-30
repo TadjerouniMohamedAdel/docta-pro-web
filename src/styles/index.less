@@ -19,7 +19,7 @@ body {
 .layout.main-layout {
   background-color: @layout-body-background;
   .header {
-    box-shadow: @box-shadow-base;
+    box-shadow: 4px 0 6px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
     background-color: @white;
   }
   .sidebar {
@@ -29,6 +29,9 @@ body {
     height: 100%;
   }
   &.rtl {
+    .header {
+      box-shadow: -4px 0 6px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
+    }
     .sidebar {
       box-shadow: -4px 0 4px 0 rgba(43, 45, 55, 0.01);
     }
