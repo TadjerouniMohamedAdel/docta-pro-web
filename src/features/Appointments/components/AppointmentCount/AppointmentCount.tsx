@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Text from '../../../../components/Text/Text';
+import { Text } from '../../../../components';
 import { useAppointmentCount } from '../../hooks';
 
 type Props = {

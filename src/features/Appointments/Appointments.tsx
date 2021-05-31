@@ -3,13 +3,11 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
+import { InnerLayout } from '../../Layout';
 import Calendar from './components/Calendar/Calendar';
-import Text from '../../components/Text/Text';
-import Icon from '../../components/Icon/Icon';
+import { Text, Icon, Button } from '../../components';
 import DayView from './views/DayView/DayView';
 import VisitReasons from './components/VisitReasons/VisitReasons';
-import Button from '../../components/Button/Button';
 import { useLocaleState } from '../../i18n';
 import WeekView from './views/WeekView/WeekView';
 import './styles.less';
@@ -19,7 +17,7 @@ import AppointmentCount from './components/AppointmentCount/AppointmentCount';
 import { AppointmentForm, Patient } from './types';
 import AppointmentDetails from './views/AppointmentDetails/AppointmentDetails';
 import AppointmentStart from './views/AppointmentStart/AppointmentStart';
-import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
+import { ProtectedComponent } from '../Auth';
 
 const Appointments: React.FC = () => {
   const { locale } = useLocaleState();
@@ -93,7 +91,7 @@ const Appointments: React.FC = () => {
   return (
     <InnerLayout>
       {pathname !== '/appointments/week' ? (
-        <InnerSidebar>
+        <InnerLayout.Sidebar>
           <div
             style={{
               display: 'flex',
@@ -162,10 +160,10 @@ const Appointments: React.FC = () => {
               </div>
             </div>
           </div>
-        </InnerSidebar>
+        </InnerLayout.Sidebar>
       ) : null}
 
-      <InnerContent style={{ padding: '18px 40px' }}>
+      <InnerLayout.Content style={{ padding: '18px 40px' }}>
         <div>
           <Row justify="space-between" align="middle">
             <Col>
@@ -286,7 +284,7 @@ const Appointments: React.FC = () => {
             />
           </Switch>
         </div>
-      </InnerContent>
+      </InnerLayout.Content>
       <ProtectedComponent accessCode="add/appointments">
         <AppointmentAdd
           visible={showAppointmentAdd}

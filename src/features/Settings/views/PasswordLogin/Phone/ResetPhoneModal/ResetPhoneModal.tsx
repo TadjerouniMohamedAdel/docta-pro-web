@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
-import Modal from '../../../../../../components/Modal/Modal';
+import { Modal } from '../../../../../../components';
 import PasswordStep from './PasswordStep/PasswordStep';
 import PhoneStep from './PhoneStep/PhoneStep';
 import OTPFormStep from './OTPFormStep/OTPFormStep';

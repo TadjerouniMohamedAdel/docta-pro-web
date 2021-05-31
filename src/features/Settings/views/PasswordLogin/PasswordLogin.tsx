@@ -1,7 +1,7 @@
 import { Divider } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Text from '../../../../components/Text/Text';
+import { Text } from '../../../../components';
 import Password from './Password/Password';
 import Phone from './Phone/Phone';
 

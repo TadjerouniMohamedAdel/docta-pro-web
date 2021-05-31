@@ -1,7 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import Button from '../../../../../../../components/Button/Button';
-import Icon from '../../../../../../../components/Icon/Icon';
+import { Button, Icon } from '../../../../../../../components';
 import { Image } from '../../../types';
 import './styles.less';
 

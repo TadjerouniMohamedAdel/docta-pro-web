@@ -4,9 +4,7 @@ import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import moment from 'moment';
-import Text from '../../../../components/Text/Text';
-import Icon from '../../../../components/Icon/Icon';
-import Button from '../../../../components/Button/Button';
+import { Text, Icon, Button } from '../../../../components';
 import { fetchUsers } from './services';
 import UserModal from './UserModal/UserModal';
 import { Professional, UserForm } from './types';
@@ -117,7 +115,7 @@ const Users: React.FC<Props> = () => {
       title: t('role'),
       dataIndex: 'role',
       key: 'role',
-      render: (text: any, record: Professional) => <>{record.role.name}</>,
+      render: (text: any, record: Professional) => <>{t(record.role.name.toLowerCase())}</>,
     },
     {
       title: t('created at'),
@@ -129,30 +127,31 @@ const Users: React.FC<Props> = () => {
       title: t('actions'),
       dataIndex: 'actions',
       key: 'actions',
-      render: (text: any, record: Professional) => (
-        <Row>
-          <Col>
-            <Button
-              type="text"
-              size="small"
-              className="edit-action"
-              onClick={() => handleEditUser(record)}
-            >
-              <Icon name="pencil-line" />
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              type="text"
-              size="small"
-              className="delete-action"
-              onClick={() => handleDeleteUser(record)}
-            >
-              <Icon name="delete-bin-7-line" />
-            </Button>
-          </Col>
-        </Row>
-      ),
+      render: (text: any, record: Professional) =>
+        record.role.code === 'practitioner' ? null : (
+          <Row>
+            <Col>
+              <Button
+                type="text"
+                size="small"
+                className="edit-action"
+                onClick={() => handleEditUser(record)}
+              >
+                <Icon name="pencil-line" />
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                type="text"
+                size="small"
+                className="delete-action"
+                onClick={() => handleDeleteUser(record)}
+              >
+                <Icon name="delete-bin-7-line" />
+              </Button>
+            </Col>
+          </Row>
+        ),
     },
   ];
 

@@ -2,10 +2,7 @@ import { Avatar, Col, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from 'react-query';
-import Button from '../../../../../components/Button/Button';
-import Modal from '../../../../../components/Modal/Modal';
-import Text from '../../../../../components/Text/Text';
-import Icon from '../../../../../components/Icon/Icon';
+import { Button, Modal, Text, Icon } from '../../../../../components';
 import { UserForm } from '../types';
 import { deleteUser } from '../services';
 

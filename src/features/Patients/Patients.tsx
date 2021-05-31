@@ -1,16 +1,13 @@
 import { Col, Row } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import InnerLayout, { InnerContent, InnerSidebar } from '../../components/InnerLayout';
-import Text from '../../components/Text/Text';
-import Button from '../../components/Button/Button';
-import Icon from '../../components/Icon/Icon';
-import Spacer from '../../components/Spacer/Spacer';
-import PatientsList from './PatientsList/PatientsList';
-import PatientProfile from './PatientProfile/PatientProfile';
-import PatientModal from './PatientModal/PatientModal';
+import { InnerLayout } from '../../Layout';
+import { Text, Button, Icon, Spacer } from '../../components';
+import PatientsList from './views/PatientsList/PatientsList';
+import PatientProfile from './views/PatientProfile/PatientProfile';
+import AddPatient from './views/AddPatient/AddPatient';
 import { SelectedPatient } from './types';
-import ProtectedComponent from '../Auth/ProtectedComponent/ProtectedComponent';
+import { ProtectedComponent } from '../Auth';
 import emptyStateImg from '../../assets/img/empty-state.png';
 import './styles.less';
 
@@ -19,7 +16,7 @@ const Patients: React.FC = () => {
   const [patientsCount, setPatientsCount] = useState<number | undefined>();
   const [selectedPatient, setSelectedPatient] = useState<SelectedPatient | undefined>();
 
-  const [showPatientModal, setShowPatientModal] = useState<boolean>(false);
+  const [showAddPatient, setShowAddPatient] = useState<boolean>(false);
 
   const handleSetPatientCount = (value: number) => {
     setPatientsCount(value);
@@ -27,7 +24,7 @@ const Patients: React.FC = () => {
 
   return (
     <InnerLayout className="patient-layout">
-      <InnerSidebar>
+      <InnerLayout.Sidebar>
         <Row justify="space-between" style={{ padding: 13 }}>
           <Col style={{ display: 'flex' }}>
             <Spacer size="xs">
@@ -41,7 +38,7 @@ const Patients: React.FC = () => {
           </Col>
           <Col>
             <ProtectedComponent accessCode="add/patients">
-              <Button type="primary" size="small" onClick={() => setShowPatientModal(true)}>
+              <Button type="primary" size="small" onClick={() => setShowAddPatient(true)}>
                 <Icon name="add-line" />
               </Button>
             </ProtectedComponent>
@@ -52,8 +49,8 @@ const Patients: React.FC = () => {
           selectedPatient={selectedPatient}
           setSelectedPatient={setSelectedPatient}
         />
-      </InnerSidebar>
-      <InnerContent style={{ display: 'flex', flexDirection: 'column' }}>
+      </InnerLayout.Sidebar>
+      <InnerLayout.Content style={{ display: 'flex', flexDirection: 'column' }}>
         {selectedPatient ? (
           <PatientProfile
             selectedPatient={selectedPatient}
@@ -74,9 +71,9 @@ const Patients: React.FC = () => {
             </Spacer>
           </div>
         )}
-      </InnerContent>
+      </InnerLayout.Content>
       <ProtectedComponent accessCode="add/patients">
-        <PatientModal visible={showPatientModal} setVisible={setShowPatientModal} />
+        <AddPatient visible={showAddPatient} setVisible={setShowAddPatient} />
       </ProtectedComponent>
     </InnerLayout>
   );

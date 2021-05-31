@@ -1,0 +1,18 @@
+@import '../../../../../styles/variables.less';
+
+.custom-button.btn-record {
+  color: @text-color-secondary;
+  background-color: @input-bg;
+  border: none;
+
+  .custom-icon {
+    font-size: 20px !important;
+  }
+  &:hover {
+    color: @text-color;
+    background-color: rgba(@primary-color, 0.1);
+    .custom-icon {
+      color: @primary-color;
+    }
+  }
+}

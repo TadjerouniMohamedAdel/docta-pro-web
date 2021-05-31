@@ -1,0 +1,30 @@
+@import '../../../../../styles/variables.less';
+
+.records-list {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid @border-color-base;
+  .Record-box {
+    flex-grow: 1;
+    border-right: 1px solid @border-color-base;
+    .record-header {
+      height: @height-sm;
+      display: flex;
+      align-items: center;
+      padding-left: 16px;
+      padding-right: 16px;
+      background-color: @input-bg;
+      border-bottom: 1px solid @border-color-base;
+    }
+    .record-body {
+      padding: 16px;
+      .record-item {
+        height: @height-sm;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

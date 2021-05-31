@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as AntMenu } from 'antd';
 import MenuItem from './MenuItem/MenuItem';
-import ProtectedComponent from '../../Auth/ProtectedComponent/ProtectedComponent';
+import { ProtectedComponent } from '../../Auth';
 
 const Menu: React.FC = () => {
   const { t } = useTranslation();

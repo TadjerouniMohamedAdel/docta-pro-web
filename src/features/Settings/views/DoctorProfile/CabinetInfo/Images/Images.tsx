@@ -1,8 +1,7 @@
 import { Row, Col, Modal, Upload } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Icon from '../../../../../../components/Icon/Icon';
-import Text from '../../../../../../components/Text/Text';
+import { Icon, Text } from '../../../../../../components';
 import { getBase64 } from '../../../../../../common/utilities/base64';
 import { DoctorCabinetInfoForm, Image } from '../../types';
 import ImageItem from './ImageItem/ImageItem';

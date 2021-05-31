@@ -1,15 +1,11 @@
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import { useFormik } from 'formik';
 import React, { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
-import InputMask from 'react-input-mask';
-import Label from '../../../../../../../components/Label/Label';
-import Text from '../../../../../../../components/Text/Text';
-import Icon from '../../../../../../../components/Icon/Icon';
+import { Text, Button, PhoneInput } from '../../../../../../../components';
 import i18n from '../../../../../../../i18n';
-import Button from '../../../../../../../components/Button/Button';
 import firebaseApp from '../../../../../../../firebase';
 import { CheckPhoneNumber } from '../../../../../../Auth/services';
 
@@ -31,8 +27,11 @@ const PhoneStep: React.FC<Props> = ({ setConfirmationResult, setStep, setPhoneNu
 
   const initialValues: FormValue = { phone: '' };
 
+  const phoneRegEx = /(\+[0-9]{11,12})/;
   const validationSchema = Yup.object().shape({
-    phone: Yup.string().required(t('errors:required field')),
+    phone: Yup.string()
+      .required(t('errors:required field'))
+      .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
   });
 
   const onPhoneVerification = async (values: FormValue) => {
@@ -66,41 +65,22 @@ const PhoneStep: React.FC<Props> = ({ setConfirmationResult, setStep, setPhoneNu
       <Form.Item style={{ marginBottom: 40 }}>
         <Text size="lg">{t('new phone description')}</Text>
       </Form.Item>
-      <Form.Item
-        validateStatus={touched.phone && Boolean(errors.phone) ? 'error' : undefined}
-        style={{ marginBottom: 16 }}
-      >
-        <Label
-          title={i18n.t('placeholders:enter', {
-            fieldName: t('new login phone number'),
-          })}
-          error={touched.phone ? errors.phone : undefined}
-        />
-
-        <InputMask
-          mask="+213 999 999 999"
-          maskChar={null}
-          placeholder={`+213 ${i18n.t('placeholders:enter your', {
-            fieldName: t('Docta phone number'),
-          })}`}
+      <div style={{ marginBottom: 16 }}>
+        <PhoneInput
+          required
           value={values.phone}
           onChange={handleChange}
           onBlur={handleBlur}
-          dir="ltr"
-        >
-          {(inputProps: any) => (
-            <Input
-              dir="ltr"
-              prefix={<Icon name="phone-line" />}
-              name="phone"
-              value={values.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              {...inputProps}
-            />
-          )}
-        </InputMask>
-      </Form.Item>
+          name="phone"
+          label={t('placeholders:enter', {
+            fieldName: t('new login phone number'),
+          })}
+          error={touched.phone ? errors.phone : undefined}
+          placeholder={`+213 ${i18n.t('placeholders:enter your', {
+            fieldName: t('Docta phone number'),
+          })}`}
+        />
+      </div>
 
       <Button type="primary" htmlType="submit" block loading={loading}>
         {t('next')}

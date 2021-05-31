@@ -1,3 +1,4 @@
 export { default } from './Auth';
-export { default as ForgetPassword } from './ForgetPassword/ForgetPassword';
 export { AuthProvider, useAuthState } from './context';
+export * from './hooks';
+export { ProtectedComponent, ProtectedRoute } from './components';

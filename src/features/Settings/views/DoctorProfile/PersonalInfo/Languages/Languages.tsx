@@ -1,10 +1,7 @@
 import { AutoComplete, Col, Form, Input, Row, Tag } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from '../../../../../../components/Button/Button';
-import Label from '../../../../../../components/Label/Label';
-import Icon from '../../../../../../components/Icon/Icon';
-import Text from '../../../../../../components/Text/Text';
+import { Button, Label, Icon, Text } from '../../../../../../components';
 import { Language } from '../../types';
 import i18n from '../../../../../../i18n';
 import './styles.less';

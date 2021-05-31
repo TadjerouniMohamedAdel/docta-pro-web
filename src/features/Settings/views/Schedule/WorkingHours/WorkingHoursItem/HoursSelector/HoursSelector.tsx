@@ -2,8 +2,7 @@
 import React from 'react';
 import { Select as AntSelect } from 'antd';
 import moment from 'moment';
-import Select from '../../../../../../../components/Select/Select';
-import Icon from '../../../../../../../components/Icon/Icon';
+import { Select, Icon } from '../../../../../../../components';
 
 type Props = {
   time: string;

@@ -16,7 +16,7 @@ const AppLoader: React.FC = () => {
         zIndex: 1999,
       }}
     >
-      <div>Loading ...</div>
+      <video width={200} autoPlay muted loop src="/docta-loader.mp4" />
     </div>
   );
 };

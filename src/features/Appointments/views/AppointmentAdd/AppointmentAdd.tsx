@@ -7,12 +7,7 @@ import { Avatar, Col, Divider, Empty, Form, Input, Row, Select as AntSelect } fr
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import ReactInputMask from 'react-input-mask';
-import Button from '../../../../components/Button/Button';
-import Modal from '../../../../components/Modal/Modal';
-import Icon from '../../../../components/Icon/Icon';
-import Label from '../../../../components/Label/Label';
-import Select from '../../../../components/Select/Select';
+import { Button, Modal, Icon, Label, Select } from '../../../../components';
 import { AppointmentForm, Patient } from '../../types';
 import i18n from '../../../../i18n';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
@@ -27,6 +22,7 @@ import { useAddAppointment } from '../../hooks/useAddAppointment';
 import { fetchPatientDetails } from '../../../Patients/services';
 import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
 import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
+import PhoneInput from '../../../../components/PhoneInput/PhoneInput';
 
 type Props = {
   visible: boolean;
@@ -363,7 +359,7 @@ const AppointmentAdd: React.FC<Props> = ({
             <Col span={24}>
               <Row style={{ height: 250 }} align="middle">
                 <Col flex={1}>
-                  <Empty description={t('No patient is selected!')} />
+                  <Empty description={t('no patient selected')} />
                 </Col>
               </Row>
             </Col>
@@ -443,24 +439,14 @@ const AppointmentAdd: React.FC<Props> = ({
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Label title={t('phone number')} />
-                <Form.Item>
-                  <ReactInputMask
-                    disabled
-                    mask="+213 999 999 999"
-                    maskChar={null}
-                    placeholder={`+213 ${i18n.t('placeholders:enter', {
-                      fieldName: t('phone number'),
-                    })}`}
-                    value={patient.phone ?? ''}
-                    dir="ltr"
-                    name="phone"
-                  >
-                    {(inputProps: any) => (
-                      <Input disabled prefix={<Icon name="phone-line" />} {...inputProps} />
-                    )}
-                  </ReactInputMask>
-                </Form.Item>
+                <PhoneInput
+                  value={patient.phone}
+                  name="phone"
+                  label={t('phone number')}
+                  placeholder={`+213 ${t('placeholders:enter', {
+                    fieldName: t('phone number'),
+                  })}`}
+                />
               </Col>
               <Col span={12}>
                 <Label title={t('general status')} />

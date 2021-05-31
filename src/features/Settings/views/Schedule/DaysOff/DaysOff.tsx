@@ -5,8 +5,7 @@ import { useQuery } from 'react-query';
 import React from 'react';
 import moment from 'moment';
 import { DaysOffSchedule } from '../types';
-import Text from '../../../../../components/Text/Text';
-import Icon from '../../../../../components/Icon/Icon';
+import { Text, Icon } from '../../../../../components';
 import { fetchDaysOff } from '../services';
 import DaysOffModal from './DaysOffModal/DaysOffModal';
 

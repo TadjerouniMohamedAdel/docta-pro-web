@@ -1,8 +1,8 @@
 import React from 'react';
-import Layout from '../../components/Layout';
+import { MainLayout } from '../../Layout';
 
 const AuthenticatedApp: React.FC = () => {
-  return <Layout />;
+  return <MainLayout />;
 };
 
 export default AuthenticatedApp;

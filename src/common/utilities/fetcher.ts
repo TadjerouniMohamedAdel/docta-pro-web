@@ -29,7 +29,7 @@ const fetcher = (
   }: FetcherOptions = {},
 ) => {
   const token = localStorage.getItem('token');
-  const locale = localStorage.getItem('locale') ?? 'en';
+  const locale = localStorage.getItem('locale') ?? 'fr';
 
   const headers: FetchHeader = {
     locale,

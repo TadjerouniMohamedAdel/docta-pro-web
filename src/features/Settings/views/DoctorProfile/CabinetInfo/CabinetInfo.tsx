@@ -1,6 +1,6 @@
 import { FormikProps } from 'formik';
 import React from 'react';
-import Spacer from '../../../../../components/Spacer/Spacer';
+import { Spacer } from '../../../../../components';
 import { DoctorCabinetInfoForm, Service, CabinetForm, Image } from '../types';
 import CabinetInfoForm from './CabinetInfoForm/CabinetInfoForm';
 import Images from './Images/Images';

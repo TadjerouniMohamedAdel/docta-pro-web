@@ -26,4 +26,3 @@ const Card: React.FC<Props> = ({ children, shadow = 'md', style, ...rest }) => {
 };
 
 export default Card;
-export type { Props as CardProps };

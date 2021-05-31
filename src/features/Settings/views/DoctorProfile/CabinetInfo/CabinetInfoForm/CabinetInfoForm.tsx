@@ -2,9 +2,7 @@ import { Col, Form, Input, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps } from 'formik';
-import ReactInputMask from 'react-input-mask';
-import Label from '../../../../../../components/Label/Label';
-import Icon from '../../../../../../components/Icon/Icon';
+import { Label, Icon, PhoneInput } from '../../../../../../components';
 import i18n from '../../../../../../i18n';
 import { CabinetForm } from '../../types';
 
@@ -27,98 +25,40 @@ const CabinetInfoForm: React.FC<Props> = ({ data, formik, handleUpdateData }) =>
     <Form>
       <Row gutter={[35, 16]}>
         <Col span={12}>
-          <Label
-            title={t('Cabinet Phone')}
-            error={touched.contactNumber ? (errors.contactNumber as string) : undefined}
+          <PhoneInput
             required
+            value={values.contactNumber}
+            onChange={handleChange}
+            onBlur={(e) => {
+              handleBlur(e);
+              handleFieldsChange(e.target.name, e.target.value);
+            }}
+            name="contactNumber"
+            label={t('Cabinet Phone')}
+            error={touched.contactNumber ? (errors.contactNumber as string) : undefined}
+            placeholder={i18n.t('placeholders:enter', {
+              fieldName: t('Cabinet Phone'),
+            })}
           />
-          <Form.Item
-            validateStatus={
-              touched.contactNumber && Boolean(errors.contactNumber) ? 'error' : undefined
-            }
-          >
-            <ReactInputMask
-              mask="+213 999 999 999"
-              maskChar={null}
-              placeholder={i18n.t('placeholders:enter', {
-                fieldName: t('Cabinet Phone'),
-              })}
-              value={values.contactNumber}
-              onChange={(e) =>
-                handleChange({
-                  target: { name: 'contactNumber', value: e.target.value.replace(/ /g, '') },
-                })
-              }
-              onBlur={(e) => {
-                handleBlur({
-                  target: { name: 'contactNumber', value: e.target.value.replace(/ /g, '') },
-                });
-
-                handleFieldsChange('contactNumber', e.target.value.replace(/ /g, ''));
-              }}
-            >
-              {(inputProps: any) => (
-                <Input
-                  prefix={<Icon name="phone-line" />}
-                  name="contactNumber"
-                  value={values.contactNumber}
-                  {...inputProps}
-                />
-              )}
-            </ReactInputMask>
-          </Form.Item>
         </Col>
         <Col span={12}>
-          <Label
-            title={`${t('Cabinet Phone')} 2`}
+          <PhoneInput
+            required
+            value={values.secondaryContactNumber}
+            onChange={handleChange}
+            onBlur={(e) => {
+              handleBlur(e);
+              handleFieldsChange(e.target.name, e.target.value);
+            }}
+            name="secondaryContactNumber"
+            label={`${t('Cabinet Phone')} 2`}
             error={
               touched.secondaryContactNumber ? (errors.secondaryContactNumber as string) : undefined
             }
-            required
+            placeholder={i18n.t('placeholders:enter', {
+              fieldName: t('Cabinet Phone'),
+            })}
           />
-          <Form.Item
-            validateStatus={
-              touched.secondaryContactNumber && Boolean(errors.secondaryContactNumber)
-                ? 'error'
-                : undefined
-            }
-          >
-            <ReactInputMask
-              mask="+213 999 999 999"
-              maskChar={null}
-              placeholder={i18n.t('placeholders:enter', {
-                fieldName: t('Cabinet Phone'),
-              })}
-              value={values.secondaryContactNumber}
-              onChange={(e) =>
-                handleChange({
-                  target: {
-                    name: 'secondaryContactNumber',
-                    value: e.target.value.replace(/ /g, ''),
-                  },
-                })
-              }
-              onBlur={(e) => {
-                handleBlur({
-                  target: {
-                    name: 'secondaryContactNumber',
-                    value: e.target.value.replace(/ /g, ''),
-                  },
-                });
-
-                handleFieldsChange('secondaryContactNumber', e.target.value.replace(/ /g, ''));
-              }}
-            >
-              {(inputProps: any) => (
-                <Input
-                  prefix={<Icon name="phone-line" />}
-                  name="secondaryContactNumber"
-                  value={values.secondaryContactNumber}
-                  {...inputProps}
-                />
-              )}
-            </ReactInputMask>
-          </Form.Item>
         </Col>
         <Col span={24}>
           <Label

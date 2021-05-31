@@ -3,18 +3,13 @@ import { Col, DatePicker, Divider, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from 'react-query';
 import moment from 'moment';
-import Modal from '../../../../../../components/Modal/Modal';
-import Icon from '../../../../../../components/Icon/Icon';
-import Button from '../../../../../../components/Button/Button';
-import Text from '../../../../../../components/Text/Text';
-import Label from '../../../../../../components/Label/Label';
+import { Modal, Icon, Button, Text, Label, Spacer } from '../../../../../../components';
 import './styles.less';
 import { useLocaleState } from '../../../../../../i18n';
 import { DaysOffParams } from '../../types';
 import { addDaysOff } from '../../services';
 import AppointmentCount from '../../../../../Appointments/components/AppointmentCount/AppointmentCount';
 import { fetchAppointmentsCount } from '../../../../../Appointments/services';
-import Spacer from '../../../../../../components/Spacer/Spacer';
 
 type Props = {
   visible: boolean;

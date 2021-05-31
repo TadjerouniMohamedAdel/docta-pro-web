@@ -8,7 +8,7 @@ import 'moment/locale/ar-tn';
 import 'moment/locale/fr';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryCache } from 'react-query';
-import FullPageLoader from '../components/AppLoader';
+import AppLoader from '../components/AppLoader';
 import { useAuthState } from '../features/Auth/context';
 import { useLocaleState } from '../i18n';
 import { getCurrentUser } from '../features/Auth/services';
@@ -32,7 +32,7 @@ function App() {
   const { locale } = useLocaleState();
   const token = localStorage.getItem('token');
 
-  moment.updateLocale(locale === 'ar' ? 'ar-tn' : locale || 'en', {
+  moment.updateLocale(locale === 'ar' ? 'ar-tn' : locale || 'fr', {
     week: {
       dow: 0,
       doy: 0,
@@ -59,14 +59,14 @@ function App() {
 
   return (
     <ConfigProvider
-      locale={(language as any)[locale ?? 'en']}
+      locale={(language as any)[locale ?? 'fr']}
       direction={locale === 'ar' ? 'rtl' : 'ltr'}
     >
       <Router>
         {token && !user ? (
-          <FullPageLoader />
+          <AppLoader />
         ) : (
-          <React.Suspense fallback={<FullPageLoader />}>
+          <React.Suspense fallback={<AppLoader />}>
             {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
           </React.Suspense>
         )}

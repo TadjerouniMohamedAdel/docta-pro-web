@@ -10,7 +10,7 @@ const LocaleStateContext = React.createContext<ContextProps | undefined>(undefin
 export const LocaleProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [locale, setLocale] = useState<string | undefined>(localStorage.getItem('locale') ?? 'en');
+  const [locale, setLocale] = useState<string | undefined>(localStorage.getItem('locale') ?? 'fr');
 
   return (
     <LocaleStateContext.Provider value={{ locale, setLocale }}>

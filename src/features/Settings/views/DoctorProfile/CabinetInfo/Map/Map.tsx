@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import marker from '../../../../../../assets/svg/marker.svg';
-import Text from '../../../../../../components/Text/Text';
+import { Text } from '../../../../../../components';
 import { Location } from '../../types';
 
 type Props = {

@@ -4,11 +4,8 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
 import { useTranslation } from 'react-i18next';
-import Label from '../../../../../../../components/Label/Label';
-import Text from '../../../../../../../components/Text/Text';
-import Icon from '../../../../../../../components/Icon/Icon';
+import { Label, Text, Icon, Button } from '../../../../../../../components';
 import i18n from '../../../../../../../i18n';
-import Button from '../../../../../../../components/Button/Button';
 import { checkPassword } from '../../../services';
 
 type Props = {

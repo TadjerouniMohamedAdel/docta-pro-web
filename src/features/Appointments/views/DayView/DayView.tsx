@@ -6,8 +6,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import './styles.less';
-import Spacer from '../../../../components/Spacer/Spacer';
-import Text from '../../../../components/Text/Text';
+import { Spacer, Text } from '../../../../components';
 // import Icon from '../../../components/Icon/Icon';
 import Button from '../../../../components/Button/Button';
 import { Appointment } from '../../types';
@@ -152,7 +151,7 @@ const DayView: React.FC<Props> = ({
     </div>
   ) : (
     <div style={{ display: 'flex', height: 400, alignItems: 'center', justifyContent: 'center' }}>
-      <Empty description={t('No appointments available!')} />
+      <Empty description={t('No appointments available')} />
     </div>
   );
 };
