@@ -3,9 +3,11 @@ export const convertToFormData = (data: any): FormData => {
   Object.entries(data).forEach(([key, value]: any) => {
     if (Array.isArray(value))
       value.forEach((file: any) => {
-        if (file instanceof Blob) formData.append(key, file);
+        if (file instanceof Blob) {
+          formData.append(key, file);
+        }
       });
-    formData.append(key, value);
+    else formData.append(key, value);
   });
   return formData;
 };
