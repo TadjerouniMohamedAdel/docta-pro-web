@@ -27,7 +27,9 @@ export type DoctorPersonalInfoForm = {
   picture: string;
   file?: Blob;
   firstName: string;
+  firstNameAr?: string;
   lastName: string;
+  lastNameAr?: string;
   phone: string;
   email: string;
   birthDate: string;
@@ -71,7 +73,9 @@ export type FetchDoctorPersonalInfoResponse = {
   birthDate: string;
   email: string;
   firstName: string;
+  firstNameAr: string;
   lastName: string;
+  lastNameAr: string;
   formations: Diploma[];
   gender: string | undefined;
   languages: Language[];

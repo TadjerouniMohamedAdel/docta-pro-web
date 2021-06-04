@@ -1,0 +1,51 @@
+@import '../../styles/variables.less';
+
+.account-setup {
+  .side-panel {
+    background-color: @primary-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 108px;
+    padding-right: 70px;
+  }
+
+  .step-header {
+    padding-top: 25px;
+    padding-left: 84px;
+    padding-right: 24px;
+  }
+  .step-content {
+    padding: 80px;
+  }
+
+  .custom-dot {
+    border-radius: 50%;
+    background-color: @border-color-base;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    &:not(.small) {
+      margin-top: 15px;
+    }
+    &.small {
+      width: 7px;
+      height: 7px;
+    }
+  }
+
+  .half-step {
+    padding-left: 0 !important;
+    margin-left: -25px !important;
+    .custom-dot {
+      width: 0 !important;
+      height: 0 !important;
+    }
+  }
+
+  .ant-steps-item-finish {
+    .custom-dot {
+      background-color: @primary-color;
+    }
+  }
+}

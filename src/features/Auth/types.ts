@@ -23,6 +23,7 @@ export type User = {
   picture: string;
   permissions: Permission[];
   role: Role;
+  setupAccountProgress: number;
 };
 
 export type LoginParams = {
