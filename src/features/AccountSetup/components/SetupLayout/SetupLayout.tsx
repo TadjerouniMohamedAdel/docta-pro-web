@@ -18,7 +18,7 @@ const SetupLayout: React.FC<Props> = ({
   title,
   description,
   content,
-  loading = false,
+  // loading = false,
   onNext,
   onBack,
 }) => {
@@ -74,7 +74,7 @@ const SetupLayout: React.FC<Props> = ({
                 </Col>
               ) : null}
               <Col>
-                <Button type="primary" size="small" onClick={onNext} loading={loading}>
+                <Button type="primary" size="small" onClick={onNext}>
                   {t('Next')}
                 </Button>
               </Col>
