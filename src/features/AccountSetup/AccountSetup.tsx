@@ -3,6 +3,7 @@ import { useAuthState } from '../Auth';
 import { SetupAccountProvider } from './context';
 import './styles.less';
 import { DoctorProfile1, DoctorProfile2 } from './views';
+import Availability from './views/Availability/Availability';
 import CabinetInfo from './views/CabinetInfo/CabinetInfo';
 
 type Props = {};
@@ -15,6 +16,7 @@ const AccountSetup: React.FC<Props> = () => {
       <DoctorProfile1 />
       <DoctorProfile2 />
       <CabinetInfo />
+      <Availability />
     </SetupAccountProvider>
   );
 };

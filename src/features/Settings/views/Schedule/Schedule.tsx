@@ -107,6 +107,7 @@ const Schedule: React.FC<Props> = () => {
             <WorkingHours
               workingHoursSchedule={workingHoursSchedule}
               handleUpdateData={handleUpdateWorkingHours}
+              spacing="24px 80px"
             />
           </Tabs.TabPane>
           <Tabs.TabPane

@@ -1,4 +1,5 @@
 import { fetcher } from '../../common/utilities';
+import { WorkingHoursSchedule } from '../Settings/views/Schedule/types';
 
 export const updateSetupAccountProgress = async (progress: number): Promise<any> => {
   return fetcher('/api/v1//professionals/account-progress', {
@@ -66,5 +67,12 @@ export const updateCabinetProfile = async (params: any): Promise<any> => {
     body,
     method: 'PUT',
     hasFiles: params.files.length > 0,
+  });
+};
+
+export const saveAvailability = async (params: WorkingHoursSchedule[]): Promise<any> => {
+  return fetcher('/api/v1/practitioners/schedule', {
+    body: params.filter((item) => item.isEdited),
+    method: 'PUT',
   });
 };
