@@ -1,5 +1,6 @@
 import { fetcher } from '../../common/utilities';
 import { WorkingHoursSchedule } from '../Settings/views/Schedule/types';
+import { Specialty } from '../Settings/views/VisitReasons/types';
 
 export const updateSetupAccountProgress = async (progress: number): Promise<any> => {
   return fetcher('/api/v1//professionals/account-progress', {
@@ -73,6 +74,13 @@ export const updateCabinetProfile = async (params: any): Promise<any> => {
 export const saveAvailability = async (params: WorkingHoursSchedule[]): Promise<any> => {
   return fetcher('/api/v1/practitioners/schedule', {
     body: params.filter((item) => item.isEdited),
+    method: 'PUT',
+  });
+};
+
+export const saveVisitReasonsStep = async (specialty: Specialty): Promise<any> => {
+  return fetcher('/api/v1/practitioners/reasons', {
+    body: specialty.visitReasons.filter((visitReason) => visitReason.isEdited),
     method: 'PUT',
   });
 };

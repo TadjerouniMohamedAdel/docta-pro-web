@@ -5,6 +5,7 @@ import './styles.less';
 import { DoctorProfile1, DoctorProfile2 } from './views';
 import Availability from './views/Availability/Availability';
 import CabinetInfo from './views/CabinetInfo/CabinetInfo';
+import VisitReasons from './views/VisitReasons/VisitReasons';
 
 type Props = {};
 
@@ -17,6 +18,7 @@ const AccountSetup: React.FC<Props> = () => {
       <DoctorProfile2 />
       <CabinetInfo />
       <Availability />
+      <VisitReasons />
     </SetupAccountProvider>
   );
 };
