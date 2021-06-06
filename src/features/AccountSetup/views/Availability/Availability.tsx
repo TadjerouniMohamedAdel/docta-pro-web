@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
-import { Text } from '../../../../components';
 import { WorkingHours } from '../../../Settings/views/Schedule';
 import { fetchWorkingHours } from '../../../Settings/views/Schedule/services';
 import { WorkingHoursSchedule } from '../../../Settings/views/Schedule/types';
@@ -48,13 +47,11 @@ const Availability: React.FC<Props> = () => {
     <SetupLayout
       title={t('Set up your working hours')}
       description="No unexpected visitors at your beach day, you are the lord of time!"
+      header={t('availability')}
       onNext={handleSaveWorkingHours}
       loading={isSaveWorkingHoursLoading}
       content={
-        <div>
-          <div style={{ marginBottom: 32 }}>
-            <Text style={{ fontSize: 36, fontWeight: 'bold' }}>{t('availability')}</Text>
-          </div>
+        <div style={{ padding: '0 80px' }}>
           <WorkingHours
             workingHoursSchedule={workingHoursSchedule}
             handleUpdateData={handleUpdateWorkingHours}

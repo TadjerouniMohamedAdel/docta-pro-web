@@ -1,13 +1,14 @@
 import { Col, Row, Steps } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Text } from '../../../../components';
+import { Button, Icon, Text } from '../../../../components';
 import { useSetupAccountState } from '../../context';
 import '../../styles.less';
 
 type Props = {
   title: string;
   description: string;
+  header: string;
   content: React.ReactNode;
   loading?: boolean;
   onNext?: () => void;
@@ -18,6 +19,7 @@ type Props = {
 const SetupLayout: React.FC<Props> = ({
   title,
   description,
+  header,
   content,
   // loading = false,
   onNext,
@@ -70,7 +72,12 @@ const SetupLayout: React.FC<Props> = ({
             <Row gutter={16} justify="end">
               {currentStep > 0 ? (
                 <Col>
-                  <Button type="text" size="small" onClick={handlePrevStep}>
+                  <Button
+                    type="text"
+                    size="small"
+                    onClick={handlePrevStep}
+                    icon={<Icon name="arrow-left-s-line" size={18} />}
+                  >
                     {t('Back')}
                   </Button>
                 </Col>
@@ -78,7 +85,12 @@ const SetupLayout: React.FC<Props> = ({
               {onNext ? (
                 <Col>
                   <Button type="primary" size="small" onClick={() => onNext?.()}>
-                    {t('Next')}
+                    <Row align="middle" gutter={8} style={{ paddingLeft: 8 }}>
+                      <Col>{t('Next')}</Col>
+                      <Col>
+                        <Icon name="arrow-right-s-line" size={18} />
+                      </Col>
+                    </Row>
                   </Button>
                 </Col>
               ) : null}
@@ -92,7 +104,12 @@ const SetupLayout: React.FC<Props> = ({
             </Row>
           </Col>
         </Row>
-        <div className="step-content">{content}</div>
+        <div className="step-content">
+          <div style={{ marginBottom: 32, marginTop: 80, paddingLeft: 80, paddingRight: 80 }}>
+            <Text style={{ fontSize: 36, fontWeight: 'bold' }}>{header}</Text>
+          </div>
+          {content}
+        </div>
       </Col>
     </Row>
   );

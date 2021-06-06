@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
-import { Button, Icon, Label, Spacer, Text } from '../../../../components';
+import { Button, Icon, Label, Spacer } from '../../../../components';
 import SetupLayout from '../../components/SetupLayout/SetupLayout';
 import { useSetupAccountState } from '../../context';
 import { useNextStep } from '../../hooks';
@@ -62,13 +62,9 @@ const ResetPassword: React.FC<Props> = () => {
       title={t('You are live now !')}
       description="Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings."
       onSkip={() => finishSteps()}
+      header={t('Main Consultation Reasons')}
       content={
-        <div>
-          <div style={{ marginBottom: 32 }}>
-            <Text style={{ fontSize: 36, fontWeight: 'bold' }}>
-              {t('Main Consultation Reasons')}
-            </Text>
-          </div>
+        <div style={{ padding: '0 80px', display: 'flex', justifyContent: 'center' }}>
           <Form onFinish={handleSubmit} style={{ width: 420, maxWidth: '100%', marginTop: 40 }}>
             <Spacer size="md" direction="vertical">
               <Spacer size="xs" direction="vertical">

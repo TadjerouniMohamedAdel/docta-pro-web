@@ -7,7 +7,7 @@ import { useMutation } from 'react-query';
 import SetupLayout from '../../components/SetupLayout/SetupLayout';
 import { fetchDoctorPersonalInfo } from '../../../Settings/views/DoctorProfile/services';
 import { getBase64 } from '../../../../common/utilities';
-import { DatePicker, Icon, Label, Select, Text } from '../../../../components';
+import { DatePicker, Icon, Label, Select } from '../../../../components';
 import { updateDoctorProfilePart1 } from '../../services';
 import { useSetupAccountState } from '../../context';
 import { useNextStep } from '../../hooks';
@@ -91,11 +91,9 @@ const DoctorProfile1: React.FC<Props> = () => {
   live, all you need to do is to complete your profile."
       onNext={handleSubmit}
       loading={isSavePersonalInfoLoading}
+      header={t('doctor profile')}
       content={
-        <div>
-          <div style={{ marginBottom: 32 }}>
-            <Text style={{ fontSize: 36, fontWeight: 'bold' }}>{t('doctor profile')}</Text>
-          </div>
+        <div style={{ padding: '0 80px' }}>
           <Form>
             <Row gutter={[35, 32]} align="middle">
               <Col span={24}>

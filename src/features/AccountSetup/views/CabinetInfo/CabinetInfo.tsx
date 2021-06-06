@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
-import { PhoneInput, Spacer, Text } from '../../../../components';
+import { PhoneInput, Spacer } from '../../../../components';
 import Images from '../../../Settings/views/DoctorProfile/CabinetInfo/Images/Images';
 import Services from '../../../Settings/views/DoctorProfile/CabinetInfo/Services/Services';
 import { fetchDoctorCabinetProfile } from '../../../Settings/views/DoctorProfile/services';
@@ -79,11 +79,9 @@ const CabinetInfo: React.FC<Props> = () => {
       description="Enter your cabinet info to help your patients contact you and know the services your cabinet provides."
       onNext={handleSubmit}
       loading={isSaveCabinetInfoLoading}
+      header={t('cabinet info')}
       content={
-        <div>
-          <div style={{ marginBottom: 32 }}>
-            <Text style={{ fontSize: 36, fontWeight: 'bold' }}>{t('cabinet info')}</Text>
-          </div>
+        <div style={{ padding: '0 80px' }}>
           <Spacer direction="vertical" size="xxl">
             <Services
               services={doctorCabinetInfoForm.services}

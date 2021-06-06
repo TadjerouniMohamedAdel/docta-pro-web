@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text } from '../../../../components';
 import { fetchSpecialties } from '../../../Settings/views/VisitReasons/services';
 import { FetchSpecialtyResponse, Specialty } from '../../../Settings/views/VisitReasons/types';
 import VisitReasonsItem from '../../../Settings/views/VisitReasons/VisitReasonsItem/VisitReasonsItem';
@@ -57,15 +56,9 @@ const VisitReasons: React.FC<Props> = () => {
           title={t('Set up visit reasons')}
           description="You are almost there ! Setting up your consultation reasons will help you manage visits better."
           onNext={() => handleSaveChanges(specialties[0].id)}
+          header={t('Main Consultation Reasons')}
           content={
-            <div>
-              <div style={{ marginBottom: 32 }}>
-                <Text style={{ fontSize: 36, fontWeight: 'bold' }}>
-                  {t('Main Consultation Reasons')}
-                </Text>
-              </div>
-              <VisitReasonsItem specialty={specialties[0]} handleUpdateSpecialty={handleUpdate} />
-            </div>
+            <VisitReasonsItem specialty={specialties[0]} handleUpdateSpecialty={handleUpdate} />
           }
         />
       ) : null}
@@ -74,15 +67,9 @@ const VisitReasons: React.FC<Props> = () => {
           title={t('One more step !')}
           description="Set up your secondary visit reasons and go live now !"
           onNext={() => handleSaveChanges(specialties[1].id)}
+          header={t('Secondary Consultation Reasons')}
           content={
-            <div>
-              <div style={{ marginBottom: 32 }}>
-                <Text style={{ fontSize: 36, fontWeight: 'bold' }}>
-                  {t('Secondary Consultation Reasons')}
-                </Text>
-              </div>
-              <VisitReasonsItem specialty={specialties[1]} handleUpdateSpecialty={handleUpdate} />
-            </div>
+            <VisitReasonsItem specialty={specialties[1]} handleUpdateSpecialty={handleUpdate} />
           }
         />
       ) : null}

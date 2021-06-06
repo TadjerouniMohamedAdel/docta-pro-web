@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
-import { Label, Text } from '../../../../components';
+import { Label } from '../../../../components';
 import Diplomas from '../../../Settings/views/DoctorProfile/PersonalInfo/Diplomas/Diplomas';
 import Languages from '../../../Settings/views/DoctorProfile/PersonalInfo/Languages/Languages';
 import { fetchDoctorPersonalInfo } from '../../../Settings/views/DoctorProfile/services';
@@ -70,11 +70,9 @@ const DoctorProfile2: React.FC<Props> = () => {
       description="Maybe you’d like to tell us more about yourself, docta ?"
       onNext={handleSubmit}
       loading={isSavePersonalInfoLoading}
+      header={t('doctor profile')}
       content={
-        <div>
-          <div style={{ marginBottom: 32 }}>
-            <Text style={{ fontSize: 36, fontWeight: 'bold' }}>{t('doctor profile')}</Text>
-          </div>
+        <div style={{ padding: '0 80px' }}>
           <Form>
             <Row gutter={[35, 32]} align="middle">
               <Col span={24}>
