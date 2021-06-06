@@ -62,7 +62,7 @@ const ResetPassword: React.FC<Props> = () => {
       title={t('You are live now !')}
       description="Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings."
       onSkip={() => finishSteps()}
-      header={t('Main Consultation Reasons')}
+      header={t('Updating Password')}
       content={
         <div style={{ padding: '0 80px', display: 'flex', justifyContent: 'center' }}>
           <Form onFinish={handleSubmit} style={{ width: 420, maxWidth: '100%', marginTop: 40 }}>

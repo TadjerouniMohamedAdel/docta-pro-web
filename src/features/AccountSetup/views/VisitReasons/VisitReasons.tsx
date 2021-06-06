@@ -73,7 +73,6 @@ const VisitReasons: React.FC<Props> = () => {
           }
         />
       ) : null}
-      ;
     </>
   );
 };

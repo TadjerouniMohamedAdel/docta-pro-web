@@ -55,7 +55,7 @@ const SetupLayout: React.FC<Props> = ({
           </Col>
         </Row>
       </Col>
-      <Col span={14} style={{ padding: 10 }}>
+      <Col span={14} style={{ height: '100vh', overflowY: 'auto', overflowX: 'hidden' }}>
         <Row className="step-header" gutter={24}>
           <Col flex={1}>
             <Steps current={currentStep}>
