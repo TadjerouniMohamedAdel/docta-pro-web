@@ -8,20 +8,28 @@ export const useNextStep = () => {
   const { currentStep, setCurrentStep } = useSetupAccountState();
 
   const takeNextStep = async (steps = 1) => {
-    if (user) {
-      if (currentStep >= user.setupAccountProgress) {
-        await updateSetupAccountProgress(user?.setupAccountProgress + 1);
-        setUser({ ...user, setupAccountProgress: user?.setupAccountProgress + steps } as User);
-      } else {
-        setCurrentStep(currentStep + steps);
+    try {
+      if (user) {
+        if (currentStep >= user.setupAccountProgress) {
+          await updateSetupAccountProgress(user?.setupAccountProgress + 1);
+          setUser({ ...user, setupAccountProgress: user?.setupAccountProgress + steps } as User);
+        } else {
+          setCurrentStep(currentStep + steps);
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const finishSteps = async () => {
-    if (user) {
-      await updateSetupAccountProgress(-1);
-      setUser({ ...user, setupAccountProgress: -1 } as User);
+    try {
+      if (user) {
+        await updateSetupAccountProgress(-1);
+        setUser({ ...user, setupAccountProgress: -1 } as User);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

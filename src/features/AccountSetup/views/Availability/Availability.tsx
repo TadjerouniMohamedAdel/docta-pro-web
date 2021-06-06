@@ -15,19 +15,20 @@ const Availability: React.FC<Props> = () => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
   const { currentStep } = useSetupAccountState();
   const { takeNextStep } = useNextStep();
+  const [loading, setLoading] = useState(false);
   const [workingHoursSchedule, setWorkingHoursSchedule] = useState<WorkingHoursSchedule[]>([]);
 
   const handleUpdateWorkingHours = (values: WorkingHoursSchedule[]) => {
     setWorkingHoursSchedule(values);
   };
 
-  const { mutate: saveWorkingHoursMutation, isLoading: isSaveWorkingHoursLoading } = useMutation(
-    saveAvailability,
-  );
+  const { mutate: saveWorkingHoursMutation } = useMutation(saveAvailability);
 
   const handleSaveWorkingHours = async () => {
+    setLoading(true);
     await saveWorkingHoursMutation(workingHoursSchedule);
-    takeNextStep();
+    await takeNextStep();
+    setLoading(false);
   };
 
   const getWorkingHours = async () => {
@@ -49,7 +50,7 @@ const Availability: React.FC<Props> = () => {
       description="No unexpected visitors at your beach day, you are the lord of time!"
       header={t('availability')}
       onNext={handleSaveWorkingHours}
-      loading={isSaveWorkingHoursLoading}
+      loading={loading}
       content={
         <div style={{ padding: '0 80px' }}>
           <WorkingHours

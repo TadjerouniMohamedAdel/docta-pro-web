@@ -18,24 +18,23 @@ const DoctorProfile2: React.FC<Props> = () => {
   const { t } = useTranslation();
   const { currentStep } = useSetupAccountState();
   const { takeNextStep } = useNextStep();
-
+  const [loading, setLoading] = useState(false);
   const [doctorPersonalInfoForm, setDoctorPersonalInfoForm] = useState<any>({
     biography: '',
     diplomas: [],
     languages: [],
   });
 
-  const {
-    mutateAsync: savePersonalInfoMutation,
-    isLoading: isSavePersonalInfoLoading,
-  } = useMutation(updateDoctorProfilePart2);
+  const { mutateAsync: savePersonalInfoMutation } = useMutation(updateDoctorProfilePart2);
 
   const formik = useFormik({
     initialValues: doctorPersonalInfoForm,
     enableReinitialize: true,
     onSubmit: async () => {
+      setLoading(true);
       await savePersonalInfoMutation(doctorPersonalInfoForm);
-      takeNextStep();
+      await takeNextStep();
+      setLoading(false);
     },
   });
 
@@ -69,7 +68,7 @@ const DoctorProfile2: React.FC<Props> = () => {
       title={t('Tell us more about you')}
       description="Maybe you’d like to tell us more about yourself, docta ?"
       onNext={handleSubmit}
-      loading={isSavePersonalInfoLoading}
+      loading={loading}
       header={t('doctor profile')}
       content={
         <div style={{ padding: '0 80px' }}>

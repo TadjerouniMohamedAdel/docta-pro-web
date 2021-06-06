@@ -41,7 +41,7 @@ const VisitReasons: React.FC<Props> = () => {
       setLoading(true);
       const specialty: Specialty | undefined = specialties.find((item) => item.id === id);
       if (specialty) await saveVisitReasonsStep(specialty);
-      takeNextStep(specialties.length === 1 ? 2 : 1);
+      await takeNextStep(specialties.length === 1 ? 2 : 1);
     } catch (error) {
       console.log(error);
     }

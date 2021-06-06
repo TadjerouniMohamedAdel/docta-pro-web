@@ -1,5 +1,5 @@
 import { Form, Input } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -22,6 +22,7 @@ const ResetPassword: React.FC<Props> = () => {
   const { t } = useTranslation('translation');
   const { currentStep } = useSetupAccountState();
   const { finishSteps } = useNextStep();
+  const [loading, setLoading] = useState(false);
 
   const initialValues: FormValue = {
     currentPassword: '',
@@ -29,12 +30,14 @@ const ResetPassword: React.FC<Props> = () => {
     passwordConfirmation: '',
   };
 
-  const { mutateAsync, isLoading } = useMutation(resetProPassword);
+  const { mutateAsync } = useMutation(resetProPassword);
 
   const onResetPassword = async (values: FormValue, { resetForm }: FormikHelpers<FormValue>) => {
+    setLoading(true);
     await mutateAsync({ password: values.currentPassword, newPassword: values.newPassword });
     resetForm();
-    finishSteps();
+    await finishSteps();
+    setLoading(false);
   };
 
   const formik = useFormik({
@@ -63,7 +66,7 @@ const ResetPassword: React.FC<Props> = () => {
       description="Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings."
       onSkip={() => finishSteps()}
       header={t('Updating Password')}
-      loading={isLoading}
+      loading={loading}
       content={
         <div style={{ padding: '0 80px', display: 'flex', justifyContent: 'center' }}>
           <Form onFinish={handleSubmit} style={{ width: 420, maxWidth: '100%', marginTop: 40 }}>
@@ -142,7 +145,7 @@ const ResetPassword: React.FC<Props> = () => {
                   />
                 </Form.Item>
               </Spacer>
-              <Button type="primary" htmlType="submit" block loading={isLoading}>
+              <Button type="primary" htmlType="submit" block>
                 {t('update password')}
               </Button>
             </Spacer>

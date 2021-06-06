@@ -18,7 +18,7 @@ const CabinetInfo: React.FC<Props> = () => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
   const { currentStep } = useSetupAccountState();
   const { takeNextStep } = useNextStep();
-
+  const [loading, setLoading] = useState(false);
   const [doctorCabinetInfoForm, setDoctorCabinetInfoForm] = useState<any>({
     services: [],
     images: [],
@@ -33,9 +33,7 @@ const CabinetInfo: React.FC<Props> = () => {
     setDoctorCabinetInfoForm({ ...doctorCabinetInfoForm, [key]: value });
   };
 
-  const { mutateAsync: saveCabinetInfoMutation, isLoading: isSaveCabinetInfoLoading } = useMutation(
-    updateCabinetProfile,
-  );
+  const { mutateAsync: saveCabinetInfoMutation } = useMutation(updateCabinetProfile);
 
   const { cabinetForm } = doctorCabinetInfoForm;
 
@@ -43,8 +41,10 @@ const CabinetInfo: React.FC<Props> = () => {
     initialValues: cabinetForm,
     enableReinitialize: true,
     onSubmit: async () => {
+      setLoading(true);
       await saveCabinetInfoMutation(doctorCabinetInfoForm);
-      takeNextStep();
+      await takeNextStep();
+      setLoading(false);
     },
   });
 
@@ -78,7 +78,7 @@ const CabinetInfo: React.FC<Props> = () => {
       title={t('Help patients find your cabinet')}
       description="Enter your cabinet info to help your patients contact you and know the services your cabinet provides."
       onNext={handleSubmit}
-      loading={isSaveCabinetInfoLoading}
+      loading={loading}
       header={t('cabinet info')}
       content={
         <div style={{ padding: '0 80px' }}>
