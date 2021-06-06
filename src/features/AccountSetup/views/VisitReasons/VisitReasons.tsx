@@ -30,6 +30,7 @@ const VisitReasons: React.FC<Props> = () => {
   const getSpecialties = async () => {
     try {
       const { data: result }: { data: FetchSpecialtyResponse[] } = await fetchSpecialties();
+      console.log(result);
       setSpecialties(result.map((item) => ({ ...item, visitReasons: item.reasons })));
     } catch (error) {
       console.log(error);

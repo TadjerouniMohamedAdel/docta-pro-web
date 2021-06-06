@@ -25,9 +25,13 @@ const Availability: React.FC<Props> = () => {
   const { mutateAsync: saveWorkingHoursMutation } = useMutation(saveAvailability);
 
   const handleSaveWorkingHours = async () => {
-    setLoading(true);
-    await saveWorkingHoursMutation(workingHoursSchedule);
-    await takeNextStep();
+    try {
+      setLoading(true);
+      await saveWorkingHoursMutation(workingHoursSchedule);
+      await takeNextStep();
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   };
 

@@ -41,9 +41,13 @@ const CabinetInfo: React.FC<Props> = () => {
     initialValues: cabinetForm,
     enableReinitialize: true,
     onSubmit: async () => {
-      setLoading(true);
-      await saveCabinetInfoMutation(doctorCabinetInfoForm);
-      await takeNextStep();
+      try {
+        setLoading(true);
+        await saveCabinetInfoMutation(doctorCabinetInfoForm);
+        await takeNextStep();
+      } catch (error) {
+        console.log(error);
+      }
       setLoading(false);
     },
   });

@@ -33,10 +33,14 @@ const ResetPassword: React.FC<Props> = () => {
   const { mutateAsync } = useMutation(resetProPassword);
 
   const onResetPassword = async (values: FormValue, { resetForm }: FormikHelpers<FormValue>) => {
-    setLoading(true);
-    await mutateAsync({ password: values.currentPassword, newPassword: values.newPassword });
-    resetForm();
-    await finishSteps();
+    try {
+      setLoading(true);
+      await mutateAsync({ password: values.currentPassword, newPassword: values.newPassword });
+      resetForm();
+      await finishSteps();
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   };
 
@@ -71,7 +75,7 @@ const ResetPassword: React.FC<Props> = () => {
         <div style={{ padding: '0 80px', display: 'flex', justifyContent: 'center' }}>
           <Form onFinish={handleSubmit} style={{ width: 420, maxWidth: '100%', marginTop: 40 }}>
             <Spacer size="xxl" direction="vertical">
-              <Spacer size="xs" direction="vertical">
+              <Spacer size="xxl" direction="vertical">
                 <Form.Item
                   validateStatus={
                     touched.currentPassword && Boolean(errors.currentPassword) ? 'error' : undefined
@@ -145,7 +149,12 @@ const ResetPassword: React.FC<Props> = () => {
                   />
                 </Form.Item>
               </Spacer>
-              <Button type="primary" htmlType="submit" block>
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                disabled={!(formik.dirty && formik.isValid)}
+              >
                 {t('update password')}
               </Button>
             </Spacer>

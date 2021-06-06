@@ -137,7 +137,7 @@ const VisitReasonsItem: React.FC<Props> = ({ specialty, handleUpdateSpecialty })
   return (
     <Table
       rowKey="id"
-      dataSource={specialty.visitReasons}
+      dataSource={specialty?.visitReasons ?? []}
       columns={columns}
       bordered
       pagination={false}

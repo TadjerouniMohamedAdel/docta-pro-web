@@ -36,9 +36,13 @@ const DoctorProfile1: React.FC<Props> = () => {
     initialValues: doctorPersonalInfoForm,
     enableReinitialize: true,
     onSubmit: async () => {
-      setLoading(true);
-      await savePersonalInfoMutation(doctorPersonalInfoForm);
-      await takeNextStep();
+      try {
+        setLoading(true);
+        await savePersonalInfoMutation(doctorPersonalInfoForm);
+        await takeNextStep();
+      } catch (error) {
+        console.log(error);
+      }
       setLoading(false);
     },
   });
