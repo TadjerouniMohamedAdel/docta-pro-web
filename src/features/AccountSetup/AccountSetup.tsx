@@ -5,11 +5,10 @@ import './styles.less';
 import { DoctorProfile1, DoctorProfile2 } from './views';
 import Availability from './views/Availability/Availability';
 import CabinetInfo from './views/CabinetInfo/CabinetInfo';
+import ResetPassword from './views/ResetPassword/ResetPassword';
 import VisitReasons from './views/VisitReasons/VisitReasons';
 
-type Props = {};
-
-const AccountSetup: React.FC<Props> = () => {
+const AccountSetup: React.FC = () => {
   const { user } = useAuthState();
 
   return (
@@ -19,6 +18,7 @@ const AccountSetup: React.FC<Props> = () => {
       <CabinetInfo />
       <Availability />
       <VisitReasons />
+      <ResetPassword />
     </SetupAccountProvider>
   );
 };

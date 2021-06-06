@@ -10,8 +10,9 @@ type Props = {
   description: string;
   content: React.ReactNode;
   loading?: boolean;
-  onNext: () => void;
+  onNext?: () => void;
   onBack?: () => void;
+  onSkip?: () => void;
 };
 
 const SetupLayout: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const SetupLayout: React.FC<Props> = ({
   // loading = false,
   onNext,
   onBack,
+  onSkip,
 }) => {
   const { t } = useTranslation();
   const { currentStep, setCurrentStep } = useSetupAccountState();
@@ -73,11 +75,20 @@ const SetupLayout: React.FC<Props> = ({
                   </Button>
                 </Col>
               ) : null}
-              <Col>
-                <Button type="primary" size="small" onClick={onNext}>
-                  {t('Next')}
-                </Button>
-              </Col>
+              {onNext ? (
+                <Col>
+                  <Button type="primary" size="small" onClick={() => onNext?.()}>
+                    {t('Next')}
+                  </Button>
+                </Col>
+              ) : null}
+              {onSkip ? (
+                <Col>
+                  <Button type="primary" size="small" onClick={() => onSkip?.()}>
+                    {t('skip')}
+                  </Button>
+                </Col>
+              ) : null}
             </Row>
           </Col>
         </Row>

@@ -54,8 +54,8 @@ const VisitReasons: React.FC<Props> = () => {
     <>
       {currentStep === 4 ? (
         <SetupLayout
-          title={t('Set up your working hours')}
-          description="No unexpected visitors at your beach day, you are the lord of time!"
+          title={t('Set up visit reasons')}
+          description="You are almost there ! Setting up your consultation reasons will help you manage visits better."
           onNext={() => handleSaveChanges(specialties[0].id)}
           content={
             <div>
@@ -71,8 +71,8 @@ const VisitReasons: React.FC<Props> = () => {
       ) : null}
       {specialties.length === 2 && currentStep === 5 ? (
         <SetupLayout
-          title={t('Set up your working hours')}
-          description="No unexpected visitors at your beach day, you are the lord of time!"
+          title={t('One more step !')}
+          description="Set up your secondary visit reasons and go live now !"
           onNext={() => handleSaveChanges(specialties[1].id)}
           content={
             <div>
