@@ -1,4 +1,4 @@
-import { Alert, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikHelpers, useFormik } from 'formik';
@@ -29,7 +29,7 @@ const ResetPassword: React.FC<Props> = () => {
     passwordConfirmation: '',
   };
 
-  const { mutateAsync, isLoading, isError } = useMutation(resetProPassword);
+  const { mutateAsync, isLoading } = useMutation(resetProPassword);
 
   const onResetPassword = async (values: FormValue, { resetForm }: FormikHelpers<FormValue>) => {
     await mutateAsync({ password: values.currentPassword, newPassword: values.newPassword });
@@ -63,6 +63,7 @@ const ResetPassword: React.FC<Props> = () => {
       description="Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings."
       onSkip={() => finishSteps()}
       header={t('Updating Password')}
+      loading={isLoading}
       content={
         <div style={{ padding: '0 80px', display: 'flex', justifyContent: 'center' }}>
           <Form onFinish={handleSubmit} style={{ width: 420, maxWidth: '100%', marginTop: 40 }}>
@@ -144,13 +145,6 @@ const ResetPassword: React.FC<Props> = () => {
               <Button type="primary" htmlType="submit" block loading={isLoading}>
                 {t('update password')}
               </Button>
-              {isError ? (
-                <Alert
-                  message="Oops! Something went wrong !"
-                  type="error"
-                  style={{ textAlign: 'center' }}
-                />
-              ) : null}
             </Spacer>
           </Form>
         </div>

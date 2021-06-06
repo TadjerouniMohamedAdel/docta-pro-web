@@ -15,6 +15,7 @@ const VisitReasons: React.FC<Props> = () => {
   const { currentStep } = useSetupAccountState();
   const { takeNextStep } = useNextStep();
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleUpdate = (id: string, specialty: Specialty) => {
     const updatedSpecialties: Specialty[] = [...specialties];
@@ -37,12 +38,14 @@ const VisitReasons: React.FC<Props> = () => {
 
   const handleSaveChanges = async (id: string) => {
     try {
+      setLoading(true);
       const specialty: Specialty | undefined = specialties.find((item) => item.id === id);
       if (specialty) await saveVisitReasonsStep(specialty);
       takeNextStep(specialties.length === 1 ? 2 : 1);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -57,6 +60,7 @@ const VisitReasons: React.FC<Props> = () => {
           description="You are almost there ! Setting up your consultation reasons will help you manage visits better."
           onNext={() => handleSaveChanges(specialties[0].id)}
           header={t('Main Consultation Reasons')}
+          loading={loading}
           content={
             <VisitReasonsItem specialty={specialties[0]} handleUpdateSpecialty={handleUpdate} />
           }
@@ -64,6 +68,7 @@ const VisitReasons: React.FC<Props> = () => {
       ) : null}
       {specialties.length === 2 && currentStep === 5 ? (
         <SetupLayout
+          loading={loading}
           title={t('One more step !')}
           description="Set up your secondary visit reasons and go live now !"
           onNext={() => handleSaveChanges(specialties[1].id)}

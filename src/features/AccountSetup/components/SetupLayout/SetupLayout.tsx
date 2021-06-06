@@ -21,7 +21,7 @@ const SetupLayout: React.FC<Props> = ({
   description,
   header,
   content,
-  // loading = false,
+  loading = false,
   onNext,
   onBack,
   onSkip,
@@ -110,6 +110,25 @@ const SetupLayout: React.FC<Props> = ({
           </div>
           {content}
         </div>
+        {loading ? (
+          <div
+            style={{
+              position: 'fixed',
+              left: 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 20,
+              zIndex: 1999,
+              background: 'rgba(255,255,255,.8)',
+            }}
+          >
+            {t('processing...')}
+          </div>
+        ) : null}
       </Col>
     </Row>
   );
