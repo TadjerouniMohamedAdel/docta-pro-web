@@ -85,9 +85,8 @@ const DoctorProfile1: React.FC<Props> = () => {
 
   return currentStep === 0 ? (
     <SetupLayout
-      title={t('Welcome to Docta Pro !')}
-      description=" We're excited to have you join our platform ! You are just a few steps away from going
-  live, all you need to do is to complete your profile."
+      title={t('account setup step 1 title')}
+      description={t('account setup step 1 description')}
       onNext={handleSubmit}
       loading={loading}
       header={t('doctor profile')}

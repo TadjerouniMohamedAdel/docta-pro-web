@@ -75,8 +75,8 @@ const CabinetInfo: React.FC<Props> = () => {
 
   return currentStep === 2 ? (
     <SetupLayout
-      title={t('Help patients find your cabinet')}
-      description="Enter your cabinet info to help your patients contact you and know the services your cabinet provides."
+      title={t('account setup step 3 title')}
+      description={t('account setup step 3 description')}
       onNext={handleSubmit}
       loading={loading}
       header={t('cabinet info')}

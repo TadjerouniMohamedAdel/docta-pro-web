@@ -56,8 +56,8 @@ const VisitReasons: React.FC<Props> = () => {
     <>
       {currentStep === 4 ? (
         <SetupLayout
-          title={t('Set up visit reasons')}
-          description="You are almost there ! Setting up your consultation reasons will help you manage visits better."
+          title={t('account setup step 5 title')}
+          description={t('account setup step 5 description')}
           onNext={() => handleSaveChanges(specialties[0].id)}
           header={t('Main Consultation Reasons')}
           loading={loading}
@@ -69,8 +69,8 @@ const VisitReasons: React.FC<Props> = () => {
       {specialties.length === 2 && currentStep === 5 ? (
         <SetupLayout
           loading={loading}
-          title={t('One more step !')}
-          description="Set up your secondary visit reasons and go live now !"
+          title={t('account setup step 6 title')}
+          description={t('account setup step 6 description')}
           onNext={() => handleSaveChanges(specialties[1].id)}
           header={t('Secondary Consultation Reasons')}
           content={

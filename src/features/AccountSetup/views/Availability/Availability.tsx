@@ -22,7 +22,7 @@ const Availability: React.FC<Props> = () => {
     setWorkingHoursSchedule(values);
   };
 
-  const { mutate: saveWorkingHoursMutation } = useMutation(saveAvailability);
+  const { mutateAsync: saveWorkingHoursMutation } = useMutation(saveAvailability);
 
   const handleSaveWorkingHours = async () => {
     setLoading(true);
@@ -46,8 +46,8 @@ const Availability: React.FC<Props> = () => {
 
   return currentStep === 3 ? (
     <SetupLayout
-      title={t('Set up your working hours')}
-      description="No unexpected visitors at your beach day, you are the lord of time!"
+      title={t('account setup step 4 title')}
+      description={t('account setup step 4 description')}
       header={t('availability')}
       onNext={handleSaveWorkingHours}
       loading={loading}

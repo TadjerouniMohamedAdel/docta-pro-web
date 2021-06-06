@@ -62,15 +62,15 @@ const ResetPassword: React.FC<Props> = () => {
 
   return currentStep === 6 ? (
     <SetupLayout
-      title={t('You are live now !')}
-      description="Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings."
+      title={t('account setup step 7 title')}
+      description={t('account setup step 7 description')}
       onSkip={() => finishSteps()}
       header={t('Updating Password')}
       loading={loading}
       content={
         <div style={{ padding: '0 80px', display: 'flex', justifyContent: 'center' }}>
           <Form onFinish={handleSubmit} style={{ width: 420, maxWidth: '100%', marginTop: 40 }}>
-            <Spacer size="md" direction="vertical">
+            <Spacer size="xxl" direction="vertical">
               <Spacer size="xs" direction="vertical">
                 <Form.Item
                   validateStatus={

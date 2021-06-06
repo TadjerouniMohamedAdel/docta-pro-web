@@ -86,7 +86,7 @@ const SetupLayout: React.FC<Props> = ({
                 <Col>
                   <Button type="primary" size="small" onClick={() => onNext?.()}>
                     <Row align="middle" gutter={8} style={{ paddingLeft: 8 }}>
-                      <Col>{t('Next')}</Col>
+                      <Col>{t('next')}</Col>
                       <Col>
                         <Icon name="arrow-right-s-line" size={18} />
                       </Col>
@@ -126,7 +126,7 @@ const SetupLayout: React.FC<Props> = ({
               background: 'rgba(255,255,255,.8)',
             }}
           >
-            {t('processing...')}
+            {t('processing')}
           </div>
         ) : null}
       </Col>

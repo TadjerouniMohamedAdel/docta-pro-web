@@ -65,8 +65,8 @@ const DoctorProfile2: React.FC<Props> = () => {
 
   return currentStep === 1 ? (
     <SetupLayout
-      title={t('Tell us more about you')}
-      description="Maybe you’d like to tell us more about yourself, docta ?"
+      title={t('account setup step 2 title')}
+      description={t('account setup step 2 description')}
       onNext={handleSubmit}
       loading={loading}
       header={t('doctor profile')}
