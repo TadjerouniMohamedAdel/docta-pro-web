@@ -1,5 +1,5 @@
 import { fetcher } from '../../common/utilities';
-import { BlockPatientParams } from './types';
+import { BlockPatientParams, PatientNote } from './types';
 
 export const fetchAllPatients = async (term = '', page = 0, size = 10): Promise<any> => {
   return fetcher(`/api/v1/professionals/patients?term=${term}&skip=${page}&take=${size}`);
@@ -58,5 +58,21 @@ export const blockPatient = async (params: BlockPatientParams): Promise<any> => 
 export const unblockPatient = async (patientId: string): Promise<any> => {
   return fetcher(`/api/v1/professionals/patients/${patientId}/unblock`, {
     method: 'DELETE',
+  });
+};
+
+export const fetchPatientNotes = async (patientId: string): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/notes`);
+};
+
+export const addPatientNote = async ({
+  data,
+  patientId,
+}: {
+  patientId: string;
+  data: PatientNote;
+}): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/notes`, {
+    body: data,
   });
 };

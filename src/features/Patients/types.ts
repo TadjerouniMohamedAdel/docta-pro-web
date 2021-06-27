@@ -86,3 +86,8 @@ export type BlockPatientParams = {
   reason: string;
   comment?: string;
 };
+
+export type PatientNote = {
+  title: string;
+  body: string;
+};
