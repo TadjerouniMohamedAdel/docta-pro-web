@@ -1,16 +1,16 @@
 import React from 'react';
-import { Col, Row } from 'antd';
+import { Col, Row, RowProps } from 'antd';
 import Text from '../Text/Text';
 
-export type Props = {
+export type Props = RowProps & {
   title: string;
   error?: string | undefined;
   required?: boolean;
 };
 
-const Label: React.FC<Props> = ({ title, error, required = false }) => {
+const Label: React.FC<Props> = ({ title, error, required = false, ...rest }) => {
   return (
-    <Row justify="space-between">
+    <Row justify="space-between" {...rest}>
       <Col>
         <Text size="lg">{title}</Text>
         {required ? (
