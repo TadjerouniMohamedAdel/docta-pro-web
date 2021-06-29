@@ -3,13 +3,14 @@ import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
+// import { RcFile } from 'antd/lib/upload';
 import { Button, Icon } from '../../../../components';
-// import { useGetPatientNotes } from '../../hooks/useGetPatientNotes';
+import { useGetPatientNotes } from '../../hooks/useGetPatientNotes';
 import PatientNotesList from './PatientNotesList/PatientNotesList';
 import { PatientNote } from '../../types';
 import './styles.less';
-import { addPatientNote } from '../../services';
+import { useAddPatientNotes } from '../../hooks/useAddPatientNote';
+// import { getBase64 } from '../../../../common/utilities';
 
 type Props = {
   patientId?: string;
@@ -17,31 +18,45 @@ type Props = {
 
 const PatientNotes: React.FC<Props> = ({ patientId }) => {
   const { t } = useTranslation();
-  // const { data } = useGetPatientNotes(patientId ?? '');
+  const { data } = useGetPatientNotes(patientId ?? '');
 
-  const initialValues: PatientNote = { title: '', body: '' };
-  const { mutateAsync } = useMutation(addPatientNote);
+  const initialValues: PatientNote = { id: '', title: '', body: '', files: [] };
+  const { mutateAsync, isLoading } = useAddPatientNotes();
 
-  const onAddNote = (value: PatientNote) => {
-    if (patientId)
-      mutateAsync({
+  const onAddNote = async (value: PatientNote) => {
+    if (patientId) {
+      await mutateAsync({
         patientId,
         data: value,
       });
+    }
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(),
+    body: Yup.string().required(),
   });
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: onAddNote,
+    onSubmit: async (values, { resetForm }) => {
+      await onAddNote(values);
+      resetForm();
+    },
     isInitialValid: false,
   });
 
   const { handleChange, handleBlur, values, handleSubmit, isValid } = formik;
+
+  // const handleUploadFile = async (file: RcFile) => {
+  //   try {
+  //     await getBase64(file);
+  //     formik.setFieldValue('files', [...formik.values.files, file]);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div style={{ padding: '30px 40px' }}>
@@ -54,7 +69,7 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
                   <Input
                     autoComplete="off"
                     placeholder={t('note title')}
-                    className="notes-input"
+                    className="notes-input title"
                     size="small"
                     value={values.title}
                     onChange={handleChange}
@@ -74,15 +89,28 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
                     name="body"
                   />
                 </div>
+                {/* <div>
+                  {values.files.map((file) => (
+                    <Tag icon={<Icon size={15} name="file-text-line" />}>{file.name}</Tag>
+                  ))}
+                </div> */}
               </div>
             </Col>
             <Col>
               <Row>
-                <Col>
-                  <Button type="text" style={{ display: 'flex' }} size="small">
-                    <Icon name="attachment-2" />
-                  </Button>
-                </Col>
+                {/* <Col>
+                  <Upload
+                    showUploadList={false}
+                    beforeUpload={(file) => {
+                      handleUploadFile(file);
+                      return false;
+                    }}
+                  >
+                    <Button type="text" style={{ display: 'flex' }} size="small">
+                      <Icon name="attachment-2" />
+                    </Button>
+                  </Upload>
+                </Col> */}
                 <Col>
                   <Button
                     type="primary"
@@ -91,6 +119,7 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
                     size="small"
                     onClick={() => handleSubmit()}
                     disabled={!isValid}
+                    loading={isLoading}
                   >
                     {t('add note')}
                   </Button>
@@ -100,7 +129,7 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
           </Row>
         </div>
       </Form>
-      <PatientNotesList />
+      <PatientNotesList notes={data} />
     </div>
   );
 };

@@ -72,7 +72,13 @@ export const addPatientNote = async ({
   patientId: string;
   data: PatientNote;
 }): Promise<any> => {
+  const body = {
+    ...(data.files && data.files.length > 0 ? { files: data.files } : undefined),
+    title: data.title,
+    body: data.body,
+  };
   return fetcher(`/api/v1/professionals/patients/${patientId}/notes`, {
-    body: data,
+    body,
+    // hasFiles: data.files.length > 0,
   });
 };
