@@ -82,3 +82,26 @@ export const addPatientNote = async ({
     // hasFiles: data.files.length > 0,
   });
 };
+
+export const removePatientNote = async (noteId: string): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/notes/${noteId}`, {
+    method: 'DELETE',
+  });
+};
+
+export const updatePatientNote = async ({
+  data,
+  noteId,
+}: {
+  noteId: string;
+  data: PatientNote;
+}): Promise<any> => {
+  const body = {
+    title: data.title,
+    body: data.body,
+  };
+  return fetcher(`/api/v1/professionals/patients/notes/${noteId}`, {
+    method: 'Put',
+    body,
+  });
+};
