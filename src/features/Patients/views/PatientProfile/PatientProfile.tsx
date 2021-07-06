@@ -26,6 +26,7 @@ import {
   unblockPatient,
 } from '../../services';
 import BlockPatientModal from './BlockPatientModal/BlockPatientModal';
+import PatientNotes from '../../components/PatientNotes/PatientNotes';
 // import PatientSkeleton from '../PatientSkeleton/PatientSkeleton';
 
 type Props = {
@@ -372,6 +373,12 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             key="3"
           >
             <VisitsHistory patientId={selectedPatient?.id} />
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={<Tab icon={<Icon name="file-text-line" />}> {t('notes')} </Tab>}
+            key="4"
+          >
+            <PatientNotes patientId={selectedPatient?.id} />
           </Tabs.TabPane>
         </Tabs>
         <BlockPatientModal

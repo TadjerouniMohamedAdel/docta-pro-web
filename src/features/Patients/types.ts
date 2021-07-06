@@ -1,3 +1,4 @@
+import { RcFile } from 'antd/lib/upload';
 import { StateCity } from '../../common/types';
 
 export type FormField = {
@@ -85,4 +86,11 @@ export type BlockPatientParams = {
   patientId: string;
   reason: string;
   comment?: string;
+};
+
+export type PatientNote = {
+  id: string;
+  title: string;
+  body: string;
+  files?: RcFile[];
 };

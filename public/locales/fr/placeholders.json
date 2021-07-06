@@ -1,8 +1,8 @@
 {
   "enter your": "Entrez votre {{fieldName}}",
   "enter": "Entrez {{fieldName}}",
-  "select": "Sélectionner {{fieldName}}",
-  "enter code we sent you to": "Entrez le code auquel nous vous avons envoyé",
+  "select": "Sélectionnez {{fieldName}}",
+  "enter code we sent you to": "Entrez le code que nous vous avons envoyé au",
   "enter otp": "Entrez OTP",
-  "confirm your": "Confirmer votre {{fieldName}}"
+  "confirm your": "Confirmez votre {{fieldName}}"
 }

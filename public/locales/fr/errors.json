@@ -1,4 +1,5 @@
 {
-  "required field": "Champ obligatoire",
-  "must be a valid": "{{fieldName}} non valide"
+  "required field": "Champs requis",
+  "must be a valid": "{{fieldName}} doit être valide",
+  "passwords must match": "Les mots de passe doivent correspondre"
 }

@@ -1,0 +1,35 @@
+@import '../../../../styles/variables.less';
+
+.notes-input {
+  border: none !important;
+  box-shadow: none !important;
+  resize: none;
+  &.title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.notes-input-form {
+  border-radius: 6px;
+  border: solid 1px @border-color-base;
+  background-color: @input-bg;
+  padding: 15px;
+  margin-bottom: 24px;
+}
+
+.note-item {
+  border-radius: 6px;
+  border: solid 1px @border-color-base;
+  padding: 15px;
+  margin-bottom: 8px;
+  .note-actions {
+    transition: none;
+    opacity: 0;
+  }
+  &:hover {
+    .note-actions {
+      opacity: 1;
+    }
+  }
+}
