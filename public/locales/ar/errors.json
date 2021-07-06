@@ -1,4 +1,5 @@
 {
-  "required field": " خانة إجبارية",
-  "must be a valid": "{{fieldName}} غير صالح"
+  "required field": "حقل مطلوب",
+  "must be a valid": "يجب أن يكون {{fieldName}} صحيحا",
+  "passwords must match": "يجب ان تكون كلمات المرور متطابقة"
 }

@@ -1,8 +1,8 @@
 {
-  "enter your": "ادخل {{fieldName}}",
-  "enter": "ادخل {{fieldName}}",
-  "select": "اختار {{fieldName}}",
-  "enter code we sent you to": "أدخل الرمز الذي أرسلناه لك إلى",
-  "enter otp": "أدخل OTP",
-  "confirm your": "أكد {{fieldName}}"
+  "enter your": "أدخل {{fieldName}} الخاص بك",
+  "enter": "أدخل {{fieldName}}",
+  "select": "حدد {{fieldName}}",
+  "enter code we sent you to": "أدخل الرمز الذي أرسلناه لك على الرقم",
+  "enter otp": "أدخل رمز OTP",
+  "confirm your": "أكد"
 }
