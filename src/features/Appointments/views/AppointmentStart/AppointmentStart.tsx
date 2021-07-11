@@ -118,6 +118,7 @@ const AppointmentStart: React.FC<Props> = ({
       visible={visible}
       width={780}
       onCancel={onClose}
+      borderedHeader={false}
       actions={
         <Button
           type="primary"

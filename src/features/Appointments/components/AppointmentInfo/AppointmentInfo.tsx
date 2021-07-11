@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon, Tab } from '../../../../components';
 import AppointmentSelection from '../AppointmentSelection/AppointmentSelection';
 import { AppointmentForm } from '../../types';
+import { PatientNotes } from '../../../Patients';
 
 type Props = {
   onClose: () => void;
@@ -20,6 +21,7 @@ const AppointmentInfo: React.FC<Props> = ({
   currentDate,
   onEditSave,
   appointmentForm,
+  patientId,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   return (
@@ -35,6 +37,11 @@ const AppointmentInfo: React.FC<Props> = ({
           onEditSave={onEditSave}
           form={appointmentForm}
         />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab={<Tab icon={<Icon name="file-text-line" />}> {t('notes')} </Tab>} key="4">
+        <div style={{ height: 500, overflowY: 'auto' }}>
+          <PatientNotes patientId={patientId} />
+        </div>
       </Tabs.TabPane>
     </Tabs>
   );
