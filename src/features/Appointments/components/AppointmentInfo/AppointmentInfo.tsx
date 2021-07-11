@@ -9,7 +9,7 @@ type Props = {
   onClose: () => void;
   onEditSave: (values: AppointmentForm) => void;
   appointmentId: string;
-  patientId: string;
+  patientId?: string;
   currentDate: Date;
   appointmentForm: FormInstance;
 };

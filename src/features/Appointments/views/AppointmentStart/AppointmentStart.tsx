@@ -5,24 +5,21 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Col, Dropdown, Form, Menu, Row } from 'antd';
 import moment from 'moment';
 import { Button, Modal, Icon } from '../../../../components';
-import { AppointmentForm, AppointmentStatus, Patient } from '../../types';
+import { AppointmentForm, AppointmentStatus } from '../../types';
 import { editAppointment, updateAppointmentStatus } from '../../services';
-
 import Spacer from '../../../../components/Spacer/Spacer';
 import Text from '../../../../components/Text/Text';
 import { useCheckAccess, ProtectedComponent } from '../../../Auth';
 import { getWeekRange } from '../../../../common/utilities';
 import AppointmentInfo from '../../components/AppointmentInfo/AppointmentInfo';
-import { fetchPatientDetails } from '../../../Patients/services';
-import { FetchPersonalInfoResponse } from '../../../Patients';
 
 type Props = {
   visible: boolean;
   onClose: () => void;
   appointmentId: string;
-  patientId: string;
+  patientId?: string;
   currentDate: Date;
-  scheduleNewAppointment: (patient: Patient) => void;
+  scheduleNewAppointment: () => void;
 };
 
 const AppointmentStart: React.FC<Props> = ({
@@ -111,28 +108,8 @@ const AppointmentStart: React.FC<Props> = ({
   };
 
   const handleScheduleNewAppointment = async () => {
-    try {
-      const response: { data: FetchPersonalInfoResponse } = await fetchPatientDetails(
-        patientId,
-        'personal-info',
-      );
-
-      onClose();
-      scheduleNewAppointment({
-        id: response.data.id,
-        firstName: response.data.firstName,
-        lastName: response.data.lastName,
-        phone: response.data.user.phone,
-        birthDate: response.data.birthDate,
-        gender: response.data.gender,
-        state: response.data.state?.id,
-        city: response.data.city?.id,
-        generalStatus: response.data.generalStatus,
-        picture: response.data.picture,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    onClose();
+    scheduleNewAppointment();
   };
 
   return (
