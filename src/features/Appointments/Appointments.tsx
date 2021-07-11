@@ -41,6 +41,7 @@ const Appointments: React.FC = () => {
   });
   const [visitReasonIds, setVisitReasonIds] = useState<string[]>([]);
   const [patient, setPatient] = useState<Patient | undefined>();
+  const [patientId, setPatientId] = useState<string>('');
 
   const onPrevDateChange = (date: Date): void => {
     if (date > prevDate && moment(date).month() !== moment(prevDate).month())
@@ -278,6 +279,7 @@ const Appointments: React.FC = () => {
                   setShowAppointmentDetails={setShowAppointmentDetails}
                   setShowAppointmentStart={setShowAppointmentStart}
                   setAppointmentDetailsId={setAppointmentDetailsId}
+                  setPatientId={setPatientId}
                   {...props}
                 />
               )}
@@ -300,6 +302,7 @@ const Appointments: React.FC = () => {
         onClose={() => setShowAppointmentDetails(false)}
         appointmentId={appointmentDetailsId}
         currentDate={currentDate}
+        patientId={patientId}
       />
       <ProtectedComponent accessCode="edit/appointments">
         <AppointmentStart
@@ -308,6 +311,7 @@ const Appointments: React.FC = () => {
           appointmentId={appointmentDetailsId}
           currentDate={currentDate}
           scheduleNewAppointment={handleScheduleNewAppointment}
+          patientId={patientId}
         />
       </ProtectedComponent>
     </InnerLayout>

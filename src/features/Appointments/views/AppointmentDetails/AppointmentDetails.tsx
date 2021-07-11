@@ -16,10 +16,17 @@ type Props = {
   visible: boolean;
   onClose: () => void;
   appointmentId: string;
+  patientId: string;
   currentDate: Date;
 };
 
-const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, currentDate }) => {
+const AppointmentDetails: React.FC<Props> = ({
+  visible,
+  onClose,
+  appointmentId,
+  currentDate,
+  patientId,
+}) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const [appointmentForm] = Form.useForm();
@@ -89,6 +96,7 @@ const AppointmentDetails: React.FC<Props> = ({ visible, onClose, appointmentId, 
         currentDate={currentDate}
         onEditSave={handleEditAppointment}
         appointmentForm={appointmentForm}
+        patientId={patientId}
       />
       <ProtectedComponent accessCode="delete/appointments">
         <div style={{ padding: '16px 40px' }}>
