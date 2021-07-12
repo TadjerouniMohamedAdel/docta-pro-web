@@ -3,8 +3,9 @@ import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 // import { RcFile } from 'antd/lib/upload';
-import { Button, Icon } from '../../../../components';
+import { Button, Icon, Text } from '../../../../components';
 import { useGetPatientNotes } from '../../hooks/useGetPatientNotes';
 import PatientNotesList from './PatientNotesList/PatientNotesList';
 import { PatientNote } from '../../types';
@@ -33,7 +34,6 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required(),
     body: Yup.string().required(),
   });
 
@@ -129,7 +129,15 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
           </Row>
         </div>
       </Form>
-      <PatientNotesList notes={data} />
+      {data?.map((item: any, index: number) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={index} style={{ marginBottom: 24 }}>
+          <Text type="secondary" style={{ fontWeight: 500, marginBottom: 4 }}>
+            {moment(item.date).isSame(new Date(), 'day') ? 'Today' : moment(item.date).format('LL')}
+          </Text>
+          <PatientNotesList notes={item.notes} />
+        </div>
+      ))}
     </div>
   );
 };

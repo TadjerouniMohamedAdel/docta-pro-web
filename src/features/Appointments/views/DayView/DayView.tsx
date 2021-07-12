@@ -19,6 +19,7 @@ export type Props = {
   setShowAppointmentDetails: (visible: boolean) => void;
   setShowAppointmentStart: (visible: boolean) => void;
   setAppointmentDetailsId: (appointmentId: string) => void;
+  setPatientId: (patientId: string) => void;
 };
 
 const DayView: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const DayView: React.FC<Props> = ({
   setShowAppointmentStart,
   setAppointmentDetailsId,
   setShowAppointmentDetails,
+  setPatientId,
 }) => {
   const { t } = useTranslation('translation');
 
@@ -35,13 +37,15 @@ const DayView: React.FC<Props> = ({
     visitReasonIds,
   );
 
-  const handleSelectAppointment = (appointmentId: string) => {
+  const handleSelectAppointment = (appointmentId: string, patientId: string) => {
     setAppointmentDetailsId(appointmentId);
+    setPatientId(patientId);
     setShowAppointmentDetails(true);
   };
 
-  const handleStartAppointment = (appointmentId: string) => {
+  const handleStartAppointment = (appointmentId: string, patientId: string) => {
     setAppointmentDetailsId(appointmentId);
+    setPatientId(patientId);
     setShowAppointmentStart(true);
   };
 
@@ -68,8 +72,8 @@ const DayView: React.FC<Props> = ({
                   done: appointment.status === 'DONE',
                 })}
                 style={{ height: 72, borderRadius: 8, padding: '0 16px' }}
-                onClick={() => handleSelectAppointment(appointment.id)}
-                onKeyPress={() => handleSelectAppointment(appointment.id)}
+                onClick={() => handleSelectAppointment(appointment.id, appointment.patient.id)}
+                onKeyPress={() => handleSelectAppointment(appointment.id, appointment.patient.id)}
                 role="button"
                 tabIndex={0}
               >
@@ -106,7 +110,7 @@ const DayView: React.FC<Props> = ({
                           size="small"
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleStartAppointment(appointment.id);
+                            handleStartAppointment(appointment.id, appointment.patient.id);
                           }}
                         >
                           {t('start appointment')}

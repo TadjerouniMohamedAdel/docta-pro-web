@@ -30,6 +30,7 @@ type Props = {
   currentDate: Date;
   appointmentForm: AppointmentForm;
   selectedPatient?: Patient;
+  selectedPatientId?: string;
 };
 
 const { Option } = AntSelect;
@@ -39,7 +40,7 @@ const AppointmentAdd: React.FC<Props> = ({
   onClose,
   currentDate,
   appointmentForm,
-  selectedPatient,
+  selectedPatientId,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   const minute = t('minute');
@@ -166,11 +167,10 @@ const AppointmentAdd: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    if (selectedPatient) {
-      setPatient(selectedPatient);
-      setFieldValue('patientId', selectedPatient.id);
+    if (selectedPatientId) {
+      handleSelectPatient(selectedPatientId);
     } else setPatient(initialPatientValues);
-  }, [selectedPatient]);
+  }, [selectedPatientId]);
 
   return (
     <Modal

@@ -25,6 +25,7 @@ export type Appointment = {
   lastName: string;
   visitReason: string;
   status: AppointmentStatus;
+  patient: Patient;
 };
 
 export type Patient = {
