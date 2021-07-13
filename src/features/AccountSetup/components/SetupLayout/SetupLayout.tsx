@@ -27,11 +27,13 @@ const SetupLayout: React.FC<Props> = ({
   onSkip,
 }) => {
   const { t } = useTranslation();
-  const { currentStep, setCurrentStep } = useSetupAccountState();
+  const { currentStep, setCurrentStep, specialtiesLength } = useSetupAccountState();
 
   const handlePrevStep = () => {
     onBack?.();
-    setCurrentStep(currentStep - 1);
+    setCurrentStep(
+      currentStep === 6 && specialtiesLength === 1 ? currentStep - 2 : currentStep - 1,
+    );
   };
 
   return (

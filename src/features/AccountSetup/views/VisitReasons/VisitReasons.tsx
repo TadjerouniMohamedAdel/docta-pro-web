@@ -12,7 +12,7 @@ type Props = {};
 
 const VisitReasons: React.FC<Props> = () => {
   const { t } = useTranslation('translation');
-  const { currentStep } = useSetupAccountState();
+  const { currentStep, setSpecialtiesLength } = useSetupAccountState();
   const { takeNextStep } = useNextStep();
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
   const [loading, setLoading] = useState(false);
@@ -30,8 +30,8 @@ const VisitReasons: React.FC<Props> = () => {
   const getSpecialties = async () => {
     try {
       const { data: result }: { data: FetchSpecialtyResponse[] } = await fetchSpecialties();
-      console.log(result);
       setSpecialties(result.map((item) => ({ ...item, visitReasons: item.reasons })));
+      if (result.length > 1) setSpecialtiesLength(result.length);
     } catch (error) {
       console.log(error);
     }

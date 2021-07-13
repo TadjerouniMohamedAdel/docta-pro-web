@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 type ContextProps = {
   currentStep: number;
   setCurrentStep: (value: number) => void;
+  specialtiesLength: number;
+  setSpecialtiesLength: (value: number) => void;
 };
 
 const SetupAccountStateContext = React.createContext<ContextProps | undefined>(undefined);
@@ -12,13 +14,16 @@ export const SetupAccountProvider: React.FunctionComponent<{
   setupAccountProgress?: number;
 }> = ({ children, setupAccountProgress = 0 }) => {
   const [currentStep, setCurrentStep] = useState(setupAccountProgress);
+  const [specialtiesLength, setSpecialtiesLength] = useState(1);
 
   useEffect(() => {
     setCurrentStep(setupAccountProgress);
   }, [setupAccountProgress]);
 
   return (
-    <SetupAccountStateContext.Provider value={{ currentStep, setCurrentStep }}>
+    <SetupAccountStateContext.Provider
+      value={{ currentStep, setCurrentStep, specialtiesLength, setSpecialtiesLength }}
+    >
       {children}
     </SetupAccountStateContext.Provider>
   );
