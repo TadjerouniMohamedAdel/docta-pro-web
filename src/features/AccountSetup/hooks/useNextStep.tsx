@@ -11,7 +11,7 @@ export const useNextStep = () => {
     try {
       if (user) {
         if (currentStep >= user.setupAccountProgress) {
-          await updateSetupAccountProgress(user?.setupAccountProgress + 1);
+          await updateSetupAccountProgress(user?.setupAccountProgress + steps);
           setUser({ ...user, setupAccountProgress: user?.setupAccountProgress + steps } as User);
         } else {
           setCurrentStep(currentStep + steps);
