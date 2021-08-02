@@ -54,8 +54,8 @@ export const updateDoctorProfilePart2 = async (params: any): Promise<any> => {
 export const updateCabinetProfile = async (params: any): Promise<any> => {
   const body = {
     ...(params.files && params.files.length > 0 ? { files: params.files } : undefined),
-    contactNumber: params.cabinetForm.contactNumber,
-    secondaryContactNumber: params.cabinetForm.secondaryContactNumber,
+    contactNumber: params.contactNumber,
+    secondaryContactNumber: params.secondaryContactNumber,
     services: JSON.stringify(
       params.services.filter(
         (service: any) => (service.isNew && !service.isDeleted) || service.isDeleted,
