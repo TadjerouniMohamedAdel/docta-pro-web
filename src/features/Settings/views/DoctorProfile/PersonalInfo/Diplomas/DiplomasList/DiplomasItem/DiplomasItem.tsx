@@ -108,7 +108,7 @@ const DiplomasItem: React.FC<Props> = ({ diploma, handleUpdateDiploma, handleDel
                   })}
                   onChange={(date) => {
                     handleChange({
-                      target: { name: 'date', value: date },
+                      target: { name: 'graduationDate', value: date },
                     });
                     handleSubmit();
                   }}
