@@ -160,6 +160,7 @@
   "block success": "{{name}} bloqué avec succès",
   "unblock success": "{{name}} débloqué avec succès",
   "change success": "{{name}} Mis à jour avec succés",
+  "change success_plural": "{{name}} Mises à jour avec succés",
   "time slot already booked": "Créneau horaire déjà réservé",
   "invalid combination": "Le nom d'utilisateur ou le mot de passe que vous avez entré est incorrect",
   "No appointments available": "Aucun rendez-vous disponible",
