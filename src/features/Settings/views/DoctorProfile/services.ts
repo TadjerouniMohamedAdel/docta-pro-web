@@ -44,6 +44,7 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
     hasFiles: !!params.file,
     successMessage: i18n.t('change success', {
       name: i18n.t('personal info'),
+      count: 2,
     }),
   });
 };
