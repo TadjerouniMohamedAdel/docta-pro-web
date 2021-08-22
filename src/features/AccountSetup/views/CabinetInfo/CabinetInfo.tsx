@@ -2,6 +2,7 @@ import { Col, Form, Row } from 'antd';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 import { useMutation } from 'react-query';
 import { PhoneInput, Spacer } from '../../../../components';
 import Images from '../../../Settings/views/DoctorProfile/CabinetInfo/Images/Images';
@@ -37,9 +38,22 @@ const CabinetInfo: React.FC<Props> = () => {
 
   const { cabinetForm } = doctorCabinetInfoForm;
 
+  const phoneRegEx = /(\+[0-9]{11,12})/;
+
+  const validationSchema = Yup.object().shape({
+    contactNumber: Yup.string()
+      .required(t('errors:required field'))
+      .matches(phoneRegEx, t('errors:must be a valid', { fieldName: t('phone number') })),
+    secondaryContactNumber: Yup.string().matches(
+      phoneRegEx,
+      t('errors:must be a valid', { fieldName: t('phone number') }),
+    ),
+  });
+
   const formik = useFormik({
     initialValues: cabinetForm,
     enableReinitialize: true,
+    validationSchema,
     onSubmit: async () => {
       try {
         setLoading(true);
@@ -112,7 +126,6 @@ const CabinetInfo: React.FC<Props> = () => {
                 </Col>
                 <Col span={12}>
                   <PhoneInput
-                    required
                     value={values.secondaryContactNumber}
                     onChange={handleChange}
                     onBlur={(e) => {

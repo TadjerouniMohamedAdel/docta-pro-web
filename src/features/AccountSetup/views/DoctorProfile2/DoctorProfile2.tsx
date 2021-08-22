@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
+import * as Yup from 'yup';
 import { Label } from '../../../../components';
 import Diplomas from '../../../Settings/views/DoctorProfile/PersonalInfo/Diplomas/Diplomas';
 import Languages from '../../../Settings/views/DoctorProfile/PersonalInfo/Languages/Languages';
@@ -27,9 +28,14 @@ const DoctorProfile2: React.FC<Props> = () => {
 
   const { mutateAsync: savePersonalInfoMutation } = useMutation(updateDoctorProfilePart2);
 
+  const validationSchema = Yup.object().shape({
+    biography: Yup.string().required(t('errors:required field')),
+  });
+
   const formik = useFormik({
     initialValues: doctorPersonalInfoForm,
     enableReinitialize: true,
+    validationSchema,
     onSubmit: async () => {
       try {
         setLoading(true);
