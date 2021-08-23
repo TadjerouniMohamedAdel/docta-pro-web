@@ -83,10 +83,11 @@ const UserModal: React.FC<Props> = ({ visible, setVisible, user, pageIndex, page
 
   const handleEditUser = async (values: UserForm, permissions: string[]) => {
     const editUserParams: EditUserParams = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      phone: values.phone,
+      ...(values.firstName !== user.firstName ? { firstName: values.firstName } : undefined),
+      ...(values.lastName !== user.lastName ? { lastName: values.lastName } : undefined),
+      ...(values.email !== user.email ? { email: values.email } : undefined),
+      ...(values.phone !== user.phone ? { phone: values.phone } : undefined),
+      ...(values.password ? { password: values.password } : undefined),
       role: values.roleId || '',
       permissions,
     };
