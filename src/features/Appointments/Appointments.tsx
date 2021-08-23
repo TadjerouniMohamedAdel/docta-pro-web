@@ -266,6 +266,7 @@ const Appointments: React.FC = () => {
                   setShowAppointmentAdd={setShowAppointmentAdd}
                   setShowAppointmentDetails={setShowAppointmentDetails}
                   setAppointmentDetailsId={setAppointmentDetailsId}
+                  setPatientId={setPatientId}
                   {...props}
                 />
               )}
