@@ -19,6 +19,7 @@ export type Props = {
   setShowAppointmentAdd: (visible: boolean) => void;
   setShowAppointmentDetails: (visible: boolean) => void;
   setAppointmentDetailsId: (appointmentId: string) => void;
+  setPatientId: (patientId: string) => void;
 };
 
 const localizer = momentLocalizer(moment);
@@ -41,6 +42,7 @@ const WeekView: React.FC<Props> = ({
   setShowAppointmentAdd,
   setShowAppointmentDetails,
   setAppointmentDetailsId,
+  setPatientId,
 }) => {
   const { resolvedData: appointments, refetch } = useAppointmentsWeekList(
     currentDate,
@@ -63,6 +65,7 @@ const WeekView: React.FC<Props> = ({
 
   const handleSelectEvent = (values: any) => {
     setAppointmentDetailsId(values.id);
+    setPatientId(values.patient.id);
     setShowAppointmentDetails(true);
   };
 

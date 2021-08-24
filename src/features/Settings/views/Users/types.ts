@@ -58,11 +58,11 @@ export type AddUserParams = {
 };
 
 export type EditUserParams = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  email?: string;
   password?: string;
-  role: string;
-  permissions: string[];
+  role?: string;
+  permissions?: string[];
 };
