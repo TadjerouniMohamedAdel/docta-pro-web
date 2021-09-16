@@ -90,7 +90,7 @@ export type BlockPatientParams = {
 
 export type PatientNote = {
   id: string;
-  title: string;
-  body: string;
+  title?: string;
+  body?: string;
   files?: RcFile[];
 };
