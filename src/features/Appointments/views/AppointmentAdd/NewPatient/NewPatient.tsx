@@ -120,6 +120,7 @@ const NewPatient: React.FC<Props> = ({ visible, onClose, handleSelectPatient }) 
       try {
         const response = await mutateAsync({
           ...personalInfoForm,
+          email: personalInfoForm.email || undefined,
           phone: personalInfoForm.phone,
           ...medicalRecordsForm,
         });
