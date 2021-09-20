@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { fetchSpecialties } from '../../../Settings/views/VisitReasons/services';
 import { FetchSpecialtyResponse, Specialty } from '../../../Settings/views/VisitReasons/types';
 import VisitReasonsItem from '../../../Settings/views/VisitReasons/VisitReasonsItem/VisitReasonsItem';
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
+import SetupLayout from '../../SetupLayout';
 import { useSetupAccountState } from '../../context';
 import { useNextStep } from '../../hooks';
 import { saveVisitReasonsStep } from '../../services';

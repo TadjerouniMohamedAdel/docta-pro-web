@@ -4,7 +4,7 @@ import { Avatar, Button, Col, Form, Input, Row, Select as AntSelect, Upload } fr
 import { useFormik } from 'formik';
 import moment from 'moment';
 import { useMutation } from 'react-query';
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
+import SetupLayout from '../../SetupLayout';
 import { fetchDoctorPersonalInfo } from '../../../Settings/views/DoctorProfile/services';
 import { getBase64 } from '../../../../common/utilities';
 import { DatePicker, Icon, Label, Select } from '../../../../components';

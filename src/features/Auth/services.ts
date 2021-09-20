@@ -12,7 +12,6 @@ export const getCurrentUser = async (): Promise<AuthResponse> => {
   return fetcher('/api/v1/professionals/current-user');
 };
 
-// TODO this api should use GET method !!!
 export const CheckPhoneNumber = async (phone: string): Promise<AuthResponse> => {
   return fetcher('/api/v1/users/phone-verification?action=pro', {
     body: { phone },

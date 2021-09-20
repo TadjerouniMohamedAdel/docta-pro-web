@@ -5,7 +5,7 @@ import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
 import { Button, Icon, Label, Spacer } from '../../../../components';
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
+import SetupLayout from '../../SetupLayout';
 import { useSetupAccountState } from '../../context';
 import { useNextStep } from '../../hooks';
 import { resetProPassword } from '../../../Settings/views/PasswordLogin/services';

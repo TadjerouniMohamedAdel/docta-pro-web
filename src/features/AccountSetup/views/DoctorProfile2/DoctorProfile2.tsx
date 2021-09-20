@@ -8,7 +8,7 @@ import { Label } from '../../../../components';
 import Diplomas from '../../../Settings/views/DoctorProfile/PersonalInfo/Diplomas/Diplomas';
 import Languages from '../../../Settings/views/DoctorProfile/PersonalInfo/Languages/Languages';
 import { fetchDoctorPersonalInfo } from '../../../Settings/views/DoctorProfile/services';
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
+import SetupLayout from '../../SetupLayout';
 import { useSetupAccountState } from '../../context';
 import { useNextStep } from '../../hooks';
 import { updateDoctorProfilePart2 } from '../../services';

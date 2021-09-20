@@ -8,7 +8,7 @@ import { PhoneInput, Spacer } from '../../../../components';
 import Images from '../../../Settings/views/DoctorProfile/CabinetInfo/Images/Images';
 import Services from '../../../Settings/views/DoctorProfile/CabinetInfo/Services/Services';
 import { fetchDoctorCabinetProfile } from '../../../Settings/views/DoctorProfile/services';
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
+import SetupLayout from '../../SetupLayout';
 import { useSetupAccountState } from '../../context';
 import { useNextStep } from '../../hooks';
 import { updateCabinetProfile } from '../../services';

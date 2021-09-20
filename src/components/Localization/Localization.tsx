@@ -1,17 +1,17 @@
 import React from 'react';
 import { Col, Dropdown, Menu, message, Row, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useLocaleState } from '../../../../i18n';
-import { Button, Icon } from '../../../../components';
-import arFlag from '../../../../assets/img/ar.png';
-import enFlag from '../../../../assets/img/en.png';
-import frFlag from '../../../../assets/img/fr.png';
+import { useLocaleState } from '../../i18n';
+import { Button, Icon } from '..';
+import arFlag from '../../assets/img/ar.png';
+import enFlag from '../../assets/img/en.png';
+import frFlag from '../../assets/img/fr.png';
 
 type Props = {
-  collapsed: boolean;
+  collapsed?: boolean;
 };
 
-const Localization: React.FC<Props> = ({ collapsed }) => {
+const Localization: React.FC<Props> = ({ collapsed = false }) => {
   const { locale, setLocale } = useLocaleState();
   const { i18n } = useTranslation();
 

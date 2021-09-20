@@ -1,9 +1,10 @@
 import { Col, Row, Steps } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, Text } from '../../../../components';
-import { useSetupAccountState } from '../../context';
-import '../../styles.less';
+import { Button, Icon, Text } from '../../components';
+import Localization from '../../components/Localization';
+import { useSetupAccountState } from './context';
+import './styles.less';
 
 type Props = {
   title: string;
@@ -54,6 +55,9 @@ const SetupLayout: React.FC<Props> = ({
             <Text size="xl" style={{ color: 'white' }}>
               {description}
             </Text>
+          </Col>
+          <Col>
+            <Localization />
           </Col>
         </Row>
       </Col>
