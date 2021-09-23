@@ -260,8 +260,8 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
               <Avatar src={selectedPatient?.picture} size="large" />
             ) : (
               <Avatar src={selectedPatient?.picture} size="large">
-                {selectedPatient?.firstName[0].toUpperCase()}
-                {selectedPatient?.lastName[0].toUpperCase()}
+                {selectedPatient?.firstName[0]?.toUpperCase()}
+                {selectedPatient?.lastName[0]?.toUpperCase()}
               </Avatar>
             )}
           </Col>
