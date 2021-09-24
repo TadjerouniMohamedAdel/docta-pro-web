@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { WorkingHours } from '../../../Settings/views/Schedule';
 import { fetchWorkingHours } from '../../../Settings/views/Schedule/services';
 import { WorkingHoursSchedule } from '../../../Settings/views/Schedule/types';
-import SetupLayout from '../../components/SetupLayout/SetupLayout';
+import SetupLayout from '../../SetupLayout';
 import { useSetupAccountState } from '../../context';
 import { useNextStep } from '../../hooks';
 import { saveAvailability } from '../../services';

@@ -28,14 +28,30 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
     if (patientId) {
       await mutateAsync({
         patientId,
-        data: value,
+        data: {
+          ...value,
+          title: value.title || undefined,
+          body: value.body || undefined,
+        },
       });
     }
   };
 
-  const validationSchema = Yup.object().shape({
-    body: Yup.string().required(),
-  });
+  const validationSchema = Yup.object().shape(
+    {
+      title: Yup.string().when('body', {
+        is: (body) => !body || body.length === 0,
+        then: Yup.string().required(),
+        otherwise: Yup.string(),
+      }),
+      body: Yup.string().when('title', {
+        is: (title) => !title || title.length === 0,
+        then: Yup.string().required(),
+        otherwise: Yup.string(),
+      }),
+    },
+    [['title', 'body']],
+  );
 
   const formik = useFormik({
     initialValues,

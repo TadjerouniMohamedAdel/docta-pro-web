@@ -45,8 +45,8 @@ const PatientAutocomplete: React.FC<Props> = ({ onSelectPatient }) => {
                 <Avatar src={patient?.picture} size="large" />
               ) : (
                 <Avatar src={patient?.picture} size="large">
-                  {patient?.firstName[0].toUpperCase()}
-                  {patient?.lastName[0].toUpperCase()}
+                  {patient?.firstName[0]?.toUpperCase()}
+                  {patient?.lastName[0]?.toUpperCase()}
                 </Avatar>
               )}
             </Col>

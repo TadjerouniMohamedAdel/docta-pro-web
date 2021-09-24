@@ -1,5 +1,5 @@
 import React from 'react';
-import Localization from './Localization';
+import Localization from '../../../components/Localization';
 import Logo from './Logo/Logo';
 import Menu from './Menu/Menu';
 

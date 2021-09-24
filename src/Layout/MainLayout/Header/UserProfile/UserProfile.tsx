@@ -31,8 +31,8 @@ const UserProfile: React.FC = () => {
               <Avatar shape="circle" src={user?.picture} />
             ) : (
               <Avatar shape="circle">
-                {user?.firstName[0].toUpperCase()}
-                {user?.lastName[0].toUpperCase()}
+                {user?.firstName[0]?.toUpperCase()}
+                {user?.lastName[0]?.toUpperCase()}
               </Avatar>
             )}
           </Col>

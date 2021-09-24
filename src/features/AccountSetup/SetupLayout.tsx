@@ -1,9 +1,10 @@
 import { Col, Row, Steps } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, Text } from '../../../../components';
-import { useSetupAccountState } from '../../context';
-import '../../styles.less';
+import { Button, Icon, Text } from '../../components';
+import Localization from '../../components/Localization';
+import { useSetupAccountState } from './context';
+import './styles.less';
 
 type Props = {
   title: string;
@@ -47,13 +48,16 @@ const SetupLayout: React.FC<Props> = ({
     >
       <Col span={10} className="side-panel">
         <Row style={{ height: 500 }}>
-          <Col>
+          <Col style={{ width: '100%' }}>
             <Text style={{ fontSize: 48, color: 'white' }}>{title}</Text>
           </Col>
-          <Col>
+          <Col style={{ width: '100%' }}>
             <Text size="xl" style={{ color: 'white' }}>
               {description}
             </Text>
+          </Col>
+          <Col>
+            <Localization />
           </Col>
         </Row>
       </Col>

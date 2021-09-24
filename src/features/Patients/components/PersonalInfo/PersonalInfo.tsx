@@ -5,7 +5,7 @@ import { FormikProps } from 'formik';
 import moment from 'moment';
 import { Label, Icon, Select, PhoneInput } from '../../../../components';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
-import { FormField, PersonalInfoForm } from '../../types';
+import { FormField, GenderEnum, PersonalInfoForm } from '../../types';
 import i18n from '../../../../i18n';
 import { useGetStatesList } from '../../../../common/hooks/useGetStatesList';
 import { StateCity } from '../../../../common/types';
@@ -172,8 +172,8 @@ const PersonalInfo: React.FC<Props> = ({ handleFormChange, formik }) => {
                 handleFieldsChange('gender', value);
               }}
             >
-              <AntSelect.Option value="MALE">Male</AntSelect.Option>
-              <AntSelect.Option value="Female">Female</AntSelect.Option>
+              <AntSelect.Option value={GenderEnum.MALE}>{t('male')}</AntSelect.Option>
+              <AntSelect.Option value={GenderEnum.FEMALE}>{t('female')}</AntSelect.Option>
             </Select>
           </Form.Item>
         </Col>

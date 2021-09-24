@@ -90,7 +90,12 @@ export type BlockPatientParams = {
 
 export type PatientNote = {
   id: string;
-  title: string;
-  body: string;
+  title?: string;
+  body?: string;
   files?: RcFile[];
 };
+
+export enum GenderEnum {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+}
