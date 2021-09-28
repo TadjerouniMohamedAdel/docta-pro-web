@@ -11,6 +11,7 @@ import PatientNotesList from './PatientNotesList/PatientNotesList';
 import { PatientNote } from '../../types';
 import './styles.less';
 import { useAddPatientNotes } from '../../hooks/useAddPatientNote';
+import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 // import { getBase64 } from '../../../../common/utilities';
 
 type Props = {
@@ -19,7 +20,27 @@ type Props = {
 
 const PatientNotes: React.FC<Props> = ({ patientId }) => {
   const { t } = useTranslation();
-  const { data } = useGetPatientNotes(patientId ?? '');
+  const [term, setTerm] = React.useState<string>('');
+
+  const {
+    data,
+    isFetchingNextPage,
+    isLoading: isLoadingNotes,
+    fetchNextPage,
+    hasNextPage,
+  } = useGetPatientNotes(patientId ?? '', term);
+
+  const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
+
+  useIntersectionObserver({
+    target: loadMoreButtonRef,
+    onIntersect: fetchNextPage,
+    enabled: hasNextPage,
+  });
+
+  const handleSearchChange = (value: string) => {
+    setTerm(value);
+  };
 
   const initialValues: PatientNote = { id: '', title: '', body: '', files: [] };
   const { mutateAsync, isLoading } = useAddPatientNotes();
@@ -76,6 +97,13 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
 
   return (
     <div style={{ padding: '30px 40px' }}>
+      <div style={{ marginBottom: 16 }}>
+        <Input
+          placeholder={t('search notes')}
+          prefix={<Icon name="search-2-line" />}
+          onChange={(e) => handleSearchChange(e.target.value)}
+        />
+      </div>
       <Form>
         <div className="notes-input-form">
           <Row align="bottom">
@@ -145,15 +173,28 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
           </Row>
         </div>
       </Form>
-      {data?.map((item: any, index: number) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <div key={index} style={{ marginBottom: 24 }}>
-          <Text type="secondary" style={{ fontWeight: 500, marginBottom: 4 }}>
-            {moment(item.date).isSame(new Date(), 'day') ? 'Today' : moment(item.date).format('LL')}
-          </Text>
-          <PatientNotesList notes={item.notes} />
-        </div>
+
+      {data.pages.map((page: any) => (
+        <>
+          {page.patientsNotes.map((item: any, index: number) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={index} style={{ marginBottom: 24 }}>
+              <Text type="secondary" style={{ fontWeight: 500, marginBottom: 4 }}>
+                {moment(item.date).isSame(new Date(), 'day')
+                  ? 'Today'
+                  : moment(item.date).format('LL')}
+              </Text>
+              <PatientNotesList notes={item.notes} />
+            </div>
+          ))}
+        </>
       ))}
+      <div ref={loadMoreButtonRef} style={{ textAlign: 'center', height: 35, marginTop: 16 }}>
+        {isLoadingNotes || isFetchingNextPage ? <span>{t('loading')}</span> : null}
+        {!hasNextPage && !isLoadingNotes ? (
+          <span style={{ opacity: 0.5 }}>{t('no more data')}</span>
+        ) : null}
+      </div>
     </div>
   );
 };
