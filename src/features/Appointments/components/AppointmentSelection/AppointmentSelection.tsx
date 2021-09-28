@@ -8,7 +8,7 @@ import moment from 'moment';
 import i18n from '../../../../i18n';
 import { Icon, Label, Select, DatePicker, TimePicker, PhoneInput } from '../../../../components';
 import AppointmentSkeleton from '../AppointmentSkeleton/AppointmentSkeleton';
-import { AppointmentForm, Patient } from '../../types';
+import { AppointmentForm, Patient, PatientRelative } from '../../types';
 import { FetchSpecialtyResponse } from '../../../Settings/views/VisitReasons/types';
 import { fetchAppointmentsDetails } from '../../services';
 
@@ -24,6 +24,7 @@ type AppointmentData = {
   appointmentForm: AppointmentForm;
   patient: Patient;
   note?: string;
+  relative?: PatientRelative;
 };
 
 const { Option } = AntSelect;
@@ -54,7 +55,6 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
       generalStatus: '',
       picture: '',
     },
-    note: undefined,
   });
 
   const cache = useQueryClient();
@@ -106,6 +106,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
         },
         patient: response.patient,
         note: response.note,
+        relative: response.relative,
       });
     } catch (error) {
       console.log(error);
@@ -351,6 +352,59 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
                   />
                 </Form.Item>
               </Col>
+              {appointmentData.relative?.id ? (
+                <>
+                  <Col span={12}>
+                    <Row gutter={16} align="middle">
+                      <Col span={24}>
+                        <Label title={t('Relative')} />
+                      </Col>
+                      <Col span={24}>
+                        <Row gutter={16} align="middle">
+                          <Col>
+                            {appointmentData.relative?.picture ? (
+                              <Avatar
+                                src={appointmentData.relative?.picture}
+                                size={48}
+                                shape="square"
+                              />
+                            ) : (
+                              <Avatar
+                                src={appointmentData.relative?.picture}
+                                size={48}
+                                shape="square"
+                              >
+                                {appointmentData.relative?.firstName?.[0]?.toUpperCase()}
+                                {appointmentData.relative?.lastName?.[0]?.toUpperCase()}
+                              </Avatar>
+                            )}
+                          </Col>
+                          <Col flex={1}>
+                            <Form.Item>
+                              <Input
+                                name="fullName"
+                                value={`${appointmentData.relative?.firstName} ${appointmentData.relative?.lastName}`}
+                                disabled
+                              />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col flex={12}>
+                    <Label title={t('Relation to relative')} />
+                    <Form.Item>
+                      <Input
+                        prefix={<Icon name="user-line" />}
+                        name="relation"
+                        value={appointmentData.relative?.relation}
+                        disabled
+                      />
+                    </Form.Item>
+                  </Col>
+                </>
+              ) : null}
             </Row>
           </div>
           {appointmentData.note ? (
