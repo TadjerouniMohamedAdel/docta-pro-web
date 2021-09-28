@@ -20,6 +20,12 @@ type Props = {
   form: FormInstance;
 };
 
+type AppointmentData = {
+  appointmentForm: AppointmentForm;
+  patient: Patient;
+  note?: string;
+};
+
 const { Option } = AntSelect;
 
 const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form }) => {
@@ -29,24 +35,26 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
   const minute = t('minute');
   const hour = t('hour');
 
-  const [patient, setPatient] = useState<Patient>({
-    id: '',
-    firstName: '',
-    lastName: '',
-    phone: '',
-    birthDate: '',
-    gender: undefined,
-    generalStatus: '',
-    picture: '',
-  });
-
-  const [appointmentForm, setAppointmentForm] = useState<AppointmentForm>({
-    id: '',
-    patientId: '',
-    start: null,
-    time: null,
-    duration: undefined,
-    reasonId: '',
+  const [appointmentData, setAppointmentData] = useState<AppointmentData>({
+    appointmentForm: {
+      id: '',
+      patientId: '',
+      start: null,
+      time: null,
+      duration: undefined,
+      reasonId: '',
+    },
+    patient: {
+      id: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      birthDate: '',
+      gender: undefined,
+      generalStatus: '',
+      picture: '',
+    },
+    note: undefined,
   });
 
   const cache = useQueryClient();
@@ -64,7 +72,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
   });
 
   const formik = useFormik({
-    initialValues: appointmentForm as AppointmentForm,
+    initialValues: appointmentData.appointmentForm as AppointmentForm,
     enableReinitialize: true,
     validationSchema,
     onSubmit: onEditSave,
@@ -87,15 +95,18 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
     try {
       setFetchAppointmentLoading(true);
       const response = await fetchAppointmentsDetails(appointmentId);
-      setAppointmentForm({
-        start: new Date(response.start),
-        time: new Date(response.start),
-        reasonId: response.reason.id,
-        duration: response.duration,
-        patientId: response.patient.id,
+      setAppointmentData({
+        ...appointmentData,
+        appointmentForm: {
+          start: new Date(response.start),
+          time: new Date(response.start),
+          reasonId: response.reason.id,
+          duration: response.duration,
+          patientId: response.patient.id,
+        },
+        patient: response.patient,
+        note: response.note,
       });
-
-      setPatient(response.patient);
     } catch (error) {
       console.log(error);
     }
@@ -248,12 +259,12 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
               <Col span={12}>
                 <Row gutter={16}>
                   <Col>
-                    {patient.picture ? (
-                      <Avatar src={patient.picture} size={75} shape="square" />
+                    {appointmentData.patient.picture ? (
+                      <Avatar src={appointmentData.patient.picture} size={75} shape="square" />
                     ) : (
-                      <Avatar src={patient.picture} size={75} shape="square">
-                        {patient.firstName[0]?.toUpperCase()}
-                        {patient.lastName[0]?.toUpperCase()}
+                      <Avatar src={appointmentData.patient.picture} size={75} shape="square">
+                        {appointmentData.patient.firstName[0]?.toUpperCase()}
+                        {appointmentData.patient.lastName[0]?.toUpperCase()}
                       </Avatar>
                     )}
                   </Col>
@@ -263,7 +274,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
                       <Input
                         prefix={<Icon name="user-line" />}
                         name="firstName"
-                        value={patient.firstName}
+                        value={appointmentData.patient.firstName}
                         disabled
                       />
                     </Form.Item>
@@ -276,7 +287,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
                   <Input
                     prefix={<Icon name="user-line" />}
                     name="lastName"
-                    value={patient.lastName}
+                    value={appointmentData.patient.lastName}
                     disabled
                   />
                 </Form.Item>
@@ -288,7 +299,11 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
                     disabled
                     prefixIcon={<Icon name="cake-line" />}
                     name="birthDate"
-                    value={patient.birthDate ? moment(patient.birthDate) : null}
+                    value={
+                      appointmentData.patient.birthDate
+                        ? moment(appointmentData.patient.birthDate)
+                        : null
+                    }
                     placeholder={i18n.t('placeholders:enter', {
                       fieldName: t('birthday'),
                     })}
@@ -305,7 +320,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
                       fieldName: t('gender'),
                     })}
                     dropdownMatchSelectWidth={false}
-                    value={patient.gender}
+                    value={appointmentData.patient.gender}
                   >
                     <AntSelect.Option value="MALE">Male</AntSelect.Option>
                     <AntSelect.Option value="Female">Female</AntSelect.Option>
@@ -314,7 +329,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
               </Col>
               <Col span={12}>
                 <PhoneInput
-                  value={patient.phone}
+                  value={appointmentData.patient.phone}
                   name="phone"
                   label={t('phone number')}
                   placeholder={`+213 ${t('placeholders:enter', {
@@ -329,7 +344,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
                     disabled
                     prefix={<Icon name="heart-pulse-line" />}
                     name="generalStatus"
-                    value={patient.generalStatus}
+                    value={appointmentData.patient.generalStatus}
                     placeholder={i18n.t('placeholders:enter', {
                       fieldName: t('general status'),
                     })}
@@ -338,6 +353,21 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
               </Col>
             </Row>
           </div>
+          {appointmentData.note ? (
+            <>
+              <Divider style={{ marginTop: 0, marginBottom: 0 }} />
+              <div style={{ padding: '16px 40px' }}>
+                <Label title={t('note from patient')} />
+                <Form.Item>
+                  <Input.TextArea
+                    name="note"
+                    autoSize={{ minRows: 2 }}
+                    value={appointmentData.note}
+                  />
+                </Form.Item>
+              </div>
+            </>
+          ) : null}
         </>
       )}
     </div>
