@@ -173,22 +173,23 @@ const PatientNotes: React.FC<Props> = ({ patientId }) => {
           </Row>
         </div>
       </Form>
+      <div>
+        {data.pages.map((page: any) => (
+          <>
+            {page.patientsNotes.map((item: any) => (
+              <div style={{ marginBottom: 24 }}>
+                <Text type="secondary" style={{ fontWeight: 500, marginBottom: 4 }}>
+                  {moment(item.date).isSame(new Date(), 'day')
+                    ? 'Today'
+                    : moment(item.date).format('LL')}
+                </Text>
+                <PatientNotesList notes={item.notes} />
+              </div>
+            ))}
+          </>
+        ))}
+      </div>
 
-      {data.pages.map((page: any) => (
-        <>
-          {page.patientsNotes.map((item: any, index: number) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index} style={{ marginBottom: 24 }}>
-              <Text type="secondary" style={{ fontWeight: 500, marginBottom: 4 }}>
-                {moment(item.date).isSame(new Date(), 'day')
-                  ? 'Today'
-                  : moment(item.date).format('LL')}
-              </Text>
-              <PatientNotesList notes={item.notes} />
-            </div>
-          ))}
-        </>
-      ))}
       <div ref={loadMoreButtonRef} style={{ textAlign: 'center', height: 35, marginTop: 16 }}>
         {isLoadingNotes || isFetchingNextPage ? <span>{t('loading')}</span> : null}
         {!hasNextPage && !isLoadingNotes ? (
