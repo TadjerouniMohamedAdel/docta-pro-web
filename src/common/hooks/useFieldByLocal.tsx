@@ -1,7 +1,7 @@
-import { useLocaleState } from '../../i18n';
+import { useTranslation } from 'react-i18next';
 
 export const useFieldByLocal = (): { getFieldNameByLocal: () => string } => {
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
 
   const getFieldNameByLocal = () => {
     const locales: any = {
@@ -10,7 +10,7 @@ export const useFieldByLocal = (): { getFieldNameByLocal: () => string } => {
       fr: 'nameFr',
     };
 
-    return locales[locale ?? 'fr'];
+    return locales[i18n.language];
   };
 
   return { getFieldNameByLocal };

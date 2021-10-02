@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocaleState } from '../../../../i18n';
+import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '../../../../components';
 
 type Props = {
@@ -8,11 +8,10 @@ type Props = {
 };
 
 const SidebarCollapser: React.FC<Props> = ({ handleCollapsed, collapsed }) => {
-  const { locale } = useLocaleState();
-
+  const { i18n } = useTranslation();
   return (
     <div className="sidebar-collapser">
-      {(locale === 'ar' && !collapsed) || (locale !== 'ar' && collapsed) ? (
+      {(i18n.language === 'ar' && !collapsed) || (i18n.language !== 'ar' && collapsed) ? (
         <Button type="text" onClick={handleCollapsed}>
           <Icon name="menu-2-line" />
         </Button>

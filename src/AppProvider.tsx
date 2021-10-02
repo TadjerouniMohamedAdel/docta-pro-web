@@ -1,18 +1,22 @@
 import React from 'react';
+import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { AppLoader } from './components';
 import { AuthProvider } from './features/Auth/context';
-import { LocaleProvider } from './i18n';
+import i18n from './i18n';
 
 const AppProvider: React.FC = ({ children }) => {
   const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClient}>
-      <LocaleProvider>
-        <AuthProvider>{children}</AuthProvider>
-      </LocaleProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <React.Suspense fallback={<AppLoader />}>
+      <QueryClientProvider client={queryClient}>
+        <I18nextProvider i18n={i18n}>
+          <AuthProvider>{children}</AuthProvider>
+        </I18nextProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </React.Suspense>
   );
 };
 

@@ -33,6 +33,7 @@
     "@typescript-eslint/indent": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "react/jsx-curly-newline": "off",
-    "@typescript-eslint/comma-dangle": "off"
+    "@typescript-eslint/comma-dangle": "off",
+    "no-nested-ternary": "off"
   }
 }

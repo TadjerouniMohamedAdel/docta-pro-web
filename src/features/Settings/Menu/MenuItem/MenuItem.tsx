@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useLocation, matchPath } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Col, Menu, Row } from 'antd';
 import { MenuItemProps } from 'antd/lib/menu/MenuItem';
 import { Text, Icon } from '../../../../components';
 import { IconName } from '../../../../components/Icon/types';
 import './styles.less';
-import { useLocaleState } from '../../../../i18n';
 
 type Props = Omit<MenuItemProps, 'key'> & {
   iconName: IconName;
@@ -16,7 +16,7 @@ type Props = Omit<MenuItemProps, 'key'> & {
 
 const MenuItem: React.FC<Props> = ({ iconName, title, path, exact = false, ...rest }) => {
   const { pathname } = useLocation();
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
 
   const isActive = (): boolean => {
     const match = matchPath(pathname, path);
@@ -49,7 +49,7 @@ const MenuItem: React.FC<Props> = ({ iconName, title, path, exact = false, ...re
         <Col style={{ paddingTop: 5 }}>
           <Icon
             className="menu-item-arrow"
-            name={locale === 'ar' ? 'arrow-left-s-line' : 'arrow-right-s-line'}
+            name={i18n.language === 'ar' ? 'arrow-left-s-line' : 'arrow-right-s-line'}
             size={24}
           />
         </Col>

@@ -14,7 +14,6 @@ import {
   PersonalInfoForm,
   addNewPatient,
 } from '../../../../Patients';
-import i18n, { useLocaleState } from '../../../../../i18n';
 import { Patient } from '../../../types';
 
 type Props = {
@@ -24,8 +23,7 @@ type Props = {
 };
 
 const NewPatient: React.FC<Props> = ({ visible, onClose, handleSelectPatient }) => {
-  const { t } = useTranslation(['translation', 'placeholders', 'errors']);
-  const { locale } = useLocaleState();
+  const { t, i18n } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const personalInfoFormInitialValues: PersonalInfoForm = {
     firstName: '',
@@ -68,11 +66,11 @@ const NewPatient: React.FC<Props> = ({ visible, onClose, handleSelectPatient }) 
     lastName: Yup.string().required(t('errors:required field')),
     phone: Yup.string()
       .required(t('errors:required field'))
-      .matches(phoneRegEx, i18n.t('errors:must be a valid', { fieldName: t('phone number') })),
+      .matches(phoneRegEx, t('errors:must be a valid', { fieldName: t('phone number') })),
     birthday: Yup.date()
-      .typeError(i18n.t('errors:must be a valid', { fieldName: t('birthday') }))
+      .typeError(t('errors:must be a valid', { fieldName: t('birthday') }))
       .nullable(),
-    email: Yup.string().email(i18n.t('errors:must be a valid', { fieldName: t('email') })),
+    email: Yup.string().email(t('errors:must be a valid', { fieldName: t('email') })),
   });
 
   const personalInfoFormik: FormikProps<PersonalInfoForm> = useFormik({
@@ -174,7 +172,7 @@ const NewPatient: React.FC<Props> = ({ visible, onClose, handleSelectPatient }) 
         <Col>
           <Spacer size="xs">
             <Button type="text" size="small" onClick={handleClose}>
-              <Icon name={locale === 'ar' ? 'arrow-right-line' : 'arrow-left-line'} />
+              <Icon name={i18n.language === 'ar' ? 'arrow-right-line' : 'arrow-left-line'} />
             </Button>
             <Text size="xxxl" style={{ fontWeight: 500 }}>
               {t('new patient')}

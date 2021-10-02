@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { useTranslation } from 'react-i18next';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-import { useLocaleState } from '../../../../i18n';
 import './styles.less';
 import Header from './Header/Header';
 import TimeSlotWrapper from './TimeSlotWrapper/TimeSlotWrapper';
@@ -49,7 +49,7 @@ const WeekView: React.FC<Props> = ({
     visitReasonIds,
   );
 
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
 
   const handleViewChange = () => {};
   const handleNavigate = () => {};
@@ -76,7 +76,7 @@ const WeekView: React.FC<Props> = ({
   return (
     <Calendar
       className="week-calendar"
-      culture={locale === 'ar' ? 'ar-tn' : locale}
+      culture={i18n.language === 'ar' ? 'ar-tn' : i18n.language}
       localizer={localizer}
       defaultDate={currentDate}
       date={currentDate}
@@ -84,7 +84,7 @@ const WeekView: React.FC<Props> = ({
       view="week"
       selectable="ignoreEvents"
       onSelecting={() => false}
-      rtl={locale === 'ar'}
+      rtl={i18n.language === 'ar'}
       events={appointments ?? []}
       style={{ height: '100%' }}
       //   onRangeChange={handleRangeChange}
