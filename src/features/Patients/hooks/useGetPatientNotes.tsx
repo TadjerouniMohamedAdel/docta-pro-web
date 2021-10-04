@@ -6,7 +6,7 @@ export const useGetPatientNotes = (patientId: string, term: string) => {
   const [total, setTotal] = React.useState(0);
 
   const { data, ...rest } = useInfiniteQuery(
-    ['patient-notes', term],
+    ['patient-notes', patientId, term],
     async ({ pageParam = 0 }) => {
       const res = await fetchPatientNotes(patientId, term, pageParam);
       setTotal(res.total);
