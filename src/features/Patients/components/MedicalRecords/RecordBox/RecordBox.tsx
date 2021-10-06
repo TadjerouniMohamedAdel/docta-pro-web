@@ -65,8 +65,7 @@ const RecordBox: React.FC<Props> = ({ data, title, name, handleAddNewItem, handl
           )}
         </div>
         {data.map((item, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <RecordItem key={index} onDelete={() => handleDeleteValue(index)}>
+          <RecordItem key={item.id} onDelete={() => handleDeleteValue(index)}>
             {item.name}
           </RecordItem>
         ))}
