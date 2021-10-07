@@ -23,6 +23,12 @@ export type Appointment = {
   picture: string;
   firstName: string;
   lastName: string;
+  reason: {
+    id:string;
+    name:string;
+    nameAr:string;
+    nameFr:string;
+  };
   visitReason: string;
   status: AppointmentStatus;
   patient: Patient;
@@ -32,6 +38,8 @@ export type Patient = {
   id: string;
   firstName: string;
   lastName: string;
+  firstNameAr?: string;
+  lastNameAr?: string;
   phone: string;
   birthDate: string;
   gender?: string;
