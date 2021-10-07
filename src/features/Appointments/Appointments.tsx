@@ -8,7 +8,6 @@ import Calendar from './components/Calendar/Calendar';
 import { Text, Icon, Button } from '../../components';
 import DayView from './views/DayView/DayView';
 import VisitReasons from './components/VisitReasons/VisitReasons';
-import { useLocaleState } from '../../i18n';
 import WeekView from './views/WeekView/WeekView';
 import './styles.less';
 import HeaderDatePicker from './components/HeaderDatePicker/HeaderDatePicker';
@@ -20,7 +19,7 @@ import AppointmentStart from './views/AppointmentStart/AppointmentStart';
 import { ProtectedComponent } from '../Auth';
 
 const Appointments: React.FC = () => {
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
   const history = useHistory();
   const { pathname } = useLocation();
   const { t } = useTranslation('translation');
@@ -124,7 +123,7 @@ const Appointments: React.FC = () => {
                         onClick={() => changePanel('prev')}
                       >
                         <Text style={{ fontWeight: 'normal' }}>
-                          {locale === 'ar' ? (
+                          {i18n.language === 'ar' ? (
                             <Icon name="arrow-right-s-line" style={{ marginLeft: 16 }} />
                           ) : (
                             <Icon name="arrow-left-s-line" style={{ marginRight: 16 }} />
@@ -148,7 +147,7 @@ const Appointments: React.FC = () => {
                           {t('next')}
                         </Text>
                         <Text style={{ fontWeight: 'normal' }}>
-                          {locale === 'ar' ? (
+                          {i18n.language === 'ar' ? (
                             <Icon name="arrow-left-s-line" style={{ marginRight: 16 }} />
                           ) : (
                             <Icon name="arrow-right-s-line" style={{ marginLeft: 16 }} />

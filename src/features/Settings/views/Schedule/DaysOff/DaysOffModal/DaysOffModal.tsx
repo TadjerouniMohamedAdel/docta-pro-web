@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import moment from 'moment';
 import { Modal, Icon, Button, Text, Label, Spacer } from '../../../../../../components';
 import './styles.less';
-import { useLocaleState } from '../../../../../../i18n';
 import { DaysOffParams } from '../../types';
 import { addDaysOff } from '../../services';
 import AppointmentCount from '../../../../../Appointments/components/AppointmentCount/AppointmentCount';
@@ -20,7 +19,7 @@ const { RangePicker } = DatePicker;
 
 const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
   const { t } = useTranslation('translation');
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
 
   const [daysOff, setDaysOff] = useState<DaysOffParams>({
     from: null,
@@ -155,7 +154,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
                 <Row align="middle">
                   <Col>
                     <Text style={{ fontWeight: 'normal' }}>
-                      {locale === 'ar' ? (
+                      {i18n.language === 'ar' ? (
                         <Icon name="arrow-right-s-line" />
                       ) : (
                         <Icon name="arrow-left-s-line" />
@@ -181,7 +180,7 @@ const DaysOffModal: React.FC<Props> = ({ visible, closeModal }) => {
                   </Col>
                   <Col>
                     <Text style={{ fontWeight: 'normal' }}>
-                      {locale === 'ar' ? (
+                      {i18n.language === 'ar' ? (
                         <Icon name="arrow-left-s-line" />
                       ) : (
                         <Icon name="arrow-right-s-line" />

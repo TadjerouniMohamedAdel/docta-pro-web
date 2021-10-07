@@ -40,3 +40,7 @@ export type Patient = {
   generalStatus: string;
   picture?: string;
 };
+
+export type PatientRelative = Pick<Patient, 'id' | 'firstName' | 'lastName' | 'picture'> & {
+  relation?: string;
+};

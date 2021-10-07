@@ -1,7 +1,6 @@
 import React from 'react';
 import { Col, Dropdown, Menu, message, Row, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useLocaleState } from '../../i18n';
 import { Button, Icon } from '..';
 import arFlag from '../../assets/img/ar.png';
 import enFlag from '../../assets/img/en.png';
@@ -12,7 +11,6 @@ type Props = {
 };
 
 const Localization: React.FC<Props> = ({ collapsed = false }) => {
-  const { locale, setLocale } = useLocaleState();
   const { i18n } = useTranslation();
 
   const handleLocaleChange = (e: any): void => {
@@ -20,8 +18,6 @@ const Localization: React.FC<Props> = ({ collapsed = false }) => {
     const hide = result as () => void;
 
     i18n.changeLanguage(e.key, () => {
-      setLocale(e.key);
-      localStorage.setItem('locale', e.key);
       hide();
     });
   };
@@ -38,7 +34,7 @@ const Localization: React.FC<Props> = ({ collapsed = false }) => {
         <Menu
           style={{ minWidth: 150 }}
           onClick={handleLocaleChange}
-          selectedKeys={[locale as string]}
+          selectedKeys={[i18n.language as string]}
         >
           <Menu.Item key="ar">
             <Row align="middle" gutter={16}>
@@ -82,14 +78,14 @@ const Localization: React.FC<Props> = ({ collapsed = false }) => {
       >
         <Row justify="space-between" align="middle" style={{ width: '100%' }} wrap={false}>
           <Col>
-            {locale ? (
+            {i18n.language ? (
               <Row align="middle" gutter={16} wrap={false}>
                 <Col>
-                  <img src={languages[locale].flag} alt="flag" />
+                  <img src={languages[i18n.language].flag} alt="flag" />
                 </Col>
                 {!collapsed ? (
                   <Col>
-                    <Typography>{languages[locale].title}</Typography>
+                    <Typography>{languages[i18n.language].title}</Typography>
                   </Col>
                 ) : null}
               </Row>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Header from './Header/Header';
-import { useLocaleState } from '../../i18n';
 import Overlay from './Overlay/Overlay';
 import Sidebar from './Sidebar/Sidebar';
 import Content from './Content/Content';
 
 const MainLayout: React.FC = () => {
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [toggled, setToggled] = useState<boolean>(false);
@@ -22,7 +22,7 @@ const MainLayout: React.FC = () => {
   return (
     <div
       className={`layout main-layout fixed-sidebar fixed-header has-sidebar ${
-        locale === 'ar' ? 'rtl' : ''
+        i18n.language === 'ar' ? 'rtl' : ''
       }`}
     >
       <Sidebar collapsed={collapsed} toggled={toggled} />

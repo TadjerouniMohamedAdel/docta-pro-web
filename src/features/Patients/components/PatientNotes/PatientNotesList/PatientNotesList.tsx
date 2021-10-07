@@ -10,7 +10,7 @@ const PatientNotesList: React.FC<Props> = ({ notes }) => {
   return (
     <>
       {notes?.map((note) => (
-        <PatientNoteItem note={note} />
+        <PatientNoteItem note={note} key={note.id} />
       ))}
     </>
   );

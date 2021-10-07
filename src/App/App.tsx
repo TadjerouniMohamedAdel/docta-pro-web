@@ -8,9 +8,9 @@ import 'moment/locale/ar-tn';
 import 'moment/locale/fr';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryCache } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import AppLoader from '../components/AppLoader';
 import { useAuthState } from '../features/Auth/context';
-import { useLocaleState } from '../i18n';
 import { getCurrentUser } from '../features/Auth/services';
 import { AuthResponse } from '../features/Auth/types';
 
@@ -29,10 +29,10 @@ function App() {
   };
 
   const { user, setUser } = useAuthState();
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
   const token = localStorage.getItem('token');
 
-  moment.updateLocale(locale === 'ar' ? 'ar-tn' : locale || 'fr', {
+  moment.updateLocale(i18n.language === 'ar' ? 'ar-tn' : i18n.language || 'fr', {
     week: {
       dow: 0,
       doy: 0,
@@ -46,7 +46,6 @@ function App() {
         setUser(response.data);
       }
     } catch (err) {
-      console.log(err);
       queryCache.clear();
       localStorage.removeItem('token');
       window.location.assign(window.location as any);
@@ -59,17 +58,11 @@ function App() {
 
   return (
     <ConfigProvider
-      locale={(language as any)[locale ?? 'fr']}
-      direction={locale === 'ar' ? 'rtl' : 'ltr'}
+      locale={(language as any)[i18n.language ?? 'fr']}
+      direction={i18n.language === 'ar' ? 'rtl' : 'ltr'}
     >
       <Router>
-        {token && !user ? (
-          <AppLoader />
-        ) : (
-          <React.Suspense fallback={<AppLoader />}>
-            {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
-          </React.Suspense>
-        )}
+        {token && !user ? <AppLoader /> : user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
       </Router>
     </ConfigProvider>
   );

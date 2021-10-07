@@ -61,8 +61,15 @@ export const unblockPatient = async (patientId: string): Promise<any> => {
   });
 };
 
-export const fetchPatientNotes = async (patientId: string): Promise<any> => {
-  return fetcher(`/api/v1/professionals/patients/${patientId}/notes`);
+export const fetchPatientNotes = async (
+  patientId: string,
+  term = '',
+  page = 0,
+  size = 10,
+): Promise<any> => {
+  return fetcher(
+    `/api/v1/professionals/patients/${patientId}/notes?term=${term}&skip=${page}&take=${size}`,
+  );
 };
 
 export const addPatientNote = async ({

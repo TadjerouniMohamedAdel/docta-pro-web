@@ -1,10 +1,10 @@
 import { Form, Input } from 'antd';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactInputMask from 'react-input-mask';
 import classnames from 'classnames';
 import Label from '../Label/Label';
 import Icon from '../Icon/Icon';
-import { useLocaleState } from '../../i18n';
 import './styles.less';
 
 type Props = {
@@ -40,7 +40,7 @@ const PhoneInput: React.FC<Props> = ({
   onChange,
   onBlur,
 }) => {
-  const { locale } = useLocaleState();
+  const { i18n } = useTranslation();
   return (
     <>
       {label ? <Label title={label} error={error} required={required} /> : null}
@@ -63,7 +63,7 @@ const PhoneInput: React.FC<Props> = ({
             });
           }}
           dir="ltr"
-          className={classnames('phone-input', { rtl: locale === 'ar' })}
+          className={classnames('phone-input', { rtl: i18n.language === 'ar' })}
         >
           {(inputProps: any) => (
             <Input
