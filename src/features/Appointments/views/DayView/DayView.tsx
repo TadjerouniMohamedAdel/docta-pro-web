@@ -124,7 +124,7 @@ const DayView: React.FC<Props> = ({
                         <Text style={{ fontWeight: 500 }}>-</Text>
                       </Col>
                       <Col>
-                        <Text style={{ fontWeight: 500 }}>{(appointment.reason as any)[getFieldNameByLocal()]}</Text>
+                        <Text style={{ fontWeight: 500 }}>{(appointment.reason)[getFieldNameByLocal()]}</Text>
                       </Col>
                     </Row>
                   </Col>

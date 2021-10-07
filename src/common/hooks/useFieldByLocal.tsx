@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-export const useFieldByLocal = (): { getFieldNameByLocal: () => string } => {
+export const useFieldByLocal = (): { getFieldNameByLocal: () => 'name'|'nameFr'|'nameAr' } => {
   const { i18n } = useTranslation();
 
   const getFieldNameByLocal = () => {
