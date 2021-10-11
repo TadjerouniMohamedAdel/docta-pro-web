@@ -6,7 +6,6 @@ import './styles.less';
 
 type Props = {
   image: Image;
-  index: number;
   onDeleteImage: (id: string) => void;
   onPreviewImage: (imageUrl: string) => void;
 };
