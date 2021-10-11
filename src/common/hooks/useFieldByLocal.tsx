@@ -1,18 +1,20 @@
 import { useTranslation } from 'react-i18next';
 
-type LocalName = 'name' | 'nameFr' | 'nameAr';
+type LocalName = 'ar' | 'en' | 'fr';
+type FieldName = 'name' | 'nameFr' | 'nameAr';
+type FieldByLocal = { getFieldNameByLocal: () => FieldName };
 
-export const useFieldByLocal = (): { getFieldNameByLocal: () => LocalName } => {
+export const useFieldByLocal = (): FieldByLocal => {
   const { i18n } = useTranslation();
 
-  const getFieldNameByLocal = () => {
-    const locales: any = {
+  const getFieldNameByLocal = (): FieldName => {
+    const locales: Record<LocalName, FieldName> = {
       ar: 'nameAr',
       en: 'name',
       fr: 'nameFr',
     };
 
-    return locales[i18n.language];
+    return locales[i18n.language as LocalName];
   };
 
   return { getFieldNameByLocal };
