@@ -12,6 +12,7 @@ import Button from '../../../../components/Button/Button';
 import { Appointment } from '../../types';
 import { useAppointmentsDayList } from '../../hooks';
 import AppointmentSkeleton from '../../components/AppointmentSkeleton/AppointmentSkeleton';
+import { useFieldByLocal } from '../../../../common/hooks/useFieldByLocal';
 
 export type Props = {
   currentDate: Date;
@@ -30,7 +31,9 @@ const DayView: React.FC<Props> = ({
   setShowAppointmentDetails,
   setPatientId,
 }) => {
-  const { t } = useTranslation('translation');
+  const { i18n, t } = useTranslation('translation');
+  const { getFieldNameByLocal } = useFieldByLocal();
+
 
   const { resolvedData: appointments, refetch, isFetching, isFetched } = useAppointmentsDayList(
     currentDate,
@@ -52,7 +55,6 @@ const DayView: React.FC<Props> = ({
   useEffect(() => {
     refetch();
   }, [visitReasonIds]);
-
   return isFetching && !isFetched ? (
     <AppointmentSkeleton.AppointmentCard />
   ) : appointments && appointments.length > 0 ? (
@@ -83,8 +85,19 @@ const DayView: React.FC<Props> = ({
                       <Avatar src={appointment.picture} size="large" />
                     ) : (
                       <Avatar src={appointment.picture} size="large">
-                        {appointment.firstName[0]?.toUpperCase()}
-                        {appointment.lastName[0]?.toUpperCase()}
+                        {
+                          i18n.language === 'ar' && appointment.patient.firstNameAr ? (
+                            <>
+                              {appointment.patient.firstNameAr?.charAt(0)}
+                              {appointment.patient.lastNameAr?.charAt(0)}
+                            </>
+                          ) : (
+                            <>
+                              {appointment.patient.firstName[0]?.toUpperCase()}
+                              {appointment.patient.lastName[0]?.toUpperCase()}
+                            </>
+                          )
+                        }
                       </Avatar>
                     )}
                   </Col>
@@ -92,14 +105,28 @@ const DayView: React.FC<Props> = ({
                     <Row gutter={4}>
                       <Col>
                         <Text style={{ fontWeight: 500 }}>
-                          {appointment.firstName} {appointment.lastName}
+                          {
+                            i18n.language === 'ar' && appointment.patient.firstNameAr ? (
+                              <>
+                                {appointment.patient.firstNameAr}
+                                &nbsp;
+                                {appointment.patient.lastNameAr}
+                              </>
+                            ) : (
+                              <>
+                                {appointment.patient.firstName}
+                                &nbsp;
+                                {appointment.patient.lastName}
+                              </>
+                            )
+                          }
                         </Text>
                       </Col>
                       <Col>
                         <Text style={{ fontWeight: 500 }}>-</Text>
                       </Col>
                       <Col>
-                        <Text style={{ fontWeight: 500 }}>{appointment.visitReason}</Text>
+                        <Text style={{ fontWeight: 500 }}>{(appointment.reason)[getFieldNameByLocal()]}</Text>
                       </Col>
                     </Row>
                   </Col>
