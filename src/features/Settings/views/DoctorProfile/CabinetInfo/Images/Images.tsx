@@ -73,12 +73,10 @@ const Images: React.FC<Props> = ({ data, updateData }) => {
       <Row gutter={16}>
         {data.images
           .filter((item) => !item.isDeleted)
-          .map((image, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Col key={index}>
+          .map((image) => (
+            <Col key={image.id}>
               <ImageItem
                 image={image}
-                index={index}
                 onDeleteImage={handleDelete}
                 onPreviewImage={handlePreview}
               />
