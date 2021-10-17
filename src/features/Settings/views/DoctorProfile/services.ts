@@ -21,9 +21,7 @@ export const updateDoctorPersonalInfo = async (params: DoctorPersonalInfoForm): 
   const body = {
     ...(params.file ? { picture: params.file } : undefined),
     firstName: params.firstName,
-    firstNameAr: params.firstNameAr,
     lastName: params.lastName,
-    lastNameAr: params.lastNameAr,
     birthDate: params.birthDate,
     bio: params.biography,
     gender: params.gender ?? '',
