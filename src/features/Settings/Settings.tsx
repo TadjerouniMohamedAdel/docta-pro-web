@@ -10,6 +10,7 @@ import Menu from './Menu/Menu';
 import Users from './views/Users';
 import Schedule from './views/Schedule';
 import PasswordLogin from './views/PasswordLogin';
+import Subscription from './views/Subscription/Subscription';
 
 type Props = {};
 
@@ -49,6 +50,11 @@ const Settings: React.FC<Props> = () => {
             accessCode="users_roles/settings"
             path="/settings/users"
             component={Users}
+          />
+          <ProtectedRoute
+            accessCode="subscription/settings"
+            path="/settings/subscription"
+            component={Subscription}
           />
           <Route path="/settings/password-login" component={PasswordLogin} />
         </Switch>

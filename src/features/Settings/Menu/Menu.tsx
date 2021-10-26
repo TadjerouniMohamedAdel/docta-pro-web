@@ -28,6 +28,13 @@ const Menu: React.FC = () => {
           path="/settings/visit-reasons"
         />
       </ProtectedComponent>
+      <ProtectedComponent accessCode="subscription/settings">
+        <MenuItem
+          title={t('Subscription')}
+          iconName="bank-card-line"
+          path="/settings/subscription"
+        />
+      </ProtectedComponent>
       <ProtectedComponent accessCode="users_roles/settings">
         <MenuItem title={t('users')} iconName="shield-user-line" path="/settings/users" />
       </ProtectedComponent>
