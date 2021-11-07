@@ -4,13 +4,11 @@ import { Button } from 'antd';
 import './styles.less';
 import { Text } from '../../../../components';
 import { formatAmount } from '../../utils';
+import { SubscriptionPlan } from '../../types';
 
 type Props = {
-    plan: {
-        title: string,
-        price: number
-    },
-    selectChoice: ({ title, price }: { title: string, price: number }) => void
+    plan: SubscriptionPlan,
+    selectChoice: ({ id, title, price }: { id:string, title: string, price: number }) => void
 };
 const ChoicePlanCard: React.FC<Props> = ({ plan, selectChoice }) => {
     // const { t } = useTranslation('translation');

@@ -6,6 +6,8 @@ import CurrentSubscription from '../../components/CurrentSubscription/CurrentSub
 import NextSubscription from '../../components/NextSubscription/NextSubscription';
 import { useGetCurrentSubscription } from '../../hooks/useGetCurrentSubscription';
 import { useGetNextSubscription } from '../../hooks/useGetNextSubscription';
+import { useGetSubscriptionPlans } from '../../hooks/useGetSubscriptionPlans';
+import { usePickPlan } from '../../hooks/usePickPlan';
 import NewSubscription from './NewSubscription/NewSubscription';
 import UploadReceipt from './NewSubscription/UploadReceipt/UploadReceipt';
 
@@ -14,7 +16,11 @@ const Subscription: React.FC = () => {
     const [addSubscriptionVisible, setAddSubscriptionVisible] = React.useState(false);
     const [uploadReceipt, setUploadReceipt] = React.useState(false);
     const { currentSubscription } = useGetCurrentSubscription();
-    const { nextSubscription } =useGetNextSubscription();
+    const { nextSubscription } = useGetNextSubscription();
+    const { plans } = useGetSubscriptionPlans();
+    const { mutateAsync } = usePickPlan();
+
+
 
 
     const columns = [
@@ -61,7 +67,12 @@ const Subscription: React.FC = () => {
             <Divider style={{ margin: 0 }} />
 
             {/* modal choosfor adding subscription */}
-            <NewSubscription visible={addSubscriptionVisible} setVisible={setAddSubscriptionVisible} />
+            <NewSubscription
+              plans={plans ? plans.data : []}
+              visible={addSubscriptionVisible}
+              setVisible={setAddSubscriptionVisible}
+              addSubscription={mutateAsync}
+            />
             <Modal title="Upload payment receipt" visible={uploadReceipt} width={650} onCancel={() => setUploadReceipt(false)}>
                 <UploadReceipt />
             </Modal>
@@ -69,9 +80,16 @@ const Subscription: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', padding: '18px 25px', }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '32px', height: 200 }}>
                     {/* Current Subscription */}
-                    <CurrentSubscription chooseNewSubscription={setAddSubscriptionVisible} subscription={currentSubscription?.data} />
+                    <CurrentSubscription
+                      pickPlan={plans?.data && plans?.data.length > 0}
+                      chooseNewSubscription={setAddSubscriptionVisible}
+                      subscription={currentSubscription?.data}
+                    />
                     {/* Next Subscription */}
-                    <NextSubscription setVisibleUploadReceipt={setUploadReceipt} subscription={nextSubscription?.data} />
+                    <NextSubscription
+                      setVisibleUploadReceipt={setUploadReceipt}
+                      subscription={nextSubscription?.data}
+                    />
                 </div>
 
                 {/* list of subscriptions */}

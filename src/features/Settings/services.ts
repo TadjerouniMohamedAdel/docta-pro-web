@@ -16,4 +16,6 @@ export const fetchPaymentMethods = async (): Promise<any> => {
   return fetcher('/api/v1/subscriptions/next-subscription');
 };
 
-export const pickPlan = async (): Promise<any> => {};
+export const pickPlan = async ({ planId }: { planId: string }): Promise<any> => {
+  return fetcher('/api/v1/subscriptions/pick-plan', { body: { planId } });
+};

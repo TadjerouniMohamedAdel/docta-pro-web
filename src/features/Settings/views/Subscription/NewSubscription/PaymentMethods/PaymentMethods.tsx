@@ -53,8 +53,8 @@ const PaymentMethods: React.FC<Props> = ({ formik }) => {
                     <Input required name="nif" placeholder="Enter NIF number" value={formik.values.nif} onBlur={formik.handleBlur} onChange={formik.handleChange} />
                 </div>
                 <div style={{ marginBottom: 16 }}>
-                    <Label required title="N° Article (AI)" error={formik.errors.ai?.toString()} />
-                    <Input required name="ai" placeholder="Enter AI number" value={formik.values.ai} onBlur={formik.handleBlur} onChange={formik.handleChange} />
+                    <Label required title="N° Article (AI)" error={formik.errors.numArticle?.toString()} />
+                    <Input required name="ai" placeholder="Enter AI number" value={formik.values.numArticle} onBlur={formik.handleBlur} onChange={formik.handleChange} />
                 </div>
                 <Radio.Group value={isRC} onChange={(e) => setIsRC(e.target.value)} style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
                     <Radio value="rc" style={{ flex: 1, marginRight: 20 }}><Label required={isRC === 'rc'} title="RC" /></Radio>

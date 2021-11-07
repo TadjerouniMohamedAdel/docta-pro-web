@@ -5,38 +5,52 @@ import { useFormik } from 'formik';
 import { Text, Modal, Icon } from '../../../../../components';
 import ChoicePlanCard from '../../../components/ChoicePlanCard/ChoicePlanCard';
 import PaymentMethods from './PaymentMethods/PaymentMethods';
-import { useGetSubscriptionPlans } from '../../../hooks/useGetSubscriptionPlans';
+import { SubscriptionPlan } from '../../../types';
 
 type Props = {
+    plans: SubscriptionPlan[],
     visible: boolean,
-    setVisible: (visible: boolean) => void
+    setVisible: (visible: boolean) => void,
+    addSubscription: ({ planId }: { planId: string }) => Promise<any>,
 };
 
 
-const NewSubscription: React.FC<Props> = ({ visible, setVisible }) => {
+const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubscription }) => {
     const { t } = useTranslation('translation');
-    const [selectedPlan, setSelectedPlan] = React.useState<null | { title: string, price: number }>(null);
-    const { plans } = useGetSubscriptionPlans();
+    const [selectedPlan, setSelectedPlan] = React.useState<null | SubscriptionPlan>(null);
+    const addNewSubscription = async () => {
+        console.log('selected plan id', selectedPlan!.id);
+        try {
+            await addSubscription({ planId: selectedPlan!.id });
+            setSelectedPlan(null);
+        } catch (error) {
+            console.log('error catch', error);
+            setSelectedPlan(null);
+
+        }
+    };
 
     React.useEffect(() => {
         if (selectedPlan?.title === 'FREE TRIAL') {
             setVisible(false);
+            addNewSubscription();
         }
     }, [selectedPlan]);
 
 
 
+
     const validationSchema = Yup.object().shape({
         nif: Yup.string().required(t('errors:required field')),
-        ai: Yup.string().required(t('errors:required field')),
-        // rc: Yup.string().required(t('errors:required field')),
-        agreementNumber: Yup.string().required(t('errors:required field')),
+        numArticle: Yup.string().required(t('errors:required field')),
+        rc: Yup.string(),
+        agreementNumber: Yup.string(),
         nis: Yup.string(),
 
     });
 
     const formik = useFormik({
-        initialValues: { nif: '', ai: '', rc: null, agreementNumber: null, nis: '' },
+        initialValues: { nif: '', numArticle: '', rc: null, agreementNumber: null, nis: '' },
         enableReinitialize: true,
         validationSchema,
         validateOnChange: false,
@@ -73,7 +87,7 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible }) => {
                         <Text style={{ fontSize: '14px', color: '#74798C', marginTop: 45 }}>Select subscription plan</Text>
                         <div style={{ display: 'flex', flexDirection: 'row', marginTop: 37 }}>
                             {
-                                plans?.data && plans?.data.map((plan: any) => (
+                                plans && plans.map((plan: any) => (
                                     <ChoicePlanCard selectChoice={setSelectedPlan} key={`plan-${plan.title}`} plan={plan} />
 
                                 ))
