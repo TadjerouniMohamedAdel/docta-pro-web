@@ -202,5 +202,8 @@
   "account setup step 6 title": "One more step !",
   "account setup step 6 description": "Set up your secondary visit reasons and go live now !",
   "account setup step 7 title": "You are live now !",
-  "account setup step 7 description": "Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings."
+  "account setup step 7 description": "Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings.",
+  "prescriptions": "Prescriptions",
+  "new blank prescription": "New Blank Prescription",
+  "new form template": "New Form Template"
 }

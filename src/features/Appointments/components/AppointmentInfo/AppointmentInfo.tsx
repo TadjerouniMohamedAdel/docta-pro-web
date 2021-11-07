@@ -5,6 +5,7 @@ import { Icon, Tab } from '../../../../components';
 import AppointmentSelection from '../AppointmentSelection/AppointmentSelection';
 import { AppointmentForm } from '../../types';
 import { PatientNotes } from '../../../Patients';
+import Prescriptions from '../Prescriptions/Prescriptions';
 
 type Props = {
   onClose: () => void;
@@ -25,7 +26,7 @@ const AppointmentInfo: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   return (
-    <Tabs tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+    <Tabs tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }} defaultActiveKey="6">
       <Tabs.TabPane
         tab={<Tab icon={<Icon name="calendar-todo-line" />}>{t('appointment details')}</Tab>}
         key="1"
@@ -42,6 +43,12 @@ const AppointmentInfo: React.FC<Props> = ({
         <div style={{ height: 500, overflowY: 'auto' }}>
           <PatientNotes patientId={patientId} />
         </div>
+      </Tabs.TabPane>
+      <Tabs.TabPane
+        tab={<Tab icon={<Icon name="file-text-line" />}> {t('prescriptions')} </Tab>}
+        key="6"
+      >
+        <Prescriptions />
       </Tabs.TabPane>
     </Tabs>
   );

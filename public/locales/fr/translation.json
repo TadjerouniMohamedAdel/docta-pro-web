@@ -203,5 +203,8 @@
   "account setup step 6 title": "Un pas de plus !",
   "account setup step 6 description": "Configurez vos motifs de visite secondaires et lancez-vous dès maintenant !",
   "account setup step 7 title": "Vous êtes en direct maintenant !",
-  "account setup step 7 description": "Bien fait ! Les patients peuvent désormais vous trouver et prendre rendez-vous avec vous en utilisant Docta App. Configurez maintenant un nouveau mot de passe ou ignorez cette étape et faites-le plus tard dans vos paramètres"
+  "account setup step 7 description": "Bien fait ! Les patients peuvent désormais vous trouver et prendre rendez-vous avec vous en utilisant Docta App. Configurez maintenant un nouveau mot de passe ou ignorez cette étape et faites-le plus tard dans vos paramètres",
+  "prescriptions": "",
+  "new blank prescription": "",
+  "new form template": ""
 }
