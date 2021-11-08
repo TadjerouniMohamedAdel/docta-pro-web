@@ -5,21 +5,58 @@ import { useFormik } from 'formik';
 import { Text, Modal, Icon } from '../../../../../components';
 import ChoicePlanCard from '../../../components/ChoicePlanCard/ChoicePlanCard';
 import PaymentMethods from './PaymentMethods/PaymentMethods';
-import { SubscriptionPlan } from '../../../types';
+import { PaymentType, SubscriptionPlan } from '../../../types';
+import { useGetPaymentMethods } from '../../../hooks/useGetPaymentMethods';
 
 type Props = {
     plans: SubscriptionPlan[],
     visible: boolean,
     setVisible: (visible: boolean) => void,
-    addSubscription: ({ planId }: { planId: string }) => Promise<any>,
+    addSubscription: ({ planId, paymentMethodId, paymentInfo }: {
+        planId: string, paymentMethodId?: string | undefined;
+        paymentInfo?: any;
+    }) => Promise<any>,
 };
 
 
 const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubscription }) => {
     const { t } = useTranslation('translation');
     const [selectedPlan, setSelectedPlan] = React.useState<null | SubscriptionPlan>(null);
-    const addNewSubscription = async () => {
-        console.log('selected plan id', selectedPlan!.id);
+    const { methods } = useGetPaymentMethods();
+    const [selectedMethod, setSelectedMethod] = React.useState<PaymentType | undefined>(undefined);
+
+    const validationSchema = Yup.object().shape({
+        nif: Yup.string().required(t('errors:required field')),
+        numArticle: Yup.string().required(t('errors:required field')),
+        rc: Yup.string(),
+        agreementNumber: Yup.string().nullable(),
+        nis: Yup.string(),
+
+    });
+
+    const formik = useFormik({
+        initialValues: { nif: '', numArticle: '', rc: null, agreementNumber: null, nis: '' },
+        enableReinitialize: true,
+        validationSchema,
+        validateOnChange: false,
+        onSubmit: async (item: any) => {
+            try {
+                await addSubscription({
+                    planId: selectedPlan!.id,
+                    paymentMethodId: selectedMethod?.id,
+                    paymentInfo: item
+                });
+
+            } catch (error) {
+                console.log('error catch', error);
+                setSelectedPlan(null);
+
+            }
+        }
+    });
+
+
+    const addFreeTrial = async () => {
         try {
             await addSubscription({ planId: selectedPlan!.id });
             setSelectedPlan(null);
@@ -30,32 +67,27 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
         }
     };
 
+
+
+
+    React.useEffect(() => {
+        if (!selectedMethod) setSelectedMethod(methods?.data && methods?.data[0]);
+    }, [methods]);
+
     React.useEffect(() => {
         if (selectedPlan?.title === 'FREE TRIAL') {
             setVisible(false);
-            addNewSubscription();
+            addFreeTrial();
         }
     }, [selectedPlan]);
 
+    React.useEffect(() => {
+        setSelectedPlan(null);
+        formik.resetForm();
+        setSelectedMethod(methods?.data && methods?.data[0]);
+    }, [visible]);
 
 
-
-    const validationSchema = Yup.object().shape({
-        nif: Yup.string().required(t('errors:required field')),
-        numArticle: Yup.string().required(t('errors:required field')),
-        rc: Yup.string(),
-        agreementNumber: Yup.string(),
-        nis: Yup.string(),
-
-    });
-
-    const formik = useFormik({
-        initialValues: { nif: '', numArticle: '', rc: null, agreementNumber: null, nis: '' },
-        enableReinitialize: true,
-        validationSchema,
-        validateOnChange: false,
-        onSubmit: async () => { }
-    });
 
     const CustomTitle = () => (
         selectedPlan ? (
@@ -97,7 +129,12 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
                     </div>
                 ) : (
                     /* step 1 payment method */
-                    <PaymentMethods formik={formik} />
+                    <PaymentMethods
+                      formik={formik}
+                      methods={methods?.data}
+                      selectMethod={setSelectedMethod}
+                      selectedMethod={selectedMethod}
+                    />
                 )
             }
         </Modal>

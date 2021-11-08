@@ -2,37 +2,21 @@ import React from 'react';
 import { FormikProps } from 'formik';
 import { Radio, Input, Button } from 'antd';
 import { Text, Label } from '../../../../../../components';
-import ccp from '../../../../../../assets/img/ccp.png';
-import bank from '../../../../../../assets/img/bank.png';
-import check from '../../../../../../assets/img/check.png';
 import PaymentMethodChoice from '../../../../components/PaymentMethodChoice/PaymentMethodChoice';
+import { PaymentType } from '../../../../types';
 
 
 type Props = {
     formik: FormikProps<any>,
+    methods: PaymentType[] | undefined,
+    selectMethod: (method: PaymentType) => void,
+    selectedMethod: PaymentType|undefined
 };
 
-const paymentMethods = [
-    {
-        name: 'ccp',
-        label: 'CCP Transfer',
-        img: ccp
-    },
-    {
-        name: 'banl',
-        label: 'Bank Transfer',
-        img: bank
-    },
-    {
-        name: 'check',
-        label: 'Cheque',
-        img: check
-    },
-];
 
 
-const PaymentMethods: React.FC<Props> = ({ formik }) => {
-    const [paymentMethodActive, setPAymentMehodActive] = React.useState(0);
+
+const PaymentMethods: React.FC<Props> = ({ formik, methods, selectMethod, selectedMethod }) => {
     const [isRC, setIsRC] = React.useState<'rc' | 'an'>('rc');
     return (
         <div style={{ padding: '30px 80px' }}>
@@ -40,8 +24,8 @@ const PaymentMethods: React.FC<Props> = ({ formik }) => {
             {/* Payment types */}
             <div style={{ display: 'flex', flexDirection: 'row', marginTop: 16, justifyContent: 'space-between' }}>
                 {
-                    paymentMethods.map((method, index) => (
-                        <PaymentMethodChoice {...method} isActive={paymentMethodActive === index} onClick={() => setPAymentMehodActive(index)} />
+                    methods?.map(method => (
+                        <PaymentMethodChoice {...method} key={`payment-method-${method.id}`} isActive={selectedMethod?.id === method.id} onClick={() => selectMethod(method)} />
                     ))
                 }
             </div>
@@ -54,7 +38,7 @@ const PaymentMethods: React.FC<Props> = ({ formik }) => {
                 </div>
                 <div style={{ marginBottom: 16 }}>
                     <Label required title="N° Article (AI)" error={formik.errors.numArticle?.toString()} />
-                    <Input required name="ai" placeholder="Enter AI number" value={formik.values.numArticle} onBlur={formik.handleBlur} onChange={formik.handleChange} />
+                    <Input required name="numArticle" placeholder="Enter AI number" value={formik.values.numArticle} onBlur={formik.handleBlur} onChange={formik.handleChange} />
                 </div>
                 <Radio.Group value={isRC} onChange={(e) => setIsRC(e.target.value)} style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
                     <Radio value="rc" style={{ flex: 1, marginRight: 20 }}><Label required={isRC === 'rc'} title="RC" /></Radio>

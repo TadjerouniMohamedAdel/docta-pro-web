@@ -3,3 +3,8 @@ export type SubscriptionPlan = {
   title: string;
   price: number;
 };
+
+export type PaymentType = {
+  id: string;
+  type: string;
+};

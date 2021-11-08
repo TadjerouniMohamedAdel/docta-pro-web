@@ -1,20 +1,19 @@
 import React from 'react';
 import { Text } from '../../../../components';
 import './styles.less';
+import bank from '../../../../assets/img/bank.png';
 
 type Props = {
-    name: string,
-    label: string,
-    img: string,
+    type: string,
     isActive: boolean,
     onClick: () => void
 };
 
-const PaymentMethodChoice: React.FC<Props> = ({ name, label, img, isActive, onClick }) => {
+const PaymentMethodChoice: React.FC<Props> = ({ type, isActive, onClick }) => {
     return (
-        <button type="button" className={`payment-method-choice ${isActive && 'active'}`} onClick={()=>onClick()}>
-            <img style={{ marginRight: 10 }} src={img} alt={name} />
-            <Text style={{ fontSize: 12 }}>{label}</Text>
+        <button type="button" className={`payment-method-choice ${isActive && 'active'}`} onClick={() => onClick()}>
+            <img style={{ marginRight: 10 }} src={bank} alt={type} />
+            <Text style={{ fontSize: 12 }}>{type.toUpperCase()}</Text>
         </button>
     );
 };

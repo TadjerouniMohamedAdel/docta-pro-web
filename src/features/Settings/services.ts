@@ -13,9 +13,19 @@ export const fetchNextSubscription = async (): Promise<any> => {
 };
 
 export const fetchPaymentMethods = async (): Promise<any> => {
-  return fetcher('/api/v1/subscriptions/next-subscription');
+  return fetcher('/api/v1/subscriptions/payment-methods');
 };
 
-export const pickPlan = async ({ planId }: { planId: string }): Promise<any> => {
-  return fetcher('/api/v1/subscriptions/pick-plan', { body: { planId } });
+export const pickPlan = async ({
+  planId,
+  paymentMethodId,
+  paymentInfo,
+}: {
+  planId: string;
+  paymentMethodId?: string|undefined;
+  paymentInfo?: any;
+}): Promise<any> => {
+  return fetcher('/api/v1/subscriptions/pick-plan', {
+    body: { planId, paymentMethodId, paymentInfo },
+  });
 };
