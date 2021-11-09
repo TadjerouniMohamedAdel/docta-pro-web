@@ -22,10 +22,16 @@ export const pickPlan = async ({
   paymentInfo,
 }: {
   planId: string;
-  paymentMethodId?: string|undefined;
+  paymentMethodId?: string | undefined;
   paymentInfo?: any;
 }): Promise<any> => {
   return fetcher('/api/v1/subscriptions/pick-plan', {
     body: { planId, paymentMethodId, paymentInfo },
+  });
+};
+
+export const fetchInvoices = async (page:number, size:number): Promise<any> => {
+  return fetcher('/api/v1/subscriptions/pick-plan', {
+    body: { page, size },
   });
 };

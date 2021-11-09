@@ -66,7 +66,7 @@ const Subscription: React.FC = () => {
             </div>
             <Divider style={{ margin: 0 }} />
 
-            {/* modal choosfor adding subscription */}
+            {/* modal for adding subscription */}
             <NewSubscription
               plans={plans ? plans.data : []}
               visible={addSubscriptionVisible}
@@ -105,9 +105,9 @@ const Subscription: React.FC = () => {
                     <Table
                       rowKey="id"
                       dataSource={[]}
+                      pagination={{ pageSize:10, total:1 }}
                       columns={columns}
                       bordered
-                      pagination={false}
                       style={{ marginTop: 17 }}
                     /* loading={isLoading} */
                     />
