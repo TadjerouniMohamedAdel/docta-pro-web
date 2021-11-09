@@ -17,7 +17,7 @@ type Props = {
   visible: boolean;
   onClose: () => void;
   appointmentId: string;
-  patientId?: string;
+  patientId: string;
   currentDate: Date;
   scheduleNewAppointment: () => void;
 };

@@ -28,8 +28,8 @@ const Appointments: React.FC = () => {
   const [prevDate, setPrevDate] = useState<Date>(currentDate);
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
   const [showAppointmentAdd, setShowAppointmentAdd] = useState(false);
-  const [showAppointmentDetails, setShowAppointmentDetails] = useState(false);
-  const [showAppointmentStart, setShowAppointmentStart] = useState(true);
+  const [showAppointmentDetails, setShowAppointmentDetails] = useState(true);
+  const [showAppointmentStart, setShowAppointmentStart] = useState(false);
   const [appointmentDetailsId, setAppointmentDetailsId] = useState('');
   const [addAppointmentForm, setAddAppointmentForm] = useState<AppointmentForm>({
     patientId: '',
@@ -40,7 +40,7 @@ const Appointments: React.FC = () => {
   });
   const [visitReasonIds, setVisitReasonIds] = useState<string[]>([]);
   const [patient] = useState<Patient | undefined>();
-  const [patientId, setPatientId] = useState<string | undefined>();
+  const [patientId, setPatientId] = useState<string>('');
 
   const onPrevDateChange = (date: Date): void => {
     if (date > prevDate && moment(date).month() !== moment(prevDate).month())
@@ -85,7 +85,7 @@ const Appointments: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!showAppointmentAdd) setPatientId(undefined);
+    if (!showAppointmentAdd) setPatientId('');
   }, [showAppointmentAdd]);
 
   return (

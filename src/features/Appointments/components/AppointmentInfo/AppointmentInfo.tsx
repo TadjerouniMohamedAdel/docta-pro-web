@@ -5,13 +5,13 @@ import { Icon, Tab } from '../../../../components';
 import AppointmentSelection from '../AppointmentSelection/AppointmentSelection';
 import { AppointmentForm } from '../../types';
 import { PatientNotes } from '../../../Patients';
-import Prescriptions from '../Prescriptions/Prescriptions';
+import Prescriptions from '../../../Patients/components/Prescriptions/Prescriptions';
 
 type Props = {
   onClose: () => void;
   onEditSave: (values: AppointmentForm) => void;
   appointmentId: string;
-  patientId?: string;
+  patientId: string;
   currentDate: Date;
   appointmentForm: FormInstance;
 };
@@ -48,7 +48,7 @@ const AppointmentInfo: React.FC<Props> = ({
         tab={<Tab icon={<Icon name="file-text-line" />}> {t('prescriptions')} </Tab>}
         key="6"
       >
-        <Prescriptions />
+        <Prescriptions patientId={patientId} />
       </Tabs.TabPane>
     </Tabs>
   );

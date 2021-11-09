@@ -112,3 +112,13 @@ export const updatePatientNote = async ({
     body,
   });
 };
+
+export const fetchPrescriptionsHistory = async (
+  patientId: string,
+  page = 0,
+  size = 10,
+): Promise<any> => {
+  return fetcher(
+    `/api/v1/professionals/patients/${patientId}/prescriptions?skip=${page}&take=${size}`,
+  );
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon, Text } from '../../../../components';
+import { Button, Icon, Text } from '../../../../../components';
 
 type Props = { title: string };
 
