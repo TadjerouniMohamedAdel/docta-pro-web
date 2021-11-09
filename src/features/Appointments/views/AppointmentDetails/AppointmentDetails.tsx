@@ -1,16 +1,10 @@
-/* eslint-disable radix */
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQueryClient } from 'react-query';
 import { Form } from 'antd';
-import moment from 'moment';
 import { Button, Modal, Icon } from '../../../../components';
-import { AppointmentForm } from '../../types';
-import { updateAppointmentStatus } from '../../services';
 import { ProtectedComponent } from '../../../Auth';
 import { useUpdateAppointment } from '../../hooks';
-import { getWeekRange } from '../../../../common/utilities';
-import AppointmentInfo from '../../components/AppointmentInfo/AppointmentInfo';
+import AppointmentDetailsContent from '../../components/AppointmentModalContent/AppointmentDetailsContent/AppointmentDetailsContent';
 
 type Props = {
   visible: boolean;
@@ -31,47 +25,37 @@ const AppointmentDetails: React.FC<Props> = ({
 
   const [appointmentForm] = Form.useForm();
 
+  const [contentType] = useState<'info' | 'new-prescription'>('new-prescription');
+  const [modalTitle] = useState({
+    title: t('appointment details'),
+    onClick: appointmentForm.submit,
+  });
+
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
-  const { mutateAsync: mutateAsyncDelete, isLoading: isLoadingDelete } = useMutation(
-    updateAppointmentStatus,
-  );
-  const queryClient = useQueryClient();
 
-  const handleEditAppointment = async (values: AppointmentForm) => {
-    const time = moment(values.time).format('HH:mm').toString();
-    const data = {
-      ...values,
-      start: moment(values.start)
-        .set({
-          h: parseInt(time.split(':')[0]),
-          m: parseInt(time.split(':')[1]),
-          s: 0,
-          ms: 0,
-        })
-        .toDate(),
-    };
-    await mutateAsyncEdit({
-      appointmentId,
-      appointmentForm: data,
-      date: currentDate,
-    });
+  let content = null;
 
-    onClose();
-  };
-
-  const handleDeleteAppointment = async () => {
-    await mutateAsyncDelete({ appointmentId, status: 'DOCTOR_CANCELED' });
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
-
-    onClose();
-  };
+  switch (contentType) {
+    case 'info':
+      content = (
+        <AppointmentDetailsContent
+          onClose={onClose}
+          appointmentId={appointmentId}
+          patientId={patientId}
+          currentDate={currentDate}
+          mutateAsyncEdit={mutateAsyncEdit}
+          appointmentForm={appointmentForm}
+        />
+      );
+      break;
+    default:
+      content = null;
+      break;
+  }
 
   return (
     <Modal
-      title={t('appointment details')}
+      title={modalTitle.title}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -81,7 +65,7 @@ const AppointmentDetails: React.FC<Props> = ({
           <Button
             type="primary"
             icon={<Icon name="save-line" />}
-            onClick={appointmentForm.submit}
+            onClick={modalTitle.onClick}
             loading={isLoadingEdit}
             style={{ textTransform: 'uppercase' }}
           >
@@ -90,29 +74,7 @@ const AppointmentDetails: React.FC<Props> = ({
         </ProtectedComponent>
       }
     >
-      <AppointmentInfo
-        onClose={onClose}
-        appointmentId={appointmentId}
-        currentDate={currentDate}
-        onEditSave={handleEditAppointment}
-        appointmentForm={appointmentForm}
-        patientId={patientId}
-      />
-      <ProtectedComponent accessCode="delete/appointments">
-        <div style={{ padding: '16px 40px' }}>
-          <Button
-            type="primary"
-            danger
-            block
-            icon={<Icon name="delete-bin-2-line" />}
-            onClick={handleDeleteAppointment}
-            loading={isLoadingDelete}
-            style={{ textTransform: 'uppercase' }}
-          >
-            {t('delete appointment')}
-          </Button>
-        </div>
-      </ProtectedComponent>
+      {content}
     </Modal>
   );
 };

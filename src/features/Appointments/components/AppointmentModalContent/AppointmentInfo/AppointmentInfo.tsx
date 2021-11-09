@@ -1,11 +1,11 @@
 import React from 'react';
 import { FormInstance, Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Icon, Tab } from '../../../../components';
-import AppointmentSelection from '../AppointmentSelection/AppointmentSelection';
-import { AppointmentForm } from '../../types';
-import { PatientNotes } from '../../../Patients';
-import Prescriptions from '../../../Patients/components/Prescriptions/Prescriptions';
+import { Icon, Tab } from '../../../../../components';
+import AppointmentSelection from '../../AppointmentSelection/AppointmentSelection';
+import { AppointmentForm } from '../../../types';
+import { PatientNotes } from '../../../../Patients';
+import Prescriptions from '../../../../Patients/components/Prescriptions/Prescriptions';
 
 type Props = {
   onClose: () => void;
