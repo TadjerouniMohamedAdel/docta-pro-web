@@ -13,12 +13,12 @@ const Prescriptions: React.FC<Props> = ({ patientId }) => {
     <div className="prescriptions">
       <div style={{ padding: '30px 40px' }}>
         <Row gutter={20}>
-          <Col span={12}>
+          <Col span={24}>
             <AddPrescriptionButton title={t('new blank prescription')} />
           </Col>
-          <Col span={12}>
+          {/* <Col span={12}>
             <AddPrescriptionButton title={t('new form template')} />
-          </Col>
+          </Col> */}
         </Row>
       </div>
       <PrescriptionsList patientId={patientId} />
