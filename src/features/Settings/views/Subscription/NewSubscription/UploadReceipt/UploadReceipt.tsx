@@ -1,9 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload, Button } from 'antd';
 import { Text } from '../../../../../../components';
 import uploadImage from '../../../../../../assets/img/upload_image.png';
 
 const UploadReceipt: React.FC = () => {
+    const { t } = useTranslation('translation');
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: 30, justifyContent: 'center', alignItems: 'center' }}>
             <Upload>
@@ -14,7 +17,7 @@ const UploadReceipt: React.FC = () => {
                 </div>
             </Upload>
             <Button disabled type="primary" style={{ width: '600px', marginTop: 21 }}>
-                Upload
+                {t('upload')}
             </Button>
         </div>
     );

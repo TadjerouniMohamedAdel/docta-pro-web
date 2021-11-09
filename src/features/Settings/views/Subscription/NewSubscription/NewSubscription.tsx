@@ -21,9 +21,9 @@ type Props = {
 
 const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubscription }) => {
     const { t } = useTranslation('translation');
-    const [selectedPlan, setSelectedPlan] = React.useState<null | SubscriptionPlan>(null);
+    const [selectedPlan, setSelectedPlan] = React.useState<null | SubscriptionPlan>(null);// selected plan for new subscription
     const { methods } = useGetPaymentMethods();
-    const [selectedMethod, setSelectedMethod] = React.useState<PaymentType | undefined>(undefined);
+    const [selectedMethod, setSelectedMethod] = React.useState<PaymentType | undefined>(undefined);// selected methods for payment
 
     const validationSchema = Yup.object().shape({
         nif: Yup.string().required(t('errors:required field')),
@@ -46,11 +46,12 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
                     paymentMethodId: selectedMethod?.id,
                     paymentInfo: item
                 });
+                setVisible(false);
 
             } catch (error) {
                 console.log('error catch', error);
                 setSelectedPlan(null);
-
+                setVisible(false);
             }
         }
     });
@@ -68,7 +69,7 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
     };
 
 
-
+    // Effects
 
     React.useEffect(() => {
         if (!selectedMethod) setSelectedMethod(methods?.data && methods?.data[0]);
@@ -96,7 +97,7 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
                     <Icon name="arrow-left-line" style={{ color: '#273151', fontSize: 17 }} />
                 </button>
                 <span style={{ marginLeft: 16, marginRight: 16 }}>
-                    {t('Payment')}
+                    {t('payment')}
                 </span>
                 <span style={{ marginLeft: 16, marginRight: 16, display: 'flex', flexDirection: 'row', fontWeight: 'bold', fontSize: 12, color: '#fff', justifyContent: 'center', alignItems: 'center', padding: '4px 6px', width: 111, height: 24, background: '#273151', borderRadius: 2 }}>
                     {selectedPlan.title}
@@ -105,7 +106,7 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
 
         ) : (
             <>
-                {t('Change subscription plan')}
+                {t('change subscription plan')}
             </>
         )
     );
@@ -116,11 +117,15 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
                 !selectedPlan ? (
                     /* step 0 choosing plan */
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 40 }}>
-                        <Text style={{ fontSize: '14px', color: '#74798C', marginTop: 45 }}>Select subscription plan</Text>
+                        <Text style={{ fontSize: '14px', color: '#74798C', marginTop: 45 }}>{t('select subscription plan')}</Text>
                         <div style={{ display: 'flex', flexDirection: 'row', marginTop: 37 }}>
                             {
-                                plans && plans.map((plan: any) => (
-                                    <ChoicePlanCard selectChoice={setSelectedPlan} key={`plan-${plan.title}`} plan={plan} />
+                                plans && plans.map((plan: SubscriptionPlan) => (
+                                    <ChoicePlanCard 
+                                      selectChoice={setSelectedPlan} 
+                                      key={`plan-${plan.title}`} 
+                                      plan={plan} 
+                                    />
 
                                 ))
                             }

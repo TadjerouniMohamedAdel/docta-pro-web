@@ -30,7 +30,7 @@ const Menu: React.FC = () => {
       </ProtectedComponent>
       <ProtectedComponent accessCode="subscription/settings">
         <MenuItem
-          title={t('Subscription')}
+          title={t('subscription')}
           iconName="bank-card-line"
           path="/settings/subscription"
         />

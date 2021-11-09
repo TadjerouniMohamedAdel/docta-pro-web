@@ -25,32 +25,32 @@ const Subscription: React.FC = () => {
 
     const columns = [
         {
-            title: 'Date',
+            title: t('date'),
             dataIndex: 'Date',
             key: 'Date',
         },
         {
-            title: 'Plan',
+            title: t('plan'),
             dataIndex: 'Plan',
             key: 'Plan',
         },
         {
-            title: 'Price',
+            title: t('price'),
             dataIndex: 'Price',
             key: 'Price',
         },
         {
-            title: 'Quotation / Receipt',
+            title: t('quotation/receipt'),
             dataIndex: 'Quotation / Receipt',
             key: 'Quotation / Receipt',
         },
         {
-            title: 'Status',
+            title: t('status'),
             dataIndex: 'Status',
             key: 'Status',
         },
         {
-            title: 'Payment Receipt',
+            title: t('payment receipt'),
             dataIndex: 'Payment Receipt',
             key: 'Payment Receipt',
         },
@@ -61,7 +61,7 @@ const Subscription: React.FC = () => {
 
             <div style={{ padding: '18px 25px' }}>
                 <Text size="xxl" style={{ fontWeight: 'bold' }}>
-                    {t('Subscription')}
+                    {t('subscription')}
                 </Text>
             </div>
             <Divider style={{ margin: 0 }} />
@@ -73,7 +73,12 @@ const Subscription: React.FC = () => {
               setVisible={setAddSubscriptionVisible}
               addSubscription={mutateAsync}
             />
-            <Modal title="Upload payment receipt" visible={uploadReceipt} width={650} onCancel={() => setUploadReceipt(false)}>
+            <Modal
+              title={t('upload payment receipt')}
+              visible={uploadReceipt}
+              width={650}
+              onCancel={() => setUploadReceipt(false)}
+            >
                 <UploadReceipt />
             </Modal>
             {/* Subscription state */}
@@ -95,9 +100,17 @@ const Subscription: React.FC = () => {
                 {/* list of subscriptions */}
                 <div style={{ marginTop: 30 }}>
                     <Text style={{ fontSize: '12px', color: '#74798C' }}>
-                        Invoices (0)
+                        {t('invoices')}(0)
                     </Text>
-                    <Table rowKey="id" dataSource={[]} columns={columns} bordered pagination={false} style={{ marginTop: 17 }} /* loading={isLoading} */ />
+                    <Table
+                      rowKey="id"
+                      dataSource={[]}
+                      columns={columns}
+                      bordered
+                      pagination={false}
+                      style={{ marginTop: 17 }}
+                    /* loading={isLoading} */
+                    />
                 </div>
             </div>
         </>
