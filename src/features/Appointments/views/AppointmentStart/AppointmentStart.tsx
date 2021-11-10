@@ -6,6 +6,7 @@ import { Form } from 'antd';
 import { Button, Modal, Icon } from '../../../../components';
 import { editAppointment } from '../../services';
 import StartAppointmentContent from '../../components/AppointmentModalContent/StartAppointmentContent/StartAppointmentContent';
+import NewPrescription from '../../../Patients/components/Prescriptions/NewPrescription/NewPrescription';
 
 type Props = {
   visible: boolean;
@@ -27,16 +28,14 @@ const AppointmentStart: React.FC<Props> = ({
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   const [appointmentForm] = Form.useForm();
+  const [prescriptionForm] = Form.useForm();
 
-  const [contentType] = useState<'info' | 'new-prescription'>('new-prescription');
-  const [modalTitle] = useState({
-    title: t('start appointment'),
-    onClick: appointmentForm.submit,
-  });
+  const [contentType, setContentType] = useState<'info' | 'new-prescription'>('info');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
 
   let content = null;
+  let modalTitle: { title: string; onClick: () => void } | null = null;
 
   switch (contentType) {
     case 'info':
@@ -49,17 +48,30 @@ const AppointmentStart: React.FC<Props> = ({
           scheduleNewAppointment={scheduleNewAppointment}
           mutateAsyncEdit={mutateAsyncEdit}
           appointmentForm={appointmentForm}
+          setContentType={setContentType}
         />
       );
+      modalTitle = {
+        title: t('start appointment'),
+        onClick: appointmentForm.submit,
+      };
+      break;
+    case 'new-prescription':
+      content = <NewPrescription />;
+      modalTitle = {
+        title: t('new prescription'),
+        onClick: prescriptionForm.submit,
+      };
       break;
     default:
       content = null;
+      modalTitle = null;
       break;
   }
 
   return (
     <Modal
-      title={modalTitle.title}
+      title={modalTitle?.title}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -68,7 +80,7 @@ const AppointmentStart: React.FC<Props> = ({
         <Button
           type="primary"
           icon={<Icon name="save-line" />}
-          onClick={modalTitle.onClick}
+          onClick={modalTitle?.onClick}
           loading={isLoadingEdit}
           style={{ textTransform: 'uppercase' }}
         >

@@ -14,6 +14,7 @@ type Props = {
   patientId: string;
   currentDate: Date;
   appointmentForm: FormInstance;
+  setContentType: (contentType: 'info' | 'new-prescription') => void;
 };
 
 const AppointmentInfo: React.FC<Props> = ({
@@ -23,6 +24,7 @@ const AppointmentInfo: React.FC<Props> = ({
   onEditSave,
   appointmentForm,
   patientId,
+  setContentType,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   return (
@@ -48,7 +50,7 @@ const AppointmentInfo: React.FC<Props> = ({
         tab={<Tab icon={<Icon name="file-text-line" />}> {t('prescriptions')} </Tab>}
         key="6"
       >
-        <Prescriptions patientId={patientId} />
+        <Prescriptions patientId={patientId} setContentType={setContentType} />
       </Tabs.TabPane>
     </Tabs>
   );

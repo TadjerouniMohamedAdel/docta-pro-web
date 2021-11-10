@@ -27,6 +27,7 @@ type Props = {
     unknown
   >;
   appointmentForm: FormInstance<any>;
+  setContentType: (contentType: 'info' | 'new-prescription') => void;
 };
 
 const StartAppointmentContent: React.FC<Props> = ({
@@ -37,6 +38,7 @@ const StartAppointmentContent: React.FC<Props> = ({
   scheduleNewAppointment,
   mutateAsyncEdit,
   appointmentForm,
+  setContentType,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -126,6 +128,7 @@ const StartAppointmentContent: React.FC<Props> = ({
         onEditSave={handleEditAppointment}
         appointmentForm={appointmentForm}
         patientId={patientId}
+        setContentType={setContentType}
       />
       <div style={{ padding: '16px 40px' }}>
         <Row justify="space-between">
