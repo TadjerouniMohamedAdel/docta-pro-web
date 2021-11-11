@@ -28,15 +28,19 @@ const AppointmentDetails: React.FC<Props> = ({
   const [appointmentForm] = Form.useForm();
   const [prescriptionForm] = Form.useForm();
 
-  const [contentType, setContentType] = useState<'info' | 'new-prescription'>('info');
+  const [contentType, setContentType] = useState<'info' | 'new-prescription'>('new-prescription');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
 
+  let modalHeaderInfo = null;
   let content = null;
-  let modalTitle = null;
 
   switch (contentType) {
     case 'info':
+      modalHeaderInfo = {
+        title: t('appointment details'),
+        onClick: appointmentForm.submit,
+      };
       content = (
         <AppointmentDetailsContent
           onClose={onClose}
@@ -48,26 +52,14 @@ const AppointmentDetails: React.FC<Props> = ({
           setContentType={setContentType}
         />
       );
-      modalTitle = {
-        title: t('appointment details'),
-        onClick: appointmentForm.submit,
-      };
       break;
     case 'new-prescription':
-      content = <NewPrescription />;
-      modalTitle = {
+      modalHeaderInfo = {
         title: (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <button
               type="button"
-              style={{
-                background: '#F5F7FB',
-                borderRadius: 4,
-                display: 'flex',
-                alignItems: 'center',
-                border: '1px solid #F5F7FB',
-                cursor: 'pointer',
-              }}
+              className="modal-back-button"
               onClick={() => setContentType('info')}
             >
               <Icon name="arrow-left-line" style={{ color: '#273151', fontSize: 17 }} />
@@ -78,15 +70,17 @@ const AppointmentDetails: React.FC<Props> = ({
         ),
         onClick: prescriptionForm.submit,
       };
+      content = <NewPrescription form={prescriptionForm} />;
       break;
     default:
+      modalHeaderInfo = null;
       content = null;
       break;
   }
 
   return (
     <Modal
-      title={modalTitle?.title}
+      title={modalHeaderInfo?.title}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -96,7 +90,7 @@ const AppointmentDetails: React.FC<Props> = ({
           <Button
             type="primary"
             icon={<Icon name="save-line" />}
-            onClick={modalTitle?.onClick}
+            onClick={modalHeaderInfo?.onClick}
             loading={isLoadingEdit}
             style={{ textTransform: 'uppercase' }}
           >

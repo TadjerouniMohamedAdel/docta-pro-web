@@ -35,7 +35,7 @@ const AppointmentStart: React.FC<Props> = ({
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
 
   let content = null;
-  let modalTitle: { title: string; onClick: () => void } | null = null;
+  let modalHeaderInfo: { title: string; onClick: () => void } | null = null;
 
   switch (contentType) {
     case 'info':
@@ -51,27 +51,27 @@ const AppointmentStart: React.FC<Props> = ({
           setContentType={setContentType}
         />
       );
-      modalTitle = {
+      modalHeaderInfo = {
         title: t('start appointment'),
         onClick: appointmentForm.submit,
       };
       break;
     case 'new-prescription':
-      content = <NewPrescription />;
-      modalTitle = {
+      content = <NewPrescription form={prescriptionForm} />;
+      modalHeaderInfo = {
         title: t('new prescription'),
         onClick: prescriptionForm.submit,
       };
       break;
     default:
       content = null;
-      modalTitle = null;
+      modalHeaderInfo = null;
       break;
   }
 
   return (
     <Modal
-      title={modalTitle?.title}
+      title={modalHeaderInfo?.title}
       visible={visible}
       width={780}
       onCancel={onClose}
@@ -80,7 +80,7 @@ const AppointmentStart: React.FC<Props> = ({
         <Button
           type="primary"
           icon={<Icon name="save-line" />}
-          onClick={modalTitle?.onClick}
+          onClick={modalHeaderInfo?.onClick}
           loading={isLoadingEdit}
           style={{ textTransform: 'uppercase' }}
         >

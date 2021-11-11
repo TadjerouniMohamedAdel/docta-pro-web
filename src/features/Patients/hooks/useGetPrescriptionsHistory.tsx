@@ -2,8 +2,6 @@ import { useQuery } from 'react-query';
 import { fetchPrescriptionsHistory } from '../services';
 
 export const useGetPrescriptionsHistory = (patientId: string, page: number, size: number) => {
-  console.log(`useGetPrescriptionsHistory: ${patientId}`);
-
   const { data, isLoading, isError, isFetching } = useQuery(
     ['prescriptions-history', patientId, page, size],
     () => fetchPrescriptionsHistory(patientId, page, size),

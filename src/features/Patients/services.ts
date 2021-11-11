@@ -122,3 +122,7 @@ export const fetchPrescriptionsHistory = async (
     `/api/v1/professionals/patients/${patientId}/prescriptions?skip=${page}&take=${size}`,
   );
 };
+
+export const fetchMedications = async (term = '', page = 0, size = 10): Promise<any> => {
+  return fetcher(`/api/v1/professionals/medications?term=${term}&skip=${page}&take=${size}`);
+};

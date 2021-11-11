@@ -24,10 +24,10 @@ export type Appointment = {
   firstName: string;
   lastName: string;
   reason: {
-    id:string;
-    name:string;
-    nameAr:string;
-    nameFr:string;
+    id: string;
+    name: string;
+    nameAr: string;
+    nameFr: string;
   };
   visitReason: string;
   status: AppointmentStatus;
@@ -51,4 +51,68 @@ export type Patient = {
 
 export type PatientRelative = Pick<Patient, 'id' | 'firstName' | 'lastName' | 'picture'> & {
   relation?: string;
+};
+
+// Medication
+export const units = [
+  'Comprimés',
+  'Goutes',
+  'Cuillères à mesure',
+  'Sachets',
+  'ml',
+  'kg',
+  'Injections',
+  'Applications',
+] as const;
+type Units = typeof units[number];
+
+export const frequencyCounts = ['Une fois', 'Deux fois', 'Trois fois', 'Quatre fois'] as const;
+type FrequencyCounts = typeof frequencyCounts[number];
+
+export const frequencyPerDays = [
+  'Chaque 8 heures',
+  'Par jour',
+  'Chaque deux jours',
+  'Chaque trois jours',
+  'Par semaine',
+  'Par mois',
+  'Par 3 mois',
+] as const;
+export type FrequencyPerDays = typeof frequencyPerDays[number];
+
+export const frequencyTimes = [
+  'Avant repas',
+  'Au milieux du repas',
+  'Apres repas',
+  'A jeun',
+  'Le matin',
+  'Le soir',
+  'En cas de douleur',
+  'En cas de fievre',
+  'En cas de nausee',
+  'En cas de vertige',
+  '-',
+] as const;
+export type FrequencyTimes = typeof frequencyTimes[number];
+
+export const durationTypes = ['Jours', 'Semaines', 'Mois'] as const;
+export type DurationTypes = typeof durationTypes[number];
+
+export type MedicationItem = {
+  name: string;
+  unitCount: number;
+  unitType: Units;
+  frequencyCount: FrequencyCounts;
+  frequencyPerDay: FrequencyPerDays;
+  frequencyTime: FrequencyTimes;
+  durationCount: number;
+  durationType: DurationTypes;
+  isNew?: boolean;
+  isDeleted?: boolean;
+};
+
+export type PrescriptionForm = {
+  diagnostic: string;
+  note?: string;
+  medications: MedicationItem[];
 };
