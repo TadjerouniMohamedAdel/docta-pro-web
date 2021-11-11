@@ -1,5 +1,5 @@
 import { AutoComplete, Col, Divider, Input, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { Icon, Text } from '../../../../../../components';
@@ -16,7 +16,8 @@ type Medication = {
 };
 
 type Props = {
-  onSelectMedication: (medicationId: string) => void;
+  selectedMedication: string;
+  onSelectMedication: (medicationName: string) => void;
 };
 
 const useSearchMedications = (term: string) => {
@@ -26,7 +27,7 @@ const useSearchMedications = (term: string) => {
   return { medications: data ?? [], ...rest };
 };
 
-const MedicationAutocomplete: React.FC<Props> = ({ onSelectMedication }) => {
+const MedicationAutocomplete: React.FC<Props> = ({ selectedMedication, onSelectMedication }) => {
   const { t } = useTranslation('translation');
 
   const [value, setValue] = useState('');
@@ -34,13 +35,17 @@ const MedicationAutocomplete: React.FC<Props> = ({ onSelectMedication }) => {
   const { medications } = useSearchMedications(value);
 
   const handleOnChange = (term: string) => {
+    if (!term) onSelectMedication('');
     setValue(term);
   };
 
   const handleOnSelect = async (term: string, option: any) => {
-    setValue(option.value);
     onSelectMedication(option.value);
   };
+
+  useEffect(() => {
+    setValue(selectedMedication);
+  }, [selectedMedication]);
 
   const options = medications.data
     ? medications.data.map((medication: Medication) => ({
