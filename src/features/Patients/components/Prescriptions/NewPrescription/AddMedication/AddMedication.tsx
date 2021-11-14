@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Col, Form, Input, Row, Select } from 'antd';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
+import { v4 as uuidv4 } from 'uuid';
 import { Icon, Label } from '../../../../../../components';
 import {
   durationTypes,
@@ -10,16 +11,19 @@ import {
   frequencyPerDays,
   frequencyTimes,
   MedicationItem,
+  NewMedication,
   units,
 } from '../../../../../Appointments/types';
 import MedicationAutocomplete from '../MedicationAutocomplete/MedicationAutocomplete';
 
-type Props = {};
+type Props = {
+  addMedication: (medication: MedicationItem) => void;
+};
 
-const AddMedication: React.FC<Props> = () => {
+const AddMedication: React.FC<Props> = ({ addMedication }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
-  const initialValues: MedicationItem = {
+  const initialValues: NewMedication = {
     name: '',
     unitCount: 1,
     unitType: 'Applications',
@@ -32,20 +36,28 @@ const AddMedication: React.FC<Props> = () => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(t('errors:required field')),
-    unitCount: Yup.string().required(t('errors:required field')),
-    unitType: Yup.string().required(t('errors:required field')),
-    frequencyCount: Yup.string().required(t('errors:required field')),
-    frequencyPerDay: Yup.string().required(t('errors:required field')),
-    frequencyTime: Yup.string().required(t('errors:required field')),
-    durationCount: Yup.string().required(t('errors:required field')),
-    durationType: Yup.string().required(t('errors:required field')),
   });
+
+  const handleAddMedication = (
+    values: NewMedication,
+    formikHelpers: FormikHelpers<NewMedication>,
+  ) => {
+    const newMedication: MedicationItem = {
+      id: uuidv4(),
+      name: values.name,
+      frequency: `${values.frequencyCount} ${values.frequencyPerDay} ${values.frequencyTime}`,
+      unit: `${values.unitCount} ${values.unitType}`,
+      duration: `${values.durationCount} ${values.durationType}`,
+    };
+    addMedication(newMedication);
+    formikHelpers.resetForm();
+  };
 
   const formik = useFormik({
     initialValues,
     validationSchema,
     enableReinitialize: true,
-    onSubmit: () => {},
+    onSubmit: handleAddMedication,
   });
 
   const {
@@ -63,8 +75,8 @@ const AddMedication: React.FC<Props> = () => {
     resetForm();
   };
 
-  const handleSelectMedication = (name: string) => {
-    setFieldValue('name', name);
+  const handleSelectMedication = (medicationName: string) => {
+    setFieldValue('name', medicationName);
   };
 
   const { Option } = Select;
@@ -95,7 +107,7 @@ const AddMedication: React.FC<Props> = () => {
           <Input.Group compact style={{ display: 'flex' }}>
             <Input
               type="number"
-              style={{ width: 55 }}
+              style={{ width: 70 }}
               value={values.unitCount}
               name="unitCount"
               onChange={handleChange}
@@ -152,8 +164,8 @@ const AddMedication: React.FC<Props> = () => {
             <Col span={8}>
               <Input.Group compact style={{ display: 'flex' }}>
                 <Input
-                  type="primary"
-                  style={{ width: 55 }}
+                  type="number"
+                  style={{ width: 70 }}
                   value={values.durationCount}
                   name="durationCount"
                   onChange={handleChange}

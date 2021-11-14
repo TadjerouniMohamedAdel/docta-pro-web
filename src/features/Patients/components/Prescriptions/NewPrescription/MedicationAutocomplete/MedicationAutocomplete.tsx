@@ -8,6 +8,7 @@ import greenImage from '../../../../../../assets/img/remboursement.png';
 import redImage from '../../../../../../assets/img/no_remboursement.png';
 
 type Medication = {
+  id: string;
   DENOMINATION_COMMUNE_INTERNATIONALE: string;
   FORME: string;
   LABORATOIRES_DETENTEUR_DE_LA_DECISION_DENREGISTREMENT: string;
@@ -74,6 +75,7 @@ const MedicationAutocomplete: React.FC<Props> = ({ selectedMedication, onSelectM
           </>
         ),
         value: medication.NOM_DE_MARQUE,
+        key: medication.id,
       }))
     : [];
 

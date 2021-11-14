@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '../../../../../components';
 import { useGetPrescriptionsHistory } from '../../../hooks';
-// import { useTranslation } from 'react-i18next';
 
 type Props = {
   patientId: string;
@@ -67,7 +66,7 @@ const PrescriptionsList: React.FC<Props> = ({ patientId }) => {
   return (
     <Table
       rowKey="id"
-      dataSource={data} // {[{ date: new Date(), diagnosis: 'a' }]}
+      dataSource={data}
       columns={columns}
       pagination={{ pageSize, total }}
       onChange={handleChange}

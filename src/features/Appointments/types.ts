@@ -64,10 +64,8 @@ export const units = [
   'Injections',
   'Applications',
 ] as const;
-type Units = typeof units[number];
 
 export const frequencyCounts = ['Une fois', 'Deux fois', 'Trois fois', 'Quatre fois'] as const;
-type FrequencyCounts = typeof frequencyCounts[number];
 
 export const frequencyPerDays = [
   'Chaque 8 heures',
@@ -78,7 +76,6 @@ export const frequencyPerDays = [
   'Par mois',
   'Par 3 mois',
 ] as const;
-export type FrequencyPerDays = typeof frequencyPerDays[number];
 
 export const frequencyTimes = [
   'Avant repas',
@@ -93,20 +90,27 @@ export const frequencyTimes = [
   'En cas de vertige',
   '-',
 ] as const;
-export type FrequencyTimes = typeof frequencyTimes[number];
 
 export const durationTypes = ['Jours', 'Semaines', 'Mois'] as const;
 export type DurationTypes = typeof durationTypes[number];
 
-export type MedicationItem = {
+export type NewMedication = {
   name: string;
   unitCount: number;
-  unitType: Units;
-  frequencyCount: FrequencyCounts;
-  frequencyPerDay: FrequencyPerDays;
-  frequencyTime: FrequencyTimes;
+  unitType: string;
+  frequencyCount: string;
+  frequencyPerDay: string;
+  frequencyTime: string;
   durationCount: number;
-  durationType: DurationTypes;
+  durationType: string;
+};
+
+export type MedicationItem = {
+  id: string;
+  name: string;
+  unit: string;
+  frequency: string;
+  duration: string;
   isNew?: boolean;
   isDeleted?: boolean;
 };
