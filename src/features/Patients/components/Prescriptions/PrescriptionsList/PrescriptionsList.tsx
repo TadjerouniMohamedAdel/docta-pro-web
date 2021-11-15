@@ -25,18 +25,17 @@ const PrescriptionsList: React.FC<Props> = ({ patientId }) => {
 
   const columns: ColumnsType<any> = [
     {
-      dataIndex: 'isNew',
       width: 64,
     },
     {
       title: t('date'),
-      dataIndex: 'date',
-      render: (text: Date) => <span>{format(text, 'LLL')}</span>,
-      width: 96,
+      dataIndex: 'createdAt',
+      render: (text: Date) => <span>{format(new Date(text), 'dd MMM yyyy')}</span>,
+      width: 120,
     },
     {
       title: t('diagnosis'),
-      dataIndex: 'diagnosis',
+      dataIndex: 'diagnostic',
     },
     {
       dataIndex: 'actions',

@@ -117,6 +117,6 @@ export type MedicationItem = {
 
 export type PrescriptionForm = {
   diagnostic: string;
-  note?: string;
+  note: string;
   medications: MedicationItem[];
 };

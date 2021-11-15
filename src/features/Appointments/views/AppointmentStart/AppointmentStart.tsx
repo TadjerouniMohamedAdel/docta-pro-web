@@ -57,7 +57,14 @@ const AppointmentStart: React.FC<Props> = ({
       };
       break;
     case 'new-prescription':
-      content = <NewPrescription form={prescriptionForm} />;
+      content = (
+        <NewPrescription
+          patientId={patientId}
+          appointmentId={appointmentId}
+          form={prescriptionForm}
+          backToInfo={() => setContentType('info')}
+        />
+      );
       modalHeaderInfo = {
         title: t('new prescription'),
         onClick: prescriptionForm.submit,

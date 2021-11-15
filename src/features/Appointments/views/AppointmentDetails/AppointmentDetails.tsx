@@ -28,7 +28,7 @@ const AppointmentDetails: React.FC<Props> = ({
   const [appointmentForm] = Form.useForm();
   const [prescriptionForm] = Form.useForm();
 
-  const [contentType, setContentType] = useState<'info' | 'new-prescription'>('new-prescription');
+  const [contentType, setContentType] = useState<'info' | 'new-prescription'>('info');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
 
@@ -70,7 +70,14 @@ const AppointmentDetails: React.FC<Props> = ({
         ),
         onClick: prescriptionForm.submit,
       };
-      content = <NewPrescription form={prescriptionForm} />;
+      content = (
+        <NewPrescription
+          patientId={patientId}
+          appointmentId={appointmentId}
+          form={prescriptionForm}
+          backToInfo={() => setContentType('info')}
+        />
+      );
       break;
     default:
       modalHeaderInfo = null;

@@ -2,20 +2,27 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Input, Row, FormInstance, Col } from 'antd';
 import { useFormik } from 'formik';
+import { useMutation, useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 import { Icon, Label } from '../../../../../components';
 import { MedicationItem, PrescriptionForm } from '../../../../Appointments/types';
 import AddMedication from './AddMedication/AddMedication';
 import MedicationsList from './MedicationsList/MedicationsList';
+import PrescriptionNotes from './PrescriptionNotes/PrescriptionNotes';
+import { addPrescription } from '../../../../Appointments/services';
 
 type Props = {
+  patientId: string;
+  appointmentId: string;
   form: FormInstance<any>;
+  backToInfo: () => void;
 };
 
-const NewPrescription: React.FC<Props> = ({ form }) => {
+const NewPrescription: React.FC<Props> = ({ form, patientId, appointmentId, backToInfo }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const initialValues: PrescriptionForm = {
+    note: '',
     diagnostic: '',
     medications: [],
   };
@@ -24,8 +31,21 @@ const NewPrescription: React.FC<Props> = ({ form }) => {
     diagnostic: Yup.string().required(t('errors:required field')),
   });
 
-  const handleAddNewPrescription = (values: PrescriptionForm) => {
-    console.log(values);
+  const { mutateAsync: addNewPrescriptionMutate } = useMutation(addPrescription);
+
+  const queryClient = useQueryClient();
+  const handleAddNewPrescription = async (values: PrescriptionForm) => {
+    try {
+      await addNewPrescriptionMutate({
+        patientId,
+        appointment: appointmentId,
+        ...values,
+      });
+      queryClient.invalidateQueries('prescriptions-history');
+      backToInfo();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const formik = useFormik({
@@ -81,6 +101,7 @@ const NewPrescription: React.FC<Props> = ({ form }) => {
         </Row>
       </div>
       <MedicationsList medications={values.medications} deleteMedication={deleteMedication} />
+      <PrescriptionNotes note={values.note} setNote={(note) => setFieldValue('note', note)} />
     </Form>
   );
 };

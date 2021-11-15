@@ -28,7 +28,7 @@ const Appointments: React.FC = () => {
   const [prevDate, setPrevDate] = useState<Date>(currentDate);
   const [nextDate, setNextDate] = useState<Date>(moment(currentDate).add(1, 'month').toDate());
   const [showAppointmentAdd, setShowAppointmentAdd] = useState(false);
-  const [showAppointmentDetails, setShowAppointmentDetails] = useState(true);
+  const [showAppointmentDetails, setShowAppointmentDetails] = useState(false);
   const [showAppointmentStart, setShowAppointmentStart] = useState(false);
   const [appointmentDetailsId, setAppointmentDetailsId] = useState('');
   const [addAppointmentForm, setAddAppointmentForm] = useState<AppointmentForm>({
