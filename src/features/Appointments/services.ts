@@ -47,13 +47,45 @@ export const fetchAppointmentsDetails = async (appointmentId: string): Promise<a
   return fetcher(`/api/v1/practitioners/appointments/${appointmentId}`);
 };
 
+export const fetchPrescriptionsHistory = async (
+  patientId: string,
+  page = 0,
+  size = 10,
+): Promise<any> => {
+  return fetcher(
+    `/api/v1/professionals/patients/${patientId}/prescriptions?skip=${page}&take=${size}`,
+  );
+};
+
 export const addPrescription = async (
-  params: PrescriptionForm & { patientId: string; appointment: string },
+  patientId: string,
+  data: PrescriptionForm & { appointment: string },
 ): Promise<{ data: { id: string } }> => {
-  return fetcher(`/api/v1/professionals/patients/${params.patientId}/prescriptions`, {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions`, {
     body: {
-      ...params,
-      patientId: undefined,
+      ...data,
     },
   });
+};
+
+export const fetchPrescriptionDetails = async (
+  patientId: string,
+  prescriptionId: string,
+): Promise<{ data: PrescriptionForm }> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions/${prescriptionId}`);
+};
+
+export const updatePrescription = async (
+  patientId: string,
+  prescriptionId: string,
+  data: PrescriptionForm,
+): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions/${prescriptionId}`, {
+    body: data,
+    method: 'PUT',
+  });
+};
+
+export const fetchMedications = async (term = '', page = 0, size = 10): Promise<any> => {
+  return fetcher(`/api/v1/professionals/medications?term=${term}&skip=${page}&take=${size}`);
 };

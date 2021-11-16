@@ -5,9 +5,10 @@ import { Button, Modal, Icon } from '../../../../components';
 import { ProtectedComponent } from '../../../Auth';
 import { useUpdateAppointment } from '../../hooks';
 import AppointmentDetailsContent from '../../components/AppointmentModalContent/AppointmentDetailsContent/AppointmentDetailsContent';
-import NewPrescription from '../../../Patients/components/Prescriptions/NewPrescription/NewPrescription';
+import NewPrescription from '../../components/Prescriptions/NewPrescription/NewPrescription';
 import { AppointmentModalContentTypes } from '../../types';
 import ModalTitleWithBackButton from '../../../../components/ModalTitleWithBackButton/ModalTitleWithBackButton';
+import EditPrescription from '../../components/Prescriptions/EditPrescription/EditPrescription';
 
 type Props = {
   visible: boolean;
@@ -26,10 +27,11 @@ const AppointmentDetails: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
-  const [appointmentForm] = Form.useForm();
-  const [prescriptionForm] = Form.useForm();
+  const [form] = Form.useForm();
 
   const [contentType, setContentType] = useState<AppointmentModalContentTypes>('prescriptions');
+
+  const [selectedPrescriptionId, setSelectedPrescriptionId] = useState('');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
 
@@ -40,7 +42,6 @@ const AppointmentDetails: React.FC<Props> = ({
     case 'prescriptions':
       modalHeaderInfo = {
         title: t('appointment details'),
-        onClick: appointmentForm.submit,
       };
       content = (
         <AppointmentDetailsContent
@@ -49,8 +50,9 @@ const AppointmentDetails: React.FC<Props> = ({
           patientId={patientId}
           currentDate={currentDate}
           mutateAsyncEdit={mutateAsyncEdit}
-          appointmentForm={appointmentForm}
+          appointmentForm={form}
           setContentType={setContentType}
+          setSelectedPrescriptionId={setSelectedPrescriptionId}
         />
       );
       break;
@@ -62,27 +64,30 @@ const AppointmentDetails: React.FC<Props> = ({
             goBack={() => setContentType('prescriptions')}
           />
         ),
-        onClick: prescriptionForm.submit,
       };
       content = (
         <NewPrescription
           patientId={patientId}
           appointmentId={appointmentId}
-          form={prescriptionForm}
+          form={form}
           backToPrescriptions={() => setContentType('prescriptions')}
         />
       );
       break;
     case 'edit-prescription':
       modalHeaderInfo = {
-        title: <ModalTitleWithBackButton title="" goBack={() => setContentType('prescriptions')} />,
-        onClick: prescriptionForm.submit,
+        title: (
+          <ModalTitleWithBackButton
+            title={t('edit prescription')}
+            goBack={() => setContentType('prescriptions')}
+          />
+        ),
       };
       content = (
-        <NewPrescription
+        <EditPrescription
           patientId={patientId}
-          appointmentId={appointmentId}
-          form={prescriptionForm}
+          prescriptionId={selectedPrescriptionId}
+          form={form}
           backToPrescriptions={() => setContentType('prescriptions')}
         />
       );
@@ -99,13 +104,14 @@ const AppointmentDetails: React.FC<Props> = ({
       visible={visible}
       width={780}
       onCancel={onClose}
-      borderedHeader={false}
+      borderedHeader
+      style={{ top: 30 }}
       actions={
         <ProtectedComponent accessCode="edit/appointments">
           <Button
             type="primary"
             icon={<Icon name="save-line" />}
-            onClick={modalHeaderInfo?.onClick}
+            onClick={form.submit}
             loading={isLoadingEdit}
             style={{ textTransform: 'uppercase' }}
           >

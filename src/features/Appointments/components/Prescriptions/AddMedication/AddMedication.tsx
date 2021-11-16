@@ -13,7 +13,7 @@ import {
   MedicationItem,
   NewMedication,
   units,
-} from '../../../../Appointments/types';
+} from '../../../types';
 import MedicationAutocomplete from '../MedicationAutocomplete/MedicationAutocomplete';
 
 type Props = {

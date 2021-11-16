@@ -5,7 +5,7 @@ import { Icon, Tab } from '../../../../../components';
 import AppointmentSelection from '../../AppointmentSelection/AppointmentSelection';
 import { AppointmentForm, AppointmentModalContentTypes } from '../../../types';
 import { PatientNotes } from '../../../../Patients';
-import Prescriptions from '../../../../Patients/components/Prescriptions/Prescriptions';
+import Prescriptions from '../../Prescriptions/Prescriptions';
 
 type Props = {
   onClose: () => void;
@@ -15,6 +15,7 @@ type Props = {
   currentDate: Date;
   appointmentForm: FormInstance;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
+  setSelectedPrescriptionId: (id: string) => void;
 };
 
 const AppointmentInfo: React.FC<Props> = ({
@@ -25,6 +26,7 @@ const AppointmentInfo: React.FC<Props> = ({
   appointmentForm,
   patientId,
   setContentType,
+  setSelectedPrescriptionId,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   return (
@@ -50,7 +52,11 @@ const AppointmentInfo: React.FC<Props> = ({
         tab={<Tab icon={<Icon name="file-text-line" />}> {t('prescriptions')} </Tab>}
         key="6"
       >
-        <Prescriptions patientId={patientId} setContentType={setContentType} />
+        <Prescriptions
+          patientId={patientId}
+          setContentType={setContentType}
+          setSelectedPrescriptionId={setSelectedPrescriptionId}
+        />
       </Tabs.TabPane>
     </Tabs>
   );

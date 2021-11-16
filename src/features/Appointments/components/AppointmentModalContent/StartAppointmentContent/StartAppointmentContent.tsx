@@ -28,6 +28,7 @@ type Props = {
   >;
   appointmentForm: FormInstance<any>;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
+  setSelectedPrescriptionId: (id: string) => void;
 };
 
 const StartAppointmentContent: React.FC<Props> = ({
@@ -39,6 +40,7 @@ const StartAppointmentContent: React.FC<Props> = ({
   mutateAsyncEdit,
   appointmentForm,
   setContentType,
+  setSelectedPrescriptionId,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -129,6 +131,7 @@ const StartAppointmentContent: React.FC<Props> = ({
         appointmentForm={appointmentForm}
         patientId={patientId}
         setContentType={setContentType}
+        setSelectedPrescriptionId={setSelectedPrescriptionId}
       />
       <div style={{ padding: '16px 40px' }}>
         <Row justify="space-between">

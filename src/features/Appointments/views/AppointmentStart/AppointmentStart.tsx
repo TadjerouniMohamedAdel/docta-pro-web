@@ -5,8 +5,10 @@ import { Form } from 'antd';
 import { Button, Modal, Icon } from '../../../../components';
 import { editAppointment } from '../../services';
 import StartAppointmentContent from '../../components/AppointmentModalContent/StartAppointmentContent/StartAppointmentContent';
-import NewPrescription from '../../../Patients/components/Prescriptions/NewPrescription/NewPrescription';
+import NewPrescription from '../../components/Prescriptions/NewPrescription/NewPrescription';
 import { AppointmentModalContentTypes } from '../../types';
+import ModalTitleWithBackButton from '../../../../components/ModalTitleWithBackButton/ModalTitleWithBackButton';
+import EditPrescription from '../../components/Prescriptions/EditPrescription/EditPrescription';
 
 type Props = {
   visible: boolean;
@@ -27,21 +29,21 @@ const AppointmentStart: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
-  const [appointmentForm] = Form.useForm();
-  const [prescriptionForm] = Form.useForm();
+  const [form] = Form.useForm();
 
   const [contentType, setContentType] = useState<AppointmentModalContentTypes>('prescriptions');
+
+  const [selectedPrescriptionId, setSelectedPrescriptionId] = useState('');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
 
   let content = null;
-  let modalHeaderInfo: { title: string; onClick: () => void } | null = null;
+  let modalHeaderInfo = null;
 
   switch (contentType) {
     case 'prescriptions':
       modalHeaderInfo = {
         title: t('start appointment'),
-        onClick: appointmentForm.submit,
       };
       content = (
         <StartAppointmentContent
@@ -51,8 +53,9 @@ const AppointmentStart: React.FC<Props> = ({
           currentDate={currentDate}
           scheduleNewAppointment={scheduleNewAppointment}
           mutateAsyncEdit={mutateAsyncEdit}
-          appointmentForm={appointmentForm}
+          appointmentForm={form}
           setContentType={setContentType}
+          setSelectedPrescriptionId={setSelectedPrescriptionId}
         />
       );
 
@@ -60,13 +63,30 @@ const AppointmentStart: React.FC<Props> = ({
     case 'new-prescription':
       modalHeaderInfo = {
         title: t('new prescription'),
-        onClick: prescriptionForm.submit,
       };
       content = (
         <NewPrescription
           patientId={patientId}
           appointmentId={appointmentId}
-          form={prescriptionForm}
+          form={form}
+          backToPrescriptions={() => setContentType('prescriptions')}
+        />
+      );
+      break;
+    case 'edit-prescription':
+      modalHeaderInfo = {
+        title: (
+          <ModalTitleWithBackButton
+            title={t('edit prescription')}
+            goBack={() => setContentType('prescriptions')}
+          />
+        ),
+      };
+      content = (
+        <EditPrescription
+          patientId={patientId}
+          prescriptionId={selectedPrescriptionId}
+          form={form}
           backToPrescriptions={() => setContentType('prescriptions')}
         />
       );
@@ -88,7 +108,7 @@ const AppointmentStart: React.FC<Props> = ({
         <Button
           type="primary"
           icon={<Icon name="save-line" />}
-          onClick={modalHeaderInfo?.onClick}
+          onClick={form.submit}
           loading={isLoadingEdit}
           style={{ textTransform: 'uppercase' }}
         >

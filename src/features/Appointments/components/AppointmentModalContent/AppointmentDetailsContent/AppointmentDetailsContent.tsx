@@ -28,6 +28,7 @@ type Props = {
   >;
   appointmentForm: FormInstance<any>;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
+  setSelectedPrescriptionId: (id: string) => void;
 };
 
 const AppointmentDetailsContent: React.FC<Props> = ({
@@ -38,6 +39,7 @@ const AppointmentDetailsContent: React.FC<Props> = ({
   mutateAsyncEdit,
   appointmentForm,
   setContentType,
+  setSelectedPrescriptionId,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -88,6 +90,7 @@ const AppointmentDetailsContent: React.FC<Props> = ({
         appointmentForm={appointmentForm}
         patientId={patientId}
         setContentType={setContentType}
+        setSelectedPrescriptionId={setSelectedPrescriptionId}
       />
       <ProtectedComponent accessCode="delete/appointments">
         <div style={{ padding: '16px 40px' }}>

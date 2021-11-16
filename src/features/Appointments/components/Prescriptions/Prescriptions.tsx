@@ -1,16 +1,21 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppointmentModalContentTypes } from '../../../Appointments/types';
+import { AppointmentModalContentTypes } from '../../types';
 import AddPrescriptionButton from './AddPrescriptionButton/AddPrescriptionButton';
 import PrescriptionsList from './PrescriptionsList/PrescriptionsList';
 
 type Props = {
   patientId: string;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
+  setSelectedPrescriptionId: (id: string) => void;
 };
 
-const Prescriptions: React.FC<Props> = ({ patientId, setContentType }) => {
+const Prescriptions: React.FC<Props> = ({
+  patientId,
+  setContentType,
+  setSelectedPrescriptionId,
+}) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
   return (
@@ -31,6 +36,7 @@ const Prescriptions: React.FC<Props> = ({ patientId, setContentType }) => {
       <PrescriptionsList
         patientId={patientId}
         goToEditPrescription={() => setContentType('edit-prescription')}
+        setSelectedPrescriptionId={setSelectedPrescriptionId}
       />
     </div>
   );

@@ -1,3 +1,3 @@
 export * from './usePatientsList';
 export * from './useGetVisitHistory';
-export * from './useGetPrescriptionsHistory';
+export * from '../../Appointments/hooks/useGetPrescriptionsHistory';

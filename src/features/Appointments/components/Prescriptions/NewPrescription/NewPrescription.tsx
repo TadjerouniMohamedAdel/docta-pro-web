@@ -5,11 +5,11 @@ import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 import { Icon, Label } from '../../../../../components';
-import { MedicationItem, PrescriptionForm } from '../../../../Appointments/types';
+import { MedicationItem, PrescriptionForm } from '../../../types';
 import AddMedication from '../AddMedication/AddMedication';
 import MedicationsList from '../MedicationsList/MedicationsList';
 import PrescriptionNotes from '../PrescriptionNotes/PrescriptionNotes';
-import { addPrescription } from '../../../../Appointments/services';
+import { addPrescription } from '../../../services';
 
 type Props = {
   patientId: string;
@@ -18,7 +18,7 @@ type Props = {
   backToPrescriptions: () => void;
 };
 
-const EditPrescription: React.FC<Props> = ({
+const NewPrescription: React.FC<Props> = ({
   form,
   patientId,
   appointmentId,
@@ -36,16 +36,14 @@ const EditPrescription: React.FC<Props> = ({
     diagnostic: Yup.string().required(t('errors:required field')),
   });
 
-  const { mutateAsync: addNewPrescriptionMutate } = useMutation(addPrescription);
+  const { mutateAsync: addNewPrescriptionMutate } = useMutation((values: PrescriptionForm) =>
+    addPrescription(patientId, { ...values, appointment: appointmentId }),
+  );
 
   const queryClient = useQueryClient();
   const handleAddNewPrescription = async (values: PrescriptionForm) => {
     try {
-      await addNewPrescriptionMutate({
-        patientId,
-        appointment: appointmentId,
-        ...values,
-      });
+      await addNewPrescriptionMutate(values);
       queryClient.invalidateQueries('prescriptions-history');
       backToPrescriptions();
     } catch (err) {
@@ -74,7 +72,7 @@ const EditPrescription: React.FC<Props> = ({
   };
 
   return (
-    <Form form={form} className="new-prescription" onFinish={handleSubmit}>
+    <Form form={form} className="prescription-form" onFinish={handleSubmit}>
       <div style={{ padding: '24px 40px 0' }}>
         <Row gutter={[35, 16]} align="middle">
           <Col span={24}>
@@ -111,4 +109,4 @@ const EditPrescription: React.FC<Props> = ({
   );
 };
 
-export default EditPrescription;
+export default NewPrescription;

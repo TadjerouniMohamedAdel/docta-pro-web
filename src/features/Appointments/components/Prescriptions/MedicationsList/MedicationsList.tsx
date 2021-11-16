@@ -4,7 +4,7 @@ import Text from 'antd/lib/typography/Text';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '../../../../../components';
-import { MedicationItem } from '../../../../Appointments/types';
+import { MedicationItem } from '../../../types';
 
 type Props = {
   medications: MedicationItem[];
@@ -70,7 +70,7 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
           </Row>
         </Col>
       </Row>
-      <Table rowKey="id" dataSource={medications} columns={columns} />
+      <Table rowKey="id" dataSource={medications} columns={columns} pagination={false} />
     </div>
   );
 };

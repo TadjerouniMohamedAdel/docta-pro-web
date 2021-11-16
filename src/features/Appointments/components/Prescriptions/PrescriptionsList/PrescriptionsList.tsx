@@ -4,14 +4,20 @@ import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '../../../../../components';
-import { useGetPrescriptionsHistory } from '../../../hooks';
+import { useGetPrescriptionsHistory } from '../../../../Patients/hooks';
+import { PrescriptinRow } from '../../../types';
 
 type Props = {
   patientId: string;
   goToEditPrescription: () => void;
+  setSelectedPrescriptionId: (id: string) => void;
 };
 
-const PrescriptionsList: React.FC<Props> = ({ patientId, goToEditPrescription }) => {
+const PrescriptionsList: React.FC<Props> = ({
+  patientId,
+  goToEditPrescription,
+  setSelectedPrescriptionId,
+}) => {
   const { t } = useTranslation();
 
   const [pageIndex, setPageIndex] = useState(0);
@@ -24,7 +30,12 @@ const PrescriptionsList: React.FC<Props> = ({ patientId, goToEditPrescription })
     setPageIndex(current);
   };
 
-  const columns: ColumnsType<any> = [
+  const handleEdit = (id: string) => {
+    goToEditPrescription();
+    setSelectedPrescriptionId(id);
+  };
+
+  const columns: ColumnsType<PrescriptinRow> = [
     {
       width: 64,
     },
@@ -40,10 +51,15 @@ const PrescriptionsList: React.FC<Props> = ({ patientId, goToEditPrescription })
     },
     {
       dataIndex: 'actions',
-      render: () => (
+      render: (text, record) => (
         <Row justify="end">
           <Col>
-            <Button type="text" size="small" className="edit-action" onClick={goToEditPrescription}>
+            <Button
+              type="text"
+              size="small"
+              className="edit-action"
+              onClick={() => handleEdit(record.id)}
+            >
               <Icon name="pencil-line" />
             </Button>
           </Col>

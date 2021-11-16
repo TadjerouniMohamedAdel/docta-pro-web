@@ -115,6 +115,12 @@ export type MedicationItem = {
   isDeleted?: boolean;
 };
 
+export type PrescriptinRow = {
+  id: string;
+  date: string;
+  diagnostic: string;
+};
+
 export type PrescriptionForm = {
   diagnostic: string;
   note: string;
