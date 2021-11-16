@@ -5,7 +5,7 @@ import { UseMutateAsyncFunction, useMutation, useQueryClient } from 'react-query
 import { Col, Dropdown, FormInstance, Menu, Row } from 'antd';
 import moment from 'moment';
 import { Button, Icon, Spacer, Text } from '../../../../../components';
-import { AppointmentForm, AppointmentStatus } from '../../../types';
+import { AppointmentForm, AppointmentModalContentTypes, AppointmentStatus } from '../../../types';
 import { updateAppointmentStatus } from '../../../services';
 import { useCheckAccess, ProtectedComponent } from '../../../../Auth';
 import { getWeekRange } from '../../../../../common/utilities';
@@ -27,7 +27,7 @@ type Props = {
     unknown
   >;
   appointmentForm: FormInstance<any>;
-  setContentType: (contentType: 'info' | 'new-prescription') => void;
+  setContentType: (contentType: AppointmentModalContentTypes) => void;
 };
 
 const StartAppointmentContent: React.FC<Props> = ({

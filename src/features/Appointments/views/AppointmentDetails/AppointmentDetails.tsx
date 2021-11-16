@@ -6,6 +6,7 @@ import { ProtectedComponent } from '../../../Auth';
 import { useUpdateAppointment } from '../../hooks';
 import AppointmentDetailsContent from '../../components/AppointmentModalContent/AppointmentDetailsContent/AppointmentDetailsContent';
 import NewPrescription from '../../../Patients/components/Prescriptions/NewPrescription/NewPrescription';
+import { AppointmentModalContentTypes } from '../../types';
 
 type Props = {
   visible: boolean;
@@ -13,7 +14,6 @@ type Props = {
   appointmentId: string;
   patientId: string;
   currentDate: Date;
-  setContentType?: (contentType: 'info' | 'new-prescription') => void;
 };
 
 const AppointmentDetails: React.FC<Props> = ({
@@ -28,7 +28,7 @@ const AppointmentDetails: React.FC<Props> = ({
   const [appointmentForm] = Form.useForm();
   const [prescriptionForm] = Form.useForm();
 
-  const [contentType, setContentType] = useState<'info' | 'new-prescription'>('info');
+  const [contentType, setContentType] = useState<AppointmentModalContentTypes>('prescriptions');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
 
@@ -36,7 +36,7 @@ const AppointmentDetails: React.FC<Props> = ({
   let content = null;
 
   switch (contentType) {
-    case 'info':
+    case 'prescriptions':
       modalHeaderInfo = {
         title: t('appointment details'),
         onClick: appointmentForm.submit,
@@ -60,7 +60,7 @@ const AppointmentDetails: React.FC<Props> = ({
             <button
               type="button"
               className="modal-back-button"
-              onClick={() => setContentType('info')}
+              onClick={() => setContentType('prescriptions')}
             >
               <Icon name="arrow-left-line" style={{ color: '#273151', fontSize: 17 }} />
             </button>
@@ -75,7 +75,7 @@ const AppointmentDetails: React.FC<Props> = ({
           patientId={patientId}
           appointmentId={appointmentId}
           form={prescriptionForm}
-          backToInfo={() => setContentType('info')}
+          backToPrescriptions={() => setContentType('prescriptions')}
         />
       );
       break;

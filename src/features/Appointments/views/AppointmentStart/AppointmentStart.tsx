@@ -7,6 +7,7 @@ import { Button, Modal, Icon } from '../../../../components';
 import { editAppointment } from '../../services';
 import StartAppointmentContent from '../../components/AppointmentModalContent/StartAppointmentContent/StartAppointmentContent';
 import NewPrescription from '../../../Patients/components/Prescriptions/NewPrescription/NewPrescription';
+import { AppointmentModalContentTypes } from '../../types';
 
 type Props = {
   visible: boolean;
@@ -30,7 +31,7 @@ const AppointmentStart: React.FC<Props> = ({
   const [appointmentForm] = Form.useForm();
   const [prescriptionForm] = Form.useForm();
 
-  const [contentType, setContentType] = useState<'info' | 'new-prescription'>('info');
+  const [contentType, setContentType] = useState<AppointmentModalContentTypes>('prescriptions');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
 
@@ -38,7 +39,7 @@ const AppointmentStart: React.FC<Props> = ({
   let modalHeaderInfo: { title: string; onClick: () => void } | null = null;
 
   switch (contentType) {
-    case 'info':
+    case 'prescriptions':
       content = (
         <StartAppointmentContent
           onClose={onClose}
@@ -62,7 +63,7 @@ const AppointmentStart: React.FC<Props> = ({
           patientId={patientId}
           appointmentId={appointmentId}
           form={prescriptionForm}
-          backToInfo={() => setContentType('info')}
+          backToPrescriptions={() => setContentType('prescriptions')}
         />
       );
       modalHeaderInfo = {

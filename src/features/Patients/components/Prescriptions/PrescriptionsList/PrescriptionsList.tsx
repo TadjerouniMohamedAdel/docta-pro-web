@@ -8,9 +8,10 @@ import { useGetPrescriptionsHistory } from '../../../hooks';
 
 type Props = {
   patientId: string;
+  goToEditPrescription: () => void;
 };
 
-const PrescriptionsList: React.FC<Props> = ({ patientId }) => {
+const PrescriptionsList: React.FC<Props> = ({ patientId, goToEditPrescription }) => {
   const { t } = useTranslation();
 
   const [pageIndex, setPageIndex] = useState(0);
@@ -42,7 +43,7 @@ const PrescriptionsList: React.FC<Props> = ({ patientId }) => {
       render: () => (
         <Row justify="end">
           <Col>
-            <Button type="text" size="small" className="edit-action">
+            <Button type="text" size="small" className="edit-action" onClick={goToEditPrescription}>
               <Icon name="pencil-line" />
             </Button>
           </Col>

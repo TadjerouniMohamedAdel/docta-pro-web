@@ -120,3 +120,8 @@ export type PrescriptionForm = {
   note: string;
   medications: MedicationItem[];
 };
+
+export type AppointmentModalContentTypes =
+  | 'prescriptions'
+  | 'new-prescription'
+  | 'edit-prescription';

@@ -15,10 +15,15 @@ type Props = {
   patientId: string;
   appointmentId: string;
   form: FormInstance<any>;
-  backToInfo: () => void;
+  backToPrescriptions: () => void;
 };
 
-const EditPrescription: React.FC<Props> = ({ form, patientId, appointmentId, backToInfo }) => {
+const EditPrescription: React.FC<Props> = ({
+  form,
+  patientId,
+  appointmentId,
+  backToPrescriptions,
+}) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const initialValues: PrescriptionForm = {
@@ -42,7 +47,7 @@ const EditPrescription: React.FC<Props> = ({ form, patientId, appointmentId, bac
         ...values,
       });
       queryClient.invalidateQueries('prescriptions-history');
-      backToInfo();
+      backToPrescriptions();
     } catch (err) {
       console.log(err);
     }
