@@ -7,6 +7,7 @@ import { useUpdateAppointment } from '../../hooks';
 import AppointmentDetailsContent from '../../components/AppointmentModalContent/AppointmentDetailsContent/AppointmentDetailsContent';
 import NewPrescription from '../../../Patients/components/Prescriptions/NewPrescription/NewPrescription';
 import { AppointmentModalContentTypes } from '../../types';
+import ModalTitleWithBackButton from '../../../../components/ModalTitleWithBackButton/ModalTitleWithBackButton';
 
 type Props = {
   visible: boolean;
@@ -56,18 +57,25 @@ const AppointmentDetails: React.FC<Props> = ({
     case 'new-prescription':
       modalHeaderInfo = {
         title: (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button
-              type="button"
-              className="modal-back-button"
-              onClick={() => setContentType('prescriptions')}
-            >
-              <Icon name="arrow-left-line" style={{ color: '#273151', fontSize: 17 }} />
-            </button>
-
-            <span style={{ marginLeft: 16, marginRight: 16 }}>{t('new prescription')}</span>
-          </div>
+          <ModalTitleWithBackButton
+            title={t('new prescription')}
+            goBack={() => setContentType('prescriptions')}
+          />
         ),
+        onClick: prescriptionForm.submit,
+      };
+      content = (
+        <NewPrescription
+          patientId={patientId}
+          appointmentId={appointmentId}
+          form={prescriptionForm}
+          backToPrescriptions={() => setContentType('prescriptions')}
+        />
+      );
+      break;
+    case 'edit-prescription':
+      modalHeaderInfo = {
+        title: <ModalTitleWithBackButton title="" goBack={() => setContentType('prescriptions')} />,
         onClick: prescriptionForm.submit,
       };
       content = (

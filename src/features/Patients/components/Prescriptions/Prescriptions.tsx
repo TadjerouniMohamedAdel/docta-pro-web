@@ -30,7 +30,7 @@ const Prescriptions: React.FC<Props> = ({ patientId, setContentType }) => {
       </div>
       <PrescriptionsList
         patientId={patientId}
-        goToEditPrescription={() => setContentType('prescriptions')}
+        goToEditPrescription={() => setContentType('edit-prescription')}
       />
     </div>
   );

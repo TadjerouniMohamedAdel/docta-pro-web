@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
@@ -40,6 +39,10 @@ const AppointmentStart: React.FC<Props> = ({
 
   switch (contentType) {
     case 'prescriptions':
+      modalHeaderInfo = {
+        title: t('start appointment'),
+        onClick: appointmentForm.submit,
+      };
       content = (
         <StartAppointmentContent
           onClose={onClose}
@@ -52,12 +55,13 @@ const AppointmentStart: React.FC<Props> = ({
           setContentType={setContentType}
         />
       );
-      modalHeaderInfo = {
-        title: t('start appointment'),
-        onClick: appointmentForm.submit,
-      };
+
       break;
     case 'new-prescription':
+      modalHeaderInfo = {
+        title: t('new prescription'),
+        onClick: prescriptionForm.submit,
+      };
       content = (
         <NewPrescription
           patientId={patientId}
@@ -66,10 +70,6 @@ const AppointmentStart: React.FC<Props> = ({
           backToPrescriptions={() => setContentType('prescriptions')}
         />
       );
-      modalHeaderInfo = {
-        title: t('new prescription'),
-        onClick: prescriptionForm.submit,
-      };
       break;
     default:
       content = null;
