@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { FormikHelpers, useFormik } from 'formik';
@@ -22,6 +22,8 @@ type Props = {
 
 const AddMedication: React.FC<Props> = ({ addMedication }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
+
+  const [medicationAutoCompleteValue, setMedicationAutoCompleteValue] = useState('');
 
   const initialValues: NewMedication = {
     name: '',
@@ -52,6 +54,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
     };
     addMedication(newMedication);
     formikHelpers.resetForm();
+    setMedicationAutoCompleteValue('');
   };
 
   const formik = useFormik({
@@ -73,6 +76,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
   } = formik;
 
   const resetMedicationForm = () => {
+    setMedicationAutoCompleteValue('');
     resetForm();
   };
 
@@ -93,8 +97,9 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
           />
           <Form.Item validateStatus={touched.name && Boolean(errors.name) ? 'error' : undefined}>
             <MedicationAutocomplete
-              selectedMedication={values.name}
               onSelectMedication={handleSelectMedication}
+              value={medicationAutoCompleteValue}
+              setValue={setMedicationAutoCompleteValue}
             />
           </Form.Item>
         </Col>

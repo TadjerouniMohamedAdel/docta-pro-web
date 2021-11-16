@@ -1,11 +1,18 @@
 import { AutoComplete, Col, Divider, Input, Row } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { Icon, Text } from '../../../../../components';
 import { fetchMedications } from '../../../services';
 import greenImage from '../../../../../assets/img/remboursement.png';
 import redImage from '../../../../../assets/img/no_remboursement.png';
+
+const useSearchMedications = (term: string) => {
+  const { data, ...rest } = useQuery(['medications', term], () => fetchMedications(term, 0, 5), {
+    keepPreviousData: true,
+  });
+  return { medications: data ?? [], ...rest };
+};
 
 type Medication = {
   id: string;
@@ -17,36 +24,24 @@ type Medication = {
 };
 
 type Props = {
-  selectedMedication: string;
+  value: string;
+  setValue: (value: string) => void;
   onSelectMedication: (medicationName: string) => void;
 };
 
-const useSearchMedications = (term: string) => {
-  const { data, ...rest } = useQuery(['medications', term], () => fetchMedications(term, 0, 5), {
-    keepPreviousData: true,
-  });
-  return { medications: data ?? [], ...rest };
-};
-
-const MedicationAutocomplete: React.FC<Props> = ({ selectedMedication, onSelectMedication }) => {
+const MedicationAutocomplete: React.FC<Props> = ({ value, setValue, onSelectMedication }) => {
   const { t } = useTranslation('translation');
-
-  const [value, setValue] = useState('');
 
   const { medications } = useSearchMedications(value);
 
   const handleOnChange = (term: string) => {
-    if (!term) onSelectMedication('');
+    onSelectMedication('');
     setValue(term);
   };
 
   const handleOnSelect = async (term: string, option: any) => {
     onSelectMedication(option.value);
   };
-
-  useEffect(() => {
-    setValue(selectedMedication);
-  }, [selectedMedication]);
 
   const options = medications.data
     ? medications.data.map((medication: Medication) => ({
