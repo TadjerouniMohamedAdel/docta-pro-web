@@ -66,6 +66,15 @@ const fetcher = (
 
     if (response.status !== 204) data = await response.json();
 
+    if (response.status === 400 && data.error.code === 'user blocked') {
+      window.dispatchEvent(new CustomEvent('suspended_event', { detail: { suspended: true } }));
+      return Promise.reject(new Error("You account's suspended !"));
+    }
+
+    if (JSON.parse(window.localStorage.getItem('suspended')!)) {
+      window.dispatchEvent(new CustomEvent('suspended_event', { detail: { suspended: false } }));
+    }
+
     const responseHeaders: Headers & {
       authorization?: string;
     } = response.headers;

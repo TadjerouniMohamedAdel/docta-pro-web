@@ -1,5 +1,5 @@
 import { ConfigProvider } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import ar from 'antd/es/locale/ar_EG';
 import en from 'antd/es/locale/en_GB';
 import fr from 'antd/es/locale/fr_FR';
@@ -13,6 +13,7 @@ import AppLoader from '../components/AppLoader';
 import { useAuthState } from '../features/Auth/context';
 import { getCurrentUser } from '../features/Auth/services';
 import { AuthResponse } from '../features/Auth/types';
+import { AccountSuspendedContext } from '../common/context/AccountSuspendedContext';
 
 const queryCache = new QueryCache();
 
@@ -30,8 +31,8 @@ function App() {
 
   const { user, setUser } = useAuthState();
   const { i18n } = useTranslation();
+  const { setSuspended } = useContext(AccountSuspendedContext);
   const token = localStorage.getItem('token');
-
   moment.updateLocale(i18n.language === 'ar' ? 'ar-tn' : i18n.language || 'fr', {
     week: {
       dow: 0,
@@ -55,6 +56,17 @@ function App() {
   useEffect(() => {
     if (token && !user) handleFetchCurrentUser();
   }, []);
+
+  const updateStorage = (e: any) => {
+    setSuspended(e.detail.suspended);
+  };
+
+  useEffect(() => {
+    window.addEventListener('suspended_event', updateStorage);
+    return function cleanup() {
+      window.removeEventListener('suspended_event', updateStorage);
+    };
+  });
 
   return (
     <ConfigProvider
