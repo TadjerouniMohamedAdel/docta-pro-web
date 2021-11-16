@@ -4,7 +4,7 @@ import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
-import { Icon, Label } from '../../../../../../components';
+import { Icon, Label } from '../../../../../components';
 import {
   durationTypes,
   frequencyCounts,
@@ -13,7 +13,7 @@ import {
   MedicationItem,
   NewMedication,
   units,
-} from '../../../../../Appointments/types';
+} from '../../../../Appointments/types';
 import MedicationAutocomplete from '../MedicationAutocomplete/MedicationAutocomplete';
 
 type Props = {

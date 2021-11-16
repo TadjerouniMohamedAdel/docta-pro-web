@@ -3,8 +3,8 @@ import { ColumnsType } from 'antd/es/table';
 import Text from 'antd/lib/typography/Text';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from '../../../../../../components';
-import { MedicationItem } from '../../../../../Appointments/types';
+import { Button, Icon } from '../../../../../components';
+import { MedicationItem } from '../../../../Appointments/types';
 
 type Props = {
   medications: MedicationItem[];

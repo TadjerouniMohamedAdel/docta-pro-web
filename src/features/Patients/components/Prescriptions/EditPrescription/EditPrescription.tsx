@@ -18,7 +18,7 @@ type Props = {
   backToInfo: () => void;
 };
 
-const NewPrescription: React.FC<Props> = ({ form, patientId, appointmentId, backToInfo }) => {
+const EditPrescription: React.FC<Props> = ({ form, patientId, appointmentId, backToInfo }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
 
   const initialValues: PrescriptionForm = {
@@ -106,4 +106,4 @@ const NewPrescription: React.FC<Props> = ({ form, patientId, appointmentId, back
   );
 };
 
-export default NewPrescription;
+export default EditPrescription;

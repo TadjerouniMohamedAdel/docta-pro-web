@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextArea, Text, Icon } from '../../../../../../components';
+import { TextArea, Text, Icon } from '../../../../../components';
 
 type Props = {
   note: string;
@@ -23,6 +23,7 @@ const PrescriptionNotes: React.FC<Props> = ({ note, setNote }) => {
       </Col>
       <Col span={24}>
         <TextArea
+          placeholder={t('prescription note placeholder')}
           value={note}
           onChange={(e) => setNote(e.target.value)}
           icon={<Icon name="24-hours-line" />}

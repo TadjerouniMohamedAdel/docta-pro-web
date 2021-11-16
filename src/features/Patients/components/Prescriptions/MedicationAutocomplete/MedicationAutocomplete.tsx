@@ -2,10 +2,10 @@ import { AutoComplete, Col, Divider, Input, Row } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
-import { Icon, Text } from '../../../../../../components';
-import { fetchMedications } from '../../../../services';
-import greenImage from '../../../../../../assets/img/remboursement.png';
-import redImage from '../../../../../../assets/img/no_remboursement.png';
+import { Icon, Text } from '../../../../../components';
+import { fetchMedications } from '../../../services';
+import greenImage from '../../../../../assets/img/remboursement.png';
+import redImage from '../../../../../assets/img/no_remboursement.png';
 
 type Medication = {
   id: string;

@@ -205,5 +205,6 @@
   "account setup step 7 description": "Well done ! Patients now can find you and book appointments with you using Docta App. Now setup a new password or skip this step and do it later in your settings.",
   "prescriptions": "Prescriptions",
   "new blank prescription": "New Blank Prescription",
-  "new form template": "New Form Template"
+  "new form template": "New Form Template",
+  "prescription note placeholder": "Write instructions to pharmacist or to patient here"
 }
