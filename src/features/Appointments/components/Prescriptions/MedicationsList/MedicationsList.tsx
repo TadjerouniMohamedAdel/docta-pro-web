@@ -70,7 +70,12 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
           </Row>
         </Col>
       </Row>
-      <Table rowKey="id" dataSource={medications} columns={columns} pagination={false} />
+      <Table
+        rowKey="id"
+        dataSource={medications.filter((medication) => !medication.isDeleted)}
+        columns={columns}
+        pagination={false}
+      />
     </div>
   );
 };

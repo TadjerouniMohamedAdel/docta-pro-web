@@ -48,6 +48,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
       frequency: `${values.frequencyCount} ${values.frequencyPerDay} ${values.frequencyTime}`,
       unit: `${values.unitCount} ${values.unitType}`,
       duration: `${values.durationCount} ${values.durationType}`,
+      isNew: true,
     };
     addMedication(newMedication);
     formikHelpers.resetForm();

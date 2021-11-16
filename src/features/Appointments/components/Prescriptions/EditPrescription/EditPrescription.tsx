@@ -84,8 +84,14 @@ const EditPrescription: React.FC<Props> = ({
   };
 
   const deleteMedication = (id: string) => {
-    const newMedications = values.medications.filter((medication) => medication.id !== id);
-    setFieldValue('medications', newMedications);
+    const updatedMedications = [...values.medications];
+    const index = updatedMedications.findIndex((medication) => medication.id === id);
+
+    if (index > -1) {
+      if (updatedMedications[index].isNew) updatedMedications.splice(index, 1);
+      else updatedMedications[index].isDeleted = true;
+      setFieldValue('medications', updatedMedications);
+    }
   };
 
   return (
