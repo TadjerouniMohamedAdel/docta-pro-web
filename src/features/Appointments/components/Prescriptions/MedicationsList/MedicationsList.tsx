@@ -60,7 +60,6 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
         </Col>
         <Col span={2} />
       </Row>
-
       <div style={{ height: 200, overflow: 'scroll' }}>
         {medications.map((medication) => (
           <MedicationItem

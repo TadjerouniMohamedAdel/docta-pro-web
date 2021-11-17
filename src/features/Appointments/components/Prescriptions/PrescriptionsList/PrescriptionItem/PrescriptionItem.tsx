@@ -1,5 +1,5 @@
 import { format, isSameDay } from 'date-fns';
-import { Col, Row, Tag } from 'antd';
+import { Col, Row, Tag, Menu, Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Button, Icon, Text } from '../../../../../../components';
@@ -33,6 +33,32 @@ const PrescriptionItem: React.FC<Props> = ({
     openDeleteModal();
   };
 
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <Button type="link" icon={<Icon name="refresh-line" />}>
+          {t('prescribe again')}
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button type="text" icon={<Icon name="printer-line" />}>
+          {t('print')}
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          type="text"
+          icon={<Icon name="delete-bin-7-line" />}
+          className="delete-action"
+          onClick={handleDelete}
+          disabled={!isNew}
+        >
+          {t('delete')}
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Row align="middle" style={{ paddingRight: 34 }}>
       <Col span={3}>
@@ -55,7 +81,13 @@ const PrescriptionItem: React.FC<Props> = ({
       <Col span={6}>
         <Row justify="end">
           <Col>
-            <Button type="text" size="small" className="edit-action" onClick={handleEdit}>
+            <Button
+              type="text"
+              size="small"
+              className="edit-action"
+              onClick={handleEdit}
+              disabled={!isNew}
+            >
               <Icon name="pencil-line" />
             </Button>
           </Col>
@@ -65,9 +97,11 @@ const PrescriptionItem: React.FC<Props> = ({
             </Button>
           </Col>
           <Col>
-            <Button type="text" size="small" className="delete-action" onClick={handleDelete}>
-              <Icon name="delete-bin-7-line" />
-            </Button>
+            <Dropdown overlay={menu} trigger={['click']}>
+              <Button type="text" size="small" className="edit-action">
+                <Icon name="more-fill" />
+              </Button>
+            </Dropdown>
           </Col>
         </Row>
       </Col>
