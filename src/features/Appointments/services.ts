@@ -86,6 +86,15 @@ export const updatePrescription = async (
   });
 };
 
+export const deletePrescription = async (
+  patientId: string,
+  prescriptionId: string,
+): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions/${prescriptionId}`, {
+    method: 'delete',
+  });
+};
+
 export const fetchMedications = async (term = '', page = 0, size = 10): Promise<any> => {
   return fetcher(`/api/v1/professionals/medications?term=${term}&skip=${page}&take=${size}`);
 };

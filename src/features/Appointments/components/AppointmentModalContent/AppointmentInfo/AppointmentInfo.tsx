@@ -12,6 +12,7 @@ type Props = {
   onEditSave: (values: AppointmentForm) => void;
   appointmentId: string;
   patientId: string;
+  prescriptionId: string;
   currentDate: Date;
   appointmentForm: FormInstance;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
@@ -25,6 +26,7 @@ const AppointmentInfo: React.FC<Props> = ({
   onEditSave,
   appointmentForm,
   patientId,
+  prescriptionId,
   setContentType,
   setSelectedPrescriptionId,
 }) => {
@@ -54,6 +56,7 @@ const AppointmentInfo: React.FC<Props> = ({
       >
         <Prescriptions
           patientId={patientId}
+          prescriptionId={prescriptionId}
           setContentType={setContentType}
           setSelectedPrescriptionId={setSelectedPrescriptionId}
         />

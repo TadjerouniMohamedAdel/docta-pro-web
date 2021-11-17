@@ -7,12 +7,14 @@ import PrescriptionsList from './PrescriptionsList/PrescriptionsList';
 
 type Props = {
   patientId: string;
+  prescriptionId: string;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setSelectedPrescriptionId: (id: string) => void;
 };
 
 const Prescriptions: React.FC<Props> = ({
   patientId,
+  prescriptionId,
   setContentType,
   setSelectedPrescriptionId,
 }) => {
@@ -35,6 +37,7 @@ const Prescriptions: React.FC<Props> = ({
       </div>
       <PrescriptionsList
         patientId={patientId}
+        prescriptionId={prescriptionId}
         goToEditPrescription={() => setContentType('edit-prescription')}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
       />

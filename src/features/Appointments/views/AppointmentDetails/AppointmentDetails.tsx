@@ -48,6 +48,7 @@ const AppointmentDetails: React.FC<Props> = ({
           onClose={onClose}
           appointmentId={appointmentId}
           patientId={patientId}
+          prescriptionId={selectedPrescriptionId}
           currentDate={currentDate}
           mutateAsyncEdit={mutateAsyncEdit}
           appointmentForm={form}

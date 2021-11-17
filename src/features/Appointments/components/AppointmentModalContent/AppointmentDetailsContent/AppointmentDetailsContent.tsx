@@ -15,6 +15,7 @@ type Props = {
   onClose: () => void;
   appointmentId: string;
   patientId: string;
+  prescriptionId: string;
   currentDate: Date;
   mutateAsyncEdit: UseMutateAsyncFunction<
     string,
@@ -36,6 +37,7 @@ const AppointmentDetailsContent: React.FC<Props> = ({
   appointmentId,
   currentDate,
   patientId,
+  prescriptionId,
   mutateAsyncEdit,
   appointmentForm,
   setContentType,
@@ -89,6 +91,7 @@ const AppointmentDetailsContent: React.FC<Props> = ({
         onEditSave={handleEditAppointment}
         appointmentForm={appointmentForm}
         patientId={patientId}
+        prescriptionId={prescriptionId}
         setContentType={setContentType}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
       />

@@ -50,6 +50,7 @@ const AppointmentStart: React.FC<Props> = ({
           onClose={onClose}
           appointmentId={appointmentId}
           patientId={patientId}
+          prescriptionId={selectedPrescriptionId}
           currentDate={currentDate}
           scheduleNewAppointment={scheduleNewAppointment}
           mutateAsyncEdit={mutateAsyncEdit}
