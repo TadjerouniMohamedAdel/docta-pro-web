@@ -10,16 +10,75 @@ type Props = {
     setSelectedPrescription: (val: null) => void
 };
 
+const prescriptionFakeData = {
+    date: new Date(),
+    sickness: 'Grippe saisonnière',
+    patient: {
+        name: 'Ilyes Djelloul Boudjelthia',
+        age: 45
+    },
+    cabinetInfo: {
+        doctor: 'Amine Ould Aissa',
+        speciality: 'Pediatric',
+        phoneNumber1: '00213 666 53 53 74',
+        phoneNumber2: '00213 25 13 54 99',
+        address: 'Cité 1024 bätiment 53B porte n°01 Ouled Yaich - Blida'
+    },
+    medications: [
+        {
+            id:'1',
+            name: 'Augmentin 100mg',
+            posologie: '4 kg',
+            number: 'twice a day',
+            time: 'after meal',
+            duration: '10 days'
+        },
+        {
+            id:'2',
+            name: 'Augmentin 100mg',
+            posologie: '4 kg',
+            number: 'twice a day',
+            time: 'after meal',
+            duration: '10 days'
+        },
+        {
+            id:'3',
+            name: 'Augmentin 100mg',
+            posologie: '4 kg',
+            number: 'twice a day',
+            time: 'after meal',
+            duration: '10 days'
+        },
+        {
+            id:'4',
+            name: 'Augmentin 100mg',
+            posologie: '4 kg',
+            number: 'twice a day',
+            time: 'after meal',
+            duration: '10 days'
+        },
+    ],
+    note: 'Research in advertising is done in order to produce better advertisements that are more efficient in motivating customers to buy a product or a service.'
+
+};
+
 const PrescriptionPreview: React.FC<Props> = ({ prescription, setSelectedPrescription }) => {
     console.log(prescription);
+
+
+    // handle pint button clicked
     const handlePrint = () => {
-        const printWindow = window.open('', '', '');
+        const printWindow = window.open('', '', 'height=400,width=800');
+        printWindow?.document.write('<html><head><title>Prescription</title></head><body>');
         printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
+        printWindow?.document.write('</body></html>');
         printWindow?.document.close();
         printWindow?.print();
 
     };
 
+
+    // header of card pescription preview
     const CustomTitle = () => (
         <div className="prescription-header">
             <div>
@@ -29,7 +88,7 @@ const PrescriptionPreview: React.FC<Props> = ({ prescription, setSelectedPrescri
                         New
                     </div>
                 </div>
-                <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Grippe saisonnière</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{prescriptionFakeData.sickness}</Text>
             </div>
             <div style={{ display: 'flex' }}>
                 <Button type="primary" className="prescription-print-button" onClick={handlePrint}>
@@ -43,17 +102,20 @@ const PrescriptionPreview: React.FC<Props> = ({ prescription, setSelectedPrescri
         </div>
     );
 
-    const MedicationItem = () => (
-        <div style={{ marginBottom: 29 }}>
-            <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Augmentin 100mg</Text>
+
+
+    // prescription medication info line 
+    const MedicationItem = ({medication}: any) => (
+        <div style={{ marginBottom: 29, width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Text style={{ fontSize: 10, fontWeight: 'bold' }}>{medication.name}</Text>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 10 }}>4 kg</Text>
-                    <Text style={{ fontSize: 10 }}>twice a day</Text>
-                    <Text style={{ fontSize: 10 }}>after meal</Text>
+                    <Text style={{ fontSize: 10 }}>{medication.posologie}</Text>
+                    <Text style={{ fontSize: 10 }}>{medication.number}</Text>
+                    <Text style={{ fontSize: 10 }}>{medication.time}</Text>
                 </div>
                 <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                    <Text style={{ fontSize: 10 }}>10 days</Text>
+                    <Text style={{ fontSize: 10 }}>{medication.duration}</Text>
                 </div>
             </div>
         </div>
@@ -62,7 +124,7 @@ const PrescriptionPreview: React.FC<Props> = ({ prescription, setSelectedPrescri
 
     React.useEffect(() => {
         document.querySelector('.ant-modal')?.classList.add('modals-two-window');
-        return function cleanup() {
+        return () => {
             document.querySelector('.ant-modal')?.classList.remove('modals-two-window');
             setSelectedPrescription(null);
 
@@ -75,49 +137,52 @@ const PrescriptionPreview: React.FC<Props> = ({ prescription, setSelectedPrescri
     return (
         <Card className="prescription-preview-card" title={<CustomTitle />}>
             <div id="print-subscription">
-
-                <div style={{ padding: '16px 40px', display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                <div style={{ padding: '16px 20px', display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ marginBottom: 5, padding: '10px 14px', fontSize: 9, fontWeight: 'bold', color: '#fff', position: 'relative', width: 83, height: 52, borderRadius: 7, backgroundColor: '#74798c' }}>
                             Cabinet<br />
                             Logo
                         </div>
-                        <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>Dr Amine Ould Aissa</Text>
-                        <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>Pediatric</Text>
+                        <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>Dr {prescriptionFakeData.cabinetInfo.doctor}</Text>
+                        <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>{prescriptionFakeData.cabinetInfo.speciality}</Text>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <Text style={{ textAlign: 'right', marginBottom: 2, color: '#74798c', fontSize: 9 }}>00213 666 53 53 74</Text>
-                            <Text style={{ textAlign: 'right', marginBottom: 2, color: '#74798c', fontSize: 9 }}>00213 25 13 54 99</Text>
+                            <Text style={{ textAlign: 'right', marginBottom: 2, color: '#74798c', fontSize: 9 }}>{prescriptionFakeData.cabinetInfo.phoneNumber1}</Text>
+                            <Text style={{ textAlign: 'right', marginBottom: 2, color: '#74798c', fontSize: 9 }}>{prescriptionFakeData.cabinetInfo.phoneNumber2}</Text>
                         </div>
                         <div style={{ width: 150, textAlign: 'right' }}>
                             <Text style={{ textAlign: 'right', marginBottom: 2, color: '#74798c', fontSize: 9 }}>
-                                Cité 1024 bätiment 53B porte n°01 Ouled Yaich - Blida
+                                {prescriptionFakeData.cabinetInfo.address}
                             </Text>
                         </div>
                     </div>
                 </div>
                 <Divider style={{ margin: 0 }} />
-                <div style={{ padding: '24px 40px', width: '100%' }}>
+                <div style={{ padding: '24px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
                     <Text style={{ display: 'block', fontWeight: 'bold', textAlign: 'center', fontSize: 16 }}>Prescription</Text>
                     <div style={{ marginTop: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Text style={{ fontSize: 10 }}>18 March 2021</Text>
                         <div>
-                            <Text style={{ fontSize: 10, marginLeft: 10, marginRight: 10 }}>
-                                Ilyes Djelloul Boudjelthia
+                            <Text style={{ fontSize: 10 }}>
+                                {prescriptionFakeData.patient.name}
+                                &nbsp;
+                                {prescriptionFakeData.patient.age} yo
                             </Text>
-                            <Text style={{ fontSize: 10 }}>45 yo</Text>
+
                         </div>
                     </div>
-                    <>
-                        <div style={{ marginTop: 69 }}>
-                            <MedicationItem />
-                            <MedicationItem />
-                        </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', marginTop: 69, width: '100%' }}>
+                        {
+                            prescriptionFakeData.medications.map(medication => (
+                                <MedicationItem key={`medication-${medication.id}`} medication={medication} />
 
-                    </>
+                            ))
+                        }
+                    </div>
+
                     <p style={{ marginTop: 44, fontSize: 10, marginBottom: 80 }}>
-                        Research in advertising is done in order to produce better advertisements that are more efficient in motivating customers to buy a product or a service.
+                        {prescription.note}
                     </p>
                     <div style={{ position: 'absolute', left: 0, padding: '0 24px', bottom: 22, display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         <div>
