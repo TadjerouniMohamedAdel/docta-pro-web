@@ -3,7 +3,7 @@ import { FormInstance, Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Icon, Tab } from '../../../../../components';
 import AppointmentSelection from '../../AppointmentSelection/AppointmentSelection';
-import { AppointmentForm, AppointmentModalContentTypes } from '../../../types';
+import { AppointmentForm, AppointmentModalContentTypes, PrescriptionForm } from '../../../types';
 import { PatientNotes } from '../../../../Patients';
 import Prescriptions from '../../Prescriptions/Prescriptions';
 
@@ -17,6 +17,7 @@ type Props = {
   appointmentForm: FormInstance;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setSelectedPrescriptionId: (id: string) => void;
+  setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
 };
 
 const AppointmentInfo: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const AppointmentInfo: React.FC<Props> = ({
   prescriptionId,
   setContentType,
   setSelectedPrescriptionId,
+  setPrescriptionInitialValues,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   return (
@@ -59,6 +61,7 @@ const AppointmentInfo: React.FC<Props> = ({
           prescriptionId={prescriptionId}
           setContentType={setContentType}
           setSelectedPrescriptionId={setSelectedPrescriptionId}
+          setPrescriptionInitialValues={setPrescriptionInitialValues}
         />
       </Tabs.TabPane>
     </Tabs>

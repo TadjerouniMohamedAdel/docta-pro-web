@@ -5,7 +5,12 @@ import { UseMutateAsyncFunction, useMutation, useQueryClient } from 'react-query
 import { Col, Dropdown, FormInstance, Menu, Row } from 'antd';
 import moment from 'moment';
 import { Button, Icon, Spacer, Text } from '../../../../../components';
-import { AppointmentForm, AppointmentModalContentTypes, AppointmentStatus } from '../../../types';
+import {
+  AppointmentForm,
+  AppointmentModalContentTypes,
+  AppointmentStatus,
+  PrescriptionForm,
+} from '../../../types';
 import { updateAppointmentStatus } from '../../../services';
 import { useCheckAccess, ProtectedComponent } from '../../../../Auth';
 import { getWeekRange } from '../../../../../common/utilities';
@@ -30,6 +35,7 @@ type Props = {
   appointmentForm: FormInstance<any>;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setSelectedPrescriptionId: (id: string) => void;
+  setPrescriptionInitialValues: (intialValues: PrescriptionForm) => void;
 };
 
 const StartAppointmentContent: React.FC<Props> = ({
@@ -43,6 +49,7 @@ const StartAppointmentContent: React.FC<Props> = ({
   appointmentForm,
   setContentType,
   setSelectedPrescriptionId,
+  setPrescriptionInitialValues,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -135,6 +142,7 @@ const StartAppointmentContent: React.FC<Props> = ({
         prescriptionId={prescriptionId}
         setContentType={setContentType}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
+        setPrescriptionInitialValues={setPrescriptionInitialValues}
       />
       <div style={{ padding: '16px 40px' }}>
         <Row justify="space-between">

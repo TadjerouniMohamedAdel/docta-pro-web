@@ -5,7 +5,7 @@ import { UseMutateAsyncFunction, useMutation, useQueryClient } from 'react-query
 import { FormInstance } from 'antd';
 import moment from 'moment';
 import { Button, Icon } from '../../../../../components';
-import { AppointmentForm, AppointmentModalContentTypes } from '../../../types';
+import { AppointmentForm, AppointmentModalContentTypes, PrescriptionForm } from '../../../types';
 import { updateAppointmentStatus } from '../../../services';
 import { ProtectedComponent } from '../../../../Auth';
 import { getWeekRange } from '../../../../../common/utilities';
@@ -30,6 +30,7 @@ type Props = {
   appointmentForm: FormInstance<any>;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setSelectedPrescriptionId: (id: string) => void;
+  setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
 };
 
 const AppointmentDetailsContent: React.FC<Props> = ({
@@ -42,6 +43,7 @@ const AppointmentDetailsContent: React.FC<Props> = ({
   appointmentForm,
   setContentType,
   setSelectedPrescriptionId,
+  setPrescriptionInitialValues,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -94,6 +96,7 @@ const AppointmentDetailsContent: React.FC<Props> = ({
         prescriptionId={prescriptionId}
         setContentType={setContentType}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
+        setPrescriptionInitialValues={setPrescriptionInitialValues}
       />
       <ProtectedComponent accessCode="delete/appointments">
         <div style={{ padding: '16px 40px' }}>

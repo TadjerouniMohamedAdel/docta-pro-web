@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppointmentModalContentTypes } from '../../types';
+import { AppointmentModalContentTypes, PrescriptinRow, PrescriptionForm } from '../../types';
 import AddPrescriptionButton from './AddPrescriptionButton/AddPrescriptionButton';
 import PrescriptionsList from './PrescriptionsList/PrescriptionsList';
 
@@ -9,6 +9,7 @@ type Props = {
   patientId: string;
   prescriptionId: string;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
+  setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
   setSelectedPrescriptionId: (id: string) => void;
 };
 
@@ -16,9 +17,24 @@ const Prescriptions: React.FC<Props> = ({
   patientId,
   prescriptionId,
   setContentType,
+  setPrescriptionInitialValues,
   setSelectedPrescriptionId,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
+
+  const handleAddPrescription = () => {
+    setPrescriptionInitialValues({
+      diagnostic: '',
+      note: '',
+      medications: [],
+    });
+    setContentType('new-prescription');
+  };
+
+  const prescribeAgain = (prescription: PrescriptinRow) => {
+    setPrescriptionInitialValues(prescription);
+    setContentType('new-prescription');
+  };
 
   return (
     <div className="prescriptions">
@@ -27,7 +43,7 @@ const Prescriptions: React.FC<Props> = ({
           <Col span={24}>
             <AddPrescriptionButton
               title={t('new blank prescription')}
-              onClick={() => setContentType('new-prescription')}
+              onClick={handleAddPrescription}
             />
           </Col>
           {/* <Col span={12}>
@@ -40,6 +56,7 @@ const Prescriptions: React.FC<Props> = ({
         prescriptionId={prescriptionId}
         goToEditPrescription={() => setContentType('edit-prescription')}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
+        prescribeAgain={prescribeAgain}
       />
     </div>
   );

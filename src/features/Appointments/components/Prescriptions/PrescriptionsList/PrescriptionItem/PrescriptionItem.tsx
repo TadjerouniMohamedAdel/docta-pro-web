@@ -10,6 +10,7 @@ type Props = {
   setSelectedPrescriptionId: (prescriptionId: string) => void;
   openDeleteModal: () => void;
   goToEditPrescription: () => void;
+  prescribeAgain: (prescription: PrescriptinRow) => void;
 };
 
 const PrescriptionItem: React.FC<Props> = ({
@@ -17,11 +18,16 @@ const PrescriptionItem: React.FC<Props> = ({
   openDeleteModal,
   setSelectedPrescriptionId,
   goToEditPrescription,
+  prescribeAgain,
 }) => {
   const { t } = useTranslation();
 
   const { id, createdAt: date, diagnostic } = prescriptionRow;
   const isNew = isSameDay(new Date(date), new Date());
+
+  const handlePrescribeAgain = () => {
+    prescribeAgain(prescriptionRow);
+  };
 
   const handleEdit = () => {
     setSelectedPrescriptionId(id);
@@ -36,7 +42,7 @@ const PrescriptionItem: React.FC<Props> = ({
   const menu = (
     <Menu>
       <Menu.Item>
-        <Button type="link" icon={<Icon name="refresh-line" />}>
+        <Button type="link" icon={<Icon name="refresh-line" />} onClick={handlePrescribeAgain}>
           {t('prescribe again')}
         </Button>
       </Menu.Item>

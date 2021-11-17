@@ -6,7 +6,7 @@ import { Button, Modal, Icon } from '../../../../components';
 import { editAppointment } from '../../services';
 import StartAppointmentContent from '../../components/AppointmentModalContent/StartAppointmentContent/StartAppointmentContent';
 import NewPrescription from '../../components/Prescriptions/NewPrescription/NewPrescription';
-import { AppointmentModalContentTypes } from '../../types';
+import { AppointmentModalContentTypes, PrescriptionForm } from '../../types';
 import ModalTitleWithBackButton from '../../../../components/ModalTitleWithBackButton/ModalTitleWithBackButton';
 import EditPrescription from '../../components/Prescriptions/EditPrescription/EditPrescription';
 
@@ -28,6 +28,12 @@ const AppointmentStart: React.FC<Props> = ({
   patientId,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
+
+  const [prescriptionInitialValues, setPrescriptionInitialValues] = useState<PrescriptionForm>({
+    note: '',
+    diagnostic: '',
+    medications: [],
+  });
 
   const [form] = Form.useForm();
 
@@ -57,6 +63,7 @@ const AppointmentStart: React.FC<Props> = ({
           appointmentForm={form}
           setContentType={setContentType}
           setSelectedPrescriptionId={setSelectedPrescriptionId}
+          setPrescriptionInitialValues={setPrescriptionInitialValues}
         />
       );
 
@@ -71,6 +78,7 @@ const AppointmentStart: React.FC<Props> = ({
           appointmentId={appointmentId}
           form={form}
           backToPrescriptions={() => setContentType('prescriptions')}
+          initialValues={prescriptionInitialValues}
         />
       );
       break;

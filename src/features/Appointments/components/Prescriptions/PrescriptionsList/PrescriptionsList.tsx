@@ -15,6 +15,7 @@ type Props = {
   prescriptionId: string;
   goToEditPrescription: () => void;
   setSelectedPrescriptionId: (id: string) => void;
+  prescribeAgain: (prescription: PrescriptinRow) => void;
 };
 
 const PrescriptionsList: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const PrescriptionsList: React.FC<Props> = ({
   prescriptionId,
   goToEditPrescription,
   setSelectedPrescriptionId,
+  prescribeAgain,
 }) => {
   const { t } = useTranslation();
 
@@ -77,6 +79,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 setSelectedPrescriptionId={setSelectedPrescriptionId}
                 openDeleteModal={() => setShowDeleteModal(true)}
                 goToEditPrescription={goToEditPrescription}
+                prescribeAgain={prescribeAgain}
                 key={prescription.id}
               />
             ))}

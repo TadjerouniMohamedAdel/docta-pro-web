@@ -16,6 +16,7 @@ type Props = {
   appointmentId: string;
   form: FormInstance<any>;
   backToPrescriptions: () => void;
+  initialValues: PrescriptionForm;
 };
 
 const NewPrescription: React.FC<Props> = ({
@@ -23,14 +24,9 @@ const NewPrescription: React.FC<Props> = ({
   patientId,
   appointmentId,
   backToPrescriptions,
+  initialValues,
 }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
-
-  const initialValues: PrescriptionForm = {
-    note: '',
-    diagnostic: '',
-    medications: [],
-  };
 
   const validationSchema = Yup.object().shape({
     diagnostic: Yup.string().required(t('errors:required field')),

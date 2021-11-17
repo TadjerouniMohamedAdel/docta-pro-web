@@ -119,6 +119,8 @@ export type PrescriptinRow = {
   id: string;
   createdAt: string;
   diagnostic: string;
+  note: string;
+  medications: MedicationRow[];
 };
 
 export type PrescriptionForm = {
