@@ -5,8 +5,6 @@ import { fetchPatientNotes } from '../services';
 export const useGetPatientNotes = (patientId: string, term: string) => {
   const [total, setTotal] = React.useState(0);
 
-  console.log(`useGetPatientNotes: ${patientId}`);
-
   const { data, ...rest } = useInfiniteQuery(
     ['patient-notes', patientId, term],
     async ({ pageParam = 0 }) => {

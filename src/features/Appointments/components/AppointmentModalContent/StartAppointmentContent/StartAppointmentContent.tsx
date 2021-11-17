@@ -36,6 +36,8 @@ type Props = {
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setSelectedPrescriptionId: (id: string) => void;
   setPrescriptionInitialValues: (intialValues: PrescriptionForm) => void;
+  selectedTab: string;
+  setSelectedTab: (tab: string) => void;
 };
 
 const StartAppointmentContent: React.FC<Props> = ({
@@ -50,6 +52,8 @@ const StartAppointmentContent: React.FC<Props> = ({
   setContentType,
   setSelectedPrescriptionId,
   setPrescriptionInitialValues,
+  selectedTab,
+  setSelectedTab,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -143,6 +147,8 @@ const StartAppointmentContent: React.FC<Props> = ({
         setContentType={setContentType}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
         setPrescriptionInitialValues={setPrescriptionInitialValues}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
       />
       <div style={{ padding: '16px 40px' }}>
         <Row justify="space-between">

@@ -28,9 +28,12 @@ type Props = {
     any
   >;
   appointmentForm: FormInstance<any>;
+  contentType: AppointmentModalContentTypes;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setSelectedPrescriptionId: (id: string) => void;
   setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
+  selectedTab: string;
+  setSelectedTab: (tab: string) => void;
 };
 
 const AppointmentDetailsContent: React.FC<Props> = ({
@@ -44,6 +47,8 @@ const AppointmentDetailsContent: React.FC<Props> = ({
   setContentType,
   setSelectedPrescriptionId,
   setPrescriptionInitialValues,
+  selectedTab,
+  setSelectedTab,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -97,6 +102,8 @@ const AppointmentDetailsContent: React.FC<Props> = ({
         setContentType={setContentType}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
         setPrescriptionInitialValues={setPrescriptionInitialValues}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
       />
       <ProtectedComponent accessCode="delete/appointments">
         <div style={{ padding: '16px 40px' }}>

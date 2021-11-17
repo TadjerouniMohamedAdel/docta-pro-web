@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'antd';
 import { Button, Modal, Icon } from '../../../../components';
@@ -36,6 +36,7 @@ const AppointmentDetails: React.FC<Props> = ({
   const [form] = Form.useForm();
 
   const [contentType, setContentType] = useState<AppointmentModalContentTypes>('prescriptions');
+  const [selectedInfoTab, setSelectedInfoTab] = useState('details');
 
   const [selectedPrescriptionId, setSelectedPrescriptionId] = useState('');
 
@@ -43,6 +44,16 @@ const AppointmentDetails: React.FC<Props> = ({
 
   let modalHeaderInfo = null;
   let content = null;
+
+  const backToPrescriptions = () => {
+    setContentType('prescriptions');
+    setSelectedInfoTab('prescriptions');
+  };
+
+  // we just reset content type, all content inside the modal is reset on close
+  useEffect(() => {
+    if (!visible) setSelectedInfoTab('details');
+  }, [visible]);
 
   switch (contentType) {
     case 'prescriptions':
@@ -58,19 +69,19 @@ const AppointmentDetails: React.FC<Props> = ({
           currentDate={currentDate}
           mutateAsyncEdit={mutateAsyncEdit}
           appointmentForm={form}
+          contentType={contentType}
           setContentType={setContentType}
           setSelectedPrescriptionId={setSelectedPrescriptionId}
           setPrescriptionInitialValues={setPrescriptionInitialValues}
+          selectedTab={selectedInfoTab}
+          setSelectedTab={setSelectedInfoTab}
         />
       );
       break;
     case 'new-prescription':
       modalHeaderInfo = {
         title: (
-          <ModalTitleWithBackButton
-            title={t('new prescription')}
-            goBack={() => setContentType('prescriptions')}
-          />
+          <ModalTitleWithBackButton title={t('new prescription')} goBack={backToPrescriptions} />
         ),
       };
       content = (
@@ -78,7 +89,7 @@ const AppointmentDetails: React.FC<Props> = ({
           patientId={patientId}
           appointmentId={appointmentId}
           form={form}
-          backToPrescriptions={() => setContentType('prescriptions')}
+          backToPrescriptions={backToPrescriptions}
           initialValues={prescriptionInitialValues}
         />
       );
@@ -86,10 +97,7 @@ const AppointmentDetails: React.FC<Props> = ({
     case 'edit-prescription':
       modalHeaderInfo = {
         title: (
-          <ModalTitleWithBackButton
-            title={t('edit prescription')}
-            goBack={() => setContentType('prescriptions')}
-          />
+          <ModalTitleWithBackButton title={t('edit prescription')} goBack={backToPrescriptions} />
         ),
       };
       content = (
@@ -97,7 +105,7 @@ const AppointmentDetails: React.FC<Props> = ({
           patientId={patientId}
           prescriptionId={selectedPrescriptionId}
           form={form}
-          backToPrescriptions={() => setContentType('prescriptions')}
+          backToPrescriptions={backToPrescriptions}
         />
       );
       break;
@@ -115,6 +123,7 @@ const AppointmentDetails: React.FC<Props> = ({
       onCancel={onClose}
       borderedHeader
       style={{ top: 30 }}
+      destroyOnClose
       actions={
         <ProtectedComponent accessCode="edit/appointments">
           <Button

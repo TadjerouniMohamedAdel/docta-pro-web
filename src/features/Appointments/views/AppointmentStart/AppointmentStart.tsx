@@ -38,6 +38,7 @@ const AppointmentStart: React.FC<Props> = ({
   const [form] = Form.useForm();
 
   const [contentType, setContentType] = useState<AppointmentModalContentTypes>('prescriptions');
+  const [selectedInfoTab, setSelectedInfoTab] = useState('details');
 
   const [selectedPrescriptionId, setSelectedPrescriptionId] = useState('');
 
@@ -64,9 +65,10 @@ const AppointmentStart: React.FC<Props> = ({
           setContentType={setContentType}
           setSelectedPrescriptionId={setSelectedPrescriptionId}
           setPrescriptionInitialValues={setPrescriptionInitialValues}
+          selectedTab={selectedInfoTab}
+          setSelectedTab={setSelectedInfoTab}
         />
       );
-
       break;
     case 'new-prescription':
       modalHeaderInfo = {

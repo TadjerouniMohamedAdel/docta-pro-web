@@ -18,6 +18,8 @@ type Props = {
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setSelectedPrescriptionId: (id: string) => void;
   setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
+  selectedTab: string;
+  setSelectedTab: (tab: string) => void;
 };
 
 const AppointmentInfo: React.FC<Props> = ({
@@ -31,13 +33,20 @@ const AppointmentInfo: React.FC<Props> = ({
   setContentType,
   setSelectedPrescriptionId,
   setPrescriptionInitialValues,
+  selectedTab,
+  setSelectedTab,
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
+
   return (
-    <Tabs tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }} defaultActiveKey="6">
+    <Tabs
+      tabBarStyle={{ paddingLeft: 20, paddingRight: 20 }}
+      activeKey={selectedTab}
+      onChange={setSelectedTab}
+    >
       <Tabs.TabPane
         tab={<Tab icon={<Icon name="calendar-todo-line" />}>{t('appointment details')}</Tab>}
-        key="1"
+        key="details"
       >
         <AppointmentSelection
           onClose={onClose}
@@ -47,14 +56,17 @@ const AppointmentInfo: React.FC<Props> = ({
           form={appointmentForm}
         />
       </Tabs.TabPane>
-      <Tabs.TabPane tab={<Tab icon={<Icon name="file-text-line" />}> {t('notes')} </Tab>} key="4">
+      <Tabs.TabPane
+        tab={<Tab icon={<Icon name="file-text-line" />}> {t('notes')} </Tab>}
+        key="notes"
+      >
         <div style={{ height: 500, overflowY: 'auto' }}>
           <PatientNotes patientId={patientId} />
         </div>
       </Tabs.TabPane>
       <Tabs.TabPane
         tab={<Tab icon={<Icon name="file-text-line" />}> {t('prescriptions')} </Tab>}
-        key="6"
+        key="prescriptions"
       >
         <Prescriptions
           patientId={patientId}
