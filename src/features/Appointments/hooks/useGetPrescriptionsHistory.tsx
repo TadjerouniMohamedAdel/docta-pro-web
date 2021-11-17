@@ -1,11 +1,21 @@
-import { useQuery } from 'react-query';
+import { useState } from 'react';
+import { useInfiniteQuery } from 'react-query';
 import { fetchPrescriptionsHistory } from '../services';
 
-export const useGetPrescriptionsHistory = (patientId: string, page: number, size: number) => {
-  const { data, isLoading, isError, isFetching } = useQuery(
-    ['prescriptions-history', patientId, page, size],
-    () => fetchPrescriptionsHistory(patientId, page, size),
-    { keepPreviousData: true },
+export const useGetPrescriptionsHistory = (patientId: string) => {
+  const [total, setTotal] = useState(0);
+
+  const { data, ...rest } = useInfiniteQuery(
+    ['prescriptions-history', patientId],
+    async ({ pageParam = 0 }) => {
+      const res = await fetchPrescriptionsHistory(patientId, pageParam);
+      setTotal(res.total);
+      return { ...res, prescriptions: res.data };
+    },
+    {
+      getNextPageParam: (lastPage) =>
+        lastPage.nextCursor < lastPage.total ? lastPage.nextCursor : undefined,
+    },
   );
-  return { resolvedData: data ?? [], isLoading, isError, isFetching };
+  return { data: data && data.pages ? data : ({ pages: [] } as any), total, ...rest };
 };

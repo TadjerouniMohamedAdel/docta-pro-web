@@ -117,7 +117,7 @@ export type MedicationItem = {
 
 export type PrescriptinRow = {
   id: string;
-  date: string;
+  createdAt: string;
   diagnostic: string;
 };
 

@@ -1,14 +1,14 @@
-import { format } from 'date-fns';
-import { Col, Row, Table } from 'antd';
-import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
+import { Col, Row } from 'antd';
 import { useMutation, useQueryClient } from 'react-query';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from '../../../../../components';
+import { Text } from '../../../../../components';
 import { useGetPrescriptionsHistory } from '../../../../Patients/hooks';
-import { PrescriptinRow } from '../../../types';
 import DeleteModal from '../../../../../components/MultiActionModal/MultiActionModal';
 import { deletePrescription } from '../../../services';
+import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
+import { PrescriptinRow } from '../../../types';
+import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
 
 type Props = {
   patientId: string;
@@ -27,95 +27,67 @@ const PrescriptionsList: React.FC<Props> = ({
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize] = useState(10);
+  const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
   const cache = useQueryClient();
-  const { resolvedData, isFetching } = useGetPrescriptionsHistory(patientId, pageIndex, pageSize);
-  const { data, total = 0 } = resolvedData;
+  const {
+    data,
+    isFetchingNextPage,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+  } = useGetPrescriptionsHistory(patientId);
 
-  const handleChange = ({ current }: any) => {
-    setPageIndex(current);
-  };
-
-  const handleEdit = (id: string) => {
-    setSelectedPrescriptionId(id);
-    goToEditPrescription();
-  };
+  useIntersectionObserver({
+    target: loadMoreButtonRef,
+    onIntersect: fetchNextPage,
+    enabled: hasNextPage,
+  });
 
   const {
     mutateAsync: deletePrescriptionMutate,
     isLoading: isDeletePrescriptionLoading,
   } = useMutation(() => deletePrescription(patientId, prescriptionId));
 
-  const handleDelete = (id: string) => {
-    setSelectedPrescriptionId(id);
-    setShowDeleteModal(true);
-  };
-
   const onDeleteSuccess = () => {
     cache.invalidateQueries('prescriptions-history');
   };
 
-  const columns: ColumnsType<PrescriptinRow> = [
-    {
-      width: 64,
-    },
-    {
-      title: t('date'),
-      dataIndex: 'createdAt',
-      render: (text: Date) => <span>{format(new Date(text), 'dd MMM yyyy')}</span>,
-      width: 120,
-    },
-    {
-      title: t('diagnosis'),
-      dataIndex: 'diagnostic',
-    },
-    {
-      dataIndex: 'actions',
-      render: (text, record) => (
-        <Row justify="end">
-          <Col>
-            <Button
-              type="text"
-              size="small"
-              className="edit-action"
-              onClick={() => handleEdit(record.id)}
-            >
-              <Icon name="pencil-line" />
-            </Button>
-          </Col>
-          <Col>
-            <Button type="text" size="small">
-              <Icon name="serach-eye-line" />
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              type="text"
-              size="small"
-              className="delete-action"
-              onClick={() => handleDelete(record.id)}
-            >
-              <Icon name="delete-bin-7-line" />
-            </Button>
-          </Col>
-        </Row>
-      ),
-      width: 200,
-    },
-  ];
-
   return (
     <>
-      <Table
-        rowKey="id"
-        dataSource={data}
-        columns={columns}
-        pagination={{ pageSize, total, showQuickJumper: false, showSizeChanger: false }}
-        onChange={handleChange}
-        loading={isFetching}
-      />
+      <Row align="middle" style={{ paddingRight: 34 }}>
+        <Col span={3} />
+        <Col span={4}>
+          <Text size="md" strong>
+            {t('date')}
+          </Text>
+        </Col>
+        <Col span={17}>
+          <Text size="md" strong>
+            {t('diagnosis')}
+          </Text>
+        </Col>
+      </Row>
+      <div style={{ height: 300, overflow: 'scroll' }}>
+        {data.pages.map((page: any) => (
+          <>
+            {page.prescriptions.map((prescription: PrescriptinRow) => (
+              <PrescriptionItem
+                prescriptionRow={prescription}
+                setSelectedPrescriptionId={setSelectedPrescriptionId}
+                openDeleteModal={() => setShowDeleteModal(true)}
+                goToEditPrescription={goToEditPrescription}
+              />
+            ))}
+          </>
+        ))}
+        <div ref={loadMoreButtonRef} style={{ textAlign: 'center', height: 35, marginTop: 16 }}>
+          {isLoading || isFetchingNextPage ? <span>{t('loading')}</span> : null}
+          {!hasNextPage && !isLoading ? (
+            <span style={{ opacity: 0.5 }}>{t('no more data')}</span>
+          ) : null}
+        </div>
+      </div>
       <DeleteModal
         action="delete"
         type="prescription"
