@@ -77,6 +77,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 setSelectedPrescriptionId={setSelectedPrescriptionId}
                 openDeleteModal={() => setShowDeleteModal(true)}
                 goToEditPrescription={goToEditPrescription}
+                key={prescription.id}
               />
             ))}
           </>

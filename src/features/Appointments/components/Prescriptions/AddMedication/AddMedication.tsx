@@ -10,14 +10,14 @@ import {
   frequencyCounts,
   frequencyPerDays,
   frequencyTimes,
-  MedicationItem,
+  MedicationRow,
   NewMedication,
   units,
 } from '../../../types';
 import MedicationAutocomplete from '../MedicationAutocomplete/MedicationAutocomplete';
 
 type Props = {
-  addMedication: (medication: MedicationItem) => void;
+  addMedication: (medication: MedicationRow) => void;
 };
 
 const AddMedication: React.FC<Props> = ({ addMedication }) => {
@@ -44,7 +44,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
     values: NewMedication,
     formikHelpers: FormikHelpers<NewMedication>,
   ) => {
-    const newMedication: MedicationItem = {
+    const newMedication: MedicationRow = {
       id: uuidv4(),
       name: values.name,
       frequency: `${values.frequencyCount} ${values.frequencyPerDay} ${values.frequencyTime}`,

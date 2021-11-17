@@ -105,7 +105,7 @@ export type NewMedication = {
   durationType: string;
 };
 
-export type MedicationItem = {
+export type MedicationRow = {
   id: string;
   name: string;
   unit: string;
@@ -124,7 +124,7 @@ export type PrescriptinRow = {
 export type PrescriptionForm = {
   diagnostic: string;
   note: string;
-  medications: MedicationItem[];
+  medications: MedicationRow[];
 };
 
 export type AppointmentModalContentTypes =

@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 import { Icon, Label } from '../../../../../components';
-import { MedicationItem, PrescriptionForm } from '../../../types';
+import { MedicationRow, PrescriptionForm } from '../../../types';
 import AddMedication from '../AddMedication/AddMedication';
 import MedicationsList from '../MedicationsList/MedicationsList';
 import PrescriptionNotes from '../PrescriptionNotes/PrescriptionNotes';
@@ -77,7 +77,7 @@ const EditPrescription: React.FC<Props> = ({
 
   const { values, touched, errors, handleChange, handleBlur, setFieldValue, handleSubmit } = formik;
 
-  const addMedication = (medication: MedicationItem) => {
+  const addMedication = (medication: MedicationRow) => {
     const newMedications = [...values.medications];
     newMedications.push(medication);
     setFieldValue('medications', newMedications);
