@@ -27,10 +27,11 @@ import {
 } from '../../services';
 import BlockPatientModal from './BlockPatientModal/BlockPatientModal';
 import PatientNotes from '../../components/PatientNotes/PatientNotes';
+import PrescriptionsList from '../../../Appointments/components/Prescriptions/PrescriptionsList/PrescriptionsList';
 // import PatientSkeleton from '../PatientSkeleton/PatientSkeleton';
 
 type Props = {
-  selectedPatient?: SelectedPatient;
+  selectedPatient: SelectedPatient;
   setSelectedPatient: (values: SelectedPatient) => void;
 };
 
@@ -333,7 +334,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
           ) : null}
         </Row>
       </div>
-      <div style={{ flexGrow: 1, height: 'calc(100% - 90px)' }}>
+      <div style={{ height: 'calc(100% - 120px)' }}>
         <Tabs
           defaultActiveKey="1"
           activeKey={activeKey}
@@ -379,6 +380,12 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             key="4"
           >
             <PatientNotes patientId={selectedPatient?.id} />
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={<Tab icon={<Icon name="capsule-line" />}>{t('prescriptions')}</Tab>}
+            key="5"
+          >
+            <PrescriptionsList patientId={selectedPatient.id} disableEdit />
           </Tabs.TabPane>
         </Tabs>
         <BlockPatientModal

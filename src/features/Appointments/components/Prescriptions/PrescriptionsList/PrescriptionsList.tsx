@@ -12,18 +12,20 @@ import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
 
 type Props = {
   patientId: string;
-  prescriptionId: string;
-  goToEditPrescription: () => void;
-  setSelectedPrescriptionId: (id: string) => void;
-  prescribeAgain: (prescription: PrescriptinRow) => void;
+  selectedPrescriptionId?: string;
+  setSelectedPrescriptionId?: (id: string) => void;
+  goToEditPrescription?: () => void;
+  prescribeAgain?: (prescription: PrescriptinRow) => void;
+  disableEdit?: boolean;
 };
 
 const PrescriptionsList: React.FC<Props> = ({
   patientId,
-  prescriptionId,
+  selectedPrescriptionId: prescriptionId,
   goToEditPrescription,
   setSelectedPrescriptionId,
   prescribeAgain,
+  disableEdit = false,
 }) => {
   const { t } = useTranslation();
 
@@ -49,7 +51,7 @@ const PrescriptionsList: React.FC<Props> = ({
   const {
     mutateAsync: deletePrescriptionMutate,
     isLoading: isDeletePrescriptionLoading,
-  } = useMutation(() => deletePrescription(patientId, prescriptionId));
+  } = useMutation(() => deletePrescription(patientId, prescriptionId || ''));
 
   const onDeleteSuccess = () => {
     cache.invalidateQueries('prescriptions-history');
@@ -70,7 +72,7 @@ const PrescriptionsList: React.FC<Props> = ({
           </Text>
         </Col>
       </Row>
-      <div style={{ height: 300, overflow: 'scroll' }}>
+      <div style={{ height: disableEdit ? '100%' : 300, overflow: 'scroll' }}>
         {data.pages.map((page: any) => (
           <>
             {page.prescriptions.map((prescription: PrescriptinRow) => (
@@ -80,6 +82,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 openDeleteModal={() => setShowDeleteModal(true)}
                 goToEditPrescription={goToEditPrescription}
                 prescribeAgain={prescribeAgain}
+                disableEdit={disableEdit}
                 key={prescription.id}
               />
             ))}

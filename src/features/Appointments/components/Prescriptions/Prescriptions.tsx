@@ -10,7 +10,7 @@ type Props = {
   prescriptionId: string;
   setContentType: (contentType: AppointmentModalContentTypes) => void;
   setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
-  setSelectedPrescriptionId: (id: string) => void;
+  setSelectedPrescriptionId?: (id: string) => void;
 };
 
 const Prescriptions: React.FC<Props> = ({
@@ -53,7 +53,7 @@ const Prescriptions: React.FC<Props> = ({
       </div>
       <PrescriptionsList
         patientId={patientId}
-        prescriptionId={prescriptionId}
+        selectedPrescriptionId={prescriptionId}
         goToEditPrescription={() => setContentType('edit-prescription')}
         setSelectedPrescriptionId={setSelectedPrescriptionId}
         prescribeAgain={prescribeAgain}

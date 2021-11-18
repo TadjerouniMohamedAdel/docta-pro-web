@@ -7,10 +7,11 @@ import { PrescriptinRow } from '../../../../types';
 
 type Props = {
   prescriptionRow: PrescriptinRow;
-  setSelectedPrescriptionId: (prescriptionId: string) => void;
+  setSelectedPrescriptionId?: (prescriptionId: string) => void;
   openDeleteModal: () => void;
-  goToEditPrescription: () => void;
-  prescribeAgain: (prescription: PrescriptinRow) => void;
+  goToEditPrescription?: () => void;
+  prescribeAgain?: (prescription: PrescriptinRow) => void;
+  disableEdit: boolean;
 };
 
 const PrescriptionItem: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const PrescriptionItem: React.FC<Props> = ({
   setSelectedPrescriptionId,
   goToEditPrescription,
   prescribeAgain,
+  disableEdit,
 }) => {
   const { t } = useTranslation();
 
@@ -26,42 +28,50 @@ const PrescriptionItem: React.FC<Props> = ({
   const isNew = isSameDay(new Date(date), new Date());
 
   const handlePrescribeAgain = () => {
-    prescribeAgain(prescriptionRow);
+    if (prescribeAgain) prescribeAgain(prescriptionRow);
   };
 
   const handleEdit = () => {
+    if (!setSelectedPrescriptionId || !goToEditPrescription) return;
+
     setSelectedPrescriptionId(id);
     goToEditPrescription();
   };
 
   const handleDelete = () => {
+    if (!setSelectedPrescriptionId) return;
+
     setSelectedPrescriptionId(id);
     openDeleteModal();
   };
 
   const menu = (
     <Menu>
-      <Menu.Item>
-        <Button type="link" icon={<Icon name="refresh-line" />} onClick={handlePrescribeAgain}>
-          {t('prescribe again')}
-        </Button>
-      </Menu.Item>
+      {!disableEdit && (
+        <Menu.Item>
+          <Button type="link" icon={<Icon name="refresh-line" />} onClick={handlePrescribeAgain}>
+            {t('prescribe again')}
+          </Button>
+        </Menu.Item>
+      )}
       <Menu.Item>
         <Button type="text" icon={<Icon name="printer-line" />}>
           {t('print')}
         </Button>
       </Menu.Item>
-      <Menu.Item>
-        <Button
-          type="text"
-          icon={<Icon name="delete-bin-7-line" />}
-          className="delete-action"
-          onClick={handleDelete}
-          disabled={!isNew}
-        >
-          {t('delete')}
-        </Button>
-      </Menu.Item>
+      {!disableEdit && (
+        <Menu.Item>
+          <Button
+            type="text"
+            icon={<Icon name="delete-bin-7-line" />}
+            className="delete-action"
+            onClick={handleDelete}
+            disabled={!isNew}
+          >
+            {t('delete')}
+          </Button>
+        </Menu.Item>
+      )}
     </Menu>
   );
 
@@ -86,17 +96,19 @@ const PrescriptionItem: React.FC<Props> = ({
       </Col>
       <Col span={6}>
         <Row justify="end">
-          <Col>
-            <Button
-              type="text"
-              size="small"
-              className="edit-action"
-              onClick={handleEdit}
-              disabled={!isNew}
-            >
-              <Icon name="pencil-line" />
-            </Button>
-          </Col>
+          {!disableEdit && (
+            <Col>
+              <Button
+                type="text"
+                size="small"
+                className="edit-action"
+                onClick={handleEdit}
+                disabled={!isNew}
+              >
+                <Icon name="pencil-line" />
+              </Button>
+            </Col>
+          )}
           <Col>
             <Button type="text" size="small">
               <Icon name="serach-eye-line" />
