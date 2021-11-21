@@ -35,7 +35,6 @@ const PrescriptionItem: React.FC<Props> = ({
       try {
         const prescriptionData = await fetchPrescriptionDetails(patientId, prescriptionRow.id);
         const { data: prescription } = prescriptionData;
-        console.log(prescription);
 
         prescribeAgain(prescription);
       } catch (err) {
