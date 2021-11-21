@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppointmentModalContentTypes, PrescriptinRow, PrescriptionForm } from '../../types';
+import { AppointmentModalContentTypes, PrescriptionDetails, PrescriptionForm } from '../../types';
 import AddPrescriptionButton from './AddPrescriptionButton/AddPrescriptionButton';
 import PrescriptionsList from './PrescriptionsList/PrescriptionsList';
 
@@ -31,7 +31,7 @@ const Prescriptions: React.FC<Props> = ({
     setContentType('new-prescription');
   };
 
-  const prescribeAgain = (prescription: PrescriptinRow) => {
+  const prescribeAgain = (prescription: PrescriptionDetails) => {
     setPrescriptionInitialValues(prescription);
     setContentType('new-prescription');
   };

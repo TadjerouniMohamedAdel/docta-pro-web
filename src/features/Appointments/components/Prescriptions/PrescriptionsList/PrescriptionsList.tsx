@@ -7,7 +7,7 @@ import { useGetPrescriptionsHistory } from '../../../../Patients/hooks';
 import DeleteModal from '../../../../../components/MultiActionModal/MultiActionModal';
 import { deletePrescription } from '../../../services';
 import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
-import { PrescriptinRow } from '../../../types';
+import { PrescriptinRow, PrescriptionDetails } from '../../../types';
 import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
   selectedPrescriptionId?: string;
   setSelectedPrescriptionId?: (id: string) => void;
   goToEditPrescription?: () => void;
-  prescribeAgain?: (prescription: PrescriptinRow) => void;
+  prescribeAgain?: (prescription: PrescriptionDetails) => void;
   disableEdit?: boolean;
 };
 
@@ -59,7 +59,7 @@ const PrescriptionsList: React.FC<Props> = ({
 
   return (
     <>
-      <Row align="middle" style={{ paddingRight: 34 }}>
+      <Row align="middle">
         <Col span={3} />
         <Col span={4}>
           <Text size="md" strong>
@@ -75,15 +75,16 @@ const PrescriptionsList: React.FC<Props> = ({
       <div style={{ height: disableEdit ? '100%' : 300, overflow: 'scroll' }}>
         {data.pages.map((page: any) => (
           <>
-            {page.prescriptions.map((prescription: PrescriptinRow) => (
+            {page.prescriptions.map((prescriptionRow: PrescriptinRow) => (
               <PrescriptionItem
-                prescriptionRow={prescription}
+                patientId={patientId}
+                prescriptionRow={prescriptionRow}
                 setSelectedPrescriptionId={setSelectedPrescriptionId}
                 openDeleteModal={() => setShowDeleteModal(true)}
                 goToEditPrescription={goToEditPrescription}
                 prescribeAgain={prescribeAgain}
                 disableEdit={disableEdit}
-                key={prescription.id}
+                key={prescriptionRow.id}
               />
             ))}
           </>
@@ -95,6 +96,7 @@ const PrescriptionsList: React.FC<Props> = ({
           ) : null}
         </div>
       </div>
+
       <DeleteModal
         action="delete"
         type="prescription"

@@ -204,7 +204,21 @@
   "account setup step 7 title": "",
   "account setup step 7 description": "",
   "prescriptions": "",
+  "new": "",
   "new blank prescription": "",
-  "new form template": "",
-  "prescription note placeholder": ""
+  "diagnosis": "",
+  "prescribe again": "",
+  "print": "",
+  "add medication": "",
+  "units": "",
+  "frequency": "",
+  "add": "",
+  "clear": "",
+  "prescription": "",
+  "preview": "",
+  "medication": "",
+  "notes": "",
+  "prescription note placeholder": "",
+  "new prescription": "",
+  "edit prescription": ""
 }

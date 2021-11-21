@@ -1,3 +1,5 @@
+import { StateCity } from '../../common/types';
+
 export type AppointmentStatus =
   | 'BOOKED'
   | 'CONFIRMED'
@@ -115,18 +117,51 @@ export type MedicationRow = {
   isDeleted?: boolean;
 };
 
-export type PrescriptinRow = {
-  id: string;
-  createdAt: string;
+export type PrescriptionForm = {
   diagnostic: string;
   note: string;
   medications: MedicationRow[];
 };
 
-export type PrescriptionForm = {
+export type PrescriptinRow = {
+  id: string;
+  createdAt: string;
   diagnostic: string;
+};
+
+export type PrescriptionDetails = PrescriptinRow & {
   note: string;
   medications: MedicationRow[];
+  patient: {
+    id: string;
+    firstName: string;
+    firstNameAr: string;
+    lastName: string;
+    lastNameAr: string;
+    birthDate: string;
+  };
+  doctor: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    firstNameAr: string;
+    lastNameAr: string;
+    title: string;
+    specialties: {
+      id: string;
+      isMain: number;
+      name: string;
+      nameAr: string;
+      nameFr: string;
+    }[];
+    establishment: {
+      contactNumber: string | null;
+      secondaryContactNumber: string | null;
+      city: StateCity;
+      state: StateCity;
+      addressLine1: string;
+    };
+  };
 };
 
 export type AppointmentModalContentTypes =

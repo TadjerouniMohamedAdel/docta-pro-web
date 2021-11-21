@@ -67,6 +67,8 @@ const NewPrescription: React.FC<Props> = ({
     setFieldValue('medications', newMedications);
   };
 
+  console.log(values);
+
   return (
     <Form form={form} className="prescription-form" onFinish={handleSubmit}>
       <div style={{ padding: '24px 40px 0' }}>

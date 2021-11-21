@@ -3,18 +3,21 @@ import { Col, Row, Tag, Menu, Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Button, Icon, Text } from '../../../../../../components';
-import { PrescriptinRow } from '../../../../types';
+import { PrescriptinRow, PrescriptionDetails } from '../../../../types';
+import { fetchPrescriptionDetails } from '../../../../services';
 
 type Props = {
+  patientId: string;
   prescriptionRow: PrescriptinRow;
   setSelectedPrescriptionId?: (prescriptionId: string) => void;
   openDeleteModal: () => void;
   goToEditPrescription?: () => void;
-  prescribeAgain?: (prescription: PrescriptinRow) => void;
+  prescribeAgain?: (prescription: PrescriptionDetails) => void;
   disableEdit: boolean;
 };
 
 const PrescriptionItem: React.FC<Props> = ({
+  patientId,
   prescriptionRow,
   openDeleteModal,
   setSelectedPrescriptionId,
@@ -27,8 +30,18 @@ const PrescriptionItem: React.FC<Props> = ({
   const { id, createdAt: date, diagnostic } = prescriptionRow;
   const isNew = isSameDay(new Date(date), new Date());
 
-  const handlePrescribeAgain = () => {
-    if (prescribeAgain) prescribeAgain(prescriptionRow);
+  const handlePrescribeAgain = async () => {
+    if (prescribeAgain) {
+      try {
+        const prescriptionData = await fetchPrescriptionDetails(patientId, prescriptionRow.id);
+        const { data: prescription } = prescriptionData;
+        console.log(prescription);
+
+        prescribeAgain(prescription);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const handleEdit = () => {
@@ -76,7 +89,7 @@ const PrescriptionItem: React.FC<Props> = ({
   );
 
   return (
-    <Row align="middle" style={{ paddingRight: 34 }}>
+    <Row align="middle">
       <Col span={3}>
         {isNew && (
           <Row justify="center" align="middle">
@@ -95,7 +108,7 @@ const PrescriptionItem: React.FC<Props> = ({
         </Text>
       </Col>
       <Col span={6}>
-        <Row justify="end">
+        <Row justify="center">
           {!disableEdit && (
             <Col>
               <Button
