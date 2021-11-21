@@ -1,0 +1,135 @@
+@keyframes zoom-in {
+  0% {
+    transform: scale(0);
+  }
+ 
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-out {
+  0% {
+    transform: scale(1);
+  }
+ 
+  100% {
+    transform: scale(0);
+  }
+}
+
+.zoom-out{
+  animation: zoom-out 0.3s ease;
+}
+.prescription-preview-card {
+  width: 422px;
+  animation: zoom-in 0.3s ease-in-out;
+  height: auto;
+  transition: .5s;
+  z-index: 2000;
+  margin: auto;
+  position: absolute !important;
+  top: 0 !important;
+  right: -432px !important;
+  padding: 0px;
+  .ant-card-body {
+    padding: 0px;
+  }
+  .prescription-header {
+    padding-top: 10px;
+    display: flex;
+    width: 100%;
+    flex: 1;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+
+    .prescription-state-badge {
+      margin-left: 11px;
+      margin-right: 11px;
+      width: 34px;
+      border: 1px solid #00b6f8;
+      height: 22px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0; 182; 248; 0.1);
+      color: #00b6f8;
+      font-size: 9px;
+      font-weight: bold;
+    }
+    .prescription-print-button {
+      min-width: 105px;
+      margin-left: 16px;
+      margin-right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .prescription-close-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .prescription-cabinet-info {
+    padding: 16px 40px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .prescription-cabinet-logo {
+      margin-bottom: 5px;
+      padding: 10px 14px;
+      font-size: 9px;
+      font-weight: bold;
+      color: #fff;
+      position: relative;
+      width: 83px;
+      height: 52px;
+      border-radius: 7px;
+      background-color: #74798c;
+    }
+    .prescription-info-text {
+      margin-top: 4px !important;
+      color: #74798c;
+      font-weight: bold;
+      font-size: 9px !important;
+    }
+  }
+  .prescription-cabinet-contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .cabinet-contact {
+      text-align: right;
+      margin-bottom: 2px;
+      color: #74798c;
+      font-size: 9px !important;
+    }
+  }
+  .prescription-content {
+    padding: 24px 40px;
+    width: 100%;
+
+    .prescription-title {
+      display: block;
+      font-weight: bold;
+      text-align: center;
+      font-size: 16px !important;
+    }
+    .prescription-patient-info {
+      margin-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+
+
+.modals-two-window{
+  margin-left: 400px;  
+}
