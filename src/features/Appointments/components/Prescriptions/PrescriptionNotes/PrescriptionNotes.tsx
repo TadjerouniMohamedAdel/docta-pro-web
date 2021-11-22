@@ -26,7 +26,7 @@ const PrescriptionNotes: React.FC<Props> = ({ note, setNote }) => {
           placeholder={t('prescription note placeholder')}
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          icon={<Icon name="24-hours-line" />}
+          icon={<Icon name="feedback-line" />}
           style={{ color: '#74798C' }}
         />
       </Col>

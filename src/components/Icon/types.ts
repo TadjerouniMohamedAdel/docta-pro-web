@@ -1,4 +1,5 @@
 export type IconName =
+  | 'feedback-line'
   | 'serach-eye-line'
   | 'file-3-line'
   | 'close-circle-line'

@@ -206,7 +206,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
                 </Col>
                 <Col span={7}>
                   <Button
-                    style={{ width: '100%', display: 'flex', alignItems: 'center', columnGap: 12 }}
+                    className="add-medication-button"
                     icon={<Icon name="add-circle-fill" />}
                     onClick={() => handleSubmit()}
                   >

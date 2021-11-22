@@ -65,7 +65,7 @@ const AppointmentInfo: React.FC<Props> = ({
         </div>
       </Tabs.TabPane>
       <Tabs.TabPane
-        tab={<Tab icon={<Icon name="file-text-line" />}> {t('prescriptions')} </Tab>}
+        tab={<Tab icon={<Icon name="capsule-line" />}> {t('prescriptions')} </Tab>}
         key="prescriptions"
       >
         <Prescriptions
