@@ -69,10 +69,9 @@ export const addPrescription = async (
 };
 
 export const fetchPrescriptionDetails = async (
-  patientId: string,
   prescriptionId: string,
-): Promise<{ data: PrescriptionDetails }> => {
-  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions/${prescriptionId}`);
+): Promise<{data:PrescriptionDetails}> => {
+  return fetcher(`/api/v1/professionals/patients/prescriptions/${prescriptionId}`);
 };
 
 export const updatePrescription = async (

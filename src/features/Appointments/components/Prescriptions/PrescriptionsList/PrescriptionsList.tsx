@@ -8,6 +8,7 @@ import DeleteModal from '../../../../../components/MultiActionModal/MultiActionM
 import { deletePrescription } from '../../../services';
 import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
 import { PrescriptinRow, PrescriptionDetails } from '../../../types';
+import PrescriptionPreview from '../../../../Patients/components/Prescriptions/PrescriptionPreview/PrescriptionPreview';
 import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
 
 type Props = {
@@ -30,6 +31,7 @@ const PrescriptionsList: React.FC<Props> = ({
   const { t } = useTranslation();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [previewId, setPreviewId] = useState<null | string>(null);
 
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -77,7 +79,6 @@ const PrescriptionsList: React.FC<Props> = ({
           <>
             {page.prescriptions.map((prescriptionRow: PrescriptinRow) => (
               <PrescriptionItem
-                patientId={patientId}
                 prescriptionRow={prescriptionRow}
                 setSelectedPrescriptionId={setSelectedPrescriptionId}
                 openDeleteModal={() => setShowDeleteModal(true)}
@@ -85,6 +86,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 prescribeAgain={prescribeAgain}
                 disableEdit={disableEdit}
                 key={prescriptionRow.id}
+                setPreviewId={setPreviewId}
               />
             ))}
           </>
@@ -106,6 +108,15 @@ const PrescriptionsList: React.FC<Props> = ({
         isLoading={isDeletePrescriptionLoading}
         onSuccess={onDeleteSuccess}
       />
+      {
+        previewId && (
+          <PrescriptionPreview
+            prescriptionId={previewId}
+            setSelectedPrescriptionId={setPreviewId}
+          />
+
+        )
+      }
     </>
   );
 };
