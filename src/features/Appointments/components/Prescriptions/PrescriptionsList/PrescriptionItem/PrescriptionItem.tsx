@@ -7,23 +7,23 @@ import { PrescriptinRow, PrescriptionDetails } from '../../../../types';
 import { fetchPrescriptionDetails } from '../../../../services';
 
 type Props = {
-  patientId: string;
   prescriptionRow: PrescriptinRow;
   setSelectedPrescriptionId?: (prescriptionId: string) => void;
   openDeleteModal: () => void;
   goToEditPrescription?: () => void;
   prescribeAgain?: (prescription: PrescriptionDetails) => void;
   disableEdit: boolean;
+  setPreviewId:(id:string|null)=>void
 };
 
 const PrescriptionItem: React.FC<Props> = ({
-  patientId,
   prescriptionRow,
   openDeleteModal,
   setSelectedPrescriptionId,
   goToEditPrescription,
   prescribeAgain,
   disableEdit,
+  setPreviewId
 }) => {
   const { t } = useTranslation();
 
@@ -33,7 +33,7 @@ const PrescriptionItem: React.FC<Props> = ({
   const handlePrescribeAgain = async () => {
     if (prescribeAgain) {
       try {
-        const prescriptionData = await fetchPrescriptionDetails(patientId, prescriptionRow.id);
+        const prescriptionData = await fetchPrescriptionDetails(prescriptionRow.id);
         const { data: prescription } = prescriptionData;
 
         prescribeAgain(prescription);
@@ -122,7 +122,7 @@ const PrescriptionItem: React.FC<Props> = ({
             </Col>
           )}
           <Col>
-            <Button type="text" size="small" className="edit-action">
+            <Button type="text" size="small" className="edit-action" onClick={()=>setPreviewId(id)}>
               <Icon name="search-eye-line" />
             </Button>
           </Col>

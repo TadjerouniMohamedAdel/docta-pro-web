@@ -20,7 +20,7 @@ const initialData: PrescriptionForm = {
 const useFetchPrescription = (patientId: string, prescriptionId: string): any => {
   const { data: resolvedData, isLoading } = useQuery(
     ['prescription-details', patientId, prescriptionId],
-    () => fetchPrescriptionDetails(patientId, prescriptionId),
+    () => fetchPrescriptionDetails( prescriptionId),
     { keepPreviousData: true },
   );
 

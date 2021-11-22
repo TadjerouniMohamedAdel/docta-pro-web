@@ -1,4 +1,5 @@
 import { StateCity } from '../../common/types';
+import { Specialty } from '../Settings/views/VisitReasons/types';
 
 export type AppointmentStatus =
   | 'BOOKED'
@@ -129,6 +130,8 @@ export type PrescriptinRow = {
   diagnostic: string;
 };
 
+
+
 export type PrescriptionDetails = PrescriptinRow & {
   note: string;
   medications: MedicationRow[];
@@ -147,19 +150,19 @@ export type PrescriptionDetails = PrescriptinRow & {
     firstNameAr: string;
     lastNameAr: string;
     title: string;
-    specialties: {
-      id: string;
-      isMain: number;
-      name: string;
-      nameAr: string;
-      nameFr: string;
-    }[];
+    specialties: Specialty[];
     establishment: {
       contactNumber: string | null;
       secondaryContactNumber: string | null;
       city: StateCity;
       state: StateCity;
       addressLine1: string;
+      images:{url:string}[]
     };
   };
 };
+
+export type AppointmentModalContentTypes =
+  | 'prescriptions'
+  | 'new-prescription'
+  | 'edit-prescription';
