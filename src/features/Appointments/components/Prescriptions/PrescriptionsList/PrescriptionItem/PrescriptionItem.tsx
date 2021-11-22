@@ -61,7 +61,7 @@ const PrescriptionItem: React.FC<Props> = ({
     <Menu>
       {!disableEdit && (
         <Menu.Item>
-          <Button type="link" icon={<Icon name="refresh-line" />} onClick={handlePrescribeAgain}>
+          <Button type="link" icon={<Icon name="restart-line" />} onClick={handlePrescribeAgain}>
             {t('prescribe again')}
           </Button>
         </Menu.Item>
@@ -89,15 +89,15 @@ const PrescriptionItem: React.FC<Props> = ({
 
   return (
     <Row align="middle">
-      <Col span={3}>
-        {isNew && (
+      {!disableEdit && isNew && (
+        <Col span={3}>
           <Row justify="center" align="middle">
             <Col>
               <Tag className="new-prescription-tag">{t('new')}</Tag>
             </Col>
           </Row>
-        )}
-      </Col>
+        </Col>
+      )}
       <Col span={4}>
         <Text size="md">{format(new Date(date), 'dd MMM yyyy')}</Text>
       </Col>
@@ -122,8 +122,8 @@ const PrescriptionItem: React.FC<Props> = ({
             </Col>
           )}
           <Col>
-            <Button type="text" size="small">
-              <Icon name="serach-eye-line" />
+            <Button type="text" size="small" className="edit-action">
+              <Icon name="search-eye-line" />
             </Button>
           </Col>
           <Col>

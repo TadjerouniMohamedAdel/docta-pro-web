@@ -23,7 +23,7 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
         <Col>
           <Row>
             <Col>
-              <Button type="link" icon={<Icon name="serach-eye-line" />}>
+              <Button type="link" icon={<Icon name="search-eye-line" />}>
                 {t('preview')}
               </Button>
             </Col>

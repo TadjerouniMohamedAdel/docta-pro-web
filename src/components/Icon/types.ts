@@ -1,6 +1,7 @@
 export type IconName =
+  | 'restart-line'
   | 'feedback-line'
-  | 'serach-eye-line'
+  | 'search-eye-line'
   | 'file-3-line'
   | 'close-circle-line'
   | 'add-circle-line'

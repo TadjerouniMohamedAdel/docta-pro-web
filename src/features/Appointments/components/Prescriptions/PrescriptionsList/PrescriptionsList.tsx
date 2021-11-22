@@ -60,7 +60,7 @@ const PrescriptionsList: React.FC<Props> = ({
   return (
     <>
       <Row align="middle">
-        <Col span={3} />
+        {!disableEdit && <Col span={3} />}
         <Col span={4}>
           <Text size="md" strong>
             {t('date')}
