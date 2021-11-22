@@ -3,7 +3,7 @@ import { FormInstance, Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Icon, Tab } from '../../../../../components';
 import AppointmentSelection from '../../AppointmentSelection/AppointmentSelection';
-import { AppointmentForm, AppointmentModalContentTypes, PrescriptionForm } from '../../../types';
+import { AppointmentForm, PrescriptionForm } from '../../../types';
 import { PatientNotes } from '../../../../Patients';
 import Prescriptions from '../../Prescriptions/Prescriptions';
 
@@ -15,7 +15,7 @@ type Props = {
   prescriptionId: string;
   currentDate: Date;
   appointmentForm: FormInstance;
-  setContentType: (contentType: AppointmentModalContentTypes) => void;
+  setContentType: (contentType: string) => void;
   setSelectedPrescriptionId: (id: string) => void;
   setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
   selectedTab: string;

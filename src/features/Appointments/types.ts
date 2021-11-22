@@ -163,8 +163,3 @@ export type PrescriptionDetails = PrescriptinRow & {
     };
   };
 };
-
-export type AppointmentModalContentTypes =
-  | 'prescriptions'
-  | 'new-prescription'
-  | 'edit-prescription';

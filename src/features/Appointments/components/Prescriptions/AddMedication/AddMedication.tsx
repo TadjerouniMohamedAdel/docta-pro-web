@@ -126,7 +126,9 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
               onChange={(e) => setFieldValue('unitType', e)}
             >
               {units.map((unit) => (
-                <Option value={unit}>{unit}</Option>
+                <Option key={unit} value={unit}>
+                  {unit}
+                </Option>
               ))}
             </Select>
           </Input.Group>
@@ -138,7 +140,9 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
             onChange={(e) => setFieldValue('frequencyCount', e)}
           >
             {frequencyCounts.map((frequencyCount) => (
-              <Option value={frequencyCount}>{frequencyCount}</Option>
+              <Option key={frequencyCount} value={frequencyCount}>
+                {frequencyCount}
+              </Option>
             ))}
           </Select>
         </Col>
@@ -149,7 +153,9 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
             onChange={(e) => setFieldValue('frequencyPerDay', e)}
           >
             {frequencyPerDays.map((frequencyPerDay) => (
-              <Option value={frequencyPerDay}>{frequencyPerDay}</Option>
+              <Option key={frequencyPerDay} value={frequencyPerDay}>
+                {frequencyPerDay}
+              </Option>
             ))}
           </Select>
         </Col>
@@ -160,7 +166,9 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
             onChange={(e) => setFieldValue('frequencyTime', e)}
           >
             {frequencyTimes.map((frequencyTime) => (
-              <Option value={frequencyTime}>{frequencyTime}</Option>
+              <Option key={frequencyTime} value={frequencyTime}>
+                {frequencyTime}
+              </Option>
             ))}
           </Select>
         </Col>

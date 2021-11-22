@@ -1,14 +1,14 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppointmentModalContentTypes, PrescriptionDetails, PrescriptionForm } from '../../types';
+import { PrescriptionDetails, PrescriptionForm } from '../../types';
 import AddPrescriptionButton from './AddPrescriptionButton/AddPrescriptionButton';
 import PrescriptionsList from './PrescriptionsList/PrescriptionsList';
 
 type Props = {
   patientId: string;
   prescriptionId: string;
-  setContentType: (contentType: AppointmentModalContentTypes) => void;
+  setContentType: (contentType: string) => void;
   setPrescriptionInitialValues: (initialValues: PrescriptionForm) => void;
   setSelectedPrescriptionId?: (id: string) => void;
 };

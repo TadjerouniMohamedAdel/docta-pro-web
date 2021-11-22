@@ -6,7 +6,7 @@ import { ProtectedComponent } from '../../../Auth';
 import { useUpdateAppointment } from '../../hooks';
 import AppointmentDetailsContent from '../../components/AppointmentModalContent/AppointmentDetailsContent/AppointmentDetailsContent';
 import NewPrescription from '../../components/Prescriptions/NewPrescription/NewPrescription';
-import { AppointmentModalContentTypes, PrescriptionForm } from '../../types';
+import { PrescriptionForm } from '../../types';
 import ModalTitleWithBackButton from '../../../../components/ModalTitleWithBackButton/ModalTitleWithBackButton';
 import EditPrescription from '../../components/Prescriptions/EditPrescription/EditPrescription';
 
@@ -34,8 +34,9 @@ const AppointmentDetails: React.FC<Props> = ({
   });
 
   const [form] = Form.useForm();
-
-  const [contentType, setContentType] = useState<AppointmentModalContentTypes>('prescriptions');
+  // 'info' | 'new-prescription' | 'edit-prescription';
+  const [contentType, setContentType] = useState('info');
+  // 'details' | 'notes' | 'prescriptions';
   const [selectedInfoTab, setSelectedInfoTab] = useState('details');
 
   const [selectedPrescriptionId, setSelectedPrescriptionId] = useState('');
@@ -46,17 +47,20 @@ const AppointmentDetails: React.FC<Props> = ({
   let content = null;
 
   const backToPrescriptions = () => {
-    setContentType('prescriptions');
+    setContentType('info');
     setSelectedInfoTab('prescriptions');
   };
 
   // we just reset content type, all content inside the modal is reset on close
   useEffect(() => {
-    if (!visible) setSelectedInfoTab('details');
+    if (!visible) {
+      setContentType('info');
+      setSelectedInfoTab('details');
+    }
   }, [visible]);
 
   switch (contentType) {
-    case 'prescriptions':
+    case 'info':
       modalHeaderInfo = {
         title: t('appointment details'),
       };
