@@ -1,5 +1,5 @@
 import { fetcher } from '../../common/utilities';
-import { AppointmentForm, AppointmentStatus, PrescriptionForm } from './types';
+import { AppointmentForm, AppointmentStatus, PrescriptionDetails, PrescriptionForm } from './types';
 
 export const fetchAppointments = async (from: Date, to: Date, reasons: string[]): Promise<any> => {
   return fetcher(
@@ -69,10 +69,9 @@ export const addPrescription = async (
 };
 
 export const fetchPrescriptionDetails = async (
-  patientId: string,
   prescriptionId: string,
-): Promise<{ data: PrescriptionForm }> => {
-  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions/${prescriptionId}`);
+): Promise<{data:PrescriptionDetails}> => {
+  return fetcher(`/api/v1/professionals/patients/prescriptions/${prescriptionId}`);
 };
 
 export const updatePrescription = async (

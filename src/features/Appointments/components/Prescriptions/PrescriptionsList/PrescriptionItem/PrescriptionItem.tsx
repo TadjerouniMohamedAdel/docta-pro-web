@@ -12,6 +12,7 @@ type Props = {
   goToEditPrescription?: () => void;
   prescribeAgain?: (prescription: PrescriptinRow) => void;
   disableEdit: boolean;
+  setPreviewId:(id:string|null)=>void
 };
 
 const PrescriptionItem: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const PrescriptionItem: React.FC<Props> = ({
   goToEditPrescription,
   prescribeAgain,
   disableEdit,
+  setPreviewId
 }) => {
   const { t } = useTranslation();
 
@@ -110,7 +112,7 @@ const PrescriptionItem: React.FC<Props> = ({
             </Col>
           )}
           <Col>
-            <Button type="text" size="small">
+            <Button type="text" size="small" onClick={()=>setPreviewId(id)}>
               <Icon name="serach-eye-line" />
             </Button>
           </Col>

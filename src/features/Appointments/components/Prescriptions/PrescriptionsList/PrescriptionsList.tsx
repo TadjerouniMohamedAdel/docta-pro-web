@@ -9,6 +9,7 @@ import { deletePrescription } from '../../../services';
 import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
 import { PrescriptinRow } from '../../../types';
 import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
+import PrescriptionPreview from '../../../../Patients/components/Prescriptions/PrescriptionPreview/PrescriptionPreview';
 
 type Props = {
   patientId: string;
@@ -30,6 +31,7 @@ const PrescriptionsList: React.FC<Props> = ({
   const { t } = useTranslation();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [previewId, setPreviewId] = useState<null | string>(null);
 
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -84,6 +86,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 prescribeAgain={prescribeAgain}
                 disableEdit={disableEdit}
                 key={prescription.id}
+                setPreviewId={setPreviewId}
               />
             ))}
           </>
@@ -104,6 +107,15 @@ const PrescriptionsList: React.FC<Props> = ({
         isLoading={isDeletePrescriptionLoading}
         onSuccess={onDeleteSuccess}
       />
+      {
+        previewId && (
+          <PrescriptionPreview
+            prescriptionId={previewId}
+            setSelectedPrescriptionId={setPreviewId}
+          />
+
+        )
+      }
     </>
   );
 };

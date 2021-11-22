@@ -1,3 +1,6 @@
+import { StateCity } from '../../common/types';
+import { Specialty } from '../Settings/views/VisitReasons/types';
+
 export type AppointmentStatus =
   | 'BOOKED'
   | 'CONFIRMED'
@@ -127,6 +130,36 @@ export type PrescriptionForm = {
   diagnostic: string;
   note: string;
   medications: MedicationRow[];
+};
+
+export type PrescriptionDetails = PrescriptinRow & {
+  note: string;
+  medications: MedicationRow[];
+  patient: {
+    id: string;
+    firstName: string;
+    firstNameAr: string;
+    lastName: string;
+    lastNameAr: string;
+    birthDate: string;
+  };
+  doctor: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    firstNameAr: string;
+    lastNameAr: string;
+    title: string;
+    specialties: Specialty[];
+    establishment: {
+      contactNumber: string | null;
+      secondaryContactNumber: string | null;
+      city: StateCity;
+      state: StateCity;
+      addressLine1: string;
+      images:{url:string}[]
+    };
+  };
 };
 
 export type AppointmentModalContentTypes =
