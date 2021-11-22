@@ -88,26 +88,26 @@ const PrescriptionItem: React.FC<Props> = ({
   );
 
   return (
-    <Row align="middle">
-      {!disableEdit && isNew && (
-        <Col span={3}>
+    <Row align="middle" style={{ padding: '0 24px' }}>
+      <Col span={disableEdit ? 0 : 3}>
+        {isNew && (
           <Row justify="center" align="middle">
             <Col>
               <Tag className="new-prescription-tag">{t('new')}</Tag>
             </Col>
           </Row>
-        </Col>
-      )}
+        )}
+      </Col>
       <Col span={4}>
         <Text size="md">{format(new Date(date), 'dd MMM yyyy')}</Text>
       </Col>
-      <Col span={11}>
+      <Col flex={1}>
         <Text size="md" type="secondary">
           {diagnostic}
         </Text>
       </Col>
       <Col span={6}>
-        <Row justify="center">
+        <Row justify="end">
           {!disableEdit && (
             <Col>
               <Button

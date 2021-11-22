@@ -59,14 +59,14 @@ const PrescriptionsList: React.FC<Props> = ({
 
   return (
     <>
-      <Row align="middle">
-        {!disableEdit && <Col span={3} />}
+      <Row align="middle" style={{ padding: '0 24px' }}>
+        <Col span={disableEdit ? 0 : 3} />
         <Col span={4}>
           <Text size="md" strong>
             {t('date')}
           </Text>
         </Col>
-        <Col span={17}>
+        <Col flex={1}>
           <Text size="md" strong>
             {t('diagnosis')}
           </Text>
