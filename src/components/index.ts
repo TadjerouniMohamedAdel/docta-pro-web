@@ -15,3 +15,4 @@ export { default as Spacer } from './Spacer/Spacer';
 export { default as Tab } from './Tab/Tab';
 export { default as Text } from './Text/Text';
 export { default as TimePicker } from './TimePicker/TimePicker';
+export { default as TextArea } from './TextArea/TextArea';

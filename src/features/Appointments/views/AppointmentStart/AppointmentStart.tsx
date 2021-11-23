@@ -1,23 +1,20 @@
-/* eslint-disable radix */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQueryClient } from 'react-query';
-import { Col, Dropdown, Form, Menu, Row } from 'antd';
-import moment from 'moment';
+import { useMutation } from 'react-query';
+import { Form } from 'antd';
 import { Button, Modal, Icon } from '../../../../components';
-import { AppointmentForm, AppointmentStatus } from '../../types';
-import { editAppointment, updateAppointmentStatus } from '../../services';
-import Spacer from '../../../../components/Spacer/Spacer';
-import Text from '../../../../components/Text/Text';
-import { useCheckAccess, ProtectedComponent } from '../../../Auth';
-import { getWeekRange } from '../../../../common/utilities';
-import AppointmentInfo from '../../components/AppointmentInfo/AppointmentInfo';
+import { editAppointment } from '../../services';
+import StartAppointmentContent from '../../components/AppointmentModalContent/StartAppointmentContent/StartAppointmentContent';
+import NewPrescription from '../../components/Prescriptions/NewPrescription/NewPrescription';
+import { PrescriptionForm } from '../../types';
+import ModalTitleWithBackButton from '../../../../components/ModalTitleWithBackButton/ModalTitleWithBackButton';
+import EditPrescription from '../../components/Prescriptions/EditPrescription/EditPrescription';
 
 type Props = {
   visible: boolean;
   onClose: () => void;
   appointmentId: string;
-  patientId?: string;
+  patientId: string;
   currentDate: Date;
   scheduleNewAppointment: () => void;
 };
@@ -32,98 +29,110 @@ const AppointmentStart: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
-  const { CheckAccess } = useCheckAccess();
+  const [prescriptionInitialValues, setPrescriptionInitialValues] = useState<PrescriptionForm>({
+    note: '',
+    diagnostic: '',
+    medications: [],
+  });
 
-  const [statusAction, setStatusAction] = useState<AppointmentStatus | ''>('');
+  const [form] = Form.useForm();
 
-  const [appointmentForm] = Form.useForm();
+  const [selectedInfoTab, setSelectedInfoTab] = useState('details');
+  const [contentType, setContentType] = useState('info');
+
+  const [selectedPrescriptionId, setSelectedPrescriptionId] = useState('');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
-  const { mutateAsync: mutateAsyncStatus, isLoading: isLoadingStatus } = useMutation(
-    updateAppointmentStatus,
-  );
 
-  const queryClient = useQueryClient();
-
-  const handleEditAppointment = async (values: AppointmentForm) => {
-    const time = moment(values.time).format('HH:mm').toString();
-    const data = {
-      ...values,
-      start: moment(values.start)
-        .set({
-          h: parseInt(time.split(':')[0]),
-          m: parseInt(time.split(':')[1]),
-          s: 0,
-          ms: 0,
-        })
-        .toDate(),
-    };
-    await mutateAsyncEdit({
-      appointmentId,
-      appointmentForm: data,
-    });
-
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
-
-    onClose();
+  const backToPrescriptions = () => {
+    setContentType('info');
+    setSelectedInfoTab('prescriptions');
   };
 
-  const handleDoneAppointment = async () => {
-    setStatusAction('DONE');
-    await mutateAsyncStatus({ appointmentId, status: 'DONE' });
-    setStatusAction('');
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
+  // we just reset content type, all content inside the modal is reset on close
+  useEffect(() => {
+    if (!visible) {
+      setContentType('info');
+      setSelectedInfoTab('details');
+    }
+  }, [visible]);
 
-    onClose();
-  };
+  let content = null;
+  let modalHeaderInfo = null;
 
-  const handleDeleteAppointment = async () => {
-    setStatusAction('DOCTOR_CANCELED');
-    await mutateAsyncStatus({ appointmentId, status: 'DOCTOR_CANCELED' });
-    setStatusAction('');
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
-
-    onClose();
-  };
-
-  const handlePatientAbsent = async () => {
-    setStatusAction('PATIENT_MISSED');
-    await mutateAsyncStatus({ appointmentId, status: 'PATIENT_MISSED' });
-    setStatusAction('');
-    // TODO: remove ivalidateQueries adn replace it with a hook that updates query cache data (setQueryData)
-    queryClient.invalidateQueries(['appointments-day', currentDate]);
-    const { start, end } = getWeekRange(currentDate);
-    queryClient.invalidateQueries(['appointments-week', start, end]);
-
-    onClose();
-  };
-
-  const handleScheduleNewAppointment = async () => {
-    onClose();
-    scheduleNewAppointment();
-  };
+  switch (contentType) {
+    case 'info':
+      modalHeaderInfo = {
+        title: t('start appointment'),
+      };
+      content = (
+        <StartAppointmentContent
+          onClose={onClose}
+          appointmentId={appointmentId}
+          patientId={patientId}
+          prescriptionId={selectedPrescriptionId}
+          currentDate={currentDate}
+          scheduleNewAppointment={scheduleNewAppointment}
+          mutateAsyncEdit={mutateAsyncEdit}
+          appointmentForm={form}
+          setContentType={setContentType}
+          setSelectedPrescriptionId={setSelectedPrescriptionId}
+          setPrescriptionInitialValues={setPrescriptionInitialValues}
+          selectedTab={selectedInfoTab}
+          setSelectedTab={setSelectedInfoTab}
+        />
+      );
+      break;
+    case 'new-prescription':
+      modalHeaderInfo = {
+        title: (
+          <ModalTitleWithBackButton title={t('new prescription')} goBack={backToPrescriptions} />
+        ),
+      };
+      content = (
+        <NewPrescription
+          patientId={patientId}
+          appointmentId={appointmentId}
+          form={form}
+          backToPrescriptions={backToPrescriptions}
+          initialValues={prescriptionInitialValues}
+        />
+      );
+      break;
+    case 'edit-prescription':
+      modalHeaderInfo = {
+        title: (
+          <ModalTitleWithBackButton title={t('edit prescription')} goBack={backToPrescriptions} />
+        ),
+      };
+      content = (
+        <EditPrescription
+          patientId={patientId}
+          prescriptionId={selectedPrescriptionId}
+          form={form}
+          backToPrescriptions={backToPrescriptions}
+        />
+      );
+      break;
+    default:
+      content = null;
+      modalHeaderInfo = null;
+      break;
+  }
 
   return (
     <Modal
-      title={t('start appointment')}
+      title={modalHeaderInfo?.title}
       visible={visible}
       width={780}
       onCancel={onClose}
       borderedHeader={false}
+      destroyOnClose
       actions={
         <Button
           type="primary"
           icon={<Icon name="save-line" />}
-          onClick={appointmentForm.submit}
+          onClick={form.submit}
           loading={isLoadingEdit}
           style={{ textTransform: 'uppercase' }}
         >
@@ -131,79 +140,7 @@ const AppointmentStart: React.FC<Props> = ({
         </Button>
       }
     >
-      <AppointmentInfo
-        onClose={onClose}
-        appointmentId={appointmentId}
-        currentDate={currentDate}
-        onEditSave={handleEditAppointment}
-        appointmentForm={appointmentForm}
-        patientId={patientId}
-      />
-      <div style={{ padding: '16px 40px' }}>
-        <Row justify="space-between">
-          <Col>
-            <Spacer size="xl">
-              <Dropdown
-                placement="topLeft"
-                overlayStyle={{ minWidth: 240 }}
-                overlay={
-                  <Menu>
-                    {CheckAccess('permission', 'add/appointments') ? (
-                      <Menu.Item onClick={handleScheduleNewAppointment}>
-                        <Spacer size="sm">
-                          <Icon name="refresh-line" />
-                          <Text>{t('new appointment')}</Text>
-                        </Spacer>
-                      </Menu.Item>
-                    ) : null}
-                    {CheckAccess('permission', 'edit/appointments') ? (
-                      <Menu.Item onClick={handlePatientAbsent}>
-                        <Spacer size="sm">
-                          <Icon name="user-unfollow-line" />
-                          <Text>{t('patient absent')}</Text>
-                        </Spacer>
-                      </Menu.Item>
-                    ) : null}
-                  </Menu>
-                }
-                trigger={['click']}
-              >
-                <Button
-                  type="default"
-                  loading={isLoadingStatus && statusAction === 'PATIENT_MISSED'}
-                  style={{ paddingLeft: 5, paddingRight: 5 }}
-                >
-                  <Icon name="more-2-fill" size={24} />
-                </Button>
-              </Dropdown>
-              <ProtectedComponent accessCode="delete/appointments">
-                <Button
-                  type="primary"
-                  danger
-                  icon={<Icon name="delete-bin-2-line" />}
-                  onClick={handleDeleteAppointment}
-                  loading={isLoadingStatus && statusAction === 'DOCTOR_CANCELED'}
-                  style={{ textTransform: 'uppercase' }}
-                >
-                  {t('delete')}
-                </Button>
-              </ProtectedComponent>
-            </Spacer>
-          </Col>
-          <ProtectedComponent accessCode="edit/appointments">
-            <Col>
-              <Button
-                type="primary"
-                icon={<Icon name="calendar-check-line" />}
-                onClick={handleDoneAppointment}
-                loading={isLoadingStatus && statusAction === 'DONE'}
-              >
-                {t('appointment done')}
-              </Button>
-            </Col>
-          </ProtectedComponent>
-        </Row>
-      </div>
+      {content}
     </Modal>
   );
 };

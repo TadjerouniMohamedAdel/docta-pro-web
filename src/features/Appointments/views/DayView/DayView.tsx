@@ -34,7 +34,6 @@ const DayView: React.FC<Props> = ({
   const { i18n, t } = useTranslation('translation');
   const { getFieldNameByLocal } = useFieldByLocal();
 
-
   const { resolvedData: appointments, refetch, isFetching, isFetched } = useAppointmentsDayList(
     currentDate,
     visitReasonIds,
@@ -85,19 +84,17 @@ const DayView: React.FC<Props> = ({
                       <Avatar src={appointment.picture} size="large" />
                     ) : (
                       <Avatar src={appointment.picture} size="large">
-                        {
-                          i18n.language === 'ar' && appointment.patient.firstNameAr ? (
-                            <>
-                              {appointment.patient.firstNameAr?.charAt(0)}
-                              {appointment.patient.lastNameAr?.charAt(0)}
-                            </>
-                          ) : (
-                            <>
-                              {appointment.patient.firstName[0]?.toUpperCase()}
-                              {appointment.patient.lastName[0]?.toUpperCase()}
-                            </>
-                          )
-                        }
+                        {i18n.language === 'ar' && appointment.patient.firstNameAr ? (
+                          <>
+                            {appointment.patient.firstNameAr?.charAt(0)}
+                            {appointment.patient.lastNameAr?.charAt(0)}
+                          </>
+                        ) : (
+                          <>
+                            {appointment.patient.firstName[0]?.toUpperCase()}
+                            {appointment.patient.lastName[0]?.toUpperCase()}
+                          </>
+                        )}
                       </Avatar>
                     )}
                   </Col>
@@ -105,28 +102,28 @@ const DayView: React.FC<Props> = ({
                     <Row gutter={4}>
                       <Col>
                         <Text style={{ fontWeight: 500 }}>
-                          {
-                            i18n.language === 'ar' && appointment.patient.firstNameAr ? (
-                              <>
-                                {appointment.patient.firstNameAr}
-                                &nbsp;
-                                {appointment.patient.lastNameAr}
-                              </>
-                            ) : (
-                              <>
-                                {appointment.patient.firstName}
-                                &nbsp;
-                                {appointment.patient.lastName}
-                              </>
-                            )
-                          }
+                          {i18n.language === 'ar' && appointment.patient.firstNameAr ? (
+                            <>
+                              {appointment.patient.firstNameAr}
+                              &nbsp;
+                              {appointment.patient.lastNameAr}
+                            </>
+                          ) : (
+                            <>
+                              {appointment.patient.firstName}
+                              &nbsp;
+                              {appointment.patient.lastName}
+                            </>
+                          )}
                         </Text>
                       </Col>
                       <Col>
                         <Text style={{ fontWeight: 500 }}>-</Text>
                       </Col>
                       <Col>
-                        <Text style={{ fontWeight: 500 }}>{(appointment.reason)[getFieldNameByLocal()]}</Text>
+                        <Text style={{ fontWeight: 500 }}>
+                          {appointment.reason[getFieldNameByLocal()]}
+                        </Text>
                       </Col>
                     </Row>
                   </Col>

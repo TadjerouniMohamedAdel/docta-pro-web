@@ -1,5 +1,5 @@
 import { fetcher } from '../../common/utilities';
-import { AppointmentForm, AppointmentStatus } from './types';
+import { AppointmentForm, AppointmentStatus, PrescriptionDetails, PrescriptionForm } from './types';
 
 export const fetchAppointments = async (from: Date, to: Date, reasons: string[]): Promise<any> => {
   return fetcher(
@@ -45,4 +45,55 @@ export const fetchAppointmentsCount = async (from: Date, to: Date): Promise<any>
 
 export const fetchAppointmentsDetails = async (appointmentId: string): Promise<any> => {
   return fetcher(`/api/v1/practitioners/appointments/${appointmentId}`);
+};
+
+export const fetchPrescriptionsHistory = async (
+  patientId: string,
+  page = 0,
+  size = 10,
+): Promise<any> => {
+  return fetcher(
+    `/api/v1/professionals/patients/${patientId}/prescriptions?skip=${page}&take=${size}`,
+  );
+};
+
+export const addPrescription = async (
+  patientId: string,
+  data: PrescriptionForm & { appointment: string },
+): Promise<{ data: { id: string } }> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions`, {
+    body: {
+      ...data,
+    },
+  });
+};
+
+export const fetchPrescriptionDetails = async (
+  prescriptionId: string,
+): Promise<{data:PrescriptionDetails}> => {
+  return fetcher(`/api/v1/professionals/patients/prescriptions/${prescriptionId}`);
+};
+
+export const updatePrescription = async (
+  patientId: string,
+  prescriptionId: string,
+  data: PrescriptionForm,
+): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions/${prescriptionId}`, {
+    body: data,
+    method: 'PUT',
+  });
+};
+
+export const deletePrescription = async (
+  patientId: string,
+  prescriptionId: string,
+): Promise<any> => {
+  return fetcher(`/api/v1/professionals/patients/${patientId}/prescriptions/${prescriptionId}`, {
+    method: 'delete',
+  });
+};
+
+export const fetchMedications = async (term = '', page = 0, size = 10): Promise<any> => {
+  return fetcher(`/api/v1/professionals/medications?term=${term}&skip=${page}&take=${size}`);
 };
