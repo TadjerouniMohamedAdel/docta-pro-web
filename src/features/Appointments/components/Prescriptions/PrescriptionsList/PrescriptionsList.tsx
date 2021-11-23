@@ -17,7 +17,7 @@ type Props = {
   setSelectedPrescriptionId?: (id: string) => void;
   goToEditPrescription?: () => void;
   prescribeAgain?: (prescription: PrescriptionDetails) => void;
-  disableEdit?: boolean;
+  isEditable?: boolean;
 };
 
 const PrescriptionsList: React.FC<Props> = ({
@@ -26,7 +26,7 @@ const PrescriptionsList: React.FC<Props> = ({
   goToEditPrescription,
   setSelectedPrescriptionId,
   prescribeAgain,
-  disableEdit = false,
+  isEditable = true,
 }) => {
   const { t } = useTranslation();
 
@@ -61,8 +61,8 @@ const PrescriptionsList: React.FC<Props> = ({
 
   return (
     <>
-      <Row align="middle" style={{ padding: '0 24px' }}>
-        <Col span={disableEdit ? 0 : 3} />
+      <Row align="middle" style={{ height: 54, padding: '0 32px', backgroundColor: '#FAFAFA' }}>
+        <Col span={isEditable ? 0 : 3} />
         <Col span={4}>
           <Text size="md" strong>
             {t('date')}
@@ -74,7 +74,7 @@ const PrescriptionsList: React.FC<Props> = ({
           </Text>
         </Col>
       </Row>
-      <div style={{ height: disableEdit ? '100%' : 300, overflow: 'scroll' }}>
+      <div style={{ height: isEditable ? '100%' : 300, overflow: 'scroll' }}>
         {data.pages.map((page: any) => (
           <>
             {page.prescriptions.map((prescriptionRow: PrescriptinRow) => (
@@ -84,7 +84,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 openDeleteModal={() => setShowDeleteModal(true)}
                 goToEditPrescription={goToEditPrescription}
                 prescribeAgain={prescribeAgain}
-                disableEdit={disableEdit}
+                isEditable={isEditable}
                 key={prescriptionRow.id}
                 setPreviewId={setPreviewId}
               />
@@ -108,15 +108,9 @@ const PrescriptionsList: React.FC<Props> = ({
         isLoading={isDeletePrescriptionLoading}
         onSuccess={onDeleteSuccess}
       />
-      {
-        previewId && (
-          <PrescriptionPreview
-            prescriptionId={previewId}
-            setSelectedPrescriptionId={setPreviewId}
-          />
-
-        )
-      }
+      {previewId && (
+        <PrescriptionPreview prescriptionId={previewId} setSelectedPrescriptionId={setPreviewId} />
+      )}
     </>
   );
 };

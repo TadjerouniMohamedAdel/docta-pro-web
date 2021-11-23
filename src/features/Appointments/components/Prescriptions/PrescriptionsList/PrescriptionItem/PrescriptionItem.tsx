@@ -12,8 +12,8 @@ type Props = {
   openDeleteModal: () => void;
   goToEditPrescription?: () => void;
   prescribeAgain?: (prescription: PrescriptionDetails) => void;
-  disableEdit: boolean;
-  setPreviewId:(id:string|null)=>void
+  isEditable: boolean;
+  setPreviewId: (id: string | null) => void;
 };
 
 const PrescriptionItem: React.FC<Props> = ({
@@ -22,8 +22,8 @@ const PrescriptionItem: React.FC<Props> = ({
   setSelectedPrescriptionId,
   goToEditPrescription,
   prescribeAgain,
-  disableEdit,
-  setPreviewId
+  isEditable,
+  setPreviewId,
 }) => {
   const { t } = useTranslation();
 
@@ -59,19 +59,28 @@ const PrescriptionItem: React.FC<Props> = ({
 
   const menu = (
     <Menu>
-      {!disableEdit && (
-        <Menu.Item>
-          <Button type="link" icon={<Icon name="restart-line" />} onClick={handlePrescribeAgain}>
-            {t('prescribe again')}
-          </Button>
-        </Menu.Item>
-      )}
       <Menu.Item>
-        <Button type="text" icon={<Icon name="printer-line" />}>
+        <Button
+          type="link"
+          size="small"
+          className="edit-action"
+          icon={<Icon name="restart-line" />}
+          onClick={handlePrescribeAgain}
+        >
+          {t('prescribe again')}
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          type="text"
+          size="small"
+          className="edit-action"
+          icon={<Icon name="printer-line" />}
+        >
           {t('print')}
         </Button>
       </Menu.Item>
-      {!disableEdit && (
+      {!isEditable && (
         <Menu.Item>
           <Button
             type="text"
@@ -88,8 +97,11 @@ const PrescriptionItem: React.FC<Props> = ({
   );
 
   return (
-    <Row align="middle" style={{ padding: '0 24px' }}>
-      <Col span={disableEdit ? 0 : 3}>
+    <Row
+      align="middle"
+      style={{ height: 54, padding: '0 32px', borderBottom: '1px solid #E8E8E8' }}
+    >
+      <Col span={isEditable ? 0 : 3}>
         {isNew && (
           <Row justify="center" align="middle">
             <Col>
@@ -108,7 +120,7 @@ const PrescriptionItem: React.FC<Props> = ({
       </Col>
       <Col span={6}>
         <Row justify="end">
-          {!disableEdit && (
+          {!isEditable && (
             <Col>
               <Button
                 type="text"
@@ -122,16 +134,27 @@ const PrescriptionItem: React.FC<Props> = ({
             </Col>
           )}
           <Col>
-            <Button type="text" size="small" className="edit-action" onClick={()=>setPreviewId(id)}>
+            <Button
+              type="text"
+              size="small"
+              className="edit-action"
+              onClick={() => setPreviewId(id)}
+            >
               <Icon name="search-eye-line" />
             </Button>
           </Col>
           <Col>
-            <Dropdown overlay={menu} trigger={['click']}>
+            {isEditable ? (
+              <Dropdown overlay={menu} trigger={['click']}>
+                <Button type="text" size="small" className="edit-action">
+                  <Icon name="more-fill" />
+                </Button>
+              </Dropdown>
+            ) : (
               <Button type="text" size="small" className="edit-action">
-                <Icon name="more-fill" />
+                <Icon name="printer-line" />
               </Button>
-            </Dropdown>
+            )}
           </Col>
         </Row>
       </Col>
