@@ -61,7 +61,8 @@ const PrescriptionItem: React.FC<Props> = ({
     <Menu>
       <Menu.Item>
         <Button
-          type="link"
+          style={{ color: '#00B6F8' }}
+          type="text"
           size="small"
           className="edit-action"
           icon={<Icon name="restart-line" />}
@@ -80,19 +81,18 @@ const PrescriptionItem: React.FC<Props> = ({
           {t('print')}
         </Button>
       </Menu.Item>
-      {!isEditable && (
-        <Menu.Item>
-          <Button
-            type="text"
-            icon={<Icon name="delete-bin-7-line" />}
-            className="delete-action"
-            onClick={handleDelete}
-            disabled={!isNew}
-          >
-            {t('delete')}
-          </Button>
-        </Menu.Item>
-      )}
+      <Menu.Item>
+        <Button
+          type="text"
+          size="small"
+          icon={<Icon name="delete-bin-7-line" />}
+          className="delete-action"
+          onClick={handleDelete}
+          disabled={!isNew}
+        >
+          {t('delete')}
+        </Button>
+      </Menu.Item>
     </Menu>
   );
 
@@ -101,9 +101,9 @@ const PrescriptionItem: React.FC<Props> = ({
       align="middle"
       style={{ height: 54, padding: '0 32px', borderBottom: '1px solid #E8E8E8' }}
     >
-      <Col span={isEditable ? 0 : 3}>
+      <Col span={isEditable ? 2 : 0}>
         {isNew && (
-          <Row justify="center" align="middle">
+          <Row justify="start" align="middle">
             <Col>
               <Tag className="new-prescription-tag">{t('new')}</Tag>
             </Col>
@@ -120,7 +120,7 @@ const PrescriptionItem: React.FC<Props> = ({
       </Col>
       <Col span={6}>
         <Row justify="end">
-          {!isEditable && (
+          {isEditable && (
             <Col>
               <Button
                 type="text"

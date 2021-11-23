@@ -62,7 +62,7 @@ const PrescriptionsList: React.FC<Props> = ({
   return (
     <>
       <Row align="middle" style={{ height: 54, padding: '0 32px', backgroundColor: '#FAFAFA' }}>
-        <Col span={isEditable ? 0 : 3} />
+        <Col span={isEditable ? 2 : 0} />
         <Col span={4}>
           <Text size="md" strong>
             {t('date')}
