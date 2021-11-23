@@ -14,6 +14,7 @@ type Props = {
   prescribeAgain?: (prescription: PrescriptionDetails) => void;
   isEditable: boolean;
   setPreviewId: (id: string | null) => void;
+  printPreview:()=>void
 };
 
 const PrescriptionItem: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const PrescriptionItem: React.FC<Props> = ({
   prescribeAgain,
   isEditable,
   setPreviewId,
+  printPreview
 }) => {
   const { t } = useTranslation();
 
@@ -57,6 +59,10 @@ const PrescriptionItem: React.FC<Props> = ({
     openDeleteModal();
   };
 
+  const handlePrint = ()=>{
+    printPreview();
+  };
+
   const menu = (
     <Menu>
       <Menu.Item>
@@ -77,6 +83,7 @@ const PrescriptionItem: React.FC<Props> = ({
           size="small"
           className="edit-action"
           icon={<Icon name="printer-line" />}
+          onClick={handlePrint}
         >
           {t('print')}
         </Button>
@@ -151,7 +158,7 @@ const PrescriptionItem: React.FC<Props> = ({
                 </Button>
               </Dropdown>
             ) : (
-              <Button type="text" size="small" className="edit-action">
+              <Button type="text" size="small" className="edit-action" onClick={handlePrint}>
                 <Icon name="printer-line" />
               </Button>
             )}
