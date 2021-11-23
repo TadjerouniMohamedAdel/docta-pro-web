@@ -5,8 +5,8 @@ type Props = { title: string; onClick: () => void };
 
 const AddPrescriptionButton: React.FC<Props> = ({ title, onClick }) => {
   return (
-    <Button className="new-prescription-button" type="text" onClick={onClick}>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <Button className="add-prescription-button" type="text" onClick={onClick}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <Icon name="file-3-line" />
         <Text>{title}</Text>
       </div>

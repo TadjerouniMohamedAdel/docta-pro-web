@@ -17,7 +17,8 @@ type Props = {
   setSelectedPrescriptionId?: (id: string) => void;
   goToEditPrescription?: () => void;
   prescribeAgain?: (prescription: PrescriptionDetails) => void;
-  disableEdit?: boolean;
+  isEditable?: boolean;
+  fromPatient?:boolean
 };
 
 const PrescriptionsList: React.FC<Props> = ({
@@ -26,13 +27,14 @@ const PrescriptionsList: React.FC<Props> = ({
   goToEditPrescription,
   setSelectedPrescriptionId,
   prescribeAgain,
-  disableEdit = false,
+  isEditable = true,
+  fromPatient=false
 }) => {
   const { t } = useTranslation();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [previewId, setPreviewId] = useState<null | string>(null);
-
+  const [previewVisible, setPreviewVisible] = useState(true);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
   const cache = useQueryClient();
@@ -59,10 +61,24 @@ const PrescriptionsList: React.FC<Props> = ({
     cache.invalidateQueries('prescriptions-history');
   };
 
+  
+
+  const printPreview = (diagnostic:string) => {
+        const printWindow = window.open('', '', 'height=400,width=800');
+        printWindow?.document.write(`<html><head><title>${diagnostic}</title></head><body>`);
+        printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
+        printWindow?.document.write('</body></html>');
+        printWindow?.document.close();
+        printWindow?.print();
+        setPreviewId(null);
+        setPreviewVisible(true);
+};
+
+
   return (
     <>
-      <Row align="middle" style={{ padding: '0 24px' }}>
-        <Col span={disableEdit ? 0 : 3} />
+      <Row align="middle" style={{ height: 54, padding: '0 32px', backgroundColor: '#FAFAFA' }}>
+        <Col span={isEditable ? 2 : 0} />
         <Col span={4}>
           <Text size="md" strong>
             {t('date')}
@@ -74,7 +90,7 @@ const PrescriptionsList: React.FC<Props> = ({
           </Text>
         </Col>
       </Row>
-      <div style={{ height: disableEdit ? '100%' : 300, overflow: 'scroll' }}>
+      <div style={{ height: isEditable ? '100%' : 300, overflow: 'scroll' }}>
         {data.pages.map((page: any) => (
           <>
             {page.prescriptions.map((prescriptionRow: PrescriptinRow) => (
@@ -84,9 +100,10 @@ const PrescriptionsList: React.FC<Props> = ({
                 openDeleteModal={() => setShowDeleteModal(true)}
                 goToEditPrescription={goToEditPrescription}
                 prescribeAgain={prescribeAgain}
-                disableEdit={disableEdit}
+                isEditable={isEditable}
                 key={prescriptionRow.id}
                 setPreviewId={setPreviewId}
+                printPreview={()=>{setPreviewVisible(false);setPreviewId(prescriptionRow.id);}}
               />
             ))}
           </>
@@ -112,7 +129,10 @@ const PrescriptionsList: React.FC<Props> = ({
         previewId && (
           <PrescriptionPreview
             prescriptionId={previewId}
-            setSelectedPrescriptionId={setPreviewId}
+            onClose={() => { setPreviewId(null);setPreviewVisible(true); }}
+            visible={previewVisible}
+            isModal={fromPatient}
+            printPreview={printPreview}
           />
 
         )

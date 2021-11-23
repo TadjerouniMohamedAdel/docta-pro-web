@@ -284,7 +284,8 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
               size="small"
             >
               Message
-            </Button>
+            </Button>  disableEdit: boolean;
+
           </Col> */}
           {selectedPatient?.blocked && selectedPatient?.registered ? (
             <Col>
@@ -385,7 +386,7 @@ const PatientProfile: React.FC<Props> = ({ selectedPatient, setSelectedPatient }
             tab={<Tab icon={<Icon name="capsule-line" />}>{t('prescriptions')}</Tab>}
             key="5"
           >
-            <PrescriptionsList patientId={selectedPatient.id} disableEdit />
+            <PrescriptionsList patientId={selectedPatient.id} isEditable={false} fromPatient />
           </Tabs.TabPane>
         </Tabs>
         <BlockPatientModal

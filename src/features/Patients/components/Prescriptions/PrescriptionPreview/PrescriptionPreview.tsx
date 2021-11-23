@@ -8,41 +8,43 @@ import './styles.less';
 import { useGetPrescription } from '../../../../Appointments/hooks';
 import { MedicationRow } from '../../../../Appointments/types';
 import { Specialty } from '../../../../Settings/views/VisitReasons/types';
-
+import cabinetImage from '../../../../../assets/img/company-placeholder.png';
 
 type Props = {
     prescriptionId: string,
-    setSelectedPrescriptionId: (val: null) => void
+    onClose: () => void,
+    visible: boolean,
+    printPreview: (val: string) => void,
+    isModal?: boolean
 };
 
 
-const PrescriptionPreview: React.FC<Props> = ({ prescriptionId, setSelectedPrescriptionId }) => {
+const PrescriptionPreview: React.FC<Props> = ({ visible, prescriptionId, isModal = false, onClose, printPreview }) => {
     const { isLoading, prescription } = useGetPrescription(prescriptionId);
 
-    // handle pint button clicked
-    const handlePrint = () => {
-        if (prescription) {
-            const printWindow = window.open('', '', 'height=400,width=800');
-            printWindow?.document.write(`<html><head><title>${prescription.data.diagnostic}</title></head><body>`);
-            printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
-            printWindow?.document.write('</body></html>');
-            printWindow?.document.close();
-            printWindow?.print();
+    React.useEffect(() => {
+        if (!isLoading && !visible && prescription) printPreview(prescription?.data.diagnostic);
+    }, [visible, isLoading]);
 
-        }
+    React.useEffect(() => {
 
-    };
+        if (visible && !isModal) document.querySelector('.ant-modal')?.classList.add('modals-two-window');
+        return () => {
+            document.querySelector('.ant-modal')?.classList.remove('modals-two-window');
+        };
+    });
 
-
+    // custom loader
     const Loading = () => (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 200 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 422, height: 500 }}>
             <Spin />
         </div>
     );
 
 
+    
 
-    // header of card pescription preview
+    // header of  pescription preview
     const CustomTitle = () => {
         return isLoading ? <Loading /> : prescription && (
             <div className="prescription-header">
@@ -62,11 +64,11 @@ const PrescriptionPreview: React.FC<Props> = ({ prescriptionId, setSelectedPresc
                     <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{prescription.data.diagnostic}</Text>
                 </div>
                 <div style={{ display: 'flex' }}>
-                    <Button type="primary" className="prescription-print-button" onClick={handlePrint}>
+                    <Button type="primary" className="prescription-print-button" onClick={() => printPreview(prescription.data.diagnostic)}>
                         <Icon name="printer-line" />
                         <Text style={{ color: '#fff', fontSize: 14 }}>PRINT</Text>
                     </Button>
-                    <Button type="default" onClick={() => setSelectedPrescriptionId(null)} className="prescription-close-button">
+                    <Button type="default" onClick={() => onClose()} className="prescription-close-button">
                         <Icon name="close-line" />
                     </Button>
                 </div>
@@ -92,39 +94,40 @@ const PrescriptionPreview: React.FC<Props> = ({ prescriptionId, setSelectedPresc
     );
 
 
-    React.useEffect(() => {
-        document.querySelector('.ant-modal')?.classList.add('modals-two-window');
-        return () => {
-            document.querySelector('.ant-modal')?.classList.remove('modals-two-window');
+    
+    // Wrapper of prescription (modal on patient screen and card on apoitments)
+    const Wrapper: React.FC = ({ children }) => (
+        <div style={{display:visible?'block':'none'}}>
+            {
+                isModal ? (
+                    <div className="ant-modal-mask" style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Card title={<CustomTitle />} style={{ width: 422, margin: 'auto', marginTop: 50 }}>
+                            {children}
+                        </Card>
 
-        };
-    });
+                    </div>
+                ) : (
+                    <Card className="prescription-preview-card" title={<CustomTitle />} style={{ display: `${!visible ? 'none' : 'initial'}` }}>
+                        {children}
+                    </Card>
+                )
+
+            }
+        </div>
 
 
-
+    );
 
     return (
-        <Card className="prescription-preview-card" title={<CustomTitle />}>
+        <Wrapper>
             {
-                isLoading ? (
-                    <Loading />
-                ) : prescription &&
+                prescription &&
                 (
                     <div id="print-subscription">
                         <div style={{ padding: '16px 20px', display: 'flex', width: '95%', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                {
-                                    prescription.data.doctor.establishment.images[0] ?
-                                        (
-                                            <img src={prescription.data.doctor.establishment.images[0].url} alt="dsfs-" style={{ width: 83, height: 62 }} />
-                                        ) : (
-                                            <div style={{ marginBottom: 5, padding: '10px 14px', fontSize: 9, fontWeight: 'bold', color: '#fff', position: 'relative', width: 83, height: 52, borderRadius: 7, backgroundColor: '#74798c' }}>
-                                                Cabinet<br />
-                                                Logo
-                                            </div>
+                                <img src={cabinetImage} alt="dsfs-" style={{ width: 83, height: 62 }} />
 
-                                        )
-                                }
                                 <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>Dr {`${prescription.data.doctor.lastName} ${prescription.data?.doctor.firstName}`}</Text>
                                 <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>{prescription.data.doctor.specialties[prescription.data?.doctor.specialties.findIndex((spe: Specialty) => spe.isMain === 0)]?.name}</Text>
                             </div>
@@ -179,8 +182,7 @@ const PrescriptionPreview: React.FC<Props> = ({ prescriptionId, setSelectedPresc
                     </div>
                 )
             }
-
-        </Card>
+        </Wrapper>
     );
 };
 export default PrescriptionPreview;
