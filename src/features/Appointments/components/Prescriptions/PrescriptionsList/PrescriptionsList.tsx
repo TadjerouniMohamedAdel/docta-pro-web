@@ -18,6 +18,7 @@ type Props = {
   goToEditPrescription?: () => void;
   prescribeAgain?: (prescription: PrescriptionDetails) => void;
   disableEdit?: boolean;
+  fromPatient?:boolean
 };
 
 const PrescriptionsList: React.FC<Props> = ({
@@ -27,12 +28,13 @@ const PrescriptionsList: React.FC<Props> = ({
   setSelectedPrescriptionId,
   prescribeAgain,
   disableEdit = false,
+  fromPatient=false
 }) => {
   const { t } = useTranslation();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [previewId, setPreviewId] = useState<null | string>(null);
-
+  const [previewVisible, setPreviewVisible] = useState(true);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
 
   const cache = useQueryClient();
@@ -58,6 +60,20 @@ const PrescriptionsList: React.FC<Props> = ({
   const onDeleteSuccess = () => {
     cache.invalidateQueries('prescriptions-history');
   };
+
+  
+
+  const printPreview = (diagnostic:string) => {
+        const printWindow = window.open('', '', 'height=400,width=800');
+        printWindow?.document.write(`<html><head><title>${diagnostic}</title></head><body>`);
+        printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
+        printWindow?.document.write('</body></html>');
+        printWindow?.document.close();
+        printWindow?.print();
+        setPreviewId(null);
+        setPreviewVisible(true);
+};
+
 
   return (
     <>
@@ -87,6 +103,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 disableEdit={disableEdit}
                 key={prescriptionRow.id}
                 setPreviewId={setPreviewId}
+                printPreview={()=>{setPreviewVisible(false);setPreviewId(prescriptionRow.id);}}
               />
             ))}
           </>
@@ -112,7 +129,10 @@ const PrescriptionsList: React.FC<Props> = ({
         previewId && (
           <PrescriptionPreview
             prescriptionId={previewId}
-            setSelectedPrescriptionId={setPreviewId}
+            onClose={() => { setPreviewId(null);setPreviewVisible(true); }}
+            visible={previewVisible}
+            isModal={fromPatient}
+            printPreview={printPreview}
           />
 
         )
