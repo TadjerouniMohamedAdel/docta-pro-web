@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { FormikHelpers, useFormik } from 'formik';
@@ -22,8 +22,6 @@ type Props = {
 
 const AddMedication: React.FC<Props> = ({ addMedication }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
-
-  const [medicationAutoCompleteValue, setMedicationAutoCompleteValue] = useState('');
 
   const initialValues: NewMedication = {
     name: '',
@@ -54,7 +52,6 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
     };
     addMedication(newMedication);
     formikHelpers.resetForm();
-    setMedicationAutoCompleteValue('');
   };
 
   const formik = useFormik({
@@ -75,12 +72,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
     resetForm,
   } = formik;
 
-  const resetMedicationForm = () => {
-    setMedicationAutoCompleteValue('');
-    resetForm();
-  };
-
-  const handleSelectMedication = (medicationName: string) => {
+  const handleNameChange = (medicationName: string) => {
     setFieldValue('name', medicationName);
   };
 
@@ -96,11 +88,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
             required
           />
           <Form.Item validateStatus={touched.name && Boolean(errors.name) ? 'error' : undefined}>
-            <MedicationAutocomplete
-              onSelectMedication={handleSelectMedication}
-              value={medicationAutoCompleteValue}
-              setValue={setMedicationAutoCompleteValue}
-            />
+            <MedicationAutocomplete value={values.name} setValue={handleNameChange} />
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -200,7 +188,7 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
             <Col span={12}>
               <Row justify="end">
                 <Col span={7}>
-                  <Button type="text" danger onClick={resetMedicationForm}>
+                  <Button type="text" danger onClick={() => resetForm()}>
                     {t('clear')}
                   </Button>
                 </Col>

@@ -26,21 +26,15 @@ type Medication = {
 type Props = {
   value: string;
   setValue: (value: string) => void;
-  onSelectMedication: (medicationName: string) => void;
 };
 
-const MedicationAutocomplete: React.FC<Props> = ({ value, setValue, onSelectMedication }) => {
+const MedicationAutocomplete: React.FC<Props> = ({ value, setValue }) => {
   const { t } = useTranslation('translation');
 
   const { medications } = useSearchMedications(value);
 
-  const handleOnChange = (term: string) => {
-    onSelectMedication('');
-    setValue(term);
-  };
-
-  const handleOnSelect = async (term: string, option: any) => {
-    onSelectMedication(option.value);
+  const handleChange = (newValue: string) => {
+    setValue(newValue ?? '');
   };
 
   const options = medications.data
@@ -79,8 +73,7 @@ const MedicationAutocomplete: React.FC<Props> = ({ value, setValue, onSelectMedi
       allowClear
       style={{ width: '100%' }}
       value={value}
-      onSelect={handleOnSelect}
-      onChange={handleOnChange}
+      onChange={handleChange}
       options={options}
       dropdownStyle={{
         margin: 0,
