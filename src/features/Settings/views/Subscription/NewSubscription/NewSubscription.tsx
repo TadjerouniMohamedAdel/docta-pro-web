@@ -144,7 +144,15 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
           <Text style={{ fontSize: '14px', color: '#74798C', marginTop: 45 }}>
             {t('select subscription plan')}
           </Text>
-          <div style={{ display: 'flex', flexDirection: 'row', marginTop: 37, flexWrap: 'wrap' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              marginTop: 37,
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
             {plans &&
               plans.map((plan: SubscriptionPlan) => (
                 <ChoicePlanCard
