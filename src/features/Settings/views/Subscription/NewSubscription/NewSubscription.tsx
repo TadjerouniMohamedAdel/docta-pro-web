@@ -32,7 +32,7 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
   const validationSchema = Yup.object().shape({
     nif: Yup.string().required(t('errors:required field')),
     numArticle: Yup.string().required(t('errors:required field')),
-    rc: Yup.string(),
+    rc: Yup.string().nullable(),
     agreementNumber: Yup.string().nullable(),
     nis: Yup.string(),
   });

@@ -31,7 +31,6 @@ export const pickPlan = async ({
 };
 
 export const fetchInvoices = async (page:number, size:number): Promise<any> => {
-  return fetcher('/api/v1/subscriptions/pick-plan', {
-    body: { page, size },
+  return fetcher(`/api/v1/subscriptions/invoices?skip=${(page - 1) * size}&take=${size}`, {
   });
 };

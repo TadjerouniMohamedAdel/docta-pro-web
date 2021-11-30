@@ -9,6 +9,7 @@ export const usePickPlan = () => {
             queryClient.invalidateQueries('subscription-plans');
             queryClient.invalidateQueries('current-subscription');
             queryClient.invalidateQueries('next-subscription');
+            queryClient.invalidateQueries(['invoices']);
         }
     });
 };
