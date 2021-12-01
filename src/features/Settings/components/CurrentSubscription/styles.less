@@ -2,9 +2,11 @@
   border: 1px solid #e2e5f7;
   border-radius: 8px;
   padding: 24px;
+  min-width: 338px;
+  width: 100%;
+  margin: 20px;
   display: flex;
   flex: 1;
-  margin-right: 20px;
   flex-wrap: wrap;
   justify-content: space-between;
 
@@ -49,11 +51,9 @@
     }
   }
 }
-@media(max-width:1415px){
-  .current-plan {
+@media(max-width:930px){
+  .current-plan{
     flex:unset;
-    min-width: 320px;
-    height: 158px;
-    margin-right: unset;
-  } 
+    width: auto;
+  }
 }

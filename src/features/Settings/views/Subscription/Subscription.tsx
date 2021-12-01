@@ -149,7 +149,6 @@ const Subscription: React.FC = () => {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '32px',
             minHeight: 200,
             flexWrap: 'wrap',
           }}
@@ -168,7 +167,7 @@ const Subscription: React.FC = () => {
         </div>
 
         {/* list of subscriptions */}
-        <div style={{ marginTop: 30 }}>
+        <div style={{ marginTop: 20 }}>
           <Text style={{ fontSize: '12px', color: '#74798C' }}>
             {t('invoices')}({invoices?.total ?? 0})
           </Text>
