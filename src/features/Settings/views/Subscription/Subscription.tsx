@@ -1,5 +1,6 @@
 import React from 'react';
 import { Divider, Table } from 'antd';
+import { Breakpoint } from 'antd/lib/_util/responsiveObserve';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { Text, Modal, Icon } from '../../../../components';
@@ -31,7 +32,9 @@ const Subscription: React.FC = () => {
       title: t('date'),
       dataIndex: 'date',
       key: 'Date',
-      render: (text: any, record: InvoiceType) => <>{format(new Date(record.date), 'MMM dd,yyyy')}</>,
+      render: (text: any, record: InvoiceType) => (
+        <>{format(new Date(record.date), 'MMM dd,yyyy')}</>
+      ),
     },
     {
       title: t('plan'),
@@ -49,6 +52,7 @@ const Subscription: React.FC = () => {
       title: t('quotation/receipt'),
       dataIndex: 'Quotation / Receipt',
       key: 'Quotation / Receipt',
+      responsive: ['xxl', 'xl', 'lg'] as Breakpoint[],
       render: (text: any, record: InvoiceType) => (
         <>
           {record.quotation && record.quotation !== '' ? (
@@ -74,6 +78,7 @@ const Subscription: React.FC = () => {
       title: t('status'),
       dataIndex: 'Status',
       key: 'Status',
+      responsive: ['xxl', 'xl', 'lg', 'md'] as Breakpoint[],
       render: (text: any, record: InvoiceType) => (
         <Text
           type={
@@ -92,6 +97,7 @@ const Subscription: React.FC = () => {
       title: t('payment receipt'),
       dataIndex: 'Payment Receipt',
       key: 'Payment Receipt',
+      responsive: ['xxl', 'xl', 'lg'] as Breakpoint[],
       render: (text: any, record: InvoiceType) => (
         <>
           {record.paymentReciept && record.paymentReciept !== '' ? (

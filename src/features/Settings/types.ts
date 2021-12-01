@@ -14,5 +14,5 @@ export type InvoiceType = {
    plan:SubscriptionPlan,
    quotation:string,
    paymentReciept:string|null,
-   status: 'unpaid' | 'pending' | 'approved'
-};
+   status: 'unpaid' | 'pending' | 'approved',
+  };
