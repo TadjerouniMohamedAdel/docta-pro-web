@@ -119,7 +119,7 @@ const AppointmentSelection: React.FC<Props> = ({ appointmentId, onEditSave, form
   }, [appointmentId]);
 
   return (
-    <div>
+    <div style={{ height: 500 }}>
       {fetchAppointmentLoading ? (
         <AppointmentSkeleton.AppointmentDetails />
       ) : (
