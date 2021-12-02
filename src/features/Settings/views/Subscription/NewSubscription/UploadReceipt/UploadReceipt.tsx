@@ -3,19 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { Upload, Button } from 'antd';
 import { Text } from '../../../../../../components';
 import uploadImage from '../../../../../../assets/img/upload_image.png';
+import './styles.less';
 
 const UploadReceipt: React.FC<{handleUploadReceipt:(file:File)=>void}>= ({handleUploadReceipt}) => {
   const { t } = useTranslation('translation');
+  
   return (
     <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        padding: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      className="upload-receipt-container"
     >
       <Upload
         name="paymentReciept"
@@ -26,16 +21,8 @@ const UploadReceipt: React.FC<{handleUploadReceipt:(file:File)=>void}>= ({handle
         }}
       >
         <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '600px',
-            height: 300,
-            border: '2px dashed #E2E5F7',
-            borderRadius: 16,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          draggable
+          className="uplod-drap-drop-section"
         >
           <img src={uploadImage} alt="" />
           <Text style={{ fontSize: 14, color: '#74798C' }}>
