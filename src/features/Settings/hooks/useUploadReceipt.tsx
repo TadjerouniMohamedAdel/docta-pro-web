@@ -6,10 +6,8 @@ export const useUploadReceipt = () => {
 
     return useMutation(uploadReceipt, {
         onSuccess: () => {
-            queryClient.invalidateQueries('subscription-plans');
-            queryClient.invalidateQueries('current-subscription');
-            queryClient.invalidateQueries('next-subscription');
             queryClient.invalidateQueries(['invoices']);
+            queryClient.invalidateQueries('next-subscription');
         }
     });
 };

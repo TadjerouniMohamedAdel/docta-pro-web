@@ -15,6 +15,7 @@ import NewSubscription from './NewSubscription/NewSubscription';
 import UploadReceipt from './NewSubscription/UploadReceipt/UploadReceipt';
 import { formatAmount } from '../../utils';
 import { InvoiceType } from '../../types';
+import { useUploadReceipt } from '../../hooks/useUploadReceipt';
 
 const Subscription: React.FC = () => {
   const { t } = useTranslation('translation');
@@ -27,6 +28,8 @@ const Subscription: React.FC = () => {
   const { plans } = useGetSubscriptionPlans();
   const { mutateAsync } = usePickPlan();
   const { invoices, isLoading } = useGetInvoices(pageIndex, pageSize);
+  const { mutateAsync:mutateReceipt } = useUploadReceipt();
+
   const columns = [
     {
       title: t('date'),
@@ -125,6 +128,15 @@ const Subscription: React.FC = () => {
     setPageIndex(current);
   };
 
+  const handleUploadReceipt = async (file: File) => {
+    try {
+      await mutateReceipt({ paymentId:nextSubscription?.data?.paymentId, file });
+      setUploadReceipt(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div style={{ padding: '18px 25px' }}>
@@ -147,7 +159,9 @@ const Subscription: React.FC = () => {
         width={650}
         onCancel={() => setUploadReceipt(false)}
       >
-        <UploadReceipt />
+        <UploadReceipt 
+          handleUploadReceipt={handleUploadReceipt}
+        />
       </Modal>
       {/* Subscription state */}
       <div style={{ display: 'flex', flexDirection: 'column', padding: '18px 25px' }}>

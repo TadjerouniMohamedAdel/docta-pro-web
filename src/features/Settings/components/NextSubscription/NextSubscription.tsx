@@ -10,14 +10,14 @@ import { SubscriptionPlan } from '../../types';
 type Props = {
     subscription: {
         plan: SubscriptionPlan,
-        dueDate:Date
+        dueDate:Date,
+        status:string
     },
     setVisibleUploadReceipt: (visible: boolean) => void
 };
 
 const NextSubscription: React.FC<Props> = ({ subscription, setVisibleUploadReceipt }) => {
     const { t } = useTranslation('translation');
-    console.log('subscription', subscription);
     return (
         <div className="next-plan">
             <div>
@@ -32,7 +32,7 @@ const NextSubscription: React.FC<Props> = ({ subscription, setVisibleUploadRecei
             </div>
             <div className="plan-action">
                 {
-                    subscription && (
+                    subscription && subscription.status === 'unpaid' &&  (
                         <Button type="default" className="upload-receipt" onClick={() => setVisibleUploadReceipt(true)}>
                             <Text style={{ fontWeight: 'bold', fontSize: 12, color: '#00B6F8' }}>{t('upload receipt')}</Text>
                             <Icon name="upload-2-line" style={{ color: '#00B6F8', fontSize: 12 }} />

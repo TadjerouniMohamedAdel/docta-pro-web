@@ -3,20 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Upload, Button } from 'antd';
 import { Text } from '../../../../../../components';
 import uploadImage from '../../../../../../assets/img/upload_image.png';
-import { useUploadReceipt } from '../../../../hooks/useUploadReceipt';
 
-const UploadReceipt: React.FC = () => {
+const UploadReceipt: React.FC<{handleUploadReceipt:(file:File)=>void}>= ({handleUploadReceipt}) => {
   const { t } = useTranslation('translation');
-  const { mutateAsync } = useUploadReceipt();
-
-  const handleUploadReceipt = async (file: File) => {
-    try {
-      await mutateAsync(file);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div
       style={{
