@@ -45,9 +45,6 @@ const AppointmentDetails: React.FC<Props> = ({
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useUpdateAppointment();
 
-  let modalHeaderInfo = null;
-  let content = null;
-
   const handleSave = () => {
     if (contentType === 'info') {
       appointmentDetailsform.submit();
@@ -74,6 +71,9 @@ const AppointmentDetails: React.FC<Props> = ({
       setSelectedInfoTab('details');
     }
   }, [visible]);
+
+  let modalHeaderInfo = null;
+  let content = null;
 
   switch (contentType) {
     case 'info':
