@@ -33,7 +33,9 @@ const AppointmentDetails: React.FC<Props> = ({
     medications: [],
   });
 
-  const [form] = Form.useForm();
+  const [appointmentDetailsform] = Form.useForm();
+  const [addPrescriptionForm] = Form.useForm();
+  const [editPrescriptionForm] = Form.useForm();
   // 'info' | 'new-prescription' | 'edit-prescription';
   const [contentType, setContentType] = useState('info');
   // 'details' | 'notes' | 'prescriptions';
@@ -45,6 +47,20 @@ const AppointmentDetails: React.FC<Props> = ({
 
   let modalHeaderInfo = null;
   let content = null;
+
+  const handleSave = () => {
+    if (contentType === 'info') {
+      appointmentDetailsform.submit();
+      return;
+    }
+    if (contentType === 'new-prescription') {
+      addPrescriptionForm.submit();
+      return;
+    }
+    if (contentType === 'edit-prescription') {
+      editPrescriptionForm.submit();
+    }
+  };
 
   const backToPrescriptions = () => {
     setContentType('info');
@@ -72,7 +88,7 @@ const AppointmentDetails: React.FC<Props> = ({
           prescriptionId={selectedPrescriptionId}
           currentDate={currentDate}
           mutateAsyncEdit={mutateAsyncEdit}
-          appointmentForm={form}
+          appointmentForm={appointmentDetailsform}
           contentType={contentType}
           setContentType={setContentType}
           setSelectedPrescriptionId={setSelectedPrescriptionId}
@@ -92,7 +108,7 @@ const AppointmentDetails: React.FC<Props> = ({
         <NewPrescription
           patientId={patientId}
           appointmentId={appointmentId}
-          form={form}
+          form={addPrescriptionForm}
           backToPrescriptions={backToPrescriptions}
           initialValues={prescriptionInitialValues}
         />
@@ -108,7 +124,7 @@ const AppointmentDetails: React.FC<Props> = ({
         <EditPrescription
           patientId={patientId}
           prescriptionId={selectedPrescriptionId}
-          form={form}
+          form={editPrescriptionForm}
           backToPrescriptions={backToPrescriptions}
         />
       );
@@ -133,7 +149,7 @@ const AppointmentDetails: React.FC<Props> = ({
           <Button
             type="primary"
             icon={<Icon name="save-line" />}
-            onClick={form.submit}
+            onClick={handleSave}
             loading={isLoadingEdit}
             style={{ textTransform: 'uppercase' }}
           >
