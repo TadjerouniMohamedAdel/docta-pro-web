@@ -26,11 +26,11 @@ const AddMedication: React.FC<Props> = ({ addMedication }) => {
   const initialValues: NewMedication = {
     name: '',
     unitCount: 1,
-    unitType: 'Applications',
+    unitType: 'Comprimés',
     frequencyCount: 'Une fois',
     frequencyPerDay: 'Par jour',
     frequencyTime: 'Avant repas',
-    durationCount: 15,
+    durationCount: 7,
     durationType: 'Jours',
   };
 

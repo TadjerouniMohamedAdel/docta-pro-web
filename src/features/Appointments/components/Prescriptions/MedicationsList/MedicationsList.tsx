@@ -36,8 +36,7 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
         </Col>
       </Row>
       {/* list header row */}
-      <Row align="middle" style={{ padding: '0 18px' }}>
-        <Col span={2} />
+      <Row align="middle" style={{ padding: '0 40px' }}>
         <Col span={6}>
           <Text size="md" strong>
             {t('medication')}
@@ -48,7 +47,7 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
             {t('units')}
           </Text>
         </Col>
-        <Col span={6}>
+        <Col span={8}>
           <Text size="md" strong>
             {t('frequency')}
           </Text>
@@ -60,7 +59,7 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
         </Col>
         <Col span={2} />
       </Row>
-      <div style={{ height: 200, overflow: 'scroll' }}>
+      <div style={{ maxHeight: 200, overflow: 'scroll' }}>
         {medications.map((medication) => (
           <MedicationItem
             key={medication.id}

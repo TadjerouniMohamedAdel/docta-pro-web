@@ -130,8 +130,6 @@ export type PrescriptinRow = {
   diagnostic: string;
 };
 
-
-
 export type PrescriptionDetails = PrescriptinRow & {
   note: string;
   medications: MedicationRow[];
@@ -157,7 +155,7 @@ export type PrescriptionDetails = PrescriptinRow & {
       city: StateCity;
       state: StateCity;
       addressLine1: string;
-      images:{url:string}[]
+      images: { url: string }[];
     };
   };
 };
