@@ -18,15 +18,14 @@ const MedicationItem: React.FC<Props> = ({ medicationRow, deleteMedication }) =>
   };
 
   return (
-    <Row align="middle" style={{ padding: '0 18px' }}>
-      <Col span={2} />
+    <Row align="middle" style={{ padding: '0 40px' }}>
       <Col span={6}>
         <Text size="sm">{name}</Text>
       </Col>
       <Col span={4}>
         <Text size="sm">{unit}</Text>
       </Col>
-      <Col span={6}>
+      <Col span={8}>
         <Text size="sm">{frequency}</Text>
       </Col>
       <Col span={4}>

@@ -18,7 +18,7 @@ type Props = {
   goToEditPrescription?: () => void;
   prescribeAgain?: (prescription: PrescriptionDetails) => void;
   isEditable?: boolean;
-  fromPatient?:boolean
+  fromPatient?: boolean;
 };
 
 const PrescriptionsList: React.FC<Props> = ({
@@ -28,7 +28,7 @@ const PrescriptionsList: React.FC<Props> = ({
   setSelectedPrescriptionId,
   prescribeAgain,
   isEditable = true,
-  fromPatient=false
+  fromPatient = false,
 }) => {
   const { t } = useTranslation();
 
@@ -61,19 +61,16 @@ const PrescriptionsList: React.FC<Props> = ({
     cache.invalidateQueries('prescriptions-history');
   };
 
-  
-
-  const printPreview = (diagnostic:string) => {
-        const printWindow = window.open('', '', 'height=400,width=800');
-        printWindow?.document.write(`<html><head><title>${diagnostic}</title></head><body>`);
-        printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
-        printWindow?.document.write('</body></html>');
-        printWindow?.document.close();
-        printWindow?.print();
-        setPreviewId(null);
-        setPreviewVisible(true);
-};
-
+  const printPreview = (diagnostic: string) => {
+    const printWindow = window.open('', '', 'height=400,width=800');
+    printWindow?.document.write(`<html><head><title>${diagnostic}</title></head><body>`);
+    printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
+    printWindow?.document.write('</body></html>');
+    printWindow?.document.close();
+    printWindow?.print();
+    setPreviewId(null);
+    setPreviewVisible(true);
+  };
 
   return (
     <>
@@ -90,7 +87,7 @@ const PrescriptionsList: React.FC<Props> = ({
           </Text>
         </Col>
       </Row>
-      <div style={{ height: isEditable ? '100%' : 300, overflow: 'scroll' }}>
+      <div style={{ height: isEditable ? 330 : '100%', overflowY: 'scroll' }}>
         {data.pages.map((page: any) => (
           <>
             {page.prescriptions.map((prescriptionRow: PrescriptinRow) => (
@@ -103,7 +100,10 @@ const PrescriptionsList: React.FC<Props> = ({
                 isEditable={isEditable}
                 key={prescriptionRow.id}
                 setPreviewId={setPreviewId}
-                printPreview={()=>{setPreviewVisible(false);setPreviewId(prescriptionRow.id);}}
+                printPreview={() => {
+                  setPreviewVisible(false);
+                  setPreviewId(prescriptionRow.id);
+                }}
               />
             ))}
           </>
@@ -125,18 +125,18 @@ const PrescriptionsList: React.FC<Props> = ({
         isLoading={isDeletePrescriptionLoading}
         onSuccess={onDeleteSuccess}
       />
-      {
-        previewId && (
-          <PrescriptionPreview
-            prescriptionId={previewId}
-            onClose={() => { setPreviewId(null);setPreviewVisible(true); }}
-            visible={previewVisible}
-            isModal={fromPatient}
-            printPreview={printPreview}
-          />
-
-        )
-      }
+      {previewId && (
+        <PrescriptionPreview
+          prescriptionId={previewId}
+          onClose={() => {
+            setPreviewId(null);
+            setPreviewVisible(true);
+          }}
+          visible={previewVisible}
+          isModal={fromPatient}
+          printPreview={printPreview}
+        />
+      )}
     </>
   );
 };

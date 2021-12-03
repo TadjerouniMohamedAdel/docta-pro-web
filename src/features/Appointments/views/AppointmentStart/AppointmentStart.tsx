@@ -35,14 +35,32 @@ const AppointmentStart: React.FC<Props> = ({
     medications: [],
   });
 
-  const [form] = Form.useForm();
+  const [appointmentDetailsform] = Form.useForm();
+  const [addPrescriptionForm] = Form.useForm();
+  const [editPrescriptionForm] = Form.useForm();
 
+  // 'info' | 'new-prescription' | 'edit-prescription';
   const [selectedInfoTab, setSelectedInfoTab] = useState('details');
+  // 'info' | 'new-prescription' | 'edit-prescription';
   const [contentType, setContentType] = useState('info');
 
   const [selectedPrescriptionId, setSelectedPrescriptionId] = useState('');
 
   const { mutateAsync: mutateAsyncEdit, isLoading: isLoadingEdit } = useMutation(editAppointment);
+
+  const handleSave = () => {
+    if (contentType === 'info') {
+      appointmentDetailsform.submit();
+      return;
+    }
+    if (contentType === 'new-prescription') {
+      addPrescriptionForm.submit();
+      return;
+    }
+    if (contentType === 'edit-prescription') {
+      editPrescriptionForm.submit();
+    }
+  };
 
   const backToPrescriptions = () => {
     setContentType('info');
@@ -74,7 +92,7 @@ const AppointmentStart: React.FC<Props> = ({
           currentDate={currentDate}
           scheduleNewAppointment={scheduleNewAppointment}
           mutateAsyncEdit={mutateAsyncEdit}
-          appointmentForm={form}
+          appointmentForm={appointmentDetailsform}
           setContentType={setContentType}
           setSelectedPrescriptionId={setSelectedPrescriptionId}
           setPrescriptionInitialValues={setPrescriptionInitialValues}
@@ -93,7 +111,7 @@ const AppointmentStart: React.FC<Props> = ({
         <NewPrescription
           patientId={patientId}
           appointmentId={appointmentId}
-          form={form}
+          form={addPrescriptionForm}
           backToPrescriptions={backToPrescriptions}
           initialValues={prescriptionInitialValues}
         />
@@ -109,7 +127,7 @@ const AppointmentStart: React.FC<Props> = ({
         <EditPrescription
           patientId={patientId}
           prescriptionId={selectedPrescriptionId}
-          form={form}
+          form={editPrescriptionForm}
           backToPrescriptions={backToPrescriptions}
         />
       );
@@ -132,7 +150,7 @@ const AppointmentStart: React.FC<Props> = ({
         <Button
           type="primary"
           icon={<Icon name="save-line" />}
-          onClick={form.submit}
+          onClick={handleSave}
           loading={isLoadingEdit}
           style={{ textTransform: 'uppercase' }}
         >
