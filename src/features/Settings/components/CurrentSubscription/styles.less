@@ -1,0 +1,59 @@
+.current-plan {
+  border: 1px solid #e2e5f7;
+  border-radius: 8px;
+  padding: 24px;
+  min-width: 338px;
+  width: 100%;
+  margin: 20px;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .plan-name {
+      background: #273151;
+      border-radius: 2px;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      color: #fff;
+      padding: 5px 31px;
+    }
+
+    .choose-plan-button {
+      height: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 6px;
+      padding: 12px 8px;
+    }
+  }
+  .right-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .total-amount {
+      font-size: 32px !important;
+      color: #ffb400;
+    }
+    .amount-by-month {
+      font-weight: bold;
+      font-size: 16px !important;
+      color: #74798c;
+    }
+  }
+}
+@media(max-width:930px){
+  .current-plan{
+    flex:unset;
+    width: auto;
+  }
+}
