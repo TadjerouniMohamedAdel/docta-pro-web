@@ -30,7 +30,6 @@ const Subscription: React.FC = () => {
   const { mutateAsync } = usePickPlan();
   const { invoices, isLoading } = useGetInvoices(pageIndex, pageSize);
   const { mutateAsync: mutateReceipt, isLoading: uploadLoading } = useUploadReceipt();
-
   const columns = [
     {
       title: t('date'),
@@ -140,7 +139,14 @@ const Subscription: React.FC = () => {
 
   return (
     <>
-      <div style={{ padding: '18px 25px' }}>
+      <div
+        style={{
+          padding: '18px 25px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Text size="xxl" style={{ fontWeight: 'bold' }}>
           {t('subscription')}
         </Text>

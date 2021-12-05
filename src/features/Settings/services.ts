@@ -20,13 +20,16 @@ export const pickPlan = async ({
   planId,
   paymentMethodId,
   paymentInfo,
+  successMessage,
 }: {
   planId: string;
   paymentMethodId?: string | undefined;
   paymentInfo?: any;
+  successMessage?: string;
 }): Promise<any> => {
   return fetcher('/api/v1/subscriptions/pick-plan', {
     body: { planId, paymentMethodId, paymentInfo },
+    successMessage,
   });
 };
 
@@ -34,7 +37,13 @@ export const fetchInvoices = async (page: number, size: number): Promise<any> =>
   return fetcher(`/api/v1/subscriptions/invoices?skip=${(page - 1) * size}&take=${size}`, {});
 };
 
-export const uploadReceipt = async ({ paymentId, file }: { paymentId: string; file: any }): Promise<any> => {
+export const uploadReceipt = async ({
+  paymentId,
+  file,
+}: {
+  paymentId: string;
+  file: any;
+}): Promise<any> => {
   return fetcher('/api/v1/subscriptions/receipt', {
     body: { paymentId, file },
     method: 'PUT',

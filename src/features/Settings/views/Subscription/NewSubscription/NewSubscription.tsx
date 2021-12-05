@@ -44,11 +44,18 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
     validateOnChange: false,
     onSubmit: async (item: any) => {
       try {
-        await addSubscription({
+        const data: {
+          planId: string;
+          paymentMethodId?: string | undefined;
+          paymentInfo?: any;
+          successMessage?: string;
+        } = {
           planId: selectedPlan!.id,
           paymentMethodId: selectedMethod?.id,
           paymentInfo: item,
-        });
+        };
+        if (selectedMethod?.id) data.successMessage = 'Quotation generated successfully.';
+        await addSubscription(data);
         setVisible(false);
       } catch (error) {
         console.log('error catch', error);
