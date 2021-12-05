@@ -2,6 +2,7 @@ import React from 'react';
 import { Divider, Table } from 'antd';
 import { Breakpoint } from 'antd/lib/_util/responsiveObserve';
 import { format } from 'date-fns';
+import { RcFile } from 'antd/lib/upload';
 import { useTranslation } from 'react-i18next';
 import { Text, Modal, Icon } from '../../../../components';
 import CurrentSubscription from '../../components/CurrentSubscription/CurrentSubscription';
@@ -28,7 +29,7 @@ const Subscription: React.FC = () => {
   const { plans } = useGetSubscriptionPlans();
   const { mutateAsync } = usePickPlan();
   const { invoices, isLoading } = useGetInvoices(pageIndex, pageSize);
-  const { mutateAsync:mutateReceipt } = useUploadReceipt();
+  const { mutateAsync: mutateReceipt, isLoading: uploadLoading } = useUploadReceipt();
 
   const columns = [
     {
@@ -128,9 +129,9 @@ const Subscription: React.FC = () => {
     setPageIndex(current);
   };
 
-  const handleUploadReceipt = async (file: File) => {
+  const handleUploadReceipt = async (file: File | RcFile) => {
     try {
-      await mutateReceipt({ paymentId:nextSubscription?.data?.paymentId, file });
+      await mutateReceipt({ paymentId: nextSubscription?.data?.paymentId, file });
       setUploadReceipt(false);
     } catch (error) {
       console.log(error);
@@ -157,11 +158,10 @@ const Subscription: React.FC = () => {
         title={t('upload payment receipt')}
         visible={uploadReceipt}
         width={650}
+        destroyOnClose
         onCancel={() => setUploadReceipt(false)}
       >
-        <UploadReceipt 
-          handleUploadReceipt={handleUploadReceipt}
-        />
+        <UploadReceipt isLoading={uploadLoading} handleUploadReceipt={handleUploadReceipt} />
       </Modal>
       {/* Subscription state */}
       <div style={{ display: 'flex', flexDirection: 'column', padding: '18px 25px' }}>
