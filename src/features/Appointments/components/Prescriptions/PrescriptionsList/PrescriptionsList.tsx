@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import printJS from 'print-js';
 import { Col, Row } from 'antd';
 import { useMutation, useQueryClient } from 'react-query';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +9,7 @@ import DeleteModal from '../../../../../components/MultiActionModal/MultiActionM
 import { deletePrescription } from '../../../services';
 import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
 import { PrescriptinRow, PrescriptionDetails } from '../../../types';
-import PrescriptionPreview from '../../../../Patients/components/Prescriptions/PrescriptionPreview/PrescriptionPreview';
+import PrescriptionPreview from '../PrescriptionPreview/PrescriptionPreview';
 import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
 
 type Props = {
@@ -62,12 +63,13 @@ const PrescriptionsList: React.FC<Props> = ({
   };
 
   const printPreview = (diagnostic: string) => {
-    const printWindow = window.open('', '', 'height=400,width=800');
-    printWindow?.document.write(`<html><head><title>${diagnostic}</title></head><body>`);
-    printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
-    printWindow?.document.write('</body></html>');
-    printWindow?.document.close();
-    printWindow?.print();
+    console.log(diagnostic);
+    printJS({
+      printable: 'print-subscription',
+      type: 'html',
+      css: ['/preview.css'],
+      scanStyles: false,
+    });
     setPreviewId(null);
     setPreviewVisible(true);
   };

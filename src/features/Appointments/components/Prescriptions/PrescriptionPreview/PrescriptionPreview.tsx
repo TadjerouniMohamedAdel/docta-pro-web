@@ -3,12 +3,11 @@ import { format, isSameDay } from 'date-fns';
 import { Button, Card, Spin, Divider } from 'antd';
 import { Icon, Text } from '../../../../../components';
 import docta_with_text from '../../../../../assets/img/docta_with_text.png';
-import barre_code from '../../../../../assets/img/barre_code.png';
+// import barre_code from '../../../../../assets/img/barre_code.png';
 import './styles.less';
-import { useGetPrescription } from '../../../../Appointments/hooks';
-import { MedicationRow } from '../../../../Appointments/types';
+import { useGetPrescription } from '../../../hooks';
+import { MedicationRow } from '../../../types';
 import { Specialty } from '../../../../Settings/views/VisitReasons/types';
-import cabinetImage from '../../../../../assets/img/company-placeholder.png';
 
 type Props = {
   prescriptionId: string;
@@ -144,13 +143,24 @@ const PrescriptionPreview: React.FC<Props> = ({
               display: 'flex',
               width: '95%',
               justifyContent: 'space-between',
-              alignItems: 'center',
+              // alignItems: 'center',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <img src={cabinetImage} alt="dsfs-" style={{ width: 83, height: 62 }} />
+            <div
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+            >
+              <div style={{ marginBottom: 28 }}>
+                <img src={docta_with_text} alt="cabinet-logo-" style={{ width: 97 }} />
+              </div>
 
-              <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>
+              <Text
+                style={{
+                  marginTop: 4,
+                  color: '#74798c',
+                  fontWeight: 'bold',
+                  fontSize: 9,
+                }}
+              >
                 Dr {`${prescription.data.doctor.lastName} ${prescription.data?.doctor.firstName}`}
               </Text>
               <Text style={{ marginTop: 4, color: '#74798c', fontWeight: 'bold', fontSize: 9 }}>
@@ -224,24 +234,6 @@ const PrescriptionPreview: React.FC<Props> = ({
             <p style={{ marginTop: 44, fontSize: 10, marginBottom: 80 }}>
               {prescription.data.note}
             </p>
-            <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                padding: '0 24px',
-                bottom: 22,
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '95%',
-              }}
-            >
-              <div>
-                <img src={docta_with_text} alt="docta_logo" />
-              </div>
-              <div>
-                <img src={barre_code} alt="" />
-              </div>
-            </div>
           </div>
         </div>
       )}

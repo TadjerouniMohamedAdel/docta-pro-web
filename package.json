@@ -33,6 +33,7 @@
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
     "password-generator": "^2.3.2",
+    "print-js": "^1.6.0",
     "react": "^16.14.0",
     "react-big-calendar": "^0.32.0",
     "react-dom": "^16.14.0",
