@@ -62,8 +62,7 @@ const PrescriptionsList: React.FC<Props> = ({
     cache.invalidateQueries('prescriptions-history');
   };
 
-  const printPreview = (diagnostic: string) => {
-    console.log(diagnostic);
+  const printPreview = () => {
     printJS({
       printable: 'print-subscription',
       type: 'html',

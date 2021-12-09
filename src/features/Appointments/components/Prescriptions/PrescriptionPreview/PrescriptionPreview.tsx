@@ -13,7 +13,7 @@ type Props = {
   prescriptionId: string;
   onClose: () => void;
   visible: boolean;
-  printPreview: (val: string) => void;
+  printPreview: () => void;
   isModal?: boolean;
 };
 
@@ -27,14 +27,17 @@ const PrescriptionPreview: React.FC<Props> = ({
   const { isLoading, prescription } = useGetPrescription(prescriptionId);
 
   React.useEffect(() => {
-    if (!isLoading && !visible && prescription) printPreview(prescription?.data.diagnostic);
+    if (!isLoading && !visible && prescription) printPreview();
   }, [visible, isLoading]);
 
   React.useEffect(() => {
-    if (visible && !isModal)
+    if (visible && !isModal) {
       document.querySelector('.ant-modal')?.classList.add('modals-two-window');
+      document.querySelector('.ant-modal-content')?.classList.add('modal-content-two-modals');
+    }
     return () => {
       document.querySelector('.ant-modal')?.classList.remove('modals-two-window');
+      document.querySelector('.ant-modal-content')?.classList.remove('modal-content-two-modals');
     };
   });
 
@@ -75,7 +78,7 @@ const PrescriptionPreview: React.FC<Props> = ({
             <Button
               type="primary"
               className="prescription-print-button"
-              onClick={() => printPreview(prescription.data.diagnostic)}
+              onClick={() => printPreview()}
             >
               <Icon name="printer-line" />
               <Text style={{ color: '#fff', fontSize: 14 }}>PRINT</Text>
