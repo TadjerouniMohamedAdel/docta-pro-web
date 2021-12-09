@@ -67,7 +67,7 @@ const PrescriptionsList: React.FC<Props> = ({
     printJS({
       printable: 'print-subscription',
       type: 'html',
-      css: ['/preview.css'],
+      css: ['/prescription-preview-assets/preview.css'],
       scanStyles: false,
     });
     setPreviewId(null);
