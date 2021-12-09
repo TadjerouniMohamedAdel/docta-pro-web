@@ -21,9 +21,16 @@ type Props = {
     paymentMethodId?: string | undefined;
     paymentInfo?: any;
   }) => Promise<any>;
+  isLoadingPickPlan: boolean;
 };
 
-const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubscription }) => {
+const NewSubscription: React.FC<Props> = ({
+  visible,
+  isLoadingPickPlan,
+  setVisible,
+  plans,
+  addSubscription,
+}) => {
   const { t } = useTranslation('translation');
   const [selectedPlan, setSelectedPlan] = React.useState<null | SubscriptionPlan>(null); // selected plan for new subscription
   const { methods } = useGetPaymentMethods();
@@ -174,6 +181,7 @@ const NewSubscription: React.FC<Props> = ({ visible, setVisible, plans, addSubsc
         /* step 1 payment method */
         <PaymentMethods
           formik={formik}
+          isLoadingPickPlan={isLoadingPickPlan}
           methods={methods?.data}
           selectMethod={setSelectedMethod}
           selectedMethod={selectedMethod}
