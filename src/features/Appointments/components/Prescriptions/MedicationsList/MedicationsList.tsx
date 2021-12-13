@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, Text } from '../../../../../components';
+import { Text } from '../../../../../components';
 import { MedicationRow } from '../../../types';
 import MedicationItem from './MedicationItem/MedicationItem';
 
@@ -14,27 +14,7 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
   const { t } = useTranslation();
 
   return (
-    <div style={{ padding: '40px 0 24px' }}>
-      {/* section header */}
-      <Row justify="space-between" align="middle" style={{ padding: '0 40px 20px' }}>
-        <Col>
-          <Text>{t('prescription')}</Text>
-        </Col>
-        <Col>
-          <Row>
-            <Col>
-              <Button type="link" icon={<Icon name="search-eye-line" />}>
-                {t('preview')}
-              </Button>
-            </Col>
-            <Col>
-              <Button type="link" icon={<Icon name="printer-line" />}>
-                {t('print')}
-              </Button>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+    <div>
       {/* list header row */}
       <Row align="middle" style={{ padding: '0 40px' }}>
         <Col span={6}>
@@ -60,13 +40,16 @@ const MedicationsList: React.FC<Props> = ({ medications, deleteMedication }) => 
         <Col span={2} />
       </Row>
       <div style={{ maxHeight: 200, overflow: 'scroll' }}>
-        {medications.map((medication) => (
-          <MedicationItem
-            key={medication.id}
-            medicationRow={medication}
-            deleteMedication={deleteMedication}
-          />
-        ))}
+        {medications.map(
+          (medication) =>
+            !medication.isDeleted && (
+              <MedicationItem
+                key={medication.id}
+                medicationRow={medication}
+                deleteMedication={deleteMedication}
+              />
+            ),
+        )}
       </div>
     </div>
   );

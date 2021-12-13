@@ -4,7 +4,7 @@ import { Form, Input, Row, FormInstance, Col } from 'antd';
 import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query';
 import * as Yup from 'yup';
-import { Icon, Label } from '../../../../../components';
+import { Icon, Label, Text, Button } from '../../../../../components';
 import { MedicationRow, PrescriptionForm } from '../../../types';
 import AddMedication from '../AddMedication/AddMedication';
 import MedicationsList from '../MedicationsList/MedicationsList';
@@ -96,6 +96,27 @@ const NewPrescription: React.FC<Props> = ({
           </Col>
           <Col span={24}>
             <AddMedication addMedication={addMedication} />
+          </Col>
+        </Row>
+      </div>
+      <div style={{ marginTop: 37, marginBottom: 24, paddingLeft: 40, paddingRight: 40 }}>
+        <Row justify="space-between" align="middle">
+          <Col>
+            <Text>{t('prescription')}</Text>
+          </Col>
+          <Col>
+            <Row>
+              <Col>
+                <Button type="link" icon={<Icon name="search-eye-line" />}>
+                  {t('preview')}
+                </Button>
+              </Col>
+              <Col>
+                <Button type="link" icon={<Icon name="printer-line" />}>
+                  {t('print')}
+                </Button>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>
