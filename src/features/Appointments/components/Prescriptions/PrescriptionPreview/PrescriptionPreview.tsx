@@ -1,35 +1,32 @@
 import React from 'react';
+import printJS from 'print-js';
 import { format, isSameDay } from 'date-fns';
 import { Button, Card, Spin, Divider } from 'antd';
 import { Icon, Text } from '../../../../../components';
+
 import docta_with_text from '../../../../../assets/img/docta_with_text.png';
 // import barre_code from '../../../../../assets/img/barre_code.png';
 import './styles.less';
-import { useGetPrescription } from '../../../hooks';
 import { MedicationRow } from '../../../types';
 import { Specialty } from '../../../../Settings/views/VisitReasons/types';
 
 type Props = {
-  prescriptionId: string;
+  prescription: any;
+  isLoading: boolean;
   onClose: () => void;
   visible: boolean;
-  printPreview: () => void;
+  printPreview: boolean;
   isModal?: boolean;
 };
 
 const PrescriptionPreview: React.FC<Props> = ({
   visible,
-  prescriptionId,
+  prescription,
+  isLoading,
   isModal = false,
   onClose,
   printPreview,
 }) => {
-  const { isLoading, prescription } = useGetPrescription(prescriptionId);
-
-  React.useEffect(() => {
-    if (!isLoading && !visible && prescription) printPreview();
-  }, [visible, isLoading]);
-
   React.useEffect(() => {
     if (visible && !isModal) {
       document.querySelector('.ant-modal')?.classList.add('modals-two-window');
@@ -41,6 +38,22 @@ const PrescriptionPreview: React.FC<Props> = ({
     };
   });
 
+  const printPreviewI = () => {
+    printJS({
+      printable: 'print-subscription',
+      type: 'html',
+      css: ['/prescription-preview-assets/preview.css'],
+      scanStyles: false,
+    });
+    onClose();
+  };
+
+  React.useEffect(() => {
+    if (!isLoading && printPreview) {
+      printPreviewI();
+    }
+  }, [printPreview, isLoading]);
+
   // custom loader
   const Loading = () => (
     <div
@@ -48,7 +61,8 @@ const PrescriptionPreview: React.FC<Props> = ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: 422,
+        width: '100%',
+        padding: 0,
         height: 500,
       }}
     >
@@ -78,7 +92,7 @@ const PrescriptionPreview: React.FC<Props> = ({
             <Button
               type="primary"
               className="prescription-print-button"
-              onClick={() => printPreview()}
+              onClick={() => printPreviewI()}
             >
               <Icon name="printer-line" />
               <Text style={{ color: '#fff', fontSize: 14 }}>PRINT</Text>
@@ -193,7 +207,8 @@ const PrescriptionPreview: React.FC<Props> = ({
                 <Text
                   style={{ textAlign: 'right', marginBottom: 2, color: '#74798c', fontSize: 9 }}
                 >
-                  {prescription.data.doctor.establishment.addressLine1}
+                  {prescription.data.doctor.establishment.addressLine1 ||
+                    prescription.data.doctor.establishment.address}
                 </Text>
               </div>
             </div>
@@ -229,9 +244,12 @@ const PrescriptionPreview: React.FC<Props> = ({
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', marginTop: 69, width: '95%' }}>
-              {prescription.data.medications.map((medication: MedicationRow) => (
-                <MedicationItem key={`medication-${medication.id}`} medication={medication} />
-              ))}
+              {prescription.data.medications.map(
+                (medication: MedicationRow) =>
+                  !medication.isDeleted && (
+                    <MedicationItem key={`medication-${medication.id}`} medication={medication} />
+                  ),
+              )}
             </div>
 
             <p style={{ marginTop: 44, fontSize: 10, marginBottom: 80 }}>

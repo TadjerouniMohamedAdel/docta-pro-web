@@ -10,6 +10,7 @@ import AddMedication from '../AddMedication/AddMedication';
 import MedicationsList from '../MedicationsList/MedicationsList';
 import PrescriptionNotes from '../PrescriptionNotes/PrescriptionNotes';
 import { fetchPrescriptionDetails, updatePrescription } from '../../../services';
+import PrescriptionPreview from '../PrescriptionPreview/PrescriptionPreview';
 
 const initialData: PrescriptionForm = {
   note: '',
@@ -43,7 +44,8 @@ const EditPrescription: React.FC<Props> = ({
   backToPrescriptions,
 }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
-
+  const [previewVisible, setPreviewVisible] = React.useState(false);
+  const [printPreview, setPrintPreview] = React.useState(false);
   const { prescription, isLoading: isFetchingPrescription } = useFetchPrescription(
     patientId,
     prescriptionId,
@@ -95,63 +97,89 @@ const EditPrescription: React.FC<Props> = ({
   };
 
   return (
-    <Spin spinning={isFetchingPrescription}>
-      <Form form={form} className="prescription-form" onFinish={handleSubmit}>
-        <div style={{ padding: '24px 40px 0' }}>
-          <Row gutter={[35, 16]} align="middle">
-            <Col span={24}>
-              <Label
-                title={t('diagnostic')}
-                error={touched.diagnostic ? (errors.diagnostic as string) : undefined}
-                required
-              />
-              <Form.Item
-                validateStatus={
-                  touched.diagnostic && Boolean(errors.diagnostic) ? 'error' : undefined
-                }
-              >
-                <Input
-                  prefix={<Icon name="heart-pulse-line" />}
-                  name="diagnostic"
-                  value={values.diagnostic}
-                  placeholder={t('placeholders:enter', {
-                    fieldName: t('diagnostic'),
-                  })}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+    <>
+      <Spin spinning={isFetchingPrescription}>
+        <Form form={form} className="prescription-form" onFinish={handleSubmit}>
+          <div style={{ padding: '24px 40px 0' }}>
+            <Row gutter={[35, 16]} align="middle">
+              <Col span={24}>
+                <Label
+                  title={t('diagnostic')}
+                  error={touched.diagnostic ? (errors.diagnostic as string) : undefined}
+                  required
                 />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <AddMedication addMedication={addMedication} />
-            </Col>
-          </Row>
-        </div>
-        <div style={{ marginTop: 37, marginBottom: 24, paddingLeft: 40, paddingRight: 40 }}>
-          <Row justify="space-between" align="middle">
-            <Col>
-              <Text>{t('prescription')}</Text>
-            </Col>
-            <Col>
-              <Row>
-                <Col>
-                  <Button type="link" icon={<Icon name="search-eye-line" />}>
-                    {t('preview')}
-                  </Button>
-                </Col>
-                <Col>
-                  <Button type="link" icon={<Icon name="printer-line" />}>
-                    {t('print')}
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
-        <MedicationsList medications={values.medications} deleteMedication={deleteMedication} />
-        <PrescriptionNotes note={values.note} setNote={(note) => setFieldValue('note', note)} />
-      </Form>
-    </Spin>
+                <Form.Item
+                  validateStatus={
+                    touched.diagnostic && Boolean(errors.diagnostic) ? 'error' : undefined
+                  }
+                >
+                  <Input
+                    prefix={<Icon name="heart-pulse-line" />}
+                    name="diagnostic"
+                    value={values.diagnostic}
+                    placeholder={t('placeholders:enter', {
+                      fieldName: t('diagnostic'),
+                    })}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <AddMedication addMedication={addMedication} />
+              </Col>
+            </Row>
+          </div>
+          <div style={{ marginTop: 37, marginBottom: 24, paddingLeft: 40, paddingRight: 40 }}>
+            <Row justify="space-between" align="middle">
+              <Col>
+                <Text>{t('prescription')}</Text>
+              </Col>
+              <Col>
+                <Row>
+                  <Col>
+                    <Button
+                      type="link"
+                      icon={<Icon name="search-eye-line" />}
+                      onClick={() => setPreviewVisible(true)}
+                    >
+                      {t('preview')}
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button
+                      type="link"
+                      icon={<Icon name="printer-line" />}
+                      onClick={() => {
+                        setPreviewVisible(false);
+                        setPrintPreview(true);
+                      }}
+                    >
+                      {t('print')}
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+          <MedicationsList medications={values.medications} deleteMedication={deleteMedication} />
+          <PrescriptionNotes note={values.note} setNote={(note) => setFieldValue('note', note)} />
+        </Form>
+      </Spin>
+      {!isFetchingPrescription && (formik.values as any)?.doctor && (
+        <PrescriptionPreview
+          prescription={{ data: { ...formik.values } }}
+          isLoading={isFetchingPrescription}
+          onClose={() => {
+            setPreviewVisible(false);
+            setPrintPreview(false);
+          }}
+          visible={previewVisible}
+          isModal={false}
+          printPreview={printPreview}
+        />
+      )}
+    </>
   );
 };
 

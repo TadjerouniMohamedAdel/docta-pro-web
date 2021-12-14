@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import printJS from 'print-js';
 import { Col, Row } from 'antd';
 import { useMutation, useQueryClient } from 'react-query';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,7 @@ import useIntersectionObserver from '../../../../../common/hooks/useIntersection
 import { PrescriptinRow, PrescriptionDetails } from '../../../types';
 import PrescriptionPreview from '../PrescriptionPreview/PrescriptionPreview';
 import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
+import { useGetPrescription } from '../../../hooks';
 
 type Props = {
   patientId: string;
@@ -36,7 +36,9 @@ const PrescriptionsList: React.FC<Props> = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [previewId, setPreviewId] = useState<null | string>(null);
   const [previewVisible, setPreviewVisible] = useState(true);
+  const [printPreview, setPrintPreview] = useState(false);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
+  const { isLoading: prescriptionLoading, prescription } = useGetPrescription(previewId);
 
   const cache = useQueryClient();
   const {
@@ -60,17 +62,6 @@ const PrescriptionsList: React.FC<Props> = ({
 
   const onDeleteSuccess = () => {
     cache.invalidateQueries('prescriptions-history');
-  };
-
-  const printPreview = () => {
-    printJS({
-      printable: 'print-subscription',
-      type: 'html',
-      css: ['/prescription-preview-assets/preview.css'],
-      scanStyles: false,
-    });
-    setPreviewId(null);
-    setPreviewVisible(true);
   };
 
   return (
@@ -104,6 +95,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 printPreview={() => {
                   setPreviewVisible(false);
                   setPreviewId(prescriptionRow.id);
+                  setPrintPreview(true);
                 }}
               />
             ))}
@@ -128,10 +120,12 @@ const PrescriptionsList: React.FC<Props> = ({
       />
       {previewId && (
         <PrescriptionPreview
-          prescriptionId={previewId}
+          prescription={prescription}
+          isLoading={prescriptionLoading}
           onClose={() => {
             setPreviewId(null);
             setPreviewVisible(true);
+            setPrintPreview(false);
           }}
           visible={previewVisible}
           isModal={fromPatient}
