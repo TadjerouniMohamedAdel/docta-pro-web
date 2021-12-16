@@ -5,29 +5,38 @@ const AppointmentCard: React.FC = () => {
   return (
     <>
       {Array(5).fill(
-        <Row
-          className="appointment-card skeleton"
-          style={{
-            height: 72,
-            borderRadius: 8,
-            padding: '0 16px',
-            width: 'calc(100% - 70px)',
-            marginBottom: 8,
-            marginLeft: 70,
-          }}
-          align="middle"
-          gutter={16}
-        >
-          <Col>
-            <Skeleton.Avatar active size="large" shape="circle" />
+        <Row gutter={16} style={{ marginBottom: 10 }}>
+          <Col style={{ minWidth: 70, margin: 0 }}>
+            <Skeleton.Input
+              active
+              size="small"
+              style={{ height: 18, position: 'relative', margin: 0, top: 4 }}
+            />
           </Col>
-          <Col flex={1}>
-            <Row gutter={24} justify="space-between">
-              <Col span={16}>
-                <Skeleton.Input active size="small" style={{ height: 20 }} />
+          <Col flex={1} style={{ padding: '0 16px' }}>
+            <Row
+              className="appointment-card skeleton"
+              style={{
+                height: 72,
+                borderRadius: 8,
+
+                width: '100%',
+              }}
+              align="middle"
+              gutter={16}
+            >
+              <Col>
+                <Skeleton.Avatar active size="large" shape="circle" />
               </Col>
-              <Col span={4}>
-                <Skeleton.Input active size="small" style={{ height: 20 }} />
+              <Col flex={1}>
+                <Row gutter={24} justify="space-between">
+                  <Col span={16}>
+                    <Skeleton.Input active size="small" style={{ height: 20 }} />
+                  </Col>
+                  <Col span={4}>
+                    <Skeleton.Input active size="small" style={{ height: 20 }} />
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Col>
