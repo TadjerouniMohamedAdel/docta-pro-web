@@ -66,13 +66,23 @@ const fetcher = (
 
     if (response.status !== 204) data = await response.json();
 
+    // "account blocked"
     if (response.status === 400 && data.error.code === 'user blocked') {
       window.dispatchEvent(new CustomEvent('suspended_event', { detail: { suspended: true } }));
       return Promise.reject(new Error("You account's suspended !"));
     }
 
+    // "Account Locked : no active subscription"
+    if (response.status === 400 && data.error.code === 'no active subscription') {
+      window.dispatchEvent(new CustomEvent('locked_event', { detail: { locked: true } }));
+      return Promise.reject(new Error("You account's locked !"));
+    }
+
     if (JSON.parse(window.localStorage.getItem('suspended')!)) {
       window.dispatchEvent(new CustomEvent('suspended_event', { detail: { suspended: false } }));
+    }
+    if (JSON.parse(window.localStorage.getItem('locked')!)) {
+      window.dispatchEvent(new CustomEvent('locked_event', { detail: { locked: false } }));
     }
 
     const responseHeaders: Headers & {

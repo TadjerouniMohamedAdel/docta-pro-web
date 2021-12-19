@@ -14,6 +14,7 @@ import { useAuthState } from '../features/Auth/context';
 import { getCurrentUser } from '../features/Auth/services';
 import { AuthResponse } from '../features/Auth/types';
 import { AccountSuspendedContext } from '../common/context/AccountSuspendedContext';
+import { AccountLockedContext } from '../common/context/AccountLockedContext';
 
 const queryCache = new QueryCache();
 
@@ -32,6 +33,8 @@ function App() {
   const { user, setUser } = useAuthState();
   const { i18n } = useTranslation();
   const { setSuspended } = useContext(AccountSuspendedContext);
+  const { setLocked } = useContext(AccountLockedContext);
+
   const token = localStorage.getItem('token');
   moment.updateLocale(i18n.language === 'ar' ? 'ar-tn' : i18n.language || 'fr', {
     week: {
@@ -57,14 +60,20 @@ function App() {
     if (token && !user) handleFetchCurrentUser();
   }, []);
 
-  const updateStorage = (e: any) => {
+  const updateSuspended = (e: any) => {
     setSuspended(e.detail.suspended);
   };
 
+  const updateLocked = (e: any) => {
+    setLocked(e.detail.locked);
+  };
+
   useEffect(() => {
-    window.addEventListener('suspended_event', updateStorage);
+    window.addEventListener('suspended_event', updateSuspended);
+    window.addEventListener('locked_event', updateLocked);
     return function cleanup() {
-      window.removeEventListener('suspended_event', updateStorage);
+      window.removeEventListener('suspended_event', updateSuspended);
+      window.removeEventListener('locked_event', updateLocked);
     };
   });
 
