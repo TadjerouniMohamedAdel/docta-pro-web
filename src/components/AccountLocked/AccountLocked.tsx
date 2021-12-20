@@ -12,7 +12,7 @@ const AccountLocked: React.FC<{ isLocked: boolean }> = ({ isLocked }) => {
   const location = useLocation();
   const ModalTitle = () => (
     <div className="account-locked-header">
-      <Text className="account-locked-title">Unlock Pro Features</Text>
+      <Text className="account-locked-title">{t('unlock pro features')}</Text>
     </div>
   );
   return (
@@ -26,10 +26,7 @@ const AccountLocked: React.FC<{ isLocked: boolean }> = ({ isLocked }) => {
     >
       <div className="account-locked-content">
         <img src={lock} alt="" />
-        <Text className="account-locked-description">
-          To unlock your pro features, go to subscription and upload the invoice of your prepaid
-          plan.
-        </Text>
+        <Text className="account-locked-description">{t('unlock message')}</Text>
         <Button
           type="primary"
           style={{ width: '100%' }}

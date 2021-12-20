@@ -1,9 +1,9 @@
 import React from 'react';
 import printJS from 'print-js';
+import { useTranslation } from 'react-i18next';
 import { format, isSameDay } from 'date-fns';
 import { Button, Card, Spin, Divider } from 'antd';
 import { Icon, Text } from '../../../../../components';
-
 import docta_with_text from '../../../../../assets/img/docta_with_text.png';
 // import barre_code from '../../../../../assets/img/barre_code.png';
 import './styles.less';
@@ -27,6 +27,8 @@ const PrescriptionPreview: React.FC<Props> = ({
   onClose,
   printPreview,
 }) => {
+  const { t } = useTranslation('translation');
+
   React.useEffect(() => {
     if (visible && !isModal) {
       document.querySelector('.ant-modal')?.classList.add('modals-two-window');
@@ -95,7 +97,7 @@ const PrescriptionPreview: React.FC<Props> = ({
               onClick={() => printPreviewI()}
             >
               <Icon name="printer-line" />
-              <Text style={{ color: '#fff', fontSize: 14 }}>PRINT</Text>
+              <Text style={{ color: '#fff', fontSize: 14 }}>{t('print'.toUpperCase())}</Text>
             </Button>
             <Button type="default" onClick={() => onClose()} className="prescription-close-button">
               <Icon name="close-line" />
