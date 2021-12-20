@@ -251,5 +251,7 @@
   "validate":"Validate",
   "unlock pro features":"Unlock Pro Features",
   "go to subscription":"Go TO SUBSCRIPTIONS",
-  "unlock message":"To unlock your pro features, go to subscription and upload the invoice of your prepaid plan"
+  "unlock message":"To unlock your pro features, go to subscription and upload the invoice of your prepaid plan",
+  "payment processing":"Payment Processing",
+  "payment processing message":"We have received your payment invoice and it is being processed. Please contact support if you think this is taking too long."
 }
