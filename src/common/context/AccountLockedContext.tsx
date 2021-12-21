@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 type ContextProps = {
-  locked: boolean;
-  setLocked: React.Dispatch<React.SetStateAction<boolean>>;
+  locked: boolean | 'pending';
+  setLocked: React.Dispatch<React.SetStateAction<boolean | 'pending'>>;
 };
 const contextDefaultValues: ContextProps = {
   locked: JSON.parse(window.localStorage.getItem('locked')!) || false,
@@ -13,7 +13,7 @@ export const AccountLockedContext = React.createContext<ContextProps>(contextDef
 const AccountLockedProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [locked, setLocked] = useState<boolean>(contextDefaultValues.locked);
+  const [locked, setLocked] = useState<boolean | 'pending'>(contextDefaultValues.locked);
 
   useEffect(() => {
     window.localStorage.setItem('locked', JSON.stringify(locked));

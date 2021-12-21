@@ -7,6 +7,7 @@ import { useAuthState } from '../../features/Auth';
 import { MainLayout } from '../../Layout';
 import AccountLocked from '../../components/AccountLocked/AccountLocked';
 import { AccountLockedContext } from '../../common/context/AccountLockedContext';
+import PaymentProcessing from '../../components/PaymentProcessing/PaymentProcessing';
 
 const AuthenticatedApp: React.FC = () => {
   const { user } = useAuthState();
@@ -19,6 +20,7 @@ const AuthenticatedApp: React.FC = () => {
         <AccountSuspended />
       </Modal>
       <AccountLocked isLocked={locked} />
+      <PaymentProcessing isLocked={locked} />
       {user?.setupAccountProgress === -1 || user?.role.code !== 'practitioner' ? (
         <MainLayout />
       ) : (

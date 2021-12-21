@@ -6,7 +6,7 @@ import { Text, Button } from '..';
 import lock from '../../assets/img/lock.png';
 import './styles.less';
 
-const AccountLocked: React.FC<{ isLocked: boolean }> = ({ isLocked }) => {
+const AccountLocked: React.FC<{ isLocked: boolean | 'pending' }> = ({ isLocked }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   const history = useHistory();
   const location = useLocation();
@@ -17,7 +17,7 @@ const AccountLocked: React.FC<{ isLocked: boolean }> = ({ isLocked }) => {
   );
   return (
     <Modal
-      visible={isLocked && location.pathname !== '/settings/subscription'}
+      visible={isLocked === true && location.pathname !== '/settings/subscription'}
       footer={null}
       centered
       width={600}

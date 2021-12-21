@@ -6,7 +6,7 @@ import { Text, Button } from '..';
 import payment_processing from '../../assets/img/payment_processing.png';
 import './styles.less';
 
-const PaymentPending: React.FC = () => {
+const PaymentProcessing: React.FC<{ isLocked: boolean | 'pending' }> = ({ isLocked }) => {
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
   const history = useHistory();
   const location = useLocation();
@@ -17,7 +17,7 @@ const PaymentPending: React.FC = () => {
   );
   return (
     <Modal
-      visible={location.pathname !== '/settings/subscription'}
+      visible={isLocked === 'pending' && location.pathname !== '/settings/subscription'}
       footer={null}
       centered
       width={600}
@@ -38,4 +38,4 @@ const PaymentPending: React.FC = () => {
     </Modal>
   );
 };
-export default PaymentPending;
+export default PaymentProcessing;
