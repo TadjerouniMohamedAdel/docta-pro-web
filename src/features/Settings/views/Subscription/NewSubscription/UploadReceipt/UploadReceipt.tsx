@@ -44,7 +44,7 @@ const UploadReceipt: React.FC<Props> = ({ handleUploadReceipt, isLoading }) => {
         loading={isLoading}
         type="primary"
         style={{ width: '600px', marginTop: 21 }}
-        disabled={file === null}
+        disabled={file === null || isLoading}
         onClick={handleSubmit}
       >
         {t('upload')}

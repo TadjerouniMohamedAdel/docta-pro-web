@@ -11,9 +11,16 @@ type Props = {
   methods: PaymentType[] | undefined;
   selectMethod: (method: PaymentType) => void;
   selectedMethod: PaymentType | undefined;
+  isLoadingPickPlan: boolean;
 };
 
-const PaymentMethods: React.FC<Props> = ({ formik, methods, selectMethod, selectedMethod }) => {
+const PaymentMethods: React.FC<Props> = ({
+  isLoadingPickPlan,
+  formik,
+  methods,
+  selectMethod,
+  selectedMethod,
+}) => {
   const [isRC, setIsRC] = React.useState<'rc' | 'an'>('rc');
   const { t } = useTranslation(['translation', 'errors', 'placeholders']);
 
@@ -117,7 +124,13 @@ const PaymentMethods: React.FC<Props> = ({ formik, methods, selectMethod, select
             onChange={formik.handleChange}
           />
         </div>
-        <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ width: '100%' }}
+          loading={isLoadingPickPlan}
+          disabled={isLoadingPickPlan}
+        >
           {t('validate')}
         </Button>
       </form>

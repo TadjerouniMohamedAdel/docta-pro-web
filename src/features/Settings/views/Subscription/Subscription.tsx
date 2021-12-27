@@ -27,7 +27,7 @@ const Subscription: React.FC = () => {
   const { currentSubscription } = useGetCurrentSubscription();
   const { nextSubscription } = useGetNextSubscription();
   const { plans } = useGetSubscriptionPlans();
-  const { mutateAsync } = usePickPlan();
+  const { mutateAsync, isLoading: isLoadingPickPlan } = usePickPlan();
   const { invoices, isLoading } = useGetInvoices(pageIndex, pageSize);
   const { mutateAsync: mutateReceipt, isLoading: uploadLoading } = useUploadReceipt();
   const columns = [
@@ -159,6 +159,7 @@ const Subscription: React.FC = () => {
         visible={addSubscriptionVisible}
         setVisible={setAddSubscriptionVisible}
         addSubscription={mutateAsync}
+        isLoadingPickPlan={isLoadingPickPlan}
       />
       <Modal
         title={t('upload payment receipt')}

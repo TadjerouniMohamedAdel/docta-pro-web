@@ -8,8 +8,9 @@ import DeleteModal from '../../../../../components/MultiActionModal/MultiActionM
 import { deletePrescription } from '../../../services';
 import useIntersectionObserver from '../../../../../common/hooks/useIntersectionObserver';
 import { PrescriptinRow, PrescriptionDetails } from '../../../types';
-import PrescriptionPreview from '../../../../Patients/components/Prescriptions/PrescriptionPreview/PrescriptionPreview';
+import PrescriptionPreview from '../PrescriptionPreview/PrescriptionPreview';
 import PrescriptionItem from './PrescriptionItem/PrescriptionItem';
+import { useGetPrescription } from '../../../hooks';
 
 type Props = {
   patientId: string;
@@ -35,7 +36,9 @@ const PrescriptionsList: React.FC<Props> = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [previewId, setPreviewId] = useState<null | string>(null);
   const [previewVisible, setPreviewVisible] = useState(true);
+  const [printPreview, setPrintPreview] = useState(false);
   const loadMoreButtonRef = React.useRef<HTMLDivElement | null>(null);
+  const { isLoading: prescriptionLoading, prescription } = useGetPrescription(previewId);
 
   const cache = useQueryClient();
   const {
@@ -59,17 +62,6 @@ const PrescriptionsList: React.FC<Props> = ({
 
   const onDeleteSuccess = () => {
     cache.invalidateQueries('prescriptions-history');
-  };
-
-  const printPreview = (diagnostic: string) => {
-    const printWindow = window.open('', '', 'height=400,width=800');
-    printWindow?.document.write(`<html><head><title>${diagnostic}</title></head><body>`);
-    printWindow?.document.write(document.querySelector('#print-subscription')!.innerHTML);
-    printWindow?.document.write('</body></html>');
-    printWindow?.document.close();
-    printWindow?.print();
-    setPreviewId(null);
-    setPreviewVisible(true);
   };
 
   return (
@@ -103,6 +95,7 @@ const PrescriptionsList: React.FC<Props> = ({
                 printPreview={() => {
                   setPreviewVisible(false);
                   setPreviewId(prescriptionRow.id);
+                  setPrintPreview(true);
                 }}
               />
             ))}
@@ -127,10 +120,12 @@ const PrescriptionsList: React.FC<Props> = ({
       />
       {previewId && (
         <PrescriptionPreview
-          prescriptionId={previewId}
+          prescription={prescription}
+          isLoading={prescriptionLoading}
           onClose={() => {
             setPreviewId(null);
             setPreviewVisible(true);
+            setPrintPreview(false);
           }}
           visible={previewVisible}
           isModal={fromPatient}

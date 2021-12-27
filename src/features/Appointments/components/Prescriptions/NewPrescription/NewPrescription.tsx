@@ -4,12 +4,16 @@ import { Form, Input, Row, FormInstance, Col } from 'antd';
 import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query';
 import * as Yup from 'yup';
-import { Icon, Label } from '../../../../../components';
+import { Icon, Label, Text, Button } from '../../../../../components';
 import { MedicationRow, PrescriptionForm } from '../../../types';
 import AddMedication from '../AddMedication/AddMedication';
 import MedicationsList from '../MedicationsList/MedicationsList';
 import PrescriptionNotes from '../PrescriptionNotes/PrescriptionNotes';
 import { addPrescription } from '../../../services';
+import { useGetDoctorPersonalInfo } from '../../../hooks/useGetDoctorPersonalInfo';
+import { useGetDoctorCabinetInfo } from '../../../hooks/useGetDoctorCabinetInfo';
+import { useGetPatientInfo } from '../../../hooks/useGetPatientInfo';
+import PrescriptionPreview from '../PrescriptionPreview/PrescriptionPreview';
 
 type Props = {
   patientId: string;
@@ -27,7 +31,11 @@ const NewPrescription: React.FC<Props> = ({
   initialValues,
 }) => {
   const { t } = useTranslation(['translation', 'placeholders', 'errors']);
-
+  const { doctorPersonalInfo, isLoading: doctorPersonalLoading } = useGetDoctorPersonalInfo();
+  const { doctorCabinetInfo, isLoading: cabinetLoading } = useGetDoctorCabinetInfo();
+  const { patientInfo, isLoading: patientLoading } = useGetPatientInfo(patientId);
+  const [previewVisible, setPreviewVisible] = React.useState(false);
+  const [printPreview, setPrintPreview] = React.useState(false);
   const validationSchema = Yup.object().shape({
     diagnostic: Yup.string().required(t('errors:required field')),
   });
@@ -99,6 +107,61 @@ const NewPrescription: React.FC<Props> = ({
           </Col>
         </Row>
       </div>
+      <div style={{ marginTop: 37, marginBottom: 24, paddingLeft: 40, paddingRight: 40 }}>
+        <Row justify="space-between" align="middle">
+          <Col>
+            <Text>{t('prescription')}</Text>
+          </Col>
+          <Col>
+            <Row>
+              <Col>
+                <Button
+                  type="link"
+                  icon={<Icon name="search-eye-line" />}
+                  onClick={() => setPreviewVisible(true)}
+                >
+                  {t('preview')}
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  type="link"
+                  icon={<Icon name="printer-line" />}
+                  onClick={() => {
+                    setPreviewVisible(false);
+                    setPrintPreview(true);
+                  }}
+                >
+                  {t('print')}
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
+      {!patientLoading && !doctorPersonalLoading && !cabinetLoading && (
+        <PrescriptionPreview
+          prescription={{
+            data: {
+              ...formik.values,
+              createdAt: new Date(),
+              patient: patientInfo?.data,
+              doctor: {
+                ...doctorPersonalInfo?.data,
+                establishment: { ...doctorCabinetInfo?.data },
+              },
+            },
+          }}
+          isLoading={patientLoading || doctorPersonalLoading || cabinetLoading}
+          onClose={() => {
+            setPreviewVisible(false);
+            setPrintPreview(false);
+          }}
+          visible={previewVisible}
+          isModal={false}
+          printPreview={printPreview}
+        />
+      )}
       <MedicationsList medications={values.medications} deleteMedication={deleteMedication} />
       <PrescriptionNotes note={values.note} setNote={(note) => setFieldValue('note', note)} />
     </Form>
